@@ -1,0 +1,19 @@
+{
+  "name": "extraleague",
+  "version": "0.0.0",
+  "authors": [
+    "squix78"
+  ],
+  "description": "Company Foosball League",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "ncaleague.appspot.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/webapp/components",
+    "test",
+    "tests"
+  ]
+}

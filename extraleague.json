@@ -1,0 +1,25 @@
+{
+  "name": "extraleague",
+  "title": "Extraleague",
+  "description": "Foosball League Application.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/deichhor/extraleague",
+  "author": {
+    "name": "squix78"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/squix78/extraleague.git"
+  },
+  "bugs": "https://github.com/squix78/extraleague/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/deichhor/extraleague/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}

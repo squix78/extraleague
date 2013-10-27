@@ -17,8 +17,8 @@ public class ExtraLeagueRestApplication extends Application {
         // Create a router Restlet that routes each call to a
         // new instance of HelloWorldResource.
         Router router = new Router(getContext());
-        //router.attach("/admin/maintenance", MaintenanceResource.class);
-//        router.attach("/tweets/{paperID}", TweetListResource.class);
+        router.attach("/maintenance", MaintenanceResource.class);
+
         return router;
     }
 

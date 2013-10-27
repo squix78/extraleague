@@ -1,6 +1,7 @@
 'use strict';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
+var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
 var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
@@ -26,7 +27,12 @@ module.exports = function (grunt) {
             },
             livereload: {
                 options: {
-                    livereload: LIVERELOAD_PORT
+                    livereload: LIVERELOAD_PORT,
+                    middleware: function (connect) {
+                        return [
+                            proxySnippet
+                        ];
+                    }
                 },
                 files: [
                     'src/main/webapp/*.html',
@@ -43,11 +49,22 @@ module.exports = function (grunt) {
                 hostname: 'localhost',
                 base: 'src/main/webapp/'
             },
+            proxies: [
+                      {
+                          context: '/rest',
+                          host: 'localhost',
+                          port: 8080,
+                          https: false,
+                          changeOrigin: false,
+                          xforward: false
+                      }
+                  ],
             livereload: {
                 options: {
                     middleware: function (connect) {
                         return [
                             mountFolder(connect, 'src/main/webapp'),
+                            proxySnippet ,
                             lrSnippet
                         ];
                     }
@@ -75,6 +92,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'less:server',
+            'configureProxies',
             'connect:livereload',
             'open',
             'watch'

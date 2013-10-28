@@ -45,7 +45,7 @@ public class GameResource extends ServerResource {
 		game.setPlayers(dto.getPlayers());
 		game.setTable(dto.getTable());
 		game.setStartDate(new Date());
-		ofy().save().entity(game);
+		ofy().save().entity(game).now();
 		dto.setId(game.getId());
 		return dto;
 	}

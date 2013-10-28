@@ -9,6 +9,10 @@ angular.module('Extraleague', ['ngResource'])
     	  controller : 'TableController',
     	  templateUrl : 'partials/table.html'
       })
+      .when('/table/:table/games/:gameId', {
+    	  controller : 'GameController',
+    	  templateUrl : 'partials/game.html'
+      })
       .otherwise({
           controller : 'MainController',
           templateUrl : 'partials/tables.html'
@@ -52,7 +56,11 @@ function TableController($scope, $resource, $routeParams, Games) {
 		$scope.player="";
 	};
 	$scope.startGame = function() {
-		$scope.currentGame = $scope.currentGame.$save({table: $scope.table});
-		$scope.updateGames();
+		$scope.currentGame = $scope.currentGame.$save({table: $scope.table}, function(){
+			$location.path("/table/" + $scope.table + "/games/1");			
+		});
 	}
+}
+function GameController($scope, $resource, $routeParams) {
+	
 }

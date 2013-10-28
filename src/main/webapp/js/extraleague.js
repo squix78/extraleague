@@ -1,38 +1,58 @@
-/*
- * extraleague
- * https://github.com/deichhor/extraleague
- *
- * Copyright (c) 2013 squix78
- * Licensed under the MIT license.
- */
+angular.module('Extraleague', ['ngResource'])
+    .config(function($routeProvider) {
+      $routeProvider
+      .when('/', {
+        controller : 'MainController',
+        templateUrl : 'partials/tables.html'
+      })
+      .when('/table/:table', {
+    	  controller : 'TableController',
+    	  templateUrl : 'partials/table.html'
+      })
+      .otherwise({
+          controller : 'MainController',
+          templateUrl : 'partials/tables.html'
+      });
+    })
+    .factory('Ping', ['$resource', function($resource) {
+      return $resource('/rest/ping');
+    }])
+	.factory('Tables', ['$resource', function($resource) {
+		return $resource('/rest/tables');
+	}])
+	.factory('Games', ['$resource', function($resource) {
+		return $resource('/rest/tables/:table/games');
+	}]);
 
-(function($) {
+function MainController($scope, $resource, $location, Tables) {
+	$scope.tablesLoading = true;
+	$scope.tables = Tables.query({}, function() {
+		$scope.tablesLoading = false;
+	});
+	
+	$scope.selectTable = function(table) {
+		console.log("Table selected: " + table.name);
+		$location.path("/table/" + table.name);
+	};
+}
 
-  // Collection method.
-  $.fn.awesome = function() {
-    return this.each(function(i) {
-      // Do something awesome to each selected element.
-      $(this).html('awesome' + i);
-    });
-  };
-
-  // Static method.
-  $.awesome = function(options) {
-    // Override default options with passed-in options.
-    options = $.extend({}, $.awesome.options, options);
-    // Return something awesome.
-    return 'awesome' + options.punctuation;
-  };
-
-  // Static method default options.
-  $.awesome.options = {
-    punctuation: '.'
-  };
-
-  // Custom selector.
-  $.expr[':'].awesome = function(elem) {
-    // Is this element awesome?
-    return $(elem).text().indexOf('awesome') !== -1;
-  };
-
-}(jQuery));
+function TableController($scope, $resource, $routeParams, Games) {
+	$scope.table = $routeParams.table;
+	$scope.currentGame = new Games();
+	$scope.currentGame.table= $scope.table;
+	$scope.currentGame.players = [];
+	$scope.updateGames = function() {
+		$scope.games = Games.query({table: $scope.table}, function() {
+			
+		});
+	};
+	$scope.updateGames();
+	$scope.addPlayer = function() {
+		$scope.currentGame.players.push($scope.player);
+		$scope.player="";
+	};
+	$scope.startGame = function() {
+		$scope.currentGame = $scope.currentGame.$save({table: $scope.table});
+		$scope.updateGames();
+	}
+}

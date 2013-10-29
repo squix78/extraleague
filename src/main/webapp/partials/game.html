@@ -1,4 +1,11 @@
  <div class="starter-template">
-   <h1>Game</h1>
+   <h1>Game {{matchIndex + 1}}</h1>
  </div>
 
+<button class="btn" ng-click="decreaseScoreTeamA()">-</button>
+{{match.teamA[0]}} & {{match.teamA[1]}}
+<button class="btn btn-primary" ng-click="increaseScoreTeamA()">+</button>
+<h1>{{match.teamAScore}} : {{match.teamBScore}}</h1>
+<button class="btn" ng-click="decreaseScoreTeamB()">-</button>
+{{match.teamB[0]}} & {{match.teamB[1]}}
+<button class="btn btn-primary" ng-click="increaseScoreTeamB()">+</button>

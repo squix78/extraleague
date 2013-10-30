@@ -1,25 +1,32 @@
- <div class="starter-template">
-   <h1>Table {{table}}</h1>
- </div>
+ <div class="row">
+	<div class="col-md-12">
+		 <div class="starter-template">
+		   <h1>Table {{table}}</h1>
+		 </div>
+		
+		<div class="row">
+			<div class="col-md-5 form-group">
+			  <input type="text" class="form-control" id="player" ng-model="player" placeholder="4 Players separated by space">
+			</div>
+			<div class="col-md-7 form-group">
+				<button ng-disabled="currentGame.players.length != 4" type="submit" class="btn btn-primary" ng-click="startGame()">Start Game</button>
+			</div>
 
-<div>
-	<form class="form-inline" role="form">
-	  <div class="form-group">
-	    <input type="text" class="form-control" id="player" ng-model="player" placeholder="Player name">
-	  </div>
-	  <div class="form-group">
-		<button ng-disabled="currentGame.players.length >= 4" type="submit" class="btn btn-default" ng-click="addPlayer()">Add Player</button>
-	  </div>
-	  <div class="form-group">
-	  	<button ng-disabled="currentGame.players.length != 4" type="submit" class="btn btn-primary" ng-click="startGame()">Start Game</button>
-	  </div>
-	</form>
-</div>
-<div class="alert alert-success" ng-repeat="player in currentGame.players">{{player}}</div>
+		</div>
+		<BR/>
 
+			<span class="" ng-repeat="player in currentGame.players">
+				<button class="btn btn-default">
+					<span class="glyphicon glyphicon-user"></span> {{player}}
+				</button>
+			</span>
 
-<h2>Former Games</h2>
-<div class="alert alert-success" ng-repeat="game in games">
-  <span ng-repeat="player in game.players">{{player}} </span>
-  <span class="pull-right">{{game.startDate | date:'short'}}</span>
+		
+		
+		<h2>Former Games</h2>
+		<div class="alert alert-success" ng-repeat="game in games">
+		  <span ng-repeat="player in game.players">{{player}} </span>
+		  <span class="pull-right">{{game.startDate | date:'short'}}</span>
+		</div>
+	</div>
 </div>

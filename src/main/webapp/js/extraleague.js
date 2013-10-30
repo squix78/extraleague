@@ -56,6 +56,13 @@ function TableController($scope, $resource, $routeParams, $location, Games) {
 			
 		});
 	};
+	$scope.$watch('player', function(newValue, oldValue) {
+		if (angular.isDefined(newValue)) {
+			$scope.currentGame.players = newValue.split(' ');
+			console.log(newValue +", " + $scope.currentGame.players);
+		}
+		
+	});
 	$scope.updateGames();
 	$scope.addPlayer = function() {
 		$scope.currentGame.players.push($scope.player);
@@ -93,26 +100,28 @@ function GameController($scope, $resource, $routeParams, Game, Match) {
 	});
 	$scope.increaseScoreTeamA = function() {
 		$scope.match.teamAScore++;
-		if ($scope.match.teamAScore >= 5) {
-			//$scope.match.$save({}, function(match) {
-				$scope.matchIndex++;
-				$scope.updateCurrentMatch();
-			//});
-		}
+		$scope.checkNextMatch();
 	};
 	$scope.decreaseScoreTeamA = function() {
 		if ($scope.match.teamAScore > 0) {
 			$scope.match.teamAScore--;
 		}
 	};
-	$scope.increaseScoreTeamB = function() {
-		$scope.match.teamBScore++;
-		if ($scope.match.teamBScore >= 5) {
-			//$scope.match.$save({}, function(match) {
+	$scope.checkNextMatch = function() {
+		if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
+			$scope.matchIsSaving = true;
+			$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
+				$scope.matchIsSaving = false;
+			});
+			if ($scope.matchIndex < 3) {	
 				$scope.matchIndex++;
 				$scope.updateCurrentMatch();
-			//});
+			}
 		}
+	}
+	$scope.increaseScoreTeamB = function() {
+		$scope.match.teamBScore++;
+		$scope.checkNextMatch();
 	}
 	$scope.decreaseScoreTeamB = function() {
 		if ($scope.match.teamBScore > 0) {

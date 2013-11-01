@@ -13,6 +13,10 @@ angular.module('Extraleague', ['ngResource'])
     	  controller : 'GameController',
     	  templateUrl : 'partials/game.html'
       })
+      .when('/tables/:table/games/:gameId/summary', {
+    	  controller : 'SummaryController',
+    	  templateUrl : 'partials/summary.html'
+      })
       .otherwise({
           controller : 'MainController',
           templateUrl : 'partials/tables.html'
@@ -29,6 +33,9 @@ angular.module('Extraleague', ['ngResource'])
 	}])
 	.factory('Game', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId');
+	}])
+	.factory('Summary', ['$resource', function($resource) {
+		return $resource('/rest/tables/:table/games/:gameId/summary');
 	}])
 	.factory('Match', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId/matches');
@@ -75,7 +82,7 @@ function TableController($scope, $resource, $routeParams, $location, Games) {
 		});
 	}
 }
-function GameController($scope, $resource, $routeParams, Game, Match) {
+function GameController($scope, $resource, $routeParams, $location, Game, Match) {
 	$scope.mutations = [[0,1,2,3], [3,0,1,2], [2,3,1,0], [0,2,3,1]];
 	$scope.gameId = $routeParams.gameId;
 	$scope.table = $routeParams.table;
@@ -93,6 +100,7 @@ function GameController($scope, $resource, $routeParams, Game, Match) {
 			match.teamB = [currentPlayers[2], currentPlayers[3]];
 			match.teamAScore = 0;
 			match.teamBScore = 0;
+			match.gameId = $scope.gameId;
 			$scope.matches.push(match);
 		}
 		$scope.updateCurrentMatch();
@@ -110,12 +118,15 @@ function GameController($scope, $resource, $routeParams, Game, Match) {
 	$scope.checkNextMatch = function() {
 		if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
 			$scope.matchIsSaving = true;
+			$scope.match.endDate = new Date();
 			$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
 				$scope.matchIsSaving = false;
 			});
 			if ($scope.matchIndex < 3) {	
 				$scope.matchIndex++;
 				$scope.updateCurrentMatch();
+			} else {
+				$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");
 			}
 		}
 	}
@@ -131,9 +142,17 @@ function GameController($scope, $resource, $routeParams, Game, Match) {
 	console.log("Arrived in GameController: " + $scope.gameId);
 	$scope.updateCurrentMatch = function() {
 		$scope.match = $scope.matches[$scope.matchIndex];
+		$scope.match.startDate = new Date();
 	}
 	$scope.shuffle = function(o){ //v1.0
 	    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
 	    return o;
 	};
+}
+function SummaryController($scope, $resource, $routeParams, Summary) {
+	$scope.table = $routeParams.table;
+	$scope.gameId = $routeParams.gameId;
+	$scope.summary = Summary.get({table: $scope.table, gameId: $scope.gameId}, function() {
+		
+	});
 }

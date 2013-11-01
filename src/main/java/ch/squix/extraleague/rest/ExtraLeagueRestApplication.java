@@ -10,6 +10,7 @@ import ch.squix.extraleague.rest.games.GameResource;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
 import ch.squix.extraleague.rest.ping.PingResource;
+import ch.squix.extraleague.rest.result.SummaryResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
 
 import com.googlecode.objectify.ObjectifyService;
@@ -31,6 +32,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/tables/{table}/games", GamesResource.class);
         router.attach("/tables/{table}/games/{gameId}", GameResource.class);
         router.attach("/tables/{table}/games/{gameId}/matches", MatchesResource.class);
+        router.attach("/tables/{table}/games/{gameId}/summary", SummaryResource.class);
 
         return router;
     }

@@ -13,6 +13,8 @@ public class GameDto {
 	private Date startDate;
 	private Date endDate;
 	
+	private Integer numberOfCompletedGames;
+	
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +54,21 @@ public class GameDto {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+
+	/**
+	 * @return the numberOfCompletedGames
+	 */
+	public Integer getNumberOfCompletedGames() {
+		return numberOfCompletedGames;
+	}
+
+	/**
+	 * @param numberOfCompletedGames the numberOfCompletedGames to set
+	 */
+	public void setNumberOfCompletedGames(Integer numberOfCompletedGames) {
+		this.numberOfCompletedGames = numberOfCompletedGames;
+	}
+
 
 	
 }

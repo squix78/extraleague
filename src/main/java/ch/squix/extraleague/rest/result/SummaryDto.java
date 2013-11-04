@@ -1,24 +1,26 @@
 package ch.squix.extraleague.rest.result;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class SummaryDto {
 	
-	private Map<String, Integer> playerScore = new TreeMap<>();
+	private List<PlayerScoreDto> playerScores = new ArrayList<>();
 
 	/**
-	 * @return the playerScore
+	 * @return the playerScores
 	 */
-	public Map<String, Integer> getPlayerScore() {
-		return playerScore;
+	public List<PlayerScoreDto> getPlayerScores() {
+		return playerScores;
 	}
 
 	/**
-	 * @param playerScore the playerScore to set
+	 * @param playerScores the playerScores to set
 	 */
-	public void setPlayerScore(Map<String, Integer> playerScore) {
-		this.playerScore = playerScore;
+	public void setPlayerScores(List<PlayerScoreDto> playerScores) {
+		this.playerScores = playerScores;
 	}
 
 }

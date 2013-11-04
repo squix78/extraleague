@@ -3,8 +3,9 @@ package ch.squix.extraleague.rest.result;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
@@ -21,8 +22,9 @@ public class SummaryResource extends ServerResource {
 		Game game = ofy().load().type(Game.class).id(gameId).now();
 		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", gameId).list();
 		SummaryDto dto = new SummaryDto();
+		Map<String, Integer> playerScores = new HashMap<>();
 		for (String player : game.getPlayers()) {
-			dto.getPlayerScore().put(player, 0);
+			playerScores.put(player, 0);
 		}
 		for (Match match : matches) {
 			Integer teamAScore = match.getTeamAScore();
@@ -34,8 +36,13 @@ public class SummaryResource extends ServerResource {
 				winners = match.getTeamB();
 			}
 			for (String winner : winners) {
-				dto.getPlayerScore().put(winner, dto.getPlayerScore().get(winner) + 1);
+				Integer score = playerScores.get(winner);
+				score++;
+				playerScores.put(winner, score);
 			}
+		}
+		for (String player : game.getPlayers()) {
+			dto.getPlayerScores().add(new PlayerScoreDto(player, playerScores.get(player)));
 		}
 		return dto;
 	}

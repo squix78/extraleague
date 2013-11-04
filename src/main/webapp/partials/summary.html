@@ -1,5 +1,18 @@
 <h1>Summary</h1>
 
-<div ng-repeat="(key, value) in summary.playerScore">
-	{{key}} {{value}}
+<div class="row">
+	<div class="col-xs-6">
+		<b>Player</b>
+	</div>
+	<div class="col-xs-6">
+		<b>Score</b>
+	</div>
+</div>
+<div class="row" ng-repeat="playerScore in summary.playerScores | orderBy:'-score'"  ng-class-even="'even'" ng-class-odd="'odd'">
+	<div class="col-xs-6">
+		{{playerScore.player}}
+	</div>
+	<div class="col-xs-6">
+		{{playerScore.score}}
+	</div>
 </div>

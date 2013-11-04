@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource'])
+angular.module('Extraleague', ['ngResource', 'PlayerMappings'])
     .config(function($routeProvider) {
       $routeProvider
       .when('/', {
@@ -16,6 +16,10 @@ angular.module('Extraleague', ['ngResource'])
       .when('/tables/:table/games/:gameId/summary', {
     	  controller : 'SummaryController',
     	  templateUrl : 'partials/summary.html'
+      })
+      .when('/ranking', {
+    	  controller : 'RankingController',
+    	  templateUrl : 'partials/ranking.html'
       })
       .otherwise({
           controller : 'MainController',
@@ -37,15 +41,19 @@ angular.module('Extraleague', ['ngResource'])
 	.factory('Summary', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId/summary');
 	}])
+	.factory('Ranking', ['$resource', function($resource) {
+		return $resource('/rest/ranking');
+	}])
 	.factory('Match', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId/matches');
 	}]);
 
 function MainController($scope, $resource, $location, Tables) {
-	$scope.tablesLoading = true;
-	$scope.tables = Tables.query({}, function() {
-		$scope.tablesLoading = false;
-	});
+//	$scope.tablesLoading = true;
+//	$scope.tables = Tables.query({}, function() {
+//		$scope.tablesLoading = false;
+//	});
+	$scope.tables = [{name: 'Park'}, {name: 'Albis'}, {name: 'Bern'}, {name: 'Skopje'}];
 	
 	$scope.selectTable = function(table) {
 		console.log("Table selected: " + table.name);
@@ -53,7 +61,8 @@ function MainController($scope, $resource, $location, Tables) {
 	};
 }
 
-function TableController($scope, $resource, $routeParams, $location, Games) {
+function TableController($scope, $resource, $routeParams, $location, Games, PlayerService) {
+	$scope.PlayerService = PlayerService;
 	$scope.table = $routeParams.table;
 	$scope.currentGame = new Games();
 	$scope.currentGame.table= $scope.table;
@@ -80,30 +89,31 @@ function TableController($scope, $resource, $routeParams, $location, Games) {
 			$scope.currentGame = savedGame;
 			$location.path("/tables/" + $scope.table + "/games/" + $scope.currentGame.id);			
 		});
-	}
+	};
+	$scope.continueGame = function(gameId) {
+		$location.path("/tables/" + $scope.table + "/games/" + gameId);
+	};
 }
-function GameController($scope, $resource, $routeParams, $location, Game, Match) {
-	$scope.mutations = [[0,1,2,3], [3,0,1,2], [2,3,1,0], [0,2,3,1]];
+function GameController($scope, $resource, $routeParams, $location, Game, Match, PlayerService) {
+	$scope.PlayerService = PlayerService;
+	
 	$scope.gameId = $routeParams.gameId;
 	$scope.table = $routeParams.table;
 	$scope.matches = [];
 	$scope.matchIndex = 0;
 	$scope.game = Game.get({table: $scope.table, gameId: $scope.gameId}, function() {
-		var players = $scope.shuffle($scope.game.players);
-		for (var i = 0; i < 4; i++) {
-			var match = new Match();
-			var currentPlayers = [];
-			for (var j = 0; j < 4; j++) {
-				currentPlayers.push(players[$scope.mutations[i][j]]);
+		if ($scope.game.numberOfCompletedGames >= 4) {
+			$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");
+		} else {
+
+			$scope.matchIndex = $scope.game.numberOfCompletedGames;
+			if (!angular.isDefined($scope.matchIndex)) {
+				$scope.matchIndex = 0;
 			}
-			match.teamA = [currentPlayers[0], currentPlayers[1]];
-			match.teamB = [currentPlayers[2], currentPlayers[3]];
-			match.teamAScore = 0;
-			match.teamBScore = 0;
-			match.gameId = $scope.gameId;
-			$scope.matches.push(match);
+			$scope.matches = Match.query({table: $scope.table, gameId: $scope.gameId}, function() {
+				$scope.updateCurrentMatch();
+			});
 		}
-		$scope.updateCurrentMatch();
 		
 	});
 	$scope.increaseScoreTeamA = function() {
@@ -126,7 +136,7 @@ function GameController($scope, $resource, $routeParams, $location, Game, Match)
 				$scope.matchIndex++;
 				$scope.updateCurrentMatch();
 			} else {
-				$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");
+				$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");				
 			}
 		}
 	}
@@ -144,15 +154,17 @@ function GameController($scope, $resource, $routeParams, $location, Game, Match)
 		$scope.match = $scope.matches[$scope.matchIndex];
 		$scope.match.startDate = new Date();
 	}
-	$scope.shuffle = function(o){ //v1.0
-	    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-	    return o;
-	};
+
 }
 function SummaryController($scope, $resource, $routeParams, Summary) {
 	$scope.table = $routeParams.table;
 	$scope.gameId = $routeParams.gameId;
 	$scope.summary = Summary.get({table: $scope.table, gameId: $scope.gameId}, function() {
+		
+	});
+}
+function RankingController($scope, $resource, $routeParams, Ranking) {
+	$scope.rankings = Ranking.query({}, function() {
 		
 	});
 }

@@ -7,9 +7,9 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 @Entity
-public class Match {
+public class Match { 
 
-	@Id
+	@Id 
 	private Long id;
 	
 	@Index
@@ -20,6 +20,8 @@ public class Match {
 	private Integer teamBScore;
 	private Date startDate;
 	private Date endDate;
+	private String table;
+	private Integer matchIndex;
 	
 	public Long getId() {
 		return id;
@@ -68,6 +70,30 @@ public class Match {
 	}
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	/**
+	 * @return the table
+	 */
+	public String getTable() {
+		return table;
+	}
+	/**
+	 * @param table the table to set
+	 */
+	public void setTable(String table) {
+		this.table = table;
+	}
+	/**
+	 * @return the matchIndex
+	 */
+	public Integer getMatchIndex() {
+		return matchIndex;
+	}
+	/**
+	 * @param matchIndex the matchIndex to set
+	 */
+	public void setMatchIndex(Integer matchIndex) {
+		this.matchIndex = matchIndex;
 	}
 
 }

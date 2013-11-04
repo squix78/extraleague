@@ -12,9 +12,9 @@
 
 </div>
 <div class="row text-center">
-	<h2>{{match.teamA[0]}} // {{match.teamA[1]}}</h2>
+	<h2><img class="player img img-rounded" src="{{PlayerService.getPlayerPicture(match.teamA[0])}}"/> {{match.teamA[0]}} // {{match.teamA[1]}} <img class="player img img-rounded" src="{{PlayerService.getPlayerPicture(match.teamA[1])}}"/></h2>
 	<h1>{{match.teamAScore}} : {{match.teamBScore}}</h1>
-	<h2>{{match.teamB[0]}} // {{match.teamB[1]}}</h2>
+	<h2><img class="player img img-rounded" src="{{PlayerService.getPlayerPicture(match.teamB[0])}}"/> {{match.teamB[0]}} // {{match.teamB[1]}} <img class="player img img-rounded" src="{{PlayerService.getPlayerPicture(match.teamB[1])}}"/> </h2>
 </div>
 <div class="row">
 	<div class="col-xs-6">

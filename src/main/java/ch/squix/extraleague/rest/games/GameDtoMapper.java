@@ -11,6 +11,7 @@ public class GameDtoMapper {
 		dto.setTable(game.getTable());
 		dto.setStartDate(game.getStartDate());
 		dto.setEndDate(game.getEndDate());
+		dto.setNumberOfCompletedGames(game.getNumberOfCompletedMatches());
 		return dto;
 	}
 

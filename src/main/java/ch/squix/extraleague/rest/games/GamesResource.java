@@ -13,6 +13,7 @@ import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
+import ch.squix.extraleague.model.match.Match;
 
 
 
@@ -35,13 +36,32 @@ public class GamesResource extends ServerResource {
 	
 	@Post(value = "json")
 	public GameDto create(GameDto dto) {
+		Integer [][] mutations = {{0,1,2,3}, {3,0,1,2}, {2,3,1,0}, {0,2,3,1}};
 		log.info("Received game to save");
 		Game game = new Game();
 		game.setPlayers(dto.getPlayers());
 		game.setTable(dto.getTable());
 		game.setStartDate(new Date());
+		game.setNumberOfCompletedMatches(0);
 		ofy().save().entity(game).now();
 		dto.setId(game.getId());
+		
+		// Prepare Matches
+		List<String> players = game.getPlayers();
+		List<Match> matches = new ArrayList<>();
+		for (int gameIndex = 0; gameIndex < 4; gameIndex++) {
+			Integer [] mutation = mutations[gameIndex];
+			Match match = new Match();
+			match.setGameId(game.getId());
+			match.setTeamA(new String[] {players.get(mutation[0]), players.get(mutation[1])});
+			match.setTeamB(new String[] {players.get(mutation[2]), players.get(mutation[3])});
+			match.setTeamAScore(0);
+			match.setTeamBScore(0);
+			match.setTable(game.getTable());
+			match.setMatchIndex(gameIndex);
+			matches.add(match);
+		}
+		ofy().save().entities(matches).now();
 		return dto;
 	}
 

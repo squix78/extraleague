@@ -11,6 +11,7 @@ public class MatchDto {
 	private Integer teamBScore;
 	private Date startDate;
 	private Date endDate;
+	private String table;
 	
 	public Long getGameId() {
 		return gameId;
@@ -65,6 +66,18 @@ public class MatchDto {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+	/**
+	 * @return the table
+	 */
+	public String getTable() {
+		return table;
+	}
+	/**
+	 * @param table the table to set
+	 */
+	public void setTable(String table) {
+		this.table = table;
 	}
 
 }

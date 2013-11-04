@@ -13,20 +13,29 @@
 			</div>
 
 		</div>
-		<BR/>
-
-			<span class="" ng-repeat="player in currentGame.players">
-				<button class="btn btn-default">
-					<span class="glyphicon glyphicon-user"></span> {{player}}
-				</button>
-			</span>
+		<div ng-show="currentGame.players.length > 0">
+			<h2>Players</h2>
+			<div class="row">
+				<div class="col-xs-2" ng-repeat="player in currentGame.players">
+					<div class="text-center">
+						<img class="img img-rounded player" src="{{PlayerService.getPlayerPicture(player)}}"/>
+						<span class="glyphicon glyphicon-user"></span> {{player}}
+					</div>
+				</div>
+			</div>
+		</div>
 
 		
-		
-		<h2>Former Games</h2>
-		<div class="alert alert-success" ng-repeat="game in games">
-		  <span ng-repeat="player in game.players">{{player}} </span>
-		  <span class="pull-right">{{game.startDate | date:'short'}}</span>
+		<div ng-show="games.length > 0">
+			<h2>Former Games</h2>
+			<div class="alert alert-success" ng-repeat="game in games  | orderBy:'-startDate'">
+			  <span class="pull-right">
+			  	{{game.startDate | date:'short'}}
+			  		<span ng-show="game.endDate"> - {{game.endDate | date:'short'}}</span>
+			  	</span>
+			  <span ng-repeat="player in game.players">{{player}} </span>
+			  <button ng-hide="game.endDate" class="btn btn-primary" ng-click="continueGame(game.id)">Continue with Game {{game.numberOfCompletedGames + 1}} of 4</button>
+			</div>
 		</div>
 	</div>
 </div>

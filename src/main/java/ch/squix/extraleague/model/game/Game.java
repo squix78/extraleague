@@ -23,7 +23,8 @@ public class Game {
 	private Date startDate;
 	private Date endDate;
 
-
+	private Integer numberOfCompletedMatches;
+	
 	public Long getId() {
 		return id;
 	}
@@ -71,6 +72,21 @@ public class Game {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the numberOfCompletedMatches
+	 */
+	public Integer getNumberOfCompletedMatches() {
+		return numberOfCompletedMatches;
+	}
+
+
+	/**
+	 * @param numberOfCompletedMatches the numberOfCompletedMatches to set
+	 */
+	public void setNumberOfCompletedMatches(Integer numberOfCompletedMatches) {
+		this.numberOfCompletedMatches = numberOfCompletedMatches;
 	}
 	
 	

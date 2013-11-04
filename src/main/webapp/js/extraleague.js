@@ -74,7 +74,7 @@ function TableController($scope, $resource, $routeParams, $location, Games, Play
 	};
 	$scope.$watch('player', function(newValue, oldValue) {
 		if (angular.isDefined(newValue)) {
-			$scope.currentGame.players = newValue.split(' ');
+			$scope.currentGame.players = newValue.toLowerCase().split(' ');
 			console.log(newValue +", " + $scope.currentGame.players);
 		}
 		

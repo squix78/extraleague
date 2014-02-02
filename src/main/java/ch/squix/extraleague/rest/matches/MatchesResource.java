@@ -28,7 +28,17 @@ public class MatchesResource extends ServerResource {
 	public List<MatchDto> execute() throws UnsupportedEncodingException {
 		String gameId = (String) this.getRequestAttributes().get("gameId");
 		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", Long.valueOf(gameId)).list();
+<<<<<<< HEAD
 		sortMatches(matches);
+=======
+		Collections.sort(matches, new Comparator<Match>() {
+		    
+		    @Override
+		    public int compare(Match o1, Match o2) {
+		        return o1.getMatchIndex().compareTo(o2.getMatchIndex());
+		    }
+		});
+>>>>>>> branch 'master' of https://github.com/squix78/extraleague.git
 		log.info("Listing table for " + gameId + ". Found " + matches.size() + " matches for this game");
 		List<MatchDto> matchDtos = new ArrayList<>();
 		for (Match match : matches) {
@@ -67,7 +77,10 @@ public class MatchesResource extends ServerResource {
 		
 		// Update game
 		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list();
+<<<<<<< HEAD
 		sortMatches(matches);
+=======
+>>>>>>> branch 'master' of https://github.com/squix78/extraleague.git
 		Integer numberOfCompletedMatches = 0;
 		for (Match candiateMatch : matches) {
 			if (candiateMatch.getTeamAScore() >= 5 || candiateMatch.getTeamBScore() >= 5) {

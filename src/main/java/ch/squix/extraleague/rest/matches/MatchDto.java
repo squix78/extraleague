@@ -80,11 +80,12 @@ public class MatchDto {
 	public void setTable(String table) {
 		this.table = table;
 	}
-	public void setMatchIndex(Integer matchIndex) {
-		this.matchIndex = matchIndex;		
-	}
 	public Integer getMatchIndex() {
 		return matchIndex;
 	}
+	public void setMatchIndex(Integer matchIndex) {
+		this.matchIndex = matchIndex;		
+	}
+
 
 }

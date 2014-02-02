@@ -15,3 +15,15 @@ body {
 .player {
   max-width: 48px;
 }
+.redTeam {
+	border: 2px solid red;
+}
+.blueTeam {
+	border: 2px solid blue;
+}
+legend { 
+	margin:3px; 
+	text-align:center; 
+	width:100%;
+	border-bottom: none;
+}

@@ -20,7 +20,7 @@ import ch.squix.extraleague.model.match.Match;
 public class GamesResource extends ServerResource {
 	
 	private static final Logger log = Logger.getLogger(GamesResource.class.getName());
-	
+	private static final Integer [][] mutations = {{0,1,2,3}, {1, 2, 3, 0}, {2, 0, 3, 1}, {0, 3, 1, 2}};
 	@Get(value = "json")
 	public List<GameDto> execute() throws UnsupportedEncodingException {
 		String table = (String) this.getRequestAttributes().get("table");
@@ -36,7 +36,7 @@ public class GamesResource extends ServerResource {
 	
 	@Post(value = "json")
 	public GameDto create(GameDto dto) {
-		Integer [][] mutations = {{0,1,2,3}, {3,0,1,2}, {2,3,1,0}, {0,2,3,1}};
+		
 		log.info("Received game to save");
 		Game game = new Game();
 		game.setPlayers(dto.getPlayers());
@@ -47,6 +47,12 @@ public class GamesResource extends ServerResource {
 		dto.setId(game.getId());
 		
 		// Prepare Matches
+		List<Match> matches = createMatches(game);
+		ofy().save().entities(matches).now();
+		return dto;
+	}
+
+	public List<Match> createMatches(Game game) {
 		List<String> players = game.getPlayers();
 		List<Match> matches = new ArrayList<>();
 		for (int gameIndex = 0; gameIndex < 4; gameIndex++) {
@@ -61,8 +67,7 @@ public class GamesResource extends ServerResource {
 			match.setMatchIndex(gameIndex);
 			matches.add(match);
 		}
-		ofy().save().entities(matches).now();
-		return dto;
+		return matches;
 	}
 
 }

@@ -12,6 +12,7 @@ public class MatchDto {
 	private Date startDate;
 	private Date endDate;
 	private String table;
+	private Integer matchIndex;
 	
 	public Long getGameId() {
 		return gameId;
@@ -78,6 +79,12 @@ public class MatchDto {
 	 */
 	public void setTable(String table) {
 		this.table = table;
+	}
+	public void setMatchIndex(Integer matchIndex) {
+		this.matchIndex = matchIndex;		
+	}
+	public Integer getMatchIndex() {
+		return matchIndex;
 	}
 
 }

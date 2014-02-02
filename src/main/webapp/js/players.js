@@ -314,7 +314,7 @@ angular.module('PlayerMappings', [])
 			if (angular.isDefined(playerName) && shortname.length > 1) {
 				return "http://www.netcetera.com/en/data/contacts/Netcetera/" + playerName + "/photo/photo.jpg";
 			} else {
-				return null;
+				return "images/person2.png";
 			}
 		}
 	    

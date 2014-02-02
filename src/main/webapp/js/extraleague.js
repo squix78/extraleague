@@ -68,13 +68,14 @@ function TableController($scope, $resource, $routeParams, $location, Games, Play
 	$scope.currentGame.table= $scope.table;
 	$scope.currentGame.players = [];
 	$scope.updateGames = function() {
+		$scope.isGamesLoading = true;
 		$scope.games = Games.query({table: $scope.table}, function() {
-			
+			$scope.isGamesLoading = false;
 		});
 	};
 	$scope.$watch('player', function(newValue, oldValue) {
 		if (angular.isDefined(newValue)) {
-			$scope.currentGame.players = newValue.split(' ');
+			$scope.currentGame.players = newValue.toLowerCase().split(' ');
 			console.log(newValue +", " + $scope.currentGame.players);
 		}
 		
@@ -126,12 +127,12 @@ function GameController($scope, $resource, $routeParams, $location, Game, Match,
 		}
 	};
 	$scope.checkNextMatch = function() {
+		$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
+			$scope.matchIsSaving = false;
+		});
 		if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
 			$scope.matchIsSaving = true;
 			$scope.match.endDate = new Date();
-			$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
-				$scope.matchIsSaving = false;
-			});
 			if ($scope.matchIndex < 3) {	
 				$scope.matchIndex++;
 				$scope.updateCurrentMatch();

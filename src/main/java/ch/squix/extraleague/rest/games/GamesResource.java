@@ -4,6 +4,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -47,6 +48,7 @@ public class GamesResource extends ServerResource {
 		dto.setId(game.getId());
 		
 		// Prepare Matches
+		Collections.shuffle(game.getPlayers());
 		List<Match> matches = createMatches(game);
 		ofy().save().entities(matches).now();
 		return dto;

@@ -56,11 +56,14 @@ public class GameCreationIntegrationTest {
 			matchIndex++;
 		}
 		Assert.assertEquals("Expected 4 matches", 4, matches.size());
+		testOrder(new int[]{1, 2, 3, 0}, 1, matches);
+		testOrder(new int[]{2, 0, 3, 1}, 2, matches);
+		testOrder(new int[]{0, 3, 1, 2}, 3, matches);
+	}
+	
+	private void testOrder(int[] expectedOrder, int gameToTest, List<MatchDto> matches) {
 		String[] order = getOrder(matches.get(0));
-		Assert.assertArrayEquals(new String[] {order[1], order[2], order[3], order[0]}, getOrder(matches.get(1)));
-		Assert.assertArrayEquals(new String[] {order[2], order[0], order[3], order[1]}, getOrder(matches.get(2)));
-		Assert.assertArrayEquals(new String[] {order[0], order[3], order[1], order[2]}, getOrder(matches.get(3)));
-		
+		Assert.assertArrayEquals("Expected different order in game " + gameToTest, new String[] {order[expectedOrder[0]], order[expectedOrder[1]], order[expectedOrder[2]], order[expectedOrder[3]]}, getOrder(matches.get(gameToTest)));
 	}
 	
 	private String[] getOrder(MatchDto dto) {

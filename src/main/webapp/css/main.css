@@ -16,9 +16,15 @@ body {
   max-width: 48px;
 }
 .redTeam {
-	border: 2px solid red;
+	color: red;
 }
 .blueTeam {
+	color: blue;
+}
+.redTeamBorder {
+	border: 2px solid red;
+}
+.blueTeamBorder {
 	border: 2px solid blue;
 }
 legend { 

@@ -44,6 +44,9 @@ angular.module('Extraleague', ['ngResource', 'PlayerMappings'])
 	.factory('Ranking', ['$resource', function($resource) {
 		return $resource('/rest/ranking');
 	}])
+	.factory('Players', ['$resource', function($resource) {
+		return $resource('/rest/players');
+	}])
 	.factory('Match', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId/matches');
 	}]);
@@ -61,7 +64,7 @@ function MainController($scope, $resource, $location, Tables) {
 	};
 }
 
-function TableController($scope, $resource, $routeParams, $location, Games, PlayerService) {
+function TableController($scope, $resource, $routeParams, $location, Games, PlayerService, Players) {
 	$scope.PlayerService = PlayerService;
 	$scope.table = $routeParams.table;
 	$scope.currentGame = new Games();
@@ -94,8 +97,11 @@ function TableController($scope, $resource, $routeParams, $location, Games, Play
 	$scope.continueGame = function(gameId) {
 		$location.path("/tables/" + $scope.table + "/games/" + gameId);
 	};
+	var playersResult = Players.get({}, function() {
+		$scope.players = playersResult.rankingMap;
+	});
 }
-function GameController($scope, $resource, $routeParams, $location, Game, Match, PlayerService) {
+function GameController($scope, $resource, $routeParams, $location, Game, Match, PlayerService, Players) {
 	$scope.PlayerService = PlayerService;
 	
 	$scope.gameId = $routeParams.gameId;

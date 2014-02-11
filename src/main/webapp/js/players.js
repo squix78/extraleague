@@ -1,5 +1,9 @@
 angular.module('PlayerMappings', [])
-.factory('PlayerService', function() {
+.factory('Players', ['$resource', function($resource) {
+	return $resource('/rest/players/:player');
+}])
+.factory('PlayerService', ['Players', function(Players) {
+	var playerResultMap = {};
 	var playerMap = {
 			"": "yazid-abuanzeh",
 			"": "raoul-adler",
@@ -96,7 +100,7 @@ angular.module('PlayerMappings', [])
 			"": "viktor-grozdanovski",
 			"rg": "ramon-grunder",
 			"": "john-guthoerl",
-			"": "baris-guec",
+			"bg": "baris-guec",
 			"wh": "wolfgang-habicht",
 			"": "thierry-hafner",
 			"jh": "joachim-hagger",
@@ -125,7 +129,7 @@ angular.module('PlayerMappings', [])
 			"": "jovan-jovanovski",
 			"": "matthias-junker",
 			"mj": "martin-jaeger",
-			"": "roger-jaeggi",
+			"rj": "roger-jaeggi",
 			"": "kandiah",
 			"": "jana-karcheska",
 			"aka": "andreas-karrer",
@@ -312,6 +316,7 @@ angular.module('PlayerMappings', [])
 		getPlayerPicture: function(shortname) {
 			var playerName = playerMap[shortname];
 			if (angular.isDefined(playerName) && shortname.length > 1) {
+				console.log("Getting image address for ")
 				return "http://www.netcetera.com/en/data/contacts/Netcetera/" + playerName + "/photo/photo.jpg";
 			} else {
 				return "images/person2.png";
@@ -320,4 +325,4 @@ angular.module('PlayerMappings', [])
 	    
 	 	
 	}
-});
+}]);

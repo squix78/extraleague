@@ -12,16 +12,16 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
+import ch.squix.extraleague.model.ranking.RankingService;
 
-public class RankingResource extends ServerResource {
+public class RankingServiceResource extends ServerResource {
 	
 	@Get(value = "json")
-	public List<RankingDto> execute() throws UnsupportedEncodingException {
-		Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
-		return RankingDtoMapper.convertToDto(ranking);
+	public String execute() throws UnsupportedEncodingException {
+		RankingService.calculateRankings();
+
+		return "OK";
 	}
-
-
 
 
 }

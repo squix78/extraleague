@@ -16,6 +16,7 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.ranking.RankingService;
 import ch.squix.extraleague.rest.games.GamesResource;
 
 
@@ -88,6 +89,7 @@ public class MatchesResource extends ServerResource {
 		if (numberOfCompletedMatches >=4) {
 			log.info("4 Games reached. Setting game endDate");
 			game.setEndDate(new Date());
+			RankingService.calculateRankings();
 		}
 		ofy().save().entity(game).now();
 		dto.setId(match.getId());

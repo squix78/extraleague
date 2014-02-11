@@ -29,8 +29,10 @@ public class GamesResource extends ServerResource {
 		log.info("Listing table for " + table + ". Found " + games.size() + " former games");
 		List<GameDto> gameDtos = new ArrayList<>();
 		for (Game game : games) {
-			GameDto dto = GameDtoMapper.mapToDto(game);
-			gameDtos.add(dto);
+			if (game.getEndDate() == null) {
+				GameDto dto = GameDtoMapper.mapToDto(game);
+				gameDtos.add(dto);
+			}
 		}
 		return gameDtos;
 	}

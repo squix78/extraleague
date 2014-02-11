@@ -6,11 +6,14 @@ import org.restlet.routing.Router;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.rest.games.GameResource;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
 import ch.squix.extraleague.rest.ping.PingResource;
+import ch.squix.extraleague.rest.player.PlayersResource;
 import ch.squix.extraleague.rest.ranking.RankingResource;
+import ch.squix.extraleague.rest.ranking.RankingServiceResource;
 import ch.squix.extraleague.rest.result.SummaryResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
 
@@ -21,6 +24,7 @@ public class ExtraLeagueRestApplication extends Application {
     static {
         ObjectifyService.register(Game.class);
         ObjectifyService.register(Match.class);
+        ObjectifyService.register(Ranking.class);
     }
 	
 	@Override
@@ -35,6 +39,8 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/tables/{table}/games/{gameId}", GameResource.class);
         router.attach("/tables/{table}/games/{gameId}/matches", MatchesResource.class);
         router.attach("/tables/{table}/games/{gameId}/summary", SummaryResource.class);
+        router.attach("/players", PlayersResource.class);
+        router.attach("/updateRankings", RankingServiceResource.class);
 
         return router;
     }

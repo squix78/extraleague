@@ -1,10 +1,15 @@
 package ch.squix.extraleague.rest.ranking;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RankingDto {
 	
 	private String player;
+	private List<String> badges = new ArrayList<>();
 	private Integer gamesWon;
 	private Integer gamesLost;
+	private Integer ranking;
 	
 	public String getPlayer() {
 		return player;
@@ -40,6 +45,24 @@ public class RankingDto {
 	
 	public Double getSuccessRate() {
 		return 1.0 * gamesWon / (gamesWon + gamesLost);
+	}
+
+	/**
+	 * @return the ranking
+	 */
+	public Integer getRanking() {
+		return ranking;
+	}
+
+	/**
+	 * @param ranking the ranking to set
+	 */
+	public void setRanking(Integer ranking) {
+		this.ranking = ranking;
+	}
+	
+	public List<String> getBadges() {
+		return badges;
 	}
 
 

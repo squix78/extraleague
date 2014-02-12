@@ -3,6 +3,7 @@ package ch.squix.extraleague.model.ranking;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -19,6 +20,7 @@ public class RankingService {
 
 		Map<String, PlayerRanking> playerRankingMap = new HashMap<>();
 		for (Match match : matches) {
+		        //clearWrongCharacters(match);
 			if (match.getEndDate() != null) {
 				String[] winnerTeam = {};
 				String[] looserTeam = {};
@@ -41,6 +43,7 @@ public class RankingService {
 			}
 
 		}
+		//ofy().save().entities(matches);
 		List<PlayerRanking> rankings = new ArrayList<>();
 		rankings.addAll(playerRankingMap.values());
 		Collections.sort(rankings, new Comparator<PlayerRanking>() {
@@ -68,7 +71,14 @@ public class RankingService {
 
 	}
 
-	private static void calculateMatchBadges(Match match, Map<String, PlayerRanking> playerRankingMap) {
+    private static void clearWrongCharacters(Match match) {
+        match.getTeamA()[0] = match.getTeamA()[0].replaceAll(",", "");
+        match.getTeamA()[1] = match.getTeamA()[1].replaceAll(",", "");
+        match.getTeamB()[0] = match.getTeamB()[0].replaceAll(",", "");
+        match.getTeamB()[1] = match.getTeamB()[1].replaceAll(",", "");
+    }
+
+    private static void calculateMatchBadges(Match match, Map<String, PlayerRanking> playerRankingMap) {
 		if (match.getTeamAScore() == 5 && match.getTeamBScore() == 0) {
 			for (String player : match.getTeamA()) {
 				addFiveZeroBadge(playerRankingMap, player);
@@ -102,7 +112,7 @@ public class RankingService {
 			if (ranking.getRanking() == 4) {
 				ranking.getBadges().add("Bishop");
 			}
-			if (ranking.getRanking() == rankings.size() - 1) {
+			if (ranking.getRanking() == rankings.size()) {
 				ranking.getBadges().add("Pawn");
 			}
 		}

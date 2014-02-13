@@ -1,8 +1,9 @@
 package ch.squix.extraleague.model.ranking;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 
 public class PlayerRanking implements Serializable {
 	
@@ -15,7 +16,7 @@ public class PlayerRanking implements Serializable {
 	private Integer gamesWon = 0;
 	private Integer gamesLost = 0;
 	private Integer ranking;
-	private List<String> badges = new ArrayList<>();
+	private Set<String> badges = new TreeSet<>();
 	
 	public String getPlayer() {
 		return player;
@@ -43,13 +44,13 @@ public class PlayerRanking implements Serializable {
 	/**
 	 * @return the badges
 	 */
-	public List<String> getBadges() {
+	public Set<String> getBadges() {
 		return badges;
 	}
 	/**
 	 * @param badges the badges to set
 	 */
-	public void setBadges(List<String> badges) {
+	public void setBadges(Set<String> badges) {
 		this.badges = badges;
 	}
 	

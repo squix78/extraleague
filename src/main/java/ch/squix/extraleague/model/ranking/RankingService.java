@@ -45,8 +45,7 @@ public class RankingService {
 
 		}
 		//ofy().save().entities(matches);
-		List<PlayerRanking> rankings = new ArrayList<>();
-		rankings.addAll(playerRankingMap.values());
+		List<PlayerRanking> rankings = filterFirstPlayers(playerRankingMap.values());
 		Collections.sort(rankings, new Comparator<PlayerRanking>() {
 
 			@Override
@@ -72,12 +71,15 @@ public class RankingService {
 
 	}
 
-    private static void clearWrongCharacters(Match match) {
-        match.getTeamA()[0] = match.getTeamA()[0].replaceAll(",", "");
-        match.getTeamA()[1] = match.getTeamA()[1].replaceAll(",", "");
-        match.getTeamB()[0] = match.getTeamB()[0].replaceAll(",", "");
-        match.getTeamB()[1] = match.getTeamB()[1].replaceAll(",", "");
-    }
+	private static List<PlayerRanking> filterFirstPlayers(Collection<PlayerRanking> values) {
+		List<PlayerRanking> rankings = new ArrayList<>();
+		for (PlayerRanking ranking : values) {
+			if (ranking.getTotalGames() >=8) {
+				rankings.add(ranking);
+			}
+		}
+		return rankings;
+	}
 
     private static void calculateMatchBadges(Match match, Map<String, PlayerRanking> playerRankingMap) {
 		if (match.getTeamAScore() == 5 && match.getTeamBScore() == 0) {

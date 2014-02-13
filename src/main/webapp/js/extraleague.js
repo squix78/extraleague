@@ -171,7 +171,9 @@ function SummaryController($scope, $resource, $routeParams, Summary) {
 	});
 }
 function RankingController($scope, $resource, $routeParams, Ranking) {
+	$scope.isRankingLoading = true;
 	$scope.rankings = Ranking.query({}, function() {
+		$scope.isRankingLoading = false;
 		
 	});
 }

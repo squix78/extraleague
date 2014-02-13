@@ -28,3 +28,7 @@
 		<span class="badge" ng-repeat="badge in ranking.badges"> {{badge}} </span>
 	</div>	
 </div>
+<div ng-show="isRankingLoading">
+	<img src="images/ajax-loader.gif"/> Loading rankings...
+</div>
+Note: players only ranked after 8 or more matches

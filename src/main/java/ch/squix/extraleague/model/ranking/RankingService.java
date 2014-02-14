@@ -1,7 +1,5 @@
 package ch.squix.extraleague.model.ranking;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,6 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.MatchUtil;
+import ch.squix.extraleague.model.match.PlayerMatchResult;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class RankingService {
 
@@ -35,31 +37,21 @@ public class RankingService {
 			for (Match match : entry.getValue()) {
 			        //clearWrongCharacters(match);
 				if (match.getEndDate() != null) {
-					String[] winnerTeam = {};
-					String[] looserTeam = {};
-					if (match.getTeamAScore() > match.getTeamBScore()) {
-						winnerTeam = match.getTeamA();
-						looserTeam = match.getTeamB();
-					} else {
-						looserTeam = match.getTeamA();
-						winnerTeam = match.getTeamB();
-					}
-					for (String player : winnerTeam) {
-						PlayerRanking playerRanking = getRanking(player, playerRankingMap);
-						playerRanking.increaseGamesWon();
-						Integer wins = winMap.get(player);
-						if (wins == null) {
-							wins = 0;
-						}
-						wins++;
-						winMap.put(player, wins);
-					}
-					for (String player : looserTeam) {
-						PlayerRanking playerRanking  = getRanking(player, playerRankingMap);
-						playerRanking.increaseGamesLost();
-					}
-					addMatchScore(scoreMap, match.getTeamA(), match.getTeamAScore(), match.getTeamBScore());
-					addMatchScore(scoreMap, match.getTeamB(), match.getTeamBScore(), match.getTeamAScore());
+				    List<PlayerMatchResult> playerMatches = MatchUtil.getPlayerMatchResults(match);
+				    for (PlayerMatchResult playerMatch : playerMatches) {
+				        PlayerRanking playerRanking = getRanking(playerMatch.getPlayer(), playerRankingMap);
+				        if (playerMatch.hasWon()) {
+				            playerRanking.increaseGamesWon();
+				            playerRanking.increaseMatchesWonPerGame();
+
+				        } else {
+				            playerRanking.increaseGamesLost();
+				        }
+				        playerRanking.setGoalsMade(playerRanking.getGoalsMade() + playerMatch.getGoalsMade());
+				        playerRanking.setGoalsGot(playerRanking.getGoalsGot() + playerMatch.getGoalsGot());
+				        addMatchScore(scoreMap, playerMatch);
+				    }
+
 				}
 			}
 			calculateMatchBadges(scoreMap, playerRankingMap);
@@ -73,7 +65,7 @@ public class RankingService {
 			public int compare(PlayerRanking o1, PlayerRanking o2) {
 				int result = o2.getSuccessRate().compareTo(o1.getSuccessRate());
 				if (result == 0) {
-					return o2.getTotalGames().compareTo(o1.getTotalGames());
+					return o2.getGoalRate().compareTo(o1.getGoalRate());
 				}
 				return result;
 			}
@@ -100,16 +92,13 @@ public class RankingService {
 			}
 		}
 	}
-
-	private static void addMatchScore(Map<String, List<String>> scoreMap, String [] players, Integer teamScore, Integer oppositeTeamScore) {
-		for (String player : players) {
-			List<String> score = scoreMap.get(player);
+	private static void addMatchScore(Map<String, List<String>> scoreMap, PlayerMatchResult playerMatch) {
+			List<String> score = scoreMap.get(playerMatch.getPlayer());
 			if (score == null) {
 				score = new ArrayList<>();
-				scoreMap.put(player, score);
+				scoreMap.put(playerMatch.getPlayer(), score);
 			}
-			score.add(teamScore + ":" + oppositeTeamScore);
-		}
+			score.add(playerMatch.getGoalsMade() + ":" + playerMatch.getGoalsGot());
 	}
 
 	private static List<PlayerRanking> filterFirstPlayers(Collection<PlayerRanking> values) {

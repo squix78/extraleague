@@ -18,6 +18,8 @@ public class RankingDtoMapper {
 			rankingDto.setRanking(playerRanking.getRanking());
 			rankingDto.getBadges().clear();
 			rankingDto.getBadges().addAll(playerRanking.getBadges());
+			rankingDto.setGoalsMade(playerRanking.getGoalsMade());
+			rankingDto.setGoalsGot(playerRanking.getGoalsGot());
 			playerRankingList.add(rankingDto);
 		}
 		return playerRankingList;

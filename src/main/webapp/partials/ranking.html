@@ -4,11 +4,14 @@
 	<div class="col-xs-1">
 		<b>#</b>
 	</div>
-	<div class="col-xs-2">
+	<div class="col-xs-1">
 		<b>Player</b>
 	</div>
 	<div class="col-xs-2">
-		<b>Success-Rate</b>
+		<b>Success</b>
+	</div>	
+	<div class="col-xs-2">
+		<b>Goals</b>
 	</div>	
 	<div class="col-xs-4">
 		<b>Badges</b>
@@ -18,11 +21,14 @@
 	<div class="col-xs-1">
 		{{ranking.ranking}} 
 	</div>
-	<div class="col-xs-2">
+	<div class="col-xs-1">
 		{{ranking.player}} 
 	</div>
 	<div class="col-xs-2">
 		{{ranking.successRate * 100 | number:2}}%
+	</div>
+	<div class="col-xs-2">
+		{{ranking.goalRate * 100 | number:2}}%
 	</div>
 	<div class="col-xs-4">
 		<span class="label label-primary" style="margin-right: 3px;"ng-repeat="badge in ranking.badges">{{badge}}</span>

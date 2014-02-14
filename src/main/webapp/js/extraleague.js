@@ -64,7 +64,7 @@ function MainController($scope, $resource, $location, Tables) {
 	};
 }
 
-function TableController($scope, $resource, $routeParams, $location, Games, PlayerService, Players) {
+function TableController($scope, $resource, $routeParams, $location, Games, Game, PlayerService, Players) {
 	$scope.PlayerService = PlayerService;
 	$scope.table = $routeParams.table;
 	$scope.currentGame = new Games();
@@ -78,7 +78,7 @@ function TableController($scope, $resource, $routeParams, $location, Games, Play
 	};
 	$scope.$watch('player', function(newValue, oldValue) {
 		if (angular.isDefined(newValue)) {
-			$scope.currentGame.players = newValue.toLowerCase().split(' ');
+			$scope.currentGame.players = newValue.toLowerCase().replace(/,/g,'').split(' ');
 			console.log(newValue +", " + $scope.currentGame.players);
 		}
 		
@@ -96,6 +96,10 @@ function TableController($scope, $resource, $routeParams, $location, Games, Play
 	};
 	$scope.continueGame = function(gameId) {
 		$location.path("/tables/" + $scope.table + "/games/" + gameId);
+	};
+	$scope.deleteGame = function(gameId) {
+		Game.remove({table: $scope.table, gameId: gameId});
+		$scope.updateGames();
 	};
 	var playersResult = Players.get({}, function() {
 		$scope.players = playersResult.rankingMap;
@@ -171,7 +175,9 @@ function SummaryController($scope, $resource, $routeParams, Summary) {
 	});
 }
 function RankingController($scope, $resource, $routeParams, Ranking) {
+	$scope.isRankingLoading = true;
 	$scope.rankings = Ranking.query({}, function() {
+		$scope.isRankingLoading = false;
 		
 	});
 }

@@ -61,7 +61,7 @@ angular.module('PlayerMappings', [])
 			"": "domenico-de-stefano",
 			"cd": "corsin-decurtins",
 			"pde": "philipp-denzler",
-			"sd": "stephan-dick",
+			"sdk": "stephan-dick",
 			"": "markus-dietrich",
 			"sdi": "simon-dietschi",
 			"": "jean-pierre-dillier",

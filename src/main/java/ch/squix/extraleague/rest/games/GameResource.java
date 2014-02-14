@@ -3,16 +3,15 @@ package ch.squix.extraleague.rest.games;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
-import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
+import ch.squix.extraleague.model.match.Match;
 
 
 
@@ -28,6 +27,15 @@ public class GameResource extends ServerResource {
 		Game game = ofy().load().type(Game.class).id(gameId).now();
 		GameDto dto = GameDtoMapper.mapToDto(game);
 		return dto;
+	}
+	
+	@Delete(value = "json")
+	public void deleteGame() {
+		String gameIdText = (String) this.getRequestAttributes().get("gameId");
+		Long gameId = Long.valueOf(gameIdText);
+		ofy().delete().type(Game.class).id(gameId);
+		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", gameId).list();
+		ofy().delete().entities(matches).now();
 	}
 
 }

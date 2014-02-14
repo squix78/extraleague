@@ -10,7 +10,7 @@
 	<div class="col-xs-2">
 		<b>Success-Rate</b>
 	</div>	
-	<div class="col-xs-7">
+	<div class="col-xs-4">
 		<b>Badges</b>
 	</div>	
 </div>
@@ -24,7 +24,31 @@
 	<div class="col-xs-2">
 		{{ranking.successRate * 100 | number:2}}%
 	</div>
-	<div class="col-xs-7">
-		<span class="badge" ng-repeat="badge in ranking.badges">{{badge}} </span>
+	<div class="col-xs-4">
+		<span class="label label-primary" style="margin-right: 3px;"ng-repeat="badge in ranking.badges">{{badge}}</span>
 	</div>	
 </div>
+<div ng-show="isRankingLoading">
+	<img src="images/ajax-loader.gif"/> Loading rankings...
+</div>
+<BR/>
+<B>Note:</B> players are only ranked after 2 or more sessions
+<h4>Badges</h4>
+<div>
+	<span class="label label-primary">King</span>: 1st
+</div>
+<div>
+	<span class="label label-primary">Queen</span>: 2nd
+</div>
+<div>
+	<span class="label label-primary">Pawn</span>: Last
+</div>
+<div>
+	<span class="label label-primary">nx5:0!</span>: won n matches to zero in a game
+</div>
+<div>
+	<span class="label label-primary">Strike</span>: won all matches in a game
+</div>
+
+
+

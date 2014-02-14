@@ -195,7 +195,7 @@ angular.module('PlayerMappings', [])
 			"": "nikola-naumchevski",
 			"": "tina-nestoroska",
 			"": "christoph-neuhaus",
-			"": "christoph-niemz",
+			"cni": "christoph-niemz",
 			"": "zdravko-nikolovski",
 			"an": "aleksandar-nikov",
 			"so": "stefan-odendahl",

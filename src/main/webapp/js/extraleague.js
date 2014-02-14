@@ -133,11 +133,11 @@ function GameController($scope, $resource, $routeParams, $location, Game, Match,
 		}
 	};
 	$scope.checkNextMatch = function() {
+	        $scope.matchIsSaving = true;
 		$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
 			$scope.matchIsSaving = false;
 		});
 		if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
-			$scope.matchIsSaving = true;
 			$scope.match.endDate = new Date();
 			if ($scope.matchIndex < 3) {	
 				$scope.matchIndex++;

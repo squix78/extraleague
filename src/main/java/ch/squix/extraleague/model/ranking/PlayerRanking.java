@@ -14,7 +14,6 @@ public class PlayerRanking implements Serializable {
 
     private String player;
     private Integer gamesWon = 0;
-    private Integer matchesWonPerGame = 0;
     private Integer gamesLost = 0;
     private Integer ranking;
     private Set<String> badges = new TreeSet<>();
@@ -108,18 +107,6 @@ public class PlayerRanking implements Serializable {
 
     public void setGoalsGot(Integer goalsGot) {
         this.goalsGot = goalsGot;
-    }
-
-    public Integer getMatchesWonPerGame() {
-        return matchesWonPerGame;
-    }
-
-    public void resetMatchesWonPerGame() {
-        this.matchesWonPerGame = 0;
-    }
-
-    public void increaseMatchesWonPerGame() {
-        matchesWonPerGame++;
     }
 
 }

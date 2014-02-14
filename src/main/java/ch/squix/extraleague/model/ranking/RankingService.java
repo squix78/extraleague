@@ -42,7 +42,11 @@ public class RankingService {
 				        PlayerRanking playerRanking = getRanking(playerMatch.getPlayer(), playerRankingMap);
 				        if (playerMatch.hasWon()) {
 				            playerRanking.increaseGamesWon();
-				            playerRanking.increaseMatchesWonPerGame();
+				            Integer matchesWon = winMap.get(playerRanking.getPlayer());
+				            if (matchesWon == null) {
+				                matchesWon = 0;
+				            }
+				            winMap.put(playerRanking.getPlayer(), matchesWon + 1);
 
 				        } else {
 				            playerRanking.increaseGamesLost();

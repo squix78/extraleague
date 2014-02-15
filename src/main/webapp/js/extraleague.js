@@ -21,6 +21,10 @@ angular.module('Extraleague', ['ngResource', 'PlayerMappings'])
     	  controller : 'RankingController',
     	  templateUrl : 'partials/ranking.html'
       })
+      .when('/player/:player', {
+    	  controller : 'PlayerController',
+    	  templateUrl : 'partials/player.html'
+      })
       .otherwise({
           controller : 'MainController',
           templateUrl : 'partials/tables.html'
@@ -43,6 +47,9 @@ angular.module('Extraleague', ['ngResource', 'PlayerMappings'])
 	}])
 	.factory('Ranking', ['$resource', function($resource) {
 		return $resource('/rest/ranking');
+	}])
+	.factory('Player', ['$resource', function($resource) {
+		return $resource('/rest/players/:player');
 	}])
 	.factory('Players', ['$resource', function($resource) {
 		return $resource('/rest/players');
@@ -181,3 +188,14 @@ function RankingController($scope, $resource, $routeParams, Ranking) {
 		
 	});
 }
+function PlayerController($scope, $routeParams, PlayerService, Player) {
+	$scope.player = $routeParams.player;
+	$scope.playerPicture = PlayerService.getPlayerPicture($scope.player);
+	$scope.playerResult = Player.get({player: $scope.player}, function() {
+
+	});
+}
+
+
+
+

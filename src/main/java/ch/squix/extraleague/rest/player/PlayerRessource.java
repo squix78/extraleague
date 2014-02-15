@@ -15,17 +15,19 @@ import ch.squix.extraleague.rest.ranking.RankingsDto;
 
 
 
-public class PlayersResource extends ServerResource {
+public class PlayerRessource extends ServerResource {
 	
 	@Get(value = "json")
-	public RankingsDto execute() throws UnsupportedEncodingException {
+	public RankingDto execute() throws UnsupportedEncodingException {
+		String player = (String) this.getRequestAttributes().get("player");
 		Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
 		List<RankingDto> rankings = RankingDtoMapper.convertToDto(ranking);
-		RankingsDto result = new RankingsDto();
 		for (RankingDto dto : rankings) {
-			result.getRankingMap().put(dto.getPlayer(), dto);
+			if (dto.getPlayer().equals(player)) {
+				return dto;
+			}
 		}
-		return result;
+		return null;
 	}
 
 }

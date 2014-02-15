@@ -22,7 +22,7 @@
 		{{ranking.ranking}} 
 	</div>
 	<div class="col-xs-1">
-		{{ranking.player}} 
+		<a href="#/player/{{ranking.player}}">{{ranking.player}} </a>
 	</div>
 	<div class="col-xs-2">
 		{{ranking.successRate * 100 | number:2}}%
@@ -31,7 +31,7 @@
 		{{ranking.goalRate * 100 | number:2}}%
 	</div>
 	<div class="col-xs-4">
-		<span class="label label-primary" style="margin-right: 3px;"ng-repeat="badge in ranking.badges">{{badge}}</span>
+		<span class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">{{badge}}</span>
 	</div>	
 </div>
 <div ng-show="isRankingLoading">

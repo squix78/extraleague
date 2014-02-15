@@ -20,6 +20,14 @@ public class RankingDtoMapper {
 			rankingDto.getBadges().addAll(playerRanking.getBadges());
 			rankingDto.setGoalsMade(playerRanking.getGoalsMade());
 			rankingDto.setGoalsGot(playerRanking.getGoalsGot());
+			rankingDto.setBestPartner(playerRanking.getBestPartner());
+			rankingDto.setBestPartnerRate(playerRanking.getBestPartnerRate());
+			rankingDto.setWorstPartner(playerRanking.getWorstPartner());
+			rankingDto.setWorstOpponentRate(playerRanking.getWorstPartnerRate());
+			rankingDto.setBestOpponent(playerRanking.getBestOpponent());
+			rankingDto.setBestOpponentRate(playerRanking.getBestOpponentRate());
+			rankingDto.setWorstOpponent(playerRanking.getWorstOpponent());
+			rankingDto.setWorstOpponentRate(playerRanking.getWorstOpponentRate());
 			playerRankingList.add(rankingDto);
 		}
 		return playerRankingList;

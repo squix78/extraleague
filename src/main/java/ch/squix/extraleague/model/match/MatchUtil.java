@@ -18,21 +18,29 @@ public class MatchUtil {
     public static List<PlayerMatchResult> getPlayerMatchResults(Match match) {
         List<PlayerMatchResult> results = new ArrayList<>();
         boolean hasTeamAWon = match.getTeamAScore() > match.getTeamBScore();
+        int index = 0;
         for (String player : match.getTeamA()) {
             PlayerMatchResult result = new PlayerMatchResult();
             result.setPlayer(player);
+            result.setPartner(match.getTeamA()[(index + 1) % 2]);
+            result.setOpponents(match.getTeamB());
             result.setGoalsMade(match.getTeamAScore());
             result.setGoalsGot(match.getTeamBScore());
             result.setHasWon(hasTeamAWon);
             results.add(result);
+            index++;
         }
+        index = 0;
         for (String player : match.getTeamB()) {
             PlayerMatchResult result = new PlayerMatchResult();
             result.setPlayer(player);
+            result.setPartner(match.getTeamB()[(index + 1) % 2]);
+            result.setOpponents(match.getTeamA());
             result.setGoalsMade(match.getTeamBScore());
             result.setGoalsGot(match.getTeamAScore());
             result.setHasWon(!hasTeamAWon);
             results.add(result);
+            index++;
         }
         return results;
     }

@@ -12,6 +12,14 @@ public class RankingDto {
     private Integer goalsMade;
     private Integer goalsGot;
     private Integer ranking;
+    private String bestPartner;
+    private Double bestPartnerRate;
+    private String worstPartner;
+    private Double worstPartnerRate;
+    private String bestOpponent;
+    private Double bestOpponentRate;
+    private String worstOpponent;
+    private Double worstOpponentRate;
 
     public String getPlayer() {
         return player;
@@ -85,6 +93,70 @@ public class RankingDto {
     public void setGoalsGot(Integer goalsGot) {
         this.goalsGot = goalsGot;
     }
+
+	public String getBestPartner() {
+		return bestPartner;
+	}
+
+	public String getWorstPartner() {
+		return worstPartner;
+	}
+
+	public String getBestOpponent() {
+		return bestOpponent;
+	}
+
+	public String getWorstOpponent() {
+		return worstOpponent;
+	}
+
+	public void setBestPartner(String bestPartner) {
+		this.bestPartner = bestPartner;
+	}
+
+	public void setWorstPartner(String worstPartner) {
+		this.worstPartner = worstPartner;
+	}
+
+	public void setBestOpponent(String bestOpponent) {
+		this.bestOpponent = bestOpponent;
+	}
+
+	public void setWorstOpponent(String worstOpponent) {
+		this.worstOpponent = worstOpponent;
+	}
+
+	public Double getBestPartnerRate() {
+		return bestPartnerRate;
+	}
+
+	public Double getWorstPartnerRate() {
+		return worstPartnerRate;
+	}
+
+	public Double getBestOpponentRate() {
+		return bestOpponentRate;
+	}
+
+	public Double getWorstOpponentRate() {
+		return worstOpponentRate;
+	}
+
+	public void setBestPartnerRate(Double bestPartnerRate) {
+		this.bestPartnerRate = bestPartnerRate;
+	}
+
+	public void setWorstPartnerRate(Double worstPartnerRate) {
+		this.worstPartnerRate = worstPartnerRate;
+	}
+
+	public void setBestOpponentRate(Double bestOpponentRate) {
+		this.bestOpponentRate = bestOpponentRate;
+	}
+
+	public void setWorstOpponentRate(Double worstOpponentRate) {
+		this.worstOpponentRate = worstOpponentRate;
+	}
 
 
 

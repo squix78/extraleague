@@ -1,5 +1,7 @@
 package ch.squix.extraleague.model.ranking;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,14 +10,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.MatchUtil;
+import ch.squix.extraleague.model.match.PlayerCombo;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
+import ch.squix.extraleague.rest.games.GameResource;
 
 public class RankingService {
+	
+	private static final Logger log = Logger.getLogger(GameResource.class.getName());
 
 	public static void calculateRankings() {
 		List<Match> matches = ofy().load().type(Match.class).list();
@@ -30,7 +35,8 @@ public class RankingService {
 			gameMatches.add(match);
 		}
 		Map<String, PlayerRanking> playerRankingMap = new HashMap<>();
-		
+		Map<String, Map<String, PlayerCombo>> partnerMap = new HashMap<>();
+		Map<String, Map<String, PlayerCombo>> opponentMap = new HashMap<>();
 		for (Map.Entry<Long, List<Match>> entry : gameMap.entrySet()) {
 			Map<String, List<String>> scoreMap = new HashMap<>();
 			Map<String, Integer> winMap = new HashMap<>();
@@ -54,13 +60,17 @@ public class RankingService {
 				        playerRanking.setGoalsMade(playerRanking.getGoalsMade() + playerMatch.getGoalsMade());
 				        playerRanking.setGoalsGot(playerRanking.getGoalsGot() + playerMatch.getGoalsGot());
 				        addMatchScore(scoreMap, playerMatch);
+				        updatePlayerCombo(partnerMap, opponentMap, playerMatch);
 				    }
 
 				}
 			}
 			calculateMatchBadges(scoreMap, playerRankingMap);
 			addStrikeBadge(winMap, playerRankingMap);
-		}
+		} 
+		log.info("partnerMap contains " + partnerMap.size() + " entries");
+		log.info("opponentMap contains " + opponentMap.size() + " entries");
+		calculatePartnerAndOpponents(playerRankingMap, partnerMap, opponentMap);
 		//ofy().save().entities(matches);
 		List<PlayerRanking> rankings = filterFirstPlayers(playerRankingMap.values());
 		Collections.sort(rankings, new Comparator<PlayerRanking>() {
@@ -86,6 +96,77 @@ public class RankingService {
 		ranking.setPlayerRankings(rankings);
 		ofy().save().entities(ranking);
 
+	}
+
+	private static void calculatePartnerAndOpponents(Map<String, PlayerRanking> playerRankingMap,
+			Map<String, Map<String, PlayerCombo>> partnerMap, Map<String, Map<String, PlayerCombo>> opponentMap) {
+		for (String player : playerRankingMap.keySet()) {
+			PlayerRanking ranking = playerRankingMap.get(player);
+			Map<String, PlayerCombo> partnerComboMap = partnerMap.get(player);
+			log.info("PartnerMap for player " + player + " contains " + partnerComboMap.size());
+			PlayerComboComparator comparator = new PlayerComboComparator();
+
+			List<PlayerCombo> partners = new ArrayList<>(partnerComboMap.values());
+			Collections.sort(partners, comparator);
+			for (PlayerCombo partner : partners) {
+				System.out.println(player +": " + partners.indexOf(partner) + ". " + partner.getCombo() + "/" 
+						+ partner.getGamesWon() + "/" + partner.getGamesLost() + "/" + partner.getSuccessRate());
+			}
+			ranking.setBestPartner(partners.get(0).getCombo());
+			ranking.setBestPartnerRate(partners.get(0).getSuccessRate());
+			ranking.setWorstPartner(partners.get(partners.size() - 1).getCombo());
+			ranking.setWorstPartnerRate(partners.get(partners.size() - 1).getSuccessRate());
+			log.info("Setting " + partners.get(0).getPlayer());
+
+			Map<String, PlayerCombo> opponentComboMap = opponentMap.get(player);
+
+			List<PlayerCombo> opponents = new ArrayList<>(opponentComboMap.values());
+			Collections.sort(opponents, comparator);
+			for (PlayerCombo opponent : opponents) {
+				System.out.println(player +": " + opponents.indexOf(opponent) + ". " + opponent.getCombo() + "/" 
+						+ opponent.getGamesWon() + "/" + opponent.getGamesLost() + "/" + opponent.getSuccessRate());
+			}
+			ranking.setBestOpponent(opponents.get(opponents.size() - 1).getCombo());
+			ranking.setBestOpponentRate(1 - opponents.get(opponents.size() - 1).getSuccessRate());
+			ranking.setWorstOpponent(opponents.get(0).getCombo());
+			ranking.setWorstOpponentRate(1 - opponents.get(0).getSuccessRate());
+			
+		}
+	}
+
+	private static void updatePlayerCombo(Map<String, Map<String, PlayerCombo>> partnerMap, Map<String, Map<String, PlayerCombo>> opponentMap,
+			PlayerMatchResult playerMatch) {
+		PlayerCombo partner = getPlayerCombo(partnerMap, playerMatch.getPlayer(), playerMatch.getPartner());
+		if (playerMatch.hasWon()) {
+			partner.increaseGamesWon();
+		} else {
+			partner.increaseGamesLost();
+		}
+		for (String opponentName : playerMatch.getOpponents()) {
+			PlayerCombo opponent = getPlayerCombo(opponentMap, playerMatch.getPlayer(), opponentName);
+			if (playerMatch.hasWon()) {
+				opponent.increaseGamesLost();
+			} else {
+				opponent.increaseGamesWon();
+			}
+		}
+	}
+
+	private static PlayerCombo getPlayerCombo(Map<String, Map<String, PlayerCombo>> playerComboMap, String player,
+			String comboName) {
+		Map<String, PlayerCombo> map = playerComboMap.get(player);
+		if (map == null) {
+			map = new HashMap<>();
+			playerComboMap.put(player, map);
+		}
+		PlayerCombo combo = map.get(comboName);
+		if (combo == null) {
+			combo = new PlayerCombo();
+			combo.setPlayer(player);
+			combo.setCombo(comboName);
+			map.put(comboName, combo);
+		}
+		return combo;
 	}
 
 	private static void addStrikeBadge(Map<String, Integer> winMap, Map<String, PlayerRanking> playerRankingMap) {
@@ -151,6 +232,19 @@ public class RankingService {
 			playerRankingMap.put(player, ranking);
 		}
 		return ranking;
+	}
+	
+	private static class PlayerComboComparator implements Comparator<PlayerCombo> {
+
+		@Override
+		public int compare(PlayerCombo o1, PlayerCombo o2) {
+			int result = o2.getSuccessRate().compareTo(o1.getSuccessRate());
+			if (result == 0) {
+				return o2.getTotalGames().compareTo(o1.getTotalGames());
+			}
+			return result;
+		}
+		
 	}
 
 }

@@ -1,71 +1,76 @@
 
 <h4>
 <img class="img img-rounded player" src="{{playerPicture}}"/>
-Player {{player}}
+{{player}}
 
 </h4>
-<div class="row">
-
-	<div class="col-xs-2">
-		Rank:
+<div ng-hide="isPlayerLoading">
+	<div class="row">
+	
+		<div class="col-xs-4">
+			Rank:
+		</div>
+		<div class="col-xs-5">
+			{{playerResult.ranking}}
+		</div>
 	</div>
-	<div class="col-xs-3">
-		{{playerResult.ranking}}
+	<div class="row">
+		<div class="col-xs-4">
+			Badges:
+		</div>
+		<div class="col-xs-8">
+			<div class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in playerResult.badges"> {{badge}}</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			Success:
+		</div>
+		<div class="col-xs-8">
+			{{playerResult.successRate * 100 | number:2}}%
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			Goals:
+		</div>
+		<div class="col-xs-8">
+			{{playerResult.goalRate * 100 | number:2}}%
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			Optimal partner:
+		</div>
+		<div class="col-xs-8">
+			won {{playerResult.bestPartnerRate * 100 | number:2}}% games played with <b>{{playerResult.bestPartner}}</b>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			Worst partner:
+		</div>
+		<div class="col-xs-8">
+			won {{playerResult.worstPartnerRate * 100 | number:2}}% games played with <b>{{playerResult.worstPartner}}</b>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			Best opponent:
+		</div>
+		<div class="col-xs-8">
+		    won {{playerResult.bestOpponentRate * 100 | number:2}}% games played against <b>{{playerResult.bestOpponent}}</b>  
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			Worst opponent:
+		</div>
+		<div class="col-xs-8">
+			won {{playerResult.worstOpponentRate * 100 | number:2}}% games played against <b>{{playerResult.worstOpponent}}</b>
+		</div>
 	</div>
 </div>
-<div class="row">
-	<div class="col-xs-2">
-		Badges:
-	</div>
-	<div class="col-xs-3">
-		<div class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in playerResult.badges"> {{badge}}</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		Success:
-	</div>
-	<div class="col-xs-3">
-		{{playerResult.successRate * 100 | number:2}}%
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		Goals:
-	</div>
-	<div class="col-xs-3">
-		{{playerResult.goalRate * 100 | number:2}}%
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		Optimal partner:
-	</div>
-	<div class="col-xs-3">
-		won {{playerResult.bestPartnerRate * 100 | number:2}}% games played with <b>{{playerResult.bestPartner}}</b>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		Worst partner:
-	</div>
-	<div class="col-xs-3">
-		won {{playerResult.worstPartnerRate * 100 | number:2}}% games played with <b>{{playerResult.worstPartner}}</b>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		Best opponent:
-	</div>
-	<div class="col-xs-3">
-	    won {{playerResult.bestOpponentRate * 100 | number:2}}% games played against <b>{{playerResult.bestOpponent}}</b>  
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		Worst opponent:
-	</div>
-	<div class="col-xs-3">
-		won {{playerResult.worstOpponentRate * 100 | number:2}}% games played against <b>{{playerResult.worstOpponent}}</b>
-	</div>
+<div ng-show="isPlayerLoading">
+	<img src="images/ajax-loader.gif"/> Loading player data...
 </div>

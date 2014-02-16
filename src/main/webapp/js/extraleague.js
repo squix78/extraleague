@@ -144,19 +144,23 @@ function GameController($scope, $resource, $routeParams, $location, Game, Match,
 		}
 	};
 	$scope.checkNextMatch = function() {
-	        $scope.matchIsSaving = true;
-		$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
-			$scope.matchIsSaving = false;
-		});
-		if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
-			$scope.match.endDate = new Date();
-			if ($scope.matchIndex < 3) {	
-				$scope.matchIndex++;
-				$scope.updateCurrentMatch();
+	    $scope.matchIsSaving = true;
+			if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
+				$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
+					$scope.matchIsSaving = false;
+					$scope.match.endDate = new Date();
+					if ($scope.matchIndex < 3) {	
+						$scope.matchIndex++;
+						$scope.updateCurrentMatch();
+					} else {
+						$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");				
+					}
+				});
 			} else {
-				$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");				
+				$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
+					$scope.matchIsSaving = false;
+				});
 			}
-		}
 	}
 	$scope.increaseScoreTeamB = function() {
 		$scope.match.teamBScore++;
@@ -191,8 +195,9 @@ function RankingController($scope, $resource, $routeParams, Ranking) {
 function PlayerController($scope, $routeParams, PlayerService, Player) {
 	$scope.player = $routeParams.player;
 	$scope.playerPicture = PlayerService.getPlayerPicture($scope.player);
+	$scope.isPlayerLoading = true;
 	$scope.playerResult = Player.get({player: $scope.player}, function() {
-
+		$scope.isPlayerLoading = false;
 	});
 }
 

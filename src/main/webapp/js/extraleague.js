@@ -109,7 +109,7 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 		$scope.updateGames();
 	};
 	var playersResult = Players.get({}, function() {
-		$scope.players = playersResult.rankingMap;
+		$scope.players = playersResult;
 	});
 }
 function GameController($scope, $resource, $routeParams, $location, Game, Match, PlayerService, Players) {

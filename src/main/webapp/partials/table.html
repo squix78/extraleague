@@ -21,6 +21,7 @@
 						
 						<img class="img img-rounded player" src="{{PlayerService.getPlayerPicture(player)}}"/>
 						<div class="caption">{{player}} <div>#{{(players[player].ranking)}}</div></div>
+						<span class="badge" ng-repeat="badge in players[player].badges">{{badge}} </span>
 					</div>
 				</div>
 				<div class="col-xs-4"></div>

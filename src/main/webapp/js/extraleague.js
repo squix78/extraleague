@@ -178,12 +178,26 @@ function GameController($scope, $resource, $routeParams, $location, Game, Match,
 	}
 
 }
-function SummaryController($scope, $resource, $routeParams, Summary) {
+function SummaryController($scope, $resource, $routeParams, Summary, Match) {
 	$scope.table = $routeParams.table;
 	$scope.gameId = $routeParams.gameId;
-	$scope.summary = Summary.get({table: $scope.table, gameId: $scope.gameId}, function() {
-		
+	
+	$scope.saveMatch = function(match) {
+		$scope.isMatchSaving = true;
+		match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
+			$scope.isMatchSaving = false;
+			$scope.getSummary();
+		});
+	};
+	$scope.matches = Match.query({table: $scope.table, gameId: $scope.gameId}, function() {
+
 	});
+	$scope.getSummary = function() {
+		$scope.summary = Summary.get({table: $scope.table, gameId: $scope.gameId}, function() {
+			
+		});
+	};
+	$scope.getSummary();
 }
 function RankingController($scope, $resource, $routeParams, Ranking) {
 	$scope.isRankingLoading = true;

@@ -86,6 +86,14 @@ public class RankingDto {
         return 1.0 * goalsMade / (goalsMade + goalsGot);
     }
 
+    public Double getGoalPlusMinus() {
+        return 1.0 * (goalsMade - goalsGot) / getTotalGames();
+    }
+    
+    public Integer getTotalGames() {
+    	return gamesLost + gamesWon;
+    }
+
     public Integer getGoalsGot() {
         return goalsGot;
     }

@@ -35,7 +35,7 @@
 			Goals:
 		</div>
 		<div class="col-xs-8">
-			{{playerResult.goalRate * 100 | number:2}}%
+			<span ng-show="playerResult.goalPlusMinus >= 0">+</span>{{playerResult.goalPlusMinus | number:2}}
 		</div>
 	</div>
 	<div class="row">

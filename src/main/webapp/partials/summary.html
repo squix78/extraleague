@@ -1,4 +1,4 @@
-<h1>Summary</h1>
+<h4>Summary</h4>
 
 <div class="row">
 	<div class="col-xs-6">
@@ -14,5 +14,23 @@
 	</div>
 	<div class="col-xs-6">
 		{{playerScore.score}}
+	</div>
+</div>
+
+<BR/>
+<BR/>
+<div ng-class-even="'even'" ng-class-odd="'odd'" ng-repeat="match in matches" class="row">
+	<div class="col-xs-4 text-center">
+		<span ng-repeat="player in match.teamA">{{player}} </span>
+		<input type="text" class="form-control" id="player" ng-model="match.teamAScore">
+		<span>&nbsp;</span>
+	</div>
+	<div class="col-xs-4 text-center">
+		<span ng-repeat="player in match.teamB">{{player}} </span>
+		<input type="text" class="form-control" id="player" ng-model="match.teamBScore">
+	</div>	
+	<div class="col-xs-4 text-center">
+		<span>&nbsp;</span>
+		<button ng-disabled="matchIsSaving" class="btn btn-primary btn-block" ng-click="saveMatch(match)">Save</button>
 	</div>
 </div>

@@ -28,7 +28,7 @@
 		{{ranking.successRate * 100 | number:2}}%
 	</div>
 	<div class="col-xs-2">
-		{{ranking.goalRate * 100 | number:2}}%
+		<span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}
 	</div>
 	<div class="col-xs-4">
 		<span class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">{{badge}}</span>

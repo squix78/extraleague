@@ -80,6 +80,10 @@ public class PlayerRanking implements Serializable {
     public Double getGoalRate() {
         return 1.0 * goalsMade / (goalsMade + goalsGot);
     }
+    
+    public Double getGoalPlusMinus() {
+        return 1.0 * (goalsMade - goalsGot) / getTotalGames();
+    }
 
     public void increaseGamesWon() {
         gamesWon++;

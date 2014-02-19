@@ -6,7 +6,7 @@ angular.module('PlayerMappings', [])
 	var playerResultMap = {};
 	var playerMap = {
 			"": "yazid-abuanzeh",
-			"": "raoul-adler",
+			"ra": "raoul-adler",
 			"": "diego-adolf",
 			"": "oliver-aeschlimann",
 			"": "filip-anastasovski",

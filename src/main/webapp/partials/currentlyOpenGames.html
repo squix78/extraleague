@@ -1,6 +1,8 @@
-
+<h2>Open Games</h2>
+<div ng-show="games.length == 0 && !isGamesLoading">
+  Currently there are now open games...
+</div>
 <div ng-show="games.length > 0">
-	<h2>Open Games</h2>
 	<div class="alert alert-success" ng-repeat="game in games  | orderBy:'-startDate'">
 	  <span ng-repeat="player in game.players">{{player}} </span>
 	  <div class="pull-right">

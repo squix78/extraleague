@@ -1,0 +1,19 @@
+
+<div ng-show="games.length > 0">
+	<h2>Open Games</h2>
+	<div class="alert alert-success" ng-repeat="game in games  | orderBy:'-startDate'">
+	  <span ng-repeat="player in game.players">{{player}} </span>
+	  <div class="pull-right">
+		  <button ng-hide="game.endDate" class="btn btn-primary" ng-click="continueGame(game)">Continue ({{game.numberOfCompletedGames + 1}}/4)</button>
+		  <button ng-hide="game.endDate || isDeleteButtonVisible" class="btn btn-danger" ng-click="isDeleteButtonVisible = true">Delete</button>
+		  <button ng-show="isDeleteButtonVisible" class="btn btn-danger" ng-click="deleteGame(game)">Really?</button>
+	  </div>
+	  <div>
+	  	{{game.startDate | date:'short'}}
+	  		<span ng-show="game.endDate"> - {{game.endDate | date:'short'}}</span>
+	  </div>
+	</div>
+</div>
+<div ng-show="isGamesLoading">
+	<img src="images/ajax-loader.gif"/> Loading previous games
+</div>

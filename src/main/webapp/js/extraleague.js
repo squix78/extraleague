@@ -17,6 +17,10 @@ angular.module('Extraleague', ['ngResource', 'PlayerMappings'])
     	  controller : 'SummaryController',
     	  templateUrl : 'partials/summary.html'
       })
+      .when('/openGames', {
+        controller : 'OpenGamesController',
+        templateUrl : 'partials/currentlyOpenGames.html'
+      })
       .when('/ranking', {
     	  controller : 'RankingController',
     	  templateUrl : 'partials/ranking.html'
@@ -38,6 +42,9 @@ angular.module('Extraleague', ['ngResource', 'PlayerMappings'])
 	}])
 	.factory('Games', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games');
+	}])
+	.factory('OpenGames', ['$resource', function($resource) {
+	  return $resource('/rest/openGames');
 	}])
 	.factory('Game', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId');
@@ -77,12 +84,7 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 	$scope.currentGame = new Games();
 	$scope.currentGame.table= $scope.table;
 	$scope.currentGame.players = [];
-	$scope.updateGames = function() {
-		$scope.isGamesLoading = true;
-		$scope.games = Games.query({table: $scope.table}, function() {
-			$scope.isGamesLoading = false;
-		});
-	};
+
 	$scope.$watch('player', function(newValue, oldValue) {
 		if (angular.isDefined(newValue)) {
 			$scope.currentGame.players = newValue.toLowerCase().replace(/,/g,'').split(' ');
@@ -90,7 +92,6 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 		}
 		
 	});
-	$scope.updateGames();
 	$scope.addPlayer = function() {
 		$scope.currentGame.players.push($scope.player);
 		$scope.player="";
@@ -104,13 +105,31 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 	$scope.continueGame = function(gameId) {
 		$location.path("/tables/" + $scope.table + "/games/" + gameId);
 	};
-	$scope.deleteGame = function(gameId) {
-		Game.remove({table: $scope.table, gameId: gameId});
-		$scope.updateGames();
-	};
+        $scope.deleteGame = function(gameId) {
+          Game.remove({table: $scope.table, gameId: gameId});
+          $scope.updateGames();
+        };
 	var playersResult = Players.get({}, function() {
 		$scope.players = playersResult;
 	});
+}
+function OpenGamesController($scope, $resource, $routeParams, $location, OpenGames, Game, PlayerService, Players) {
+  $scope.updateGames = function() {
+      $scope.isGamesLoading = true;
+      $scope.games = OpenGames.query({}, function() {
+              $scope.isGamesLoading = false;
+      });
+  };
+  $scope.updateGames();
+
+  $scope.continueGame = function(game) {
+      $location.path("/tables/" + game.table + "/games/" + game.id);
+  };
+  $scope.deleteGame = function(game) {
+      Game.remove({table: game.table, gameId: game.id}, function() {
+        $scope.updateGames();
+      });
+  };
 }
 function GameController($scope, $resource, $routeParams, $location, Game, Match, PlayerService, Players) {
 	$scope.PlayerService = PlayerService;

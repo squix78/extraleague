@@ -22,6 +22,7 @@ public class GamesResource extends ServerResource {
 	
 	private static final Logger log = Logger.getLogger(GamesResource.class.getName());
 	private static final Integer [][] mutations = {{0,1,2,3}, {1, 2, 3, 0}, {2, 0, 3, 1}, {0, 3, 1, 2}};
+	
 	@Get(value = "json")
 	public List<GameDto> execute() throws UnsupportedEncodingException {
 		String table = (String) this.getRequestAttributes().get("table");

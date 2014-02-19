@@ -4,11 +4,14 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
+import com.googlecode.objectify.ObjectifyService;
+
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.rest.games.GameResource;
 import ch.squix.extraleague.rest.games.GamesResource;
+import ch.squix.extraleague.rest.games.OpenGamesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
 import ch.squix.extraleague.rest.ping.PingResource;
 import ch.squix.extraleague.rest.player.PlayerRessource;
@@ -17,8 +20,6 @@ import ch.squix.extraleague.rest.ranking.RankingResource;
 import ch.squix.extraleague.rest.ranking.RankingServiceResource;
 import ch.squix.extraleague.rest.result.SummaryResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
-
-import com.googlecode.objectify.ObjectifyService;
 
 public class ExtraLeagueRestApplication extends Application {
 	
@@ -37,6 +38,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/tables", TablesResource.class);
         router.attach("/ranking", RankingResource.class);
         router.attach("/tables/{table}/games", GamesResource.class);
+        router.attach("/openGames", OpenGamesResource.class);
         router.attach("/tables/{table}/games/{gameId}", GameResource.class);
         router.attach("/tables/{table}/games/{gameId}/matches", MatchesResource.class);
         router.attach("/tables/{table}/games/{gameId}/summary", SummaryResource.class);

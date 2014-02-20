@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
-import ch.squix.extraleague.model.match.PlayerCombo;
+import ch.squix.extraleague.model.match.Position;
 
 
 public class PlayerRanking implements Serializable {
@@ -21,6 +21,8 @@ public class PlayerRanking implements Serializable {
     private Set<String> badges = new TreeSet<>();
     private Integer goalsMade = 0;
     private Integer goalsGot = 0;
+    private Position bestPosition;
+    private Double bestPositionRate;
     private String bestPartner;
     private Double bestPartnerRate;
     private String worstPartner;
@@ -185,6 +187,34 @@ public class PlayerRanking implements Serializable {
 
 	public void setWorstOpponentRate(Double worstOpponentRate) {
 		this.worstOpponentRate = worstOpponentRate;
+	}
+
+	/**
+	 * @return the bestPosition
+	 */
+	public Position getBestPosition() {
+		return bestPosition;
+	}
+
+	/**
+	 * @param bestPosition the bestPosition to set
+	 */
+	public void setBestPosition(Position bestPosition) {
+		this.bestPosition = bestPosition;
+	}
+
+	/**
+	 * @return the bestPositionRate
+	 */
+	public Double getBestPositionRate() {
+		return bestPositionRate;
+	}
+
+	/**
+	 * @param bestPositionRate the bestPositionRate to set
+	 */
+	public void setBestPositionRate(Double bestPositionRate) {
+		this.bestPositionRate = bestPositionRate;
 	}
 
 

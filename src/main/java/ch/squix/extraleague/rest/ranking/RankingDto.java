@@ -3,6 +3,8 @@ package ch.squix.extraleague.rest.ranking;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.squix.extraleague.model.match.Position;
+
 public class RankingDto {
 
     private String player;
@@ -12,6 +14,8 @@ public class RankingDto {
     private Integer goalsMade;
     private Integer goalsGot;
     private Integer ranking;
+    private Position bestPosition;
+    private Double bestPositionRate;
     private String bestPartner;
     private Double bestPartnerRate;
     private String worstPartner;
@@ -164,6 +168,34 @@ public class RankingDto {
 
 	public void setWorstOpponentRate(Double worstOpponentRate) {
 		this.worstOpponentRate = worstOpponentRate;
+	}
+
+	/**
+	 * @return the bestPosition
+	 */
+	public Position getBestPosition() {
+		return bestPosition;
+	}
+
+	/**
+	 * @param bestPosition the bestPosition to set
+	 */
+	public void setBestPosition(Position bestPosition) {
+		this.bestPosition = bestPosition;
+	}
+
+	/**
+	 * @return the bestPositionRate
+	 */
+	public Double getBestPositionRate() {
+		return bestPositionRate;
+	}
+
+	/**
+	 * @param bestPositionRate the bestPositionRate to set
+	 */
+	public void setBestPositionRate(Double bestPositionRate) {
+		this.bestPositionRate = bestPositionRate;
 	}
 
 

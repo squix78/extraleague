@@ -9,6 +9,7 @@ public class PlayerMatchResult {
     private String player = "";
     private String partner = "";
     private String [] opponents = {};
+    private Position position;
     
     public boolean hasWon() {
         return hasWon;
@@ -68,5 +69,19 @@ public class PlayerMatchResult {
 	 */
 	public void setOpponents(String [] opponents) {
 		this.opponents = opponents;
+	}
+
+	/**
+	 * @return the position
+	 */
+	public Position getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 }

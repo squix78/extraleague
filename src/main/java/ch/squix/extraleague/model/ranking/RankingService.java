@@ -13,10 +13,12 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.MatchDateComparator;
 import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerCombo;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
+import ch.squix.extraleague.model.match.Position;
 import ch.squix.extraleague.rest.games.GameResource;
 
 public class RankingService {
@@ -102,11 +104,40 @@ public class RankingService {
 	}
 
 	private static void calculatePlayerBadges(Matches matches, Map<String, PlayerRanking> playerRankingMap) {
+		MatchDateComparator matchDateComparator = new MatchDateComparator();
 		for (String player : matches.getPlayers()) {
 			PlayerRanking ranking = playerRankingMap.get(player);
 			int victoriesInARow = 0;
-			for (Match match : matches.getMatchesByPlayer(player)) {
-				
+			int maxVictoriesInARow = 0;
+			List<Match> matchesByPlayer = matches.getMatchesByPlayer(player);
+			Collections.sort(matchesByPlayer, matchDateComparator);
+			Map<Position, Integer> positionMap = new HashMap<>();
+			positionMap.put(Position.Offensive, 0);
+			positionMap.put(Position.Defensive, 0);
+			for (Match match : matchesByPlayer) {
+				PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
+				if (playerMatch.hasWon()) {
+					victoriesInARow++;
+					Position position = playerMatch.getPosition();
+					Integer positionCount = positionMap.get(position) + 1;
+					positionMap.put(position, positionCount);
+				} else {
+					victoriesInARow = 0;
+				}
+				maxVictoriesInARow = Math.max(victoriesInARow, maxVictoriesInARow);
+			}
+			if (maxVictoriesInARow > 4) {
+				ranking.getBadges().add(maxVictoriesInARow + "xSlam");
+			}
+			Integer offensiveCount = positionMap.get(Position.Offensive);
+			Integer defensiveCount = positionMap.get(Position.Defensive);
+			Double offensiveRate = 1.0 * offensiveCount / (offensiveCount + defensiveCount);
+			if (offensiveCount > defensiveCount) {
+				ranking.setBestPosition(Position.Offensive);
+				ranking.setBestPositionRate(offensiveRate);
+			} else {
+				ranking.setBestPosition(Position.Defensive);
+				ranking.setBestPositionRate(1 - offensiveRate);
 			}
 		}
 	}

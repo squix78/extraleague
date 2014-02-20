@@ -3,7 +3,6 @@ package ch.squix.extraleague.model.match;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class Matches {
 		this.matches = matches;
 		matchPlayerMap.clear();
 		for (Match match : matches) {
-			List<String> players = Arrays.asList(match.getTeamA());
+			List<String> players = new ArrayList<>(Arrays.asList(match.getTeamA()));
 			players.addAll(Arrays.asList(match.getTeamB()));
 			for (String player : players) {
 				List<Match> playerMatches = matchPlayerMap.get(player);
@@ -28,10 +27,6 @@ public class Matches {
 				}
 				playerMatches.add(match);
 			}
-		}
-		MatchDateComparator comparator = new MatchDateComparator();
-		for (Map.Entry<String, List<Match>> entry : matchPlayerMap.entrySet()) {
-			Collections.sort(entry.getValue(), comparator);
 		}
 	}
 	
@@ -45,15 +40,6 @@ public class Matches {
 	
 	public List<Match> getMatches() {
 		return matches;
-	}
-	
-	private class MatchDateComparator implements Comparator<Match> {
-
-		@Override
-		public int compare(Match o1, Match o2) {
-			return o1.getStartDate().compareTo(o2.getStartDate());
-		}
-		
 	}
 	
 }

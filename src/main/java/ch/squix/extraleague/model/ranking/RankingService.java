@@ -114,6 +114,7 @@ public class RankingService {
 			Map<Position, Integer> positionMap = new HashMap<>();
 			positionMap.put(Position.Offensive, 0);
 			positionMap.put(Position.Defensive, 0);
+
 			for (Match match : matchesByPlayer) {
 				PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
 				if (playerMatch.hasWon()) {
@@ -126,6 +127,7 @@ public class RankingService {
 				}
 				maxVictoriesInARow = Math.max(victoriesInARow, maxVictoriesInARow);
 			}
+
 			if (maxVictoriesInARow > 4) {
 				ranking.getBadges().add(maxVictoriesInARow + "xSlam");
 			}
@@ -135,6 +137,9 @@ public class RankingService {
 			if (offensiveCount > defensiveCount) {
 				ranking.setBestPosition(Position.Offensive);
 				ranking.setBestPositionRate(offensiveRate);
+			} else if (offensiveCount == defensiveCount) {
+				ranking.setBestPosition(Position.Omnivore);
+				ranking.setBestPositionRate(0.5d);
 			} else {
 				ranking.setBestPosition(Position.Defensive);
 				ranking.setBestPositionRate(1 - offensiveRate);

@@ -113,12 +113,16 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 		$scope.players = playersResult;
 	});
 }
-function OpenGamesController($scope, $resource, $routeParams, $location, OpenGames, Game, PlayerService, Players) {
+function OpenGamesController($scope, $resource, $timeout, $routeParams, $location, OpenGames, Game, PlayerService, Players) {
   $scope.updateGames = function() {
       $scope.isGamesLoading = true;
       $scope.games = OpenGames.query({}, function() {
               $scope.isGamesLoading = false;
       });
+	  var timer = $timeout($scope.updateGames, 120000);
+	  $scope.$on('$locationChangeStart', function(){
+		  $timeout.cancel(timer);
+	  });
   };
   $scope.updateGames();
 

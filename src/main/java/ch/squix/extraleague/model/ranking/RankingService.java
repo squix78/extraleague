@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.MatchUtil;
+import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerCombo;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.rest.games.GameResource;
@@ -23,10 +24,11 @@ public class RankingService {
 	private static final Logger log = Logger.getLogger(GameResource.class.getName());
 
 	public static void calculateRankings() {
-		List<Match> matches = ofy().load().type(Match.class).list();
-
+		List<Match> matchesList = ofy().load().type(Match.class).list();
+		Matches matches = new Matches();
+		matches.setMatches(matchesList);
 		Map<Long, List<Match>> gameMap = new HashMap<>();
-		for (Match match : matches) {
+		for (Match match : matches.getMatches()) {
 			List<Match> gameMatches = gameMap.get(match.getGameId());
 			if (gameMatches == null) {
 				gameMatches = new ArrayList<>();
@@ -68,6 +70,7 @@ public class RankingService {
 			calculateMatchBadges(scoreMap, playerRankingMap);
 			addStrikeBadge(winMap, playerRankingMap);
 		} 
+		calculatePlayerBadges(matches, playerRankingMap);
 		log.info("partnerMap contains " + partnerMap.size() + " entries");
 		log.info("opponentMap contains " + opponentMap.size() + " entries");
 		calculatePartnerAndOpponents(playerRankingMap, partnerMap, opponentMap);
@@ -96,6 +99,16 @@ public class RankingService {
 		ranking.setPlayerRankings(rankings);
 		ofy().save().entities(ranking);
 
+	}
+
+	private static void calculatePlayerBadges(Matches matches, Map<String, PlayerRanking> playerRankingMap) {
+		for (String player : matches.getPlayers()) {
+			PlayerRanking ranking = playerRankingMap.get(player);
+			int victoriesInARow = 0;
+			for (Match match : matches.getMatchesByPlayer(player)) {
+				
+			}
+		}
 	}
 
 	private static void calculatePartnerAndOpponents(Map<String, PlayerRanking> playerRankingMap,

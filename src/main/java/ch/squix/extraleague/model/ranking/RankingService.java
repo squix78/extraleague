@@ -21,7 +21,7 @@ import ch.squix.extraleague.model.ranking.tasks.RankingTask;
 import ch.squix.extraleague.model.ranking.tasks.ScoreTask;
 import ch.squix.extraleague.model.ranking.tasks.SlamTask;
 import ch.squix.extraleague.model.ranking.tasks.StrikeTask;
-import ch.squix.extraleague.model.ranking.tasks.ZeroFiveTask;
+import ch.squix.extraleague.model.ranking.tasks.FiveZeroTask;
 import ch.squix.extraleague.rest.games.GameResource;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
@@ -34,7 +34,8 @@ public class RankingService {
 		List<Match> matchesList = ofy().load().type(Match.class).list();
 		Matches matches = new Matches();
 		matches.setMatches(matchesList);
-		Map<Long, List<Match>> gameMap = matches.getGameMatches();
+		
+		// Initialize player ranking map
 		Map<String, PlayerRanking> playerRankingMap = new HashMap<>();
 		for (String player : matches.getPlayers()) {
 	                PlayerRanking ranking = new PlayerRanking();
@@ -46,7 +47,7 @@ public class RankingService {
 		
 		List<RankingTask> rankingTasks = new ArrayList<>();
 		rankingTasks.add(new ScoreTask());
-		rankingTasks.add(new ZeroFiveTask());
+		rankingTasks.add(new FiveZeroTask());
 		rankingTasks.add(new BestPositionTask());
 		rankingTasks.add(new SlamTask());
 		rankingTasks.add(new StrikeTask());
@@ -82,10 +83,6 @@ public class RankingService {
 		ofy().save().entities(ranking);
 
 	}
-
-
-
-
 
 	private static List<PlayerRanking> filterFirstPlayers(Collection<PlayerRanking> values) {
 		List<PlayerRanking> rankings = new ArrayList<>();

@@ -1,7 +1,5 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,28 +11,27 @@ import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 
 
-public class ZeroFiveTask implements RankingTask {
+public class FiveZeroTask implements RankingTask {
 
     @Override
     public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
-        Map<String, List<String>> scoreMap = new HashMap<String, List<String>>();
+        Map<String, Integer> scoreMap = new HashMap<String, Integer>();
         for (Match match : matches.getMatches()) {
             List<PlayerMatchResult> playerMatches = MatchUtil.getPlayerMatchResults(match);
             for (PlayerMatchResult playerMatch : playerMatches) {
-                List<String> score = scoreMap.get(playerMatch.getPlayer());
-                if (score == null) {
-                        score = new ArrayList<>();
-                        scoreMap.put(playerMatch.getPlayer(), score);
+                Integer fiveZeroCount = scoreMap.get(playerMatch.getPlayer());
+                if (fiveZeroCount == null) {
+                        fiveZeroCount = 0;
                 }
-                score.add(playerMatch.getGoalsMade() + ":" + playerMatch.getGoalsGot());
+                fiveZeroCount++;
+                scoreMap.put(playerMatch.getPlayer(), fiveZeroCount);
             }
         }
         for(String player : scoreMap.keySet()) {
-                List<String> scores = scoreMap.get(player);
-                int numberOfFiveZeros = Collections.frequency(scores, "5:0");
-                if (numberOfFiveZeros > 0) {
+                Integer fiveZeroes = scoreMap.get(player);
+                if (fiveZeroes > 0) {
                     PlayerRanking ranking = playerRankingMap.get(player);
-                    ranking.getBadges().add(numberOfFiveZeros + "x5:0!");
+                    ranking.getBadges().add(fiveZeroes + "x5:0!");
                 }
         }
     }

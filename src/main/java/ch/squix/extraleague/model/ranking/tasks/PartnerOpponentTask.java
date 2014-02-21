@@ -30,7 +30,7 @@ public class PartnerOpponentTask implements RankingTask {
         calculatePartnerAndOpponents(playerRankingMap, partnerMap, opponentMap);
     }
     
-    private static void calculatePartnerAndOpponents(Map<String, PlayerRanking> playerRankingMap,
+    private void calculatePartnerAndOpponents(Map<String, PlayerRanking> playerRankingMap,
             Map<String, Map<String, PlayerCombo>> partnerMap, Map<String, Map<String, PlayerCombo>> opponentMap) {
     for (String player : playerRankingMap.keySet()) {
             PlayerRanking ranking = playerRankingMap.get(player);
@@ -40,10 +40,7 @@ public class PartnerOpponentTask implements RankingTask {
 
             List<PlayerCombo> partners = new ArrayList<>(partnerComboMap.values());
             Collections.sort(partners, comparator);
-            for (PlayerCombo partner : partners) {
-                    System.out.println(player +": " + partners.indexOf(partner) + ". " + partner.getCombo() + "/" 
-                                    + partner.getGamesWon() + "/" + partner.getGamesLost() + "/" + partner.getSuccessRate());
-            }
+
             ranking.setBestPartner(partners.get(0).getCombo());
             ranking.setBestPartnerRate(partners.get(0).getSuccessRate());
             ranking.setWorstPartner(partners.get(partners.size() - 1).getCombo());
@@ -54,10 +51,7 @@ public class PartnerOpponentTask implements RankingTask {
 
             List<PlayerCombo> opponents = new ArrayList<>(opponentComboMap.values());
             Collections.sort(opponents, comparator);
-            for (PlayerCombo opponent : opponents) {
-                    System.out.println(player +": " + opponents.indexOf(opponent) + ". " + opponent.getCombo() + "/" 
-                                    + opponent.getGamesWon() + "/" + opponent.getGamesLost() + "/" + opponent.getSuccessRate());
-            }
+
             ranking.setBestOpponent(opponents.get(opponents.size() - 1).getCombo());
             ranking.setBestOpponentRate(1 - opponents.get(opponents.size() - 1).getSuccessRate());
             ranking.setWorstOpponent(opponents.get(0).getCombo());
@@ -106,7 +100,7 @@ public class PartnerOpponentTask implements RankingTask {
     }
     
     
-    private static class PlayerComboComparator implements Comparator<PlayerCombo> {
+    private class PlayerComboComparator implements Comparator<PlayerCombo> {
 
             @Override
             public int compare(PlayerCombo o1, PlayerCombo o2) {

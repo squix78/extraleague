@@ -2,7 +2,6 @@ package ch.squix.extraleague.model.match;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +14,13 @@ public class Matches {
         private Map<Long, List<Match>> gameMap = new HashMap<>();
 
 	
-	public void setMatches(List<Match> matches) {
-		this.matches = matches;
+	public void setMatches(List<Match> unfilteredMatches) {
+		this.matches = new ArrayList<>();
+		for (Match match : unfilteredMatches) {
+		    if (match.getEndDate() != null) {
+		        matches.add(match); 
+		    }
+		}
 		matchPlayerMap.clear();
 		for (Match match : matches) {
 			List<String> players = new ArrayList<>(Arrays.asList(match.getTeamA()));

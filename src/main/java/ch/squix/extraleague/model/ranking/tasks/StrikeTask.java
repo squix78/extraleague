@@ -17,10 +17,10 @@ public class StrikeTask implements RankingTask {
     public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
         
         Map<Long, List<Match>> gameMatches = matches.getGameMatches();
-        for (Long gameId : gameMatches.keySet()) {
-            for (Match match : gameMatches.get(gameId)) {
+        for (Map.Entry<Long, List<Match>> gameEntry : gameMatches.entrySet()) {
+        	Map<String, Integer> winMap = new HashMap<>();
+            for (Match match : gameEntry.getValue()) {
                 List<PlayerMatchResult> playerMatches = MatchUtil.getPlayerMatchResults(match);
-                Map<String, Integer> winMap = new HashMap<>();
                 for (PlayerMatchResult playerMatch : playerMatches) {
                     if (playerMatch.hasWon()) {
                         Integer wins = winMap.get(playerMatch.getPlayer());
@@ -31,12 +31,13 @@ public class StrikeTask implements RankingTask {
                         winMap.put(playerMatch.getPlayer(), wins);
                     }
                 }
-                for (Map.Entry<String, Integer> entry : winMap.entrySet()) {
-                    if (entry.getValue() == 4) {
-                        PlayerRanking playerRanking = playerRankingMap.get(entry.getKey());
-                        playerRanking.getBadges().add("Strike");
-                    }
-                }
+            }
+            for (Map.Entry<String, Integer> entry : winMap.entrySet()) {
+            	System.out.println("Player " + entry.getKey() + " has " + entry.getValue() + " victories");
+            	if (entry.getValue() == 4) {
+            		PlayerRanking playerRanking = playerRankingMap.get(entry.getKey());
+            		playerRanking.getBadges().add("Strike");
+            	}
             }
         }
     }

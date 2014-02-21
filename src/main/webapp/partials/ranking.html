@@ -1,39 +1,32 @@
 <h1>NFA Ranking</h1>
-<div class="row">
 
-	<div class="col-xs-1">
-		<b>#</b>
-	</div>
-	<div class="col-xs-1">
-		<b>Player</b>
-	</div>
-	<div class="col-xs-2">
-		<b>Success</b>
-	</div>	
-	<div class="col-xs-2">
-		<b>Goals</b>
-	</div>	
-	<div class="col-xs-4">
-		<b>Badges</b>
-	</div>	
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+          <tr>
+            <th>#</th>
+            <th>Who</th>
+            <th>%</th>
+            <th>Goals</th>
+            <th>Badges</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="ranking in rankings | orderBy:'ranking'">
+            <td>{{ranking.ranking}} </td>
+            <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
+            <td>{{ranking.successRate * 100 | number:1}}</td>
+            <td><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>
+            <td>
+            	<span class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">
+            		{{badge}}
+            	</span>
+            </td>
+          </tr>
+        </tbody>
+	</table>
 </div>
-<div class="row" ng-repeat="ranking in rankings | orderBy:'ranking'" ng-class-even="'even'" ng-class-odd="'odd'">
-	<div class="col-xs-1">
-		{{ranking.ranking}} 
-	</div>
-	<div class="col-xs-1">
-		<a href="#/player/{{ranking.player}}">{{ranking.player}} </a>
-	</div>
-	<div class="col-xs-2">
-		{{ranking.successRate * 100 | number:2}}%
-	</div>
-	<div class="col-xs-2">
-		<span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}
-	</div>
-	<div class="col-xs-4">
-		<span class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">{{badge}}</span>
-	</div>	
-</div>
+
 <div ng-show="isRankingLoading">
 	<img src="images/ajax-loader.gif"/> Loading rankings...
 </div>
@@ -57,6 +50,9 @@
 </div>
 <div>
 	<span class="label label-primary">Strike</span>: won all matches in a game
+</div>
+<div>
+	<span class="label label-primary">Iceman</span>: won all matches 5:4 in a game
 </div>
 
 

@@ -1,5 +1,7 @@
 package ch.squix.extraleague.model.ranking;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,20 +13,15 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.Match;
-import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
-import ch.squix.extraleague.model.match.PlayerCombo;
-import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
+import ch.squix.extraleague.model.ranking.tasks.SpecialResultPerGameTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
 import ch.squix.extraleague.model.ranking.tasks.ScoreTask;
 import ch.squix.extraleague.model.ranking.tasks.SlamTask;
 import ch.squix.extraleague.model.ranking.tasks.StrikeTask;
-import ch.squix.extraleague.model.ranking.tasks.FiveZeroTask;
 import ch.squix.extraleague.rest.games.GameResource;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class RankingService {
 	
@@ -47,7 +44,7 @@ public class RankingService {
 		
 		List<RankingTask> rankingTasks = new ArrayList<>();
 		rankingTasks.add(new ScoreTask());
-		rankingTasks.add(new FiveZeroTask());
+		rankingTasks.add(new SpecialResultPerGameTask());
 		rankingTasks.add(new BestPositionTask());
 		rankingTasks.add(new SlamTask());
 		rankingTasks.add(new StrikeTask());

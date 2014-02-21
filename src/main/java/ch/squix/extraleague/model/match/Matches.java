@@ -12,6 +12,8 @@ public class Matches {
 
 	private Map<String, List<Match>> matchPlayerMap = new HashMap<>();
 	private List<Match> matches = new ArrayList<>();
+        private Map<Long, List<Match>> gameMap = new HashMap<>();
+
 	
 	public void setMatches(List<Match> matches) {
 		this.matches = matches;
@@ -28,6 +30,18 @@ public class Matches {
 				playerMatches.add(match);
 			}
 		}
+	        for (Match match : matches) {
+	                List<Match> gameMatches = gameMap.get(match.getGameId());
+	                if (gameMatches == null) {
+	                        gameMatches = new ArrayList<>();
+	                        gameMap.put(match.getGameId(), gameMatches);
+	                }
+	                gameMatches.add(match);
+	        }
+	}
+	
+	public Map<Long, List<Match>> getGameMatches() {
+	    return gameMap;
 	}
 	
 	public Set<String> getPlayers() {

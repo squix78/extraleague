@@ -20,18 +20,18 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" >
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">Extraleague</a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#/tables">New Game</a></li>
-            <li><a href="#/ranking">Ranking</a></li>
-            <li><a href="#/openGames">Open Games</a></li>
+            <li class="active"><a ng-click="navCollapsed = true" href="#/tables">New Game</a></li>
+            <li><a  ng-click="navCollapsed = true" href="#/ranking">Ranking</a></li>
+            <li><a  ng-click="navCollapsed = true" href="#/openGames">Open Games</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -46,6 +46,7 @@
     <script src="js/extraleague.js"></script>
     <script src="components/jquery/jquery.js"></script>
     <script src="components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="http://localhost:35729/livereload.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'PlayerMappings'])
+angular.module('Extraleague', ['ngResource', 'PlayerMappings', 'ui.bootstrap'])
     .config(function($routeProvider) {
       $routeProvider
       .when('/', {

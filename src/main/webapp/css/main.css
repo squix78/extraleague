@@ -33,3 +33,6 @@ legend {
 	width:100%;
 	border-bottom: none;
 }
+.stressed {
+	font-weight: bolder;
+}

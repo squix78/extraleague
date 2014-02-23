@@ -54,7 +54,7 @@ public class RankingService {
 		}
 		
 
-		//ofy().save().entities(matches);
+		//ofy().save().entities(matchesList).now();
 		List<PlayerRanking> rankings = filterFirstPlayers(playerRankingMap.values());
 		Collections.sort(rankings, new Comparator<PlayerRanking>() {
 

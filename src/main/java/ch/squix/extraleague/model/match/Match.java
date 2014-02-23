@@ -1,6 +1,8 @@
 package ch.squix.extraleague.model.match;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -18,10 +20,15 @@ public class Match {
 	private String [] teamB = {};
 	private Integer teamAScore;
 	private Integer teamBScore;
+	
+	@Index
 	private Date startDate;
 	private Date endDate;
 	private String table;
 	private Integer matchIndex;
+	
+	@Index
+	private List<String> players = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -94,6 +101,18 @@ public class Match {
 	 */
 	public void setMatchIndex(Integer matchIndex) {
 		this.matchIndex = matchIndex;
+	}
+	/**
+	 * @return the players
+	 */
+	public List<String> getPlayers() {
+		return players;
+	}
+	/**
+	 * @param players the players to set
+	 */
+	public void setPlayers(List<String> players) {
+		this.players = players;
 	}
 
 }

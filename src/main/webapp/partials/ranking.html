@@ -5,14 +5,14 @@
 		<thead>
           <tr>
             <th>#</th>
-            <th>Who</th>
-            <th>%</th>
-            <th>Goals</th>
-            <th>Badges</th>
+            <th><a href="" ng-click="predicate = 'player'; reverse=!reverse">Who</a></th>
+            <th><a href="" ng-click="predicate = 'successRate'; reverse=!reverse">%</a></th>
+            <th><a href="" ng-click="predicate = 'goalPlusMinus'; reverse=!reverse">Goals</a></th>
+            <th><a href="" ng-click="predicate = 'badges.length'; reverse=!reverse">Badges</a></th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="ranking in rankings | orderBy:'ranking'">
+          <tr ng-repeat="ranking in rankings | orderBy:predicate:reverse">
             <td>{{ranking.ranking}} </td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
             <td>{{ranking.successRate * 100 | number:1}}</td>

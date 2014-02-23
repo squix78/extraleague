@@ -12,6 +12,7 @@ import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.rest.games.GameResource;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGamesResource;
+import ch.squix.extraleague.rest.maintenance.MigrateMatchesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
 import ch.squix.extraleague.rest.ping.PingResource;
 import ch.squix.extraleague.rest.player.PlayerRessource;
@@ -20,6 +21,7 @@ import ch.squix.extraleague.rest.ranking.RankingResource;
 import ch.squix.extraleague.rest.ranking.RankingServiceResource;
 import ch.squix.extraleague.rest.result.SummaryResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
+import ch.squix.extraleague.rest.timeseries.TimeSeriesResource;
 
 public class ExtraLeagueRestApplication extends Application {
 	
@@ -44,7 +46,9 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/tables/{table}/games/{gameId}/summary", SummaryResource.class);
         router.attach("/players", PlayersRessource.class);
         router.attach("/players/{player}", PlayerRessource.class);
+        router.attach("/timeseries/{player}", TimeSeriesResource.class);
         router.attach("/updateRankings", RankingServiceResource.class);
+        router.attach("/migrateMatches", MigrateMatchesResource.class);
 
         return router;
     }

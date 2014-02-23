@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'PlayerMappings', 'ui.bootstrap'])
+angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bootstrap', 'nvd3ChartDirectives'])
     .config(function($routeProvider) {
       $routeProvider
       .when('/', {
@@ -60,6 +60,9 @@ angular.module('Extraleague', ['ngResource', 'PlayerMappings', 'ui.bootstrap'])
 	}])
 	.factory('Players', ['$resource', function($resource) {
 		return $resource('/rest/players');
+	}])
+	.factory('TimeSeries', ['$resource', function($resource) {
+		return $resource('/rest/timeseries/:player');
 	}])
 	.factory('Match', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId/matches');
@@ -223,19 +226,40 @@ function SummaryController($scope, $resource, $routeParams, Summary, Match) {
 	$scope.getSummary();
 }
 function RankingController($scope, $resource, $routeParams, Ranking) {
+	$scope.predicate = '-successRate';
 	$scope.isRankingLoading = true;
 	$scope.rankings = Ranking.query({}, function() {
 		$scope.isRankingLoading = false;
 		
 	});
 }
-function PlayerController($scope, $routeParams, PlayerService, Player) {
+function PlayerController($scope, $routeParams, PlayerService, Player, TimeSeries) {
 	$scope.player = $routeParams.player;
 	$scope.playerPicture = PlayerService.getPlayerPicture($scope.player);
 	$scope.isPlayerLoading = true;
 	$scope.playerResult = Player.get({player: $scope.player}, function() {
 		$scope.isPlayerLoading = false;
 	});
+	$scope.isTimeseriesLoading = true;
+	$scope.timeseries = TimeSeries.get({player: $scope.player}), function() {
+		$scope.isTimeseriesLoading = false;
+	};
+	$scope.toolTipContentFunction = function(){
+		return function(key, x, y, e, graph) {
+	    	return  '<h4>' + key + '</h4>' +
+	            '<p>' +  y + ' at ' + x + '</p>'
+		}
+	};
+	$scope.xAxisTickFormatFunction = function(){
+		return function(d){
+			return d3.time.format('%y-%m-%d')(new Date(d)); //uncomment for date format
+		};
+	};
+	$scope.yAxisPercentFormatFunction = function(){
+		return function(d){
+			return d * 100 + "%"; //uncomment for date format
+		};
+	};
 }
 
 

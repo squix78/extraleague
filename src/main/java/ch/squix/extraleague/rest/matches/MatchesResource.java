@@ -40,16 +40,7 @@ public class MatchesResource extends ServerResource {
 		log.info("Listing table for " + gameId + ". Found " + matches.size() + " matches for this game");
 		List<MatchDto> matchDtos = new ArrayList<>();
 		for (Match match : matches) {
-			MatchDto dto = new MatchDto();
-			dto.setId(match.getId());
-			dto.setGameId(match.getGameId());
-			dto.setTeamA(match.getTeamA());
-			dto.setTeamB(match.getTeamB());
-			dto.setTeamAScore(match.getTeamAScore());
-			dto.setTeamBScore(match.getTeamBScore());
-			dto.setStartDate(match.getStartDate());
-			dto.setEndDate(match.getEndDate());
-			dto.setMatchIndex(match.getMatchIndex());
+			MatchDto dto = MatchDtoMapper.mapToDto(match);
 			matchDtos.add(dto);
 		}
 		return matchDtos;

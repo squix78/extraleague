@@ -68,6 +68,7 @@ public class GamesResource extends ServerResource {
 			match.setTeamB(new String[] {players.get(mutation[2]), players.get(mutation[3])});
 			match.setTeamAScore(0);
 			match.setTeamBScore(0);
+			match.setPlayers(players);
 			match.setTable(game.getTable());
 			match.setMatchIndex(gameIndex);
 			matches.add(match);

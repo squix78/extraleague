@@ -1,171 +1,111 @@
 
-<h4>
-
-</h4>
+<h4></h4>
 <div ng-hide="isPlayerLoading">
-<div class="table-responsive">
-	<table class="table table-striped">
-        <tbody>
-          <tr>
-            <td>
-            Player
-            </td>
-            <td>
-            	<div>
-		            <img class="img img-rounded player" src="{{playerPicture}}"/>
-					<div  class="caption">{{player}}</div>
-            	</div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Rank:
-            </td>
-            <td>
-            {{playerResult.statistics.ranking}}
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Badges:
-            </td>
-            <td>
-            <div class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in playerResult.statistics.badges"> {{badge}}</div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Success:
-            </td>
-            <td>
-            {{playerResult.statistics.successRate * 100 | number:2}}%
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Goals:
-            </td>
-            <td>
-            <span ng-show="playerResult.statistics.goalPlusMinus >= 0">+</span>{{playerResult.statistics.goalPlusMinus | number:2}}
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Best position:
-            </td>
-            <td>
-            {{playerResult.statistics.bestPosition}} (won {{100 * playerResult.statistics.bestPositionRate | number:2}}%)
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Optimal partner:
-            </td>
-            <td>
-            {{playerResult.statistics.bestPartner}} (won {{playerResult.statistics.bestPartnerRate * 100 | number:2}}%)
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Worst partner:
-            </td>
-            <td>
-            {{playerResult.statistics.worstPartner}} (won {{playerResult.statistics.worstPartnerRate * 100 | number:2}}%)
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Best opponent:
-            </td>
-            <td>
-            {{playerResult.statistics.bestOpponent}} (won {{playerResult.statistics.bestOpponentRate * 100 | number:2}}%) 
-            </td>
-          </tr>
-          <tr>
-            <td>
-            Worst opponent:
-            </td>
-            <td>
-            {{playerResult.statistics.worstOpponent}} (won {{playerResult.statistics.worstOpponentRate * 100 | number:2}}%)
-            </td>
-          </tr>
-        </tbody>
-	</table>
-	
-	<h4>Last Matches</h4>
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<thead>
-	          <tr>
-	            <th><a href="" ng-click="predicate = 'player'; reverse=!reverse">Who</a></th>
-	            <th><a href="" ng-click="predicate = 'successRate'; reverse=!reverse">Result</a></th>
-	          </tr>
-	        </thead>
-	        <tbody>
-	          <tr ng-repeat="match in playerResult.lastMatches | orderBy:predicate:reverse">
-	            <td><span ng-class="{stressed: player === teamPlayer}" ng-repeat="teamPlayer in match.teamA">{{teamPlayer}} </span>: <span ng-class="{stressed: player === teamPlayer}" ng-repeat="teamPlayer in match.teamB">{{teamPlayer}} </span> </td>
-	            <td>{{match.teamAScore}}:{{match.teamBScore}}</td>
-	          </tr>
-	        </tbody>
-		</table>
-	</div>
-	
-</div>
-</div>
-<div ng-show="isPlayerLoading">
-	<img src="images/ajax-loader.gif"/> Loading player data...
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <td>Player</td>
+          <td>
+            <div>
+              <img class="img img-rounded player" src="{{playerPicture}}" />
+              <div class="caption">{{player}}</div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Rank:</td>
+          <td>{{playerResult.statistics.ranking}}</td>
+        </tr>
+        <tr>
+          <td>Badges:</td>
+          <td>
+            <div class="label label-primary" style="margin-right: 3px;"
+              ng-repeat="badge in playerResult.statistics.badges">{{badge}}</div>
+          </td>
+        </tr>
+        <tr>
+          <td>Success:</td>
+          <td>{{playerResult.statistics.successRate * 100 | number:2}}%</td>
+        </tr>
+        <tr>
+          <td>Goals:</td>
+          <td><span ng-show="playerResult.statistics.goalPlusMinus >= 0">+</span>{{playerResult.statistics.goalPlusMinus
+            | number:2}}</td>
+        </tr>
+        <tr>
+          <td>Best position:</td>
+          <td>{{playerResult.statistics.bestPosition}} (won {{100 * playerResult.statistics.bestPositionRate |
+            number:2}}%)</td>
+        </tr>
+        <tr>
+          <td>Optimal partner:</td>
+          <td>{{playerResult.statistics.bestPartner}} (won {{playerResult.statistics.bestPartnerRate * 100 |
+            number:2}}%)</td>
+        </tr>
+        <tr>
+          <td>Worst partner:</td>
+          <td>{{playerResult.statistics.worstPartner}} (won {{playerResult.statistics.worstPartnerRate * 100 |
+            number:2}}%)</td>
+        </tr>
+        <tr>
+          <td>Best opponent:</td>
+          <td>{{playerResult.statistics.bestOpponent}} (won {{playerResult.statistics.bestOpponentRate * 100 |
+            number:2}}%)</td>
+        </tr>
+        <tr>
+          <td>Worst opponent:</td>
+          <td>{{playerResult.statistics.worstOpponent}} (won {{playerResult.statistics.worstOpponentRate * 100 |
+            number:2}}%)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h4>Last Matches</h4>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><a href="" ng-click="predicate = 'player'; reverse=!reverse">Who</a></th>
+          <th><a href="" ng-click="predicate = 'successRate'; reverse=!reverse">Result</a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="match in playerResult.lastMatches | orderBy:predicate:reverse">
+          <td><span ng-class="{stressed: player === teamPlayer}" ng-repeat="teamPlayer in match.teamA">{{teamPlayer}}
+          </span>: <span ng-class="{stressed: player === teamPlayer}" ng-repeat="teamPlayer in match.teamB">{{teamPlayer}}
+          </span></td>
+          <td>{{match.teamAScore}}:{{match.teamBScore}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
-	<div class="row">
-		<h4>Success Rate</h4>
-		<nvd3-line-chart 
-			id="successRate"
-			class="col-xs-12"
-		    data="timeseries.successRate"
-		    height="200"
-		    showXAxis="true"
-		    showYAxis="true"
-		    xAxisTickFormat="xAxisTickFormatFunction()"
-		    yAxisTickFormat="yAxisPercentFormatFunction()"
-		    objectEquality="true" 
-		    interactive="true"
-		    interpolate="linear">
-		</nvd3-line-chart>
-	</div>
-	<div class="row">
-		<h4>Goal Rate</h4>
-		<nvd3-line-chart 
-			id="goalRate"
-			class="col-xs-12"
-		    data="timeseries.goalRate"
-		    height="200"
-		    showXAxis="true"
-		    showYAxis="true"
-		    xAxisTickFormat="xAxisTickFormatFunction()"
-		    yAxisTickFormat="yAxisFormatFunction()"
-		    objectEquality="true" 
-		    interactive="true"
-		    interpolate="linear">
-		</nvd3-line-chart>
-	</div>
-	<div class="row">
-		<h4>Ranking</h4>
-		<nvd3-line-chart 
-			id="ranking"
-			class="col-xs-12"
-		    data="timeseries.ranking"
-		    height="200"
-		    showXAxis="true"
-		    showYAxis="true"
-		    xAxisTickFormat="xAxisTickFormatFunction()"
-		    yAxisTickFormat="yAxisFormatFunction()"
-		    objectEquality="true" 
-		    interactive="true"
-		    xAxisOrient="top"
-		    interpolate="linear">
-		</nvd3-line-chart>
-	</div>
+<div ng-show="isPlayerLoading">
+  <img src="images/ajax-loader.gif" /> Loading player data...
+</div>
+
+<div class="row">
+  <h4>Success Rate</h4>
+  <nvd3-line-chart id="successRate" class="col-xs-12" data="timeseries.successRate" height="200" showXAxis="true"
+    showYAxis="true" xAxisTickFormat="xAxisTickFormatFunction()" yAxisTickFormat="yAxisPercentFormatFunction()"
+    objectEquality="true" interactive="true" interpolate="linear"> </nvd3-line-chart>
+</div>
+<div class="row">
+  <h4>Goal Rate</h4>
+  <nvd3-line-chart id="goalRate" class="col-xs-12" data="timeseries.goalRate" height="200" showXAxis="true"
+    showYAxis="true" xAxisTickFormat="xAxisTickFormatFunction()" yAxisTickFormat="yAxisFormatFunction()"
+    objectEquality="true" interactive="true" interpolate="linear"> </nvd3-line-chart>
+</div>
+<div class="row">
+  <h4>Ranking</h4>
+  <nvd3-line-chart id="ranking" class="col-xs-12" data="timeseries.ranking" height="200" showXAxis="true"
+    showYAxis="true" xAxisTickFormat="xAxisTickFormatFunction()" yAxisTickFormat="yAxisFormatFunction()"
+    objectEquality="true" interactive="true" xAxisOrient="top" interpolate="linear"> </nvd3-line-chart>
+</div>
 
 <div ng-show="isTimeseriesLoading">
-	<img src="images/ajax-loader.gif"/> Loading history data...
+  <img src="images/ajax-loader.gif" /> Loading history data...
 </div>

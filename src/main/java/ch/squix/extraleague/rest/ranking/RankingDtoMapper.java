@@ -20,8 +20,8 @@ public class RankingDtoMapper {
 			rankingDto.getBadges().addAll(playerRanking.getBadges());
 			rankingDto.setGoalsMade(playerRanking.getGoalsMade());
 			rankingDto.setGoalsGot(playerRanking.getGoalsGot());
-			rankingDto.setBestPosition(playerRanking.getBestPosition());
-			rankingDto.setBestPositionRate(playerRanking.getBestPositionRate());
+			rankingDto.setOffensivePositionRate(playerRanking.getOffensivePositionRate());
+			rankingDto.setDefensivePositionRate(playerRanking.getDefensivePositionRate());
 			rankingDto.setBestPartner(playerRanking.getBestPartner());
 			rankingDto.setBestPartnerRate(playerRanking.getBestPartnerRate());
 			rankingDto.setWorstPartner(playerRanking.getWorstPartner());

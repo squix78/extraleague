@@ -35,17 +35,9 @@ public class BestPositionTask implements RankingTask {
 
                 Integer offensiveCount = positionMap.get(Position.Offensive);
                 Integer defensiveCount = positionMap.get(Position.Defensive);
-                Double offensiveRate = 1.0 * offensiveCount / (offensiveCount + defensiveCount);
-                if (offensiveCount > defensiveCount) {
-                        ranking.setBestPosition(Position.Offensive);
-                        ranking.setBestPositionRate(offensiveRate);
-                } else if (offensiveCount == defensiveCount) {
-                        ranking.setBestPosition(Position.Omnivore);
-                        ranking.setBestPositionRate(0.5d);
-                } else {
-                        ranking.setBestPosition(Position.Defensive);
-                        ranking.setBestPositionRate(1 - offensiveRate);
-                }
+                ranking.setOffensivePositionRate(1.0 * offensiveCount / (matchesByPlayer.size()));
+                ranking.setDefensivePositionRate(1.0 * defensiveCount / (matchesByPlayer.size()));
+
         }
     }
 

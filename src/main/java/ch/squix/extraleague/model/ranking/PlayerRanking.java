@@ -21,8 +21,7 @@ public class PlayerRanking implements Serializable {
     private Set<String> badges = new TreeSet<>();
     private Integer goalsMade = 0;
     private Integer goalsGot = 0;
-    private Position bestPosition;
-    private Double bestPositionRate;
+
     private String bestPartner;
     private Double bestPartnerRate;
     private String worstPartner;
@@ -31,6 +30,9 @@ public class PlayerRanking implements Serializable {
     private Double bestOpponentRate;
     private String worstOpponent;
     private Double worstOpponentRate;
+    
+    private Double offensivePositionRate;
+    private Double defensivePositionRate;
 
     public String getPlayer() {
         return player;
@@ -189,33 +191,20 @@ public class PlayerRanking implements Serializable {
 		this.worstOpponentRate = worstOpponentRate;
 	}
 
-	/**
-	 * @return the bestPosition
-	 */
-	public Position getBestPosition() {
-		return bestPosition;
+	public Double getOffensivePositionRate() {
+		return offensivePositionRate;
 	}
 
-	/**
-	 * @param bestPosition the bestPosition to set
-	 */
-	public void setBestPosition(Position bestPosition) {
-		this.bestPosition = bestPosition;
+	public Double getDefensivePositionRate() {
+		return defensivePositionRate;
 	}
 
-	/**
-	 * @return the bestPositionRate
-	 */
-	public Double getBestPositionRate() {
-		return bestPositionRate;
+	public void setOffensivePositionRate(Double offensivePositionRate) {
+		this.offensivePositionRate = offensivePositionRate;
 	}
 
-	/**
-	 * @param bestPositionRate the bestPositionRate to set
-	 */
-	public void setBestPositionRate(Double bestPositionRate) {
-		this.bestPositionRate = bestPositionRate;
+	public void setDefensivePositionRate(Double defensivePositionRate) {
+		this.defensivePositionRate = defensivePositionRate;
 	}
-
 
 }

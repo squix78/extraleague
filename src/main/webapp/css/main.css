@@ -22,10 +22,10 @@ body {
 	color: blue;
 }
 .redTeamBorder {
-	border: 2px solid red;
+	border: 3px solid red;
 }
 .blueTeamBorder {
-	border: 2px solid blue;
+	border: 3px solid blue;
 }
 legend { 
 	margin:3px; 

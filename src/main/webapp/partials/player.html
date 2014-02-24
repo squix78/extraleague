@@ -34,9 +34,14 @@
             | number:2}}</td>
         </tr>
         <tr>
-          <td>Best position:</td>
-          <td>{{playerResult.statistics.bestPosition}} (won {{100 * playerResult.statistics.bestPositionRate |
-            number:2}}%)</td>
+          <td>Offensive:</td>
+          <td>won {{100 * playerResult.statistics.offensivePositionRate |
+            number:2}}%</td>
+        </tr>
+        <tr>
+          <td>Defensive:</td>
+          <td>won {{100 * playerResult.statistics.defensivePositionRate |
+            number:2}}%</td>
         </tr>
         <tr>
           <td>Optimal partner:</td>
@@ -66,15 +71,21 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th><a href="" ng-click="predicate = 'player'; reverse=!reverse">Who</a></th>
-          <th><a href="" ng-click="predicate = 'successRate'; reverse=!reverse">Result</a></th>
+          <th>Team A</th>
+          <th>Team B</th>
+          <th>Result</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="match in playerResult.lastMatches | orderBy:predicate:reverse">
-          <td><span ng-class="{stressed: player === teamPlayer}" ng-repeat="teamPlayer in match.teamA">{{teamPlayer}}
-          </span>: <span ng-class="{stressed: player === teamPlayer}" ng-repeat="teamPlayer in match.teamB">{{teamPlayer}}
-          </span></td>
+          <td>
+          		<span ng-class="{stressed: match.teamA[0] === player}">{{match.teamA[0]}}</span>-
+          		<span ng-class="{stressed: match.teamA[1] === player}">{{match.teamA[1]}}</span>
+          </td>
+          <td>
+          		<span ng-class="{stressed: match.teamB[0] === player}">{{match.teamB[0]}}</span>-
+          		<span ng-class="{stressed: match.teamB[1] === player}">{{match.teamB[1]}}</span>
+          </td>
           <td>{{match.teamAScore}}:{{match.teamBScore}}</td>
         </tr>
       </tbody>
@@ -101,9 +112,18 @@
 </div>
 <div class="row">
   <h4>Ranking</h4>
-  <nvd3-line-chart id="ranking" class="col-xs-12" data="timeseries.ranking" height="200" showXAxis="true"
-    showYAxis="true" xAxisTickFormat="xAxisTickFormatFunction()" yAxisTickFormat="yAxisFormatFunction()"
-    objectEquality="true" interactive="true" xAxisOrient="top" interpolate="linear"> </nvd3-line-chart>
+  <nvd3-line-chart 
+  	id="ranking" 
+  	class="col-xs-12" 
+  	data="timeseries.ranking" 
+  	height="200" 
+  	showXAxis="true"
+    showYAxis="true" 
+    xAxisTickFormat="xAxisTickFormatFunction()" 
+    yAxisTickFormat="yAxisFormatFunction()"
+    objectEquality="true" 
+    interactive="true" 
+    yAxisOrient="right" interpolate="linear"> </nvd3-line-chart>
 </div>
 
 <div ng-show="isTimeseriesLoading">

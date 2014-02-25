@@ -19,24 +19,26 @@ public class BestPositionTask implements RankingTask {
         for (String player : matches.getPlayers()) {
                 PlayerRanking ranking = playerRankingMap.get(player);
                 List<Match> matchesByPlayer = matches.getMatchesByPlayer(player);
-                Map<Position, Integer> positionMap = new HashMap<>();
-                positionMap.put(Position.Offensive, 0);
-                positionMap.put(Position.Defensive, 0);
+                Map<Position, Integer> gamesWonOnPosition = new HashMap<>();
+                gamesWonOnPosition.put(Position.Offensive, 0);
+                gamesWonOnPosition.put(Position.Defensive, 0);
+                
+                Map<Position, Integer> gamesPlayedOnPosition = new HashMap<>();
+                gamesPlayedOnPosition.put(Position.Offensive, 0);
+                gamesPlayedOnPosition.put(Position.Defensive, 0);
 
                 for (Match match : matchesByPlayer) {
                         PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
+                        Position position = playerMatch.getPosition();
                         if (playerMatch.hasWon()) {
-                                Position position = playerMatch.getPosition();
-                                Integer positionCount = positionMap.get(position) + 1;
-                                positionMap.put(position, positionCount);
+                                gamesWonOnPosition.put(position, gamesWonOnPosition.get(position) + 1);
                         }
+                        gamesPlayedOnPosition.put(position, gamesPlayedOnPosition.get(position) + 1);
 
                 }
 
-                Integer offensiveCount = positionMap.get(Position.Offensive);
-                Integer defensiveCount = positionMap.get(Position.Defensive);
-                ranking.setOffensivePositionRate(1.0 * offensiveCount / (matchesByPlayer.size()));
-                ranking.setDefensivePositionRate(1.0 * defensiveCount / (matchesByPlayer.size()));
+                ranking.setOffensivePositionRate(1.0 * gamesWonOnPosition.get(Position.Offensive) / gamesPlayedOnPosition.get(Position.Offensive));
+                ranking.setDefensivePositionRate(1.0 * gamesWonOnPosition.get(Position.Defensive) / gamesPlayedOnPosition.get(Position.Defensive));
 
         }
     }

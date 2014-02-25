@@ -32,8 +32,8 @@ public class BestPositionTaskTest {
 		Map<String, PlayerRanking> playerRankingMap = TestDataUtil.createPlayerRankingMap("dei", "cw", "rfi", "rsp");
 		task.rankMatches(playerRankingMap, matches);
 		PlayerRanking playerDei = playerRankingMap.get("dei");
-		Assert.assertEquals(50, Math.round(100 * playerDei.getOffensivePositionRate()));
-		Assert.assertEquals(25, Math.round(100 * playerDei.getDefensivePositionRate()));
+		Assert.assertEquals(100, Math.round(100 * playerDei.getOffensivePositionRate()));
+		Assert.assertEquals(50, Math.round(100 * playerDei.getDefensivePositionRate()));
 	}
 
 	

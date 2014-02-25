@@ -3,6 +3,7 @@ package ch.squix.extraleague.model.ranking;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,11 +17,12 @@ import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.tasks.AverageTimePerMatchTask;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
-import ch.squix.extraleague.model.ranking.tasks.SpecialResultPerGameTask;
+import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
 import ch.squix.extraleague.model.ranking.tasks.ScoreTask;
 import ch.squix.extraleague.model.ranking.tasks.SlamTask;
+import ch.squix.extraleague.model.ranking.tasks.SpecialResultPerGameTask;
 import ch.squix.extraleague.model.ranking.tasks.StrikeTask;
 import ch.squix.extraleague.rest.games.GameResource;
 
@@ -29,7 +31,9 @@ public class RankingService {
 	private static final Logger log = Logger.getLogger(GameResource.class.getName());
 
 	public static void calculateRankings() {
-		List<Match> matchesList = ofy().load().type(Match.class).list();
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -30);
+		List<Match> matchesList = ofy().load().type(Match.class).filter("startDate > ", calendar.getTime()).list();
 		Matches matches = new Matches();
 		matches.setMatches(matchesList);
 		
@@ -51,6 +55,7 @@ public class RankingService {
 		rankingTasks.add(new StrikeTask());
 		rankingTasks.add(new PartnerOpponentTask());
 		rankingTasks.add(new AverageTimePerMatchTask());
+		rankingTasks.add(new ManualBadgeTask());
 		for (RankingTask task: rankingTasks) {
 		    task.rankMatches(playerRankingMap, matches);
 		}

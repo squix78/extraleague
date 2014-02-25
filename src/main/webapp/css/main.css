@@ -36,3 +36,9 @@ legend {
 .stressed {
 	font-weight: bolder;
 }
+.won {
+	color: green;
+}
+.lost {
+	color: red;
+}

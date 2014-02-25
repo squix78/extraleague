@@ -26,6 +26,8 @@ public class RankingDto {
     
     private Double offensivePositionRate;
     private Double defensivePositionRate;
+    
+    private Long averageSecondsPerMatch;
 
     public String getPlayer() {
         return player;
@@ -186,6 +188,20 @@ public class RankingDto {
 
 	public void setDefensivePositionRate(Double defensivePositionRate) {
 		this.defensivePositionRate = defensivePositionRate;
+	}
+
+	/**
+	 * @return the averageSecondsPerMatch
+	 */
+	public Long getAverageSecondsPerMatch() {
+		return averageSecondsPerMatch;
+	}
+
+	/**
+	 * @param averageSecondsPerMatch the averageSecondsPerMatch to set
+	 */
+	public void setAverageSecondsPerMatch(Long averageSecondsPerMatch) {
+		this.averageSecondsPerMatch = averageSecondsPerMatch;
 	}
 
 

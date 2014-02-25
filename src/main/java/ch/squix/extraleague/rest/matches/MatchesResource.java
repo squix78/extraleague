@@ -54,7 +54,9 @@ public class MatchesResource extends ServerResource {
 			match = new Match();
 		}
 		match.setGameId(dto.getGameId());
-		match.setStartDate(dto.getStartDate());
+		if (match.getStartDate() == null) {
+			match.setStartDate(dto.getStartDate());
+		}
 		match.setTeamA(dto.getTeamA());
 		match.setTeamB(dto.getTeamB());
 		match.setTeamAScore(dto.getTeamAScore());

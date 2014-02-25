@@ -34,6 +34,8 @@ public class PlayerRanking implements Serializable {
     private Double offensivePositionRate;
     private Double defensivePositionRate;
 
+	private Long averageSecondsPerMatch;
+
     public String getPlayer() {
         return player;
     }
@@ -205,6 +207,14 @@ public class PlayerRanking implements Serializable {
 
 	public void setDefensivePositionRate(Double defensivePositionRate) {
 		this.defensivePositionRate = defensivePositionRate;
+	}
+
+	public void setAverageSecondsPerMatch(long averageSecondsPerMatch) {
+		this.averageSecondsPerMatch = averageSecondsPerMatch;
+	}
+	
+	public Long getAverageSecondsPerMatch() {
+		return averageSecondsPerMatch;
 	}
 
 }

@@ -150,7 +150,7 @@ function OpenGamesController($scope, $rootScope, $resource, $timeout, $routePara
       });
   };
 }
-function GameController($scope, $resource, $routeParams, $location, Game, Match, PlayerService, Players) {
+function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, PlayerService, Players, NotificationService) {
 	$scope.PlayerService = PlayerService;
 	
 	$scope.gameId = $routeParams.gameId;
@@ -174,39 +174,50 @@ function GameController($scope, $resource, $routeParams, $location, Game, Match,
 	});
 	$scope.increaseScoreTeamA = function() {
 		$scope.match.teamAScore++;
-		$scope.checkNextMatch();
+		$scope.saveMatch();
 	};
 	$scope.decreaseScoreTeamA = function() {
 		if ($scope.match.teamAScore > 0) {
 			$scope.match.teamAScore--;
+			$scope.saveMatch();
 		}
 	};
-	$scope.checkNextMatch = function() {
-	    $scope.matchIsSaving = true;
-			if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
-				$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
-					$scope.matchIsSaving = false;
-					$scope.match.endDate = new Date();
-					if ($scope.matchIndex < 3) {	
-						$scope.matchIndex++;
-						$scope.updateCurrentMatch();
-					} else {
-						$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");				
-					}
-				});
-			} else {
-				$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
-					$scope.matchIsSaving = false;
-				});
-			}
+	$scope.saveMatch = function() {
+	    	$scope.matchIsSaving = true;
+	    	$scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
+	    		$scope.matchIsSaving = false;
+	    		$scope.checkEndOfMatch();
+	    	});
 	}
+	$scope.checkEndOfMatch = function() {
+		if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
+			$scope.match.endDate = new Date();
+			if ($scope.matchIndex < 3) {	
+				$scope.matchIndex++;
+				$scope.updateCurrentMatch();
+			} else {
+				$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");				
+			}
+		} 
+	};
+	
+	  $rootScope.$on("UpdateMatch", function(event, message) {
+		  console.log("Received change in game from server");
+		  $scope.$apply(function() {
+			  $scope.match = new Match(message.match);
+			  $scope.game = new Game(message.game);
+			  $scope.checkEndOfMatch();
+		  });
+	  });
+	
 	$scope.increaseScoreTeamB = function() {
 		$scope.match.teamBScore++;
-		$scope.checkNextMatch();
+		$scope.saveMatch();
 	}
 	$scope.decreaseScoreTeamB = function() {
 		if ($scope.match.teamBScore > 0) {
 			$scope.match.teamBScore--;
+			$scope.saveMatch();
 		}
 	}
 	console.log("Arrived in GameController: " + $scope.gameId);

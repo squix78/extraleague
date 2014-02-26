@@ -18,7 +18,10 @@ import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.ranking.RankingService;
 import ch.squix.extraleague.notification.NotificationService;
+import ch.squix.extraleague.notification.UpdateMatchMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
+import ch.squix.extraleague.rest.games.GameDto;
+import ch.squix.extraleague.rest.games.GameDtoMapper;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGameService;
 
@@ -87,6 +90,9 @@ public class MatchesResource extends ServerResource {
 			game.setEndDate(new Date());
 			RankingService.calculateRankings();
 			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
+		} else {
+			GameDto gameDto = GameDtoMapper.mapToDto(game);
+			NotificationService.sendMessage(new UpdateMatchMessage(gameDto, dto));
 		}
 		ofy().save().entity(game).now();
 		dto.setId(match.getId());

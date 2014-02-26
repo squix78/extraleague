@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bootstrap', 'nvd3ChartDirectives'])
+angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bootstrap', 'nvd3ChartDirectives', 'gaeChannelService'])
     .config(function($routeProvider) {
       $routeProvider
       .when('/', {
@@ -79,6 +79,7 @@ function MainController($scope, $resource, $location, Tables) {
 		console.log("Table selected: " + table.name);
 		$location.path("/tables/" + table.name);
 	};
+
 }
 
 function TableController($scope, $resource, $routeParams, $location, Games, Game, PlayerService, Players) {
@@ -116,18 +117,29 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 		$scope.players = playersResult;
 	});
 }
-function OpenGamesController($scope, $resource, $timeout, $routeParams, $location, OpenGames, Game, PlayerService, Players) {
+function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, OpenGames, Game, PlayerService, Players, NotificationService) {
   $scope.updateGames = function() {
       $scope.isGamesLoading = true;
       $scope.games = OpenGames.query({}, function() {
               $scope.isGamesLoading = false;
       });
-	  var timer = $timeout($scope.updateGames, 120000);
-	  $scope.$on('$locationChangeStart', function(){
-		  $timeout.cancel(timer);
-	  });
+//	  var timer = $timeout($scope.updateGames, 120000);
+//	  $scope.$on('$locationChangeStart', function(){
+//		  $timeout.cancel(timer);
+//	  });
   };
   $scope.updateGames();
+  
+  // Update the list, if a state changed on the server
+  $rootScope.$on("UpdateOpenGames", function(event, message) {
+	  console.log("Received change in open games from server");
+	  $scope.$apply(function() {
+		  $scope.games = [];
+		  angular.forEach(message.openGames, function(key, value) {
+			  $scope.games.push(new OpenGames(key));
+		  });
+	  });
+  });
 
   $scope.continueGame = function(game) {
       $location.path("/tables/" + game.table + "/games/" + game.id);

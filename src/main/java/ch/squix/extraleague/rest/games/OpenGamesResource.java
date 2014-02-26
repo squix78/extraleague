@@ -21,17 +21,10 @@ public class OpenGamesResource extends ServerResource {
 	@Get(value = "json")
 	public List<GameDto> execute() throws UnsupportedEncodingException {
 		String table = (String) this.getRequestAttributes().get("table");
-		List<Game> games = ofy().load().type(Game.class).list();
-		log.info("Listing table for " + table + ". Found " + games.size() + " former games");
-		List<GameDto> gameDtos = new ArrayList<>();
-		for (Game game : games) {
-			if (game.getEndDate() == null) {
-				GameDto dto = GameDtoMapper.mapToDto(game);
-				gameDtos.add(dto);
-			}
-		}
-		return gameDtos;
+		// FIXME: table currently ignored
+		return OpenGameService.getOpenGames();
 	}
+
 
 
 }

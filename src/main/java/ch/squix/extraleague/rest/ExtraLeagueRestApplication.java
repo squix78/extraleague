@@ -6,6 +6,7 @@ import org.restlet.routing.Router;
 
 import com.googlecode.objectify.ObjectifyService;
 
+import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.ranking.Ranking;
@@ -14,6 +15,7 @@ import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGamesResource;
 import ch.squix.extraleague.rest.maintenance.MigrateMatchesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
+import ch.squix.extraleague.rest.notification.NotificationTokenResource;
 import ch.squix.extraleague.rest.ping.PingResource;
 import ch.squix.extraleague.rest.player.PlayerRessource;
 import ch.squix.extraleague.rest.player.PlayersRessource;
@@ -29,6 +31,7 @@ public class ExtraLeagueRestApplication extends Application {
         ObjectifyService.register(Game.class);
         ObjectifyService.register(Match.class);
         ObjectifyService.register(Ranking.class);
+        ObjectifyService.register(BrowserClient.class);
     }
 	
 	@Override
@@ -49,6 +52,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/timeseries/{player}", TimeSeriesResource.class);
         router.attach("/updateRankings", RankingServiceResource.class);
         router.attach("/migrateMatches", MigrateMatchesResource.class);
+        router.attach("/notificationToken", NotificationTokenResource.class);
 
         return router;
     }

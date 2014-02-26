@@ -1,3 +1,4 @@
+
 <h1>NFA Ranking</h1>
 
 <div class="table-responsive">
@@ -15,8 +16,8 @@
           <tr ng-repeat="ranking in rankings | orderBy:predicate:reverse">
             <td>{{ranking.ranking}} </td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
-            <td>{{ranking.successRate * 100 | number:1}}</td>
-            <td><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>
+            <td ng-class="{won: ranking.successRate > 0.5, lost: ranking.successRate < 0.5}">{{ranking.successRate * 100 | number:1}}</td>
+            <td ng-class="{won: ranking.goalPlusMinus > 0, lost: ranking.goalPlusMinus < 0}"><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>
             <td>
             	<span class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">
             		{{badge}}
@@ -55,7 +56,7 @@
 	<span class="label label-primary">Iceman</span>: won all matches 5:4 in a game
 </div>
 <div>
-	<span class="label label-primary">PurpleHeart</span>: Contributed code or issues to Extraleage
+	<span class="label label-primary">PurpleHeart</span>: Contributed code or issues to Extraleague
 </div>
 <div>
 	<span class="label label-primary">SilverStar</span>: Contributed extraordinary amounts of ideas, code or blood to Extraleague

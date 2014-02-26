@@ -28,7 +28,7 @@ import ch.squix.extraleague.rest.games.GameResource;
 
 public class RankingService {
 	
-	private static final Logger log = Logger.getLogger(GameResource.class.getName());
+	private static final Logger log = Logger.getLogger(RankingService.class.getName());
 
 	public static void calculateRankings() {
 		Calendar calendar = Calendar.getInstance();

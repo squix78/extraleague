@@ -15,6 +15,8 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.notification.NotificationService;
+import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 
 
 
@@ -54,6 +56,7 @@ public class GamesResource extends ServerResource {
 		Collections.shuffle(game.getPlayers());
 		List<Match> matches = createMatches(game);
 		ofy().save().entities(matches).now();
+		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
 		return dto;
 	}
 

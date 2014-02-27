@@ -79,6 +79,14 @@ function MainController($scope, $resource, $location, Tables) {
 		console.log("Table selected: " + table.name);
 		$location.path("/tables/" + table.name);
 	};
+	
+    $scope.isActive = function(path) {
+	    if ($location.path().indexOf(path) !== -1) {
+	      return "active";
+	    } else {
+	      return "";
+	    }
+	};
 
 }
 

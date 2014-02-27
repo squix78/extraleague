@@ -1,3 +1,7 @@
 # Extraleague
 
-TBD
+# Starting the development environment
+
+```
+mvn appengine:devserver
+```

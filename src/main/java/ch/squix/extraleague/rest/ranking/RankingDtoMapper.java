@@ -31,6 +31,7 @@ public class RankingDtoMapper {
 			rankingDto.setWorstOpponent(playerRanking.getWorstOpponent());
 			rankingDto.setWorstOpponentRate(playerRanking.getWorstOpponentRate());
 			rankingDto.setAverageSecondsPerMatch(playerRanking.getAverageSecondsPerMatch());
+			rankingDto.setCurrentShapeRate(playerRanking.getCurrentShapeRate());
 			playerRankingList.add(rankingDto);
 		}
 		return playerRankingList;

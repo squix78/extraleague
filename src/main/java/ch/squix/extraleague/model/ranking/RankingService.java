@@ -17,6 +17,7 @@ import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.tasks.AverageTimePerMatchTask;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
+import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
 import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
@@ -56,6 +57,7 @@ public class RankingService {
 		rankingTasks.add(new PartnerOpponentTask());
 		rankingTasks.add(new AverageTimePerMatchTask());
 		rankingTasks.add(new ManualBadgeTask());
+		rankingTasks.add(new CurrentShapeTask());
 		for (RankingTask task: rankingTasks) {
 		    task.rankMatches(playerRankingMap, matches);
 		}

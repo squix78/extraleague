@@ -8,6 +8,7 @@
             <th>#</th>
             <th><a href="" ng-click="predicate = 'player'; reverse=!reverse">Who</a></th>
             <th><a href="" ng-click="predicate = 'successRate'; reverse=!reverse">%</a></th>
+            <th><a href="" ng-click="predicate = 'currentShapeRate'; reverse=!reverse">Shape %</a></th>
             <th><a href="" ng-click="predicate = 'goalPlusMinus'; reverse=!reverse">Goals</a></th>
             <th><a href="" ng-click="predicate = 'badges.length'; reverse=!reverse">Badges</a></th>
           </tr>
@@ -17,6 +18,7 @@
             <td>{{ranking.ranking}} </td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
             <td ng-class="{won: ranking.successRate > 0.5, lost: ranking.successRate < 0.5}">{{ranking.successRate * 100 | number:1}}</td>
+            <td ng-class="{won: ranking.currentShapeRate > 0.5, lost: ranking.currentShapeRate < 0.5}">{{ranking.currentShapeRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.goalPlusMinus > 0, lost: ranking.goalPlusMinus < 0}"><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>
             <td>
             	<span class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">

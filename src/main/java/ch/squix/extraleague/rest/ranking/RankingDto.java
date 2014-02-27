@@ -24,6 +24,8 @@ public class RankingDto {
     private String worstOpponent;
     private Double worstOpponentRate;
     
+    private Double currentShapeRate;
+    
     private Double offensivePositionRate;
     private Double defensivePositionRate;
     
@@ -202,6 +204,20 @@ public class RankingDto {
 	 */
 	public void setAverageSecondsPerMatch(Long averageSecondsPerMatch) {
 		this.averageSecondsPerMatch = averageSecondsPerMatch;
+	}
+
+	/**
+	 * @return the currentShapeRate
+	 */
+	public Double getCurrentShapeRate() {
+		return currentShapeRate;
+	}
+
+	/**
+	 * @param currentShapeRate the currentShapeRate to set
+	 */
+	public void setCurrentShapeRate(Double currentShapeRate) {
+		this.currentShapeRate = currentShapeRate;
 	}
 
 

@@ -36,6 +36,8 @@ public class PlayerRanking implements Serializable {
 
 	private Long averageSecondsPerMatch;
 
+	private Double currentShapeRate;
+
     public String getPlayer() {
         return player;
     }
@@ -215,6 +217,14 @@ public class PlayerRanking implements Serializable {
 	
 	public Long getAverageSecondsPerMatch() {
 		return averageSecondsPerMatch;
+	}
+
+	public void setCurrentShapeRate(Double currentShapeRate) {
+		this.currentShapeRate = currentShapeRate;
+	}
+	
+	public Double getCurrentShapeRate() {
+		return currentShapeRate;
 	}
 
 }

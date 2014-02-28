@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
+import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 import ch.squix.extraleague.model.ranking.tasks.AverageTimePerMatchTask;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
 import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
@@ -105,13 +106,13 @@ public class RankingService {
 	private static void calculateBadges(List<PlayerRanking> rankings) {
 		for (PlayerRanking ranking : rankings) {
 			if (ranking.getRanking() == 1) {
-				ranking.getBadges().add("King");
+				ranking.getBadges().add(BadgeEnum.King.name());
 			}
 			if (ranking.getRanking() == 2) {
-				ranking.getBadges().add("Queen");
+				ranking.getBadges().add(BadgeEnum.Queen.name());
 			}
 			if (ranking.getRanking() == rankings.size()) {
-				ranking.getBadges().add("Pawn");
+				ranking.getBadges().add(BadgeEnum.Pawn.name());
 			}
 		}
 	}

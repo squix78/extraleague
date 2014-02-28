@@ -9,6 +9,7 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 
 public class StrikeTask implements RankingTask {
@@ -36,7 +37,7 @@ public class StrikeTask implements RankingTask {
             	System.out.println("Player " + entry.getKey() + " has " + entry.getValue() + " victories");
             	if (entry.getValue() == 4) {
             		PlayerRanking playerRanking = playerRankingMap.get(entry.getKey());
-            		playerRanking.getBadges().add("Strike");
+            		playerRanking.getBadges().add(BadgeEnum.Strike.name());
             	}
             }
         }

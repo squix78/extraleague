@@ -8,6 +8,7 @@ import java.util.Set;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 public class IncestuousTask implements RankingTask {
 
@@ -24,7 +25,7 @@ public class IncestuousTask implements RankingTask {
     			playerSet.addAll(match.getPlayers());
     		}
     		if (playerSet.size() == 4) {
-    			ranking.getBadges().add("Incestuous!");
+    			ranking.getBadges().add(BadgeEnum.Incestuous.name());
     		}
     	}
     }

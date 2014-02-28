@@ -11,6 +11,7 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 
 public class SpecialResultPerGameTask implements RankingTask {
@@ -44,12 +45,22 @@ public class SpecialResultPerGameTask implements RankingTask {
         for(String player : maxFiveZeroPerPlayerMap.keySet()) {
                 Integer fiveZeroes = maxFiveZeroPerPlayerMap.get(player);
                 PlayerRanking ranking = playerRankingMap.get(player);
-                if (fiveZeroes!= null && fiveZeroes > 0) {
-                    ranking.getBadges().add(fiveZeroes + "x5:0!");
+                if (fiveZeroes != null && fiveZeroes > 0) {
+                	BadgeEnum badge = null;
+                	if (fiveZeroes == 1) {
+                		badge = BadgeEnum.Shutout;
+                	} else if (fiveZeroes == 2) {
+                		badge = BadgeEnum.BackToBackShutout;
+                	} else if (fiveZeroes == 3) {
+                		badge = BadgeEnum.IAmLegend;
+                	} else if (fiveZeroes == 4) {
+                		badge = BadgeEnum.NoMercy;
+                	}
+                	ranking.getBadges().add(badge.name());
                 }
                 Integer fiveToFours = max5To4PerPlayerMap.get(player);
                 if (fiveToFours != null && fiveToFours == 4) {
-                	ranking.getBadges().add("Iceman");
+                	ranking.getBadges().add(BadgeEnum.IceMan.name());
                 }
         }
     }

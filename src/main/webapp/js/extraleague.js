@@ -64,6 +64,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bo
 	.factory('TimeSeries', ['$resource', function($resource) {
 		return $resource('/rest/timeseries/:player');
 	}])
+	.factory('Badges', ['$resource', function($resource) {
+	    return $resource('/rest/badges', {}, {get: {cache: true, method: 'GET' } } );
+	}])
 	.factory('Match', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId/matches');
 	}]);
@@ -260,12 +263,18 @@ function SummaryController($scope, $resource, $routeParams, Summary, Match) {
 	};
 	$scope.getSummary();
 }
-function RankingController($scope, $resource, $routeParams, Ranking) {
+function RankingController($scope, $resource, $routeParams, Ranking, Badges) {
 	$scope.predicate = '-successRate';
 	$scope.isRankingLoading = true;
 	$scope.rankings = Ranking.query({}, function() {
 		$scope.isRankingLoading = false;
 		
+	});
+	$scope.badges = Badges.get(function() {
+		$scope.badgeList = [];
+		angular.forEach($scope.badges, function(key, value) {
+			$scope.badgeList.push(key);
+		});
 	});
 }
 function PlayerController($scope, $routeParams, PlayerService, Player, TimeSeries) {

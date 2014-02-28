@@ -21,8 +21,9 @@
             <td ng-class="{won: ranking.currentShapeRate > 0.5, lost: ranking.currentShapeRate < 0.5}">{{ranking.currentShapeRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.goalPlusMinus > 0, lost: ranking.goalPlusMinus < 0}"><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>
             <td>
-            	<span class="label label-primary" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">
-            		{{badge}}
+            	<span class="label" class="label" title="{{badges[badge].description}}"
+            		ng-class="{'label-primary': badges[badge].badgeType !== 'Shamelet', 'label-danger': badges[badge].badgeType === 'Shamelet'}" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">
+            		<i class="fa {{badges[badge].faClass}}"></i> {{badge}}
             	</span>
             </td>
           </tr>
@@ -36,36 +37,20 @@
 <BR/>
 <B>Note:</B> players are only ranked after 2 or more sessions
 <h4>Badges</h4>
-<div>
-	<span class="label label-primary">King</span>: 1st
-</div>
-<div>
-	<span class="label label-primary">Queen</span>: 2nd
-</div>
-<div>
-	<span class="label label-primary">Pawn</span>: Last
-</div>
-<div>
-	<span class="label label-primary">nx5:0!</span>: won n matches to zero in a game
-</div>
-<div>
-	<span class="label label-primary">nxSlam</span>: won n matches in a row (>4)
-</div>
-<div>
-	<span class="label label-primary">Incestuous!</span>: Played last two rounds with same partners
-</div>
-<div>
-	<span class="label label-primary">Strike</span>: won all matches in a game
-</div>
-<div>
-	<span class="label label-primary">Iceman</span>: won all matches 5:4 in a game
-</div>
-<div>
-	<span class="label label-primary">PurpleHeart</span>: Contributed code or issues to Extraleague
-</div>
-<div>
-	<span class="label label-primary">SilverStar</span>: Contributed extraordinary amounts of ideas, code or blood to Extraleague
-</div>
+<table class="table table-striped">
+	<tbody>
+		<tr class="row" ng-repeat="badge in badgeList | orderBy:index">
+			<td>
+				<span class="label" ng-class="{'label-primary': badge.badgeType === 'Achievement', 'label-danger': badge.badgeType === 'Shamelet'}">
+					<i class="fa {{badge.faClass}}"></i> {{badge.name}}
+				</span>
+			</td>
+			<td>
+				{{badge.description}}
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 
 

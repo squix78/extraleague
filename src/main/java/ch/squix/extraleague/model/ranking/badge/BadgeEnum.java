@@ -2,6 +2,7 @@ package ch.squix.extraleague.model.ranking.badge;
 
 public enum BadgeEnum {
 	
+	// Find more icon classes on http://fortawesome.github.io/Font-Awesome/icons/
 	King(1, BadgeType.Achievement, "fa-trophy", "1st"), 
 	Queen(2, BadgeType.Achievement, "fa-female", "2nd"), 
 	Pawn(3, BadgeType.Shamelet, "fa-ambulance", "Last"), 

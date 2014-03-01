@@ -25,3 +25,11 @@ If you want to look at your local datastore navigate to
 http://localhost:8080/_ah/admin
 ```
 after starting your development server.
+
+## Test environment/demo
+After every successful commit the latest version will be deployed to 
+```
+http://ncaleague-test.appspot.com/
+```
+If you plan to write a new client I suggest you experiment against this instance, rather than the "production" application.
+after starting your development server.

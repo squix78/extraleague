@@ -69,7 +69,19 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bo
 	}])
 	.factory('Match', ['$resource', function($resource) {
 		return $resource('/rest/tables/:table/games/:gameId/matches');
-	}]);
+	}])
+	.directive('badges', function() {
+		return {
+			restrict: 'A',
+			require: '^ngModel',
+			/*template: '<div>{{ngModel}}</div>',*/
+			templateUrl: 'templates/badges.html',
+		    scope: {
+		        ngModel: '=',
+		        badgeMap: '='
+		      }
+		}
+	});
 
 function MainController($scope, $resource, $location, Tables) {
 //	$scope.tablesLoading = true;
@@ -270,14 +282,14 @@ function RankingController($scope, $resource, $routeParams, Ranking, Badges) {
 		$scope.isRankingLoading = false;
 		
 	});
-	$scope.badges = Badges.get(function() {
+	$scope.badgeMap = Badges.get(function() {
 		$scope.badgeList = [];
-		angular.forEach($scope.badges, function(key, value) {
+		angular.forEach($scope.badgeMap, function(key, value) {
 			$scope.badgeList.push(key);
 		});
 	});
 }
-function PlayerController($scope, $routeParams, PlayerService, Player, TimeSeries) {
+function PlayerController($scope, $routeParams, PlayerService, Player, TimeSeries, Badges) {
 	$scope.player = $routeParams.player;
 	$scope.playerPicture = PlayerService.getPlayerPicture($scope.player);
 	$scope.isPlayerLoading = true;
@@ -304,6 +316,12 @@ function PlayerController($scope, $routeParams, PlayerService, Player, TimeSerie
 			return d * 100 + "%"; //uncomment for date format
 		};
 	};
+	$scope.badgeMap = Badges.get(function() {
+		$scope.badgeList = [];
+		angular.forEach($scope.badges, function(key, value) {
+			$scope.badgeList.push(key);
+		});
+	});
 }
 
 

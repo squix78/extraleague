@@ -21,10 +21,7 @@
             <td ng-class="{won: ranking.currentShapeRate > 0.5, lost: ranking.currentShapeRate < 0.5}">{{ranking.currentShapeRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.goalPlusMinus > 0, lost: ranking.goalPlusMinus < 0}"><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>
             <td>
-            	<span class="label" class="label" title="{{badges[badge].description}}"
-            		ng-class="{'label-primary': badges[badge].badgeType !== 'Shamelet', 'label-danger': badges[badge].badgeType === 'Shamelet'}" style="margin-right: 3px;" ng-repeat="badge in ranking.badges">
-            		<i class="fa {{badges[badge].faClass}}"></i> {{badge}}
-            	</span>
+				<div badges ng-model="ranking.badges" badge-map="badgeMap"></div>
             </td>
           </tr>
         </tbody>

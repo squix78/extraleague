@@ -20,13 +20,16 @@
         <tr>
           <td>Badges:</td>
           <td>
-            <div class="label label-primary" style="margin-right: 3px;"
-              ng-repeat="badge in playerResult.statistics.badges">{{badge}}</div>
+            	<div badges ng-model="playerResult.statistics.badges" badge-map="badgeMap"></div>
           </td>
         </tr>
         <tr>
           <td>Success:</td>
           <td>{{playerResult.statistics.successRate * 100 | number:2}}%</td>
+        </tr>
+        <tr>
+          <td>Shape:</td>
+          <td>{{playerResult.statistics.currentShapeRate * 100 | number:2}}%</td>
         </tr>
         <tr>
           <td>Goals:</td>

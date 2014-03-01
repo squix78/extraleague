@@ -13,6 +13,9 @@ public enum BadgeEnum {
 	NxSlam(8, BadgeType.Achievement, "", "won N games in a row"), 
 	Strike(9, BadgeType.Achievement, "fa-bolt", "won all matches in a round"), 
 	IceMan(10, BadgeType.Achievement, "fa-android", "won all matches 5:4 in a round"), 
+	BattleAxe(11, BadgeType.Achievement, "fa-gavel", "highest offensive rate"),
+	TheWall(11, BadgeType.Achievement, "fa-shield", "highest defensive rate"),
+	ZenMonk(11, BadgeType.Achievement, "fa-circle-o", "most balanced skills"),
 	PurpleHeart(11, BadgeType.Achievement, "fa-heart", "Contributed code or issues to Extraleague"), 
 	SilverStar(12, BadgeType.Achievement, "fa-asterisk", "Contributed extraordinary amounts of ideas, code or blood to Extraleague"),
 	Incestuous(13, BadgeType.Shamelet, "fa-stethoscope", "Played last 2 rounds with the same people");

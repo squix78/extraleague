@@ -21,6 +21,7 @@ import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
 import ch.squix.extraleague.model.ranking.tasks.RankTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
 import ch.squix.extraleague.model.ranking.tasks.ScoreTask;
+import ch.squix.extraleague.model.ranking.tasks.SkillBadgesTask;
 import ch.squix.extraleague.model.ranking.tasks.SlamTask;
 import ch.squix.extraleague.model.ranking.tasks.SpecialResultPerGameTask;
 import ch.squix.extraleague.model.ranking.tasks.StrikeTask;
@@ -50,6 +51,7 @@ public class RankingService {
 		rankingTasks.add(new ScoreTask());
 		rankingTasks.add(new SpecialResultPerGameTask());
 		rankingTasks.add(new BestPositionTask());
+		rankingTasks.add(new SkillBadgesTask());
 		rankingTasks.add(new SlamTask());
 		rankingTasks.add(new StrikeTask());
 		rankingTasks.add(new PartnerOpponentTask());

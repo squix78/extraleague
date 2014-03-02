@@ -1,10 +1,9 @@
 package ch.squix.extraleague.model.ranking;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-
-import ch.squix.extraleague.model.match.Position;
 
 
 public class PlayerRanking implements Serializable {
@@ -37,6 +36,9 @@ public class PlayerRanking implements Serializable {
 	private Long averageSecondsPerMatch;
 
 	private Double currentShapeRate;
+	
+	private Set<String> playedWith = new HashSet<>();
+	private Set<String> neverPlayedWith = new HashSet<>();
 
     public String getPlayer() {
         return player;
@@ -225,6 +227,22 @@ public class PlayerRanking implements Serializable {
 	
 	public Double getCurrentShapeRate() {
 		return currentShapeRate;
+	}
+
+	public Set<String> getPlayedWith() {
+		return playedWith;
+	}
+
+	public Set<String> getNeverPlayedWith() {
+		return neverPlayedWith;
+	}
+
+	public void setPlayedWith(Set<String> playedWith) {
+		this.playedWith = playedWith;
+	}
+
+	public void setNeverPlayedWith(Set<String> neverPlayedWith) {
+		this.neverPlayedWith = neverPlayedWith;
 	}
 
 }

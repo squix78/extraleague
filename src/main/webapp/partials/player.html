@@ -71,6 +71,24 @@
           <td><a href="#/player/{{playerResult.statistics.worstOpponent}}">{{playerResult.statistics.worstOpponent}}</a> (won {{playerResult.statistics.worstOpponentRate * 100 |
             number:2}}%)</td>
         </tr>
+        <tr>
+          <td>Played with:</td>
+          <td>
+          	<span ng-repeat="playerName in playerResult.statistics.playedWith">
+          		<span ng-show="$index > 1">, </span>
+          		{{playerName}}
+          	</span>
+          	({{playerResult.statistics.playedWith.length}})
+          </td>
+        </tr>
+        <tr>
+          <td>Never played with:</td>
+          <td>
+          	<span ng-repeat="playerName in playerResult.statistics.neverPlayedWith">
+          		<span ng-show="$index > 0">, </span>{{playerName}}</span>
+          		({{playerResult.statistics.neverPlayedWith.length}})
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

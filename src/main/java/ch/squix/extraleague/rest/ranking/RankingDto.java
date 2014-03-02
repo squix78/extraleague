@@ -2,6 +2,7 @@ package ch.squix.extraleague.rest.ranking;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import ch.squix.extraleague.model.match.Position;
 
@@ -30,6 +31,8 @@ public class RankingDto {
     private Double defensivePositionRate;
     
     private Long averageSecondsPerMatch;
+	private Set<String> playedWith;
+	private Set<String> neverPlayedWith;
 
     public String getPlayer() {
         return player;
@@ -218,6 +221,22 @@ public class RankingDto {
 	 */
 	public void setCurrentShapeRate(Double currentShapeRate) {
 		this.currentShapeRate = currentShapeRate;
+	}
+
+	public void setPlayedWith(Set<String> playedWith) {
+		this.playedWith = playedWith;
+	}
+	
+	public Set<String> getPlayedWith() {
+		return playedWith;
+	}
+
+	public void setNeverPlayedWith(Set<String> neverPlayedWith) {
+		this.neverPlayedWith = neverPlayedWith;
+	}
+	
+	public Set<String> getNeverPlayedWith() {
+		return neverPlayedWith;
 	}
 
 

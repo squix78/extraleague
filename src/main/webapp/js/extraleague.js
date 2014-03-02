@@ -106,6 +106,7 @@ function MainController($scope, $resource, $location, Tables) {
 }
 
 function TableController($scope, $resource, $routeParams, $location, Games, Game, PlayerService, Players) {
+	$scope.isSavingGame = false;
 	$scope.PlayerService = PlayerService;
 	$scope.table = $routeParams.table;
 	$scope.currentGame = new Games();
@@ -124,7 +125,9 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 		$scope.player="";
 	};
 	$scope.startGame = function() {
+		$scope.isSavingGame = true;
 		$scope.currentGame.$save({table: $scope.table}, function(savedGame){
+			$scope.isSavingGame = false;
 			$scope.currentGame = savedGame;
 			$location.path("/tables/" + $scope.table + "/games/" + $scope.currentGame.id);			
 		});

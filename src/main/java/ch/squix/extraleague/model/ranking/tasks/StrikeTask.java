@@ -34,7 +34,6 @@ public class StrikeTask implements RankingTask {
                 }
             }
             for (Map.Entry<String, Integer> entry : winMap.entrySet()) {
-            	System.out.println("Player " + entry.getKey() + " has " + entry.getValue() + " victories");
             	if (entry.getValue() == 4) {
             		PlayerRanking playerRanking = playerRankingMap.get(entry.getKey());
             		playerRanking.getBadges().add(BadgeEnum.Strike.name());

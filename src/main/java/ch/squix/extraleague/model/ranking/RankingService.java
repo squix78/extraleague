@@ -4,6 +4,9 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,13 +15,16 @@ import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
+import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 import ch.squix.extraleague.model.ranking.tasks.AverageTimePerMatchTask;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
 import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
+import ch.squix.extraleague.model.ranking.tasks.FirstPlayerFilterTask;
 import ch.squix.extraleague.model.ranking.tasks.IncestuousTask;
 import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
+import ch.squix.extraleague.model.ranking.tasks.PartnerCountTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
-import ch.squix.extraleague.model.ranking.tasks.RankTask;
+import ch.squix.extraleague.model.ranking.tasks.RankingIndexTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
 import ch.squix.extraleague.model.ranking.tasks.ScoreTask;
 import ch.squix.extraleague.model.ranking.tasks.SkillBadgesTask;
@@ -51,7 +57,6 @@ public class RankingService {
 		rankingTasks.add(new ScoreTask());
 		rankingTasks.add(new SpecialResultPerGameTask());
 		rankingTasks.add(new BestPositionTask());
-		rankingTasks.add(new SkillBadgesTask());
 		rankingTasks.add(new SlamTask());
 		rankingTasks.add(new StrikeTask());
 		rankingTasks.add(new PartnerOpponentTask());
@@ -59,13 +64,17 @@ public class RankingService {
 		rankingTasks.add(new ManualBadgeTask());
 		rankingTasks.add(new CurrentShapeTask());
 		rankingTasks.add(new IncestuousTask());
-		// Should run at the end!
-		rankingTasks.add(new RankTask());
+		
+		// From here only work on playerRankingMap
+		rankingTasks.add(new FirstPlayerFilterTask());
+		rankingTasks.add(new RankingIndexTask()); 
+		rankingTasks.add(new SkillBadgesTask());
+		rankingTasks.add(new PartnerCountTask());
 		
 		for (RankingTask task: rankingTasks) {
 		    task.rankMatches(playerRankingMap, matches);
 		}
-	
+		
 		List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
 		Ranking ranking = new Ranking();
 		ranking.setCreatedDate(new Date());
@@ -73,6 +82,7 @@ public class RankingService {
 		ofy().save().entities(ranking);
 
 	}
+
 
 
 

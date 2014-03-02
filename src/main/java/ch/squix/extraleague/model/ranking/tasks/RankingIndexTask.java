@@ -11,11 +11,10 @@ import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 
-public class RankTask implements RankingTask {
+public class RankingIndexTask implements RankingTask {
 
     @Override
     public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
-		filterFirstPlayers(playerRankingMap);
 		List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
 		Collections.sort(rankings, new Comparator<PlayerRanking>() {
 
@@ -36,17 +35,6 @@ public class RankTask implements RankingTask {
 		}
 		calculateBadges(rankings);
     }
-    
-
-	private List<PlayerRanking> filterFirstPlayers(Map<String, PlayerRanking> playerRankingMap) {
-		List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
-		for (PlayerRanking ranking : rankings) {
-			if (ranking.getTotalGames() >=8) {
-				playerRankingMap.remove(ranking.getPlayer());
-			}
-		}
-		return rankings;
-	}
 
 	private void calculateBadges(List<PlayerRanking> rankings) {
 		for (PlayerRanking ranking : rankings) {

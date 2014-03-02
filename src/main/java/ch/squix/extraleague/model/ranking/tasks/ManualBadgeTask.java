@@ -23,7 +23,9 @@ public class ManualBadgeTask implements RankingTask {
 			for (Entry<Object, Object> entry : badges.entrySet()) {
 				String player = String.valueOf(entry.getKey());
 				PlayerRanking playerRanking = playerRankingMap.get(player);
-				playerRanking.getBadges().add(String.valueOf(entry.getValue()));
+				if (playerRanking != null) {
+					playerRanking.getBadges().add(String.valueOf(entry.getValue()));
+				}
 			}
 		} catch (IOException e) {
 			log.log(Level.SEVERE, "Could not read properties for manual badges", e);

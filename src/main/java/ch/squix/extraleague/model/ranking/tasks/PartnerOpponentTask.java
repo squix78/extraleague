@@ -32,35 +32,48 @@ public class PartnerOpponentTask implements RankingTask {
     
     private void calculatePartnerAndOpponents(Map<String, PlayerRanking> playerRankingMap,
             Map<String, Map<String, PlayerCombo>> partnerMap, Map<String, Map<String, PlayerCombo>> opponentMap) {
+    PlayerComboComparator comparator = new PlayerComboComparator();
     for (String player : playerRankingMap.keySet()) {
             PlayerRanking ranking = playerRankingMap.get(player);
             Map<String, PlayerCombo> partnerComboMap = partnerMap.get(player);
 
-            PlayerComboComparator comparator = new PlayerComboComparator();
 
-            List<PlayerCombo> partners = new ArrayList<>(partnerComboMap.values());
-            Collections.sort(partners, comparator);
-
-            ranking.setBestPartner(partners.get(0).getCombo());
-            ranking.setBestPartnerRate(partners.get(0).getSuccessRate());
-            ranking.setWorstPartner(partners.get(partners.size() - 1).getCombo());
-            ranking.setWorstPartnerRate(partners.get(partners.size() - 1).getSuccessRate());
+            List<PlayerCombo> partners = filterLowFrequenceCombos(partnerComboMap);
+            if (partners.size() > 0) {
+            	Collections.sort(partners, comparator);
+	            ranking.setBestPartner(partners.get(0).getCombo());
+	            ranking.setBestPartnerRate(partners.get(0).getSuccessRate());
+	            ranking.setWorstPartner(partners.get(partners.size() - 1).getCombo());
+	            ranking.setWorstPartnerRate(partners.get(partners.size() - 1).getSuccessRate());
+            }
 
 
             Map<String, PlayerCombo> opponentComboMap = opponentMap.get(player);
 
-            List<PlayerCombo> opponents = new ArrayList<>(opponentComboMap.values());
-            Collections.sort(opponents, comparator);
-
-            ranking.setBestOpponent(opponents.get(opponents.size() - 1).getCombo());
-            ranking.setBestOpponentRate(1 - opponents.get(opponents.size() - 1).getSuccessRate());
-            ranking.setWorstOpponent(opponents.get(0).getCombo());
-            ranking.setWorstOpponentRate(1 - opponents.get(0).getSuccessRate());
+            List<PlayerCombo> opponents = filterLowFrequenceCombos(opponentComboMap);
+            if (opponents.size() > 0) {
+	            Collections.sort(opponents, comparator);
+	
+	            ranking.setBestOpponent(opponents.get(opponents.size() - 1).getCombo());
+	            ranking.setBestOpponentRate(1 - opponents.get(opponents.size() - 1).getSuccessRate());
+	            ranking.setWorstOpponent(opponents.get(0).getCombo());
+	            ranking.setWorstOpponentRate(1 - opponents.get(0).getSuccessRate());
+            }
             
     }
 }
 
-    private void updatePlayerCombo(Map<String, Map<String, PlayerCombo>> partnerMap,
+    private List<PlayerCombo> filterLowFrequenceCombos(Map<String, PlayerCombo> partnerComboMap) {
+		List<PlayerCombo> players = new ArrayList<>();
+		for (PlayerCombo combo : partnerComboMap.values()) {
+			if (combo.getTotalGames() > 2) {
+				players.add(combo);
+			}
+		}
+		return players;
+	}
+
+	private void updatePlayerCombo(Map<String, Map<String, PlayerCombo>> partnerMap,
             Map<String, Map<String, PlayerCombo>> opponentMap,
             PlayerMatchResult playerMatch) {
         PlayerCombo partner = getPlayerCombo(partnerMap, playerMatch.getPlayer(),

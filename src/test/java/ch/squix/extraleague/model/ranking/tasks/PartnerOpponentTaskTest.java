@@ -19,10 +19,12 @@ public class PartnerOpponentTaskTest {
 	@Test
 	public void shouldRenderCorrectPartnerResults() {
 		List<Match> matchList = new ArrayList<>();
-		matchList.add(TestDataUtil.createMatch(5, 4, "dei", "cw", "rfi", "rsp"));
-		matchList.add(TestDataUtil.createMatch(4, 5, "cw", "rfi", "rsp", "dei"));
-		matchList.add(TestDataUtil.createMatch(4, 5, "rfi", "dei", "rsp", "cw"));
-		matchList.add(TestDataUtil.createMatch(5, 4, "dei", "rsp", "cw", "rfi"));
+		for (int i = 0; i < 3; i++) {
+			matchList.add(TestDataUtil.createMatch(5, 4, "dei", "cw", "rfi", "rsp"));
+			matchList.add(TestDataUtil.createMatch(4, 5, "cw", "rfi", "rsp", "dei"));
+			matchList.add(TestDataUtil.createMatch(4, 5, "rfi", "dei", "rsp", "cw"));
+			matchList.add(TestDataUtil.createMatch(5, 4, "dei", "rsp", "cw", "rfi"));
+		}
 		Matches matches = new Matches();
 		matches.setMatches(matchList);
 		 

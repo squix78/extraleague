@@ -83,12 +83,13 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bo
 		}
 	});
 
-function MainController($scope, $resource, $location, Tables) {
+function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
 //	$scope.tablesLoading = true;
 //	$scope.tables = Tables.query({}, function() {
 //		$scope.tablesLoading = false;
 //	});
 	$scope.tables = [{name: 'Park'}, {name: 'Albis'}, {name: 'Bern'}, {name: 'Skopje'}];
+  $rootScope.backlink = false;
 	
 	$scope.selectTable = function(table) {
 		console.log("Table selected: " + table.name);
@@ -101,17 +102,25 @@ function MainController($scope, $resource, $location, Tables) {
 	    } else {
 	      return "";
 	    }
+
 	};
+  $rootScope.backAction = function() {
+    $location.path($rootScope.backlink);
+  };
 
 }
 
-function TableController($scope, $resource, $routeParams, $location, Games, Game, PlayerService, Players) {
+function TableController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, PlayerService, Players) {
 	$scope.isSavingGame = false;
 	$scope.PlayerService = PlayerService;
 	$scope.table = $routeParams.table;
 	$scope.currentGame = new Games();
 	$scope.currentGame.table= $scope.table;
 	$scope.currentGame.players = [];
+
+  $scope.$on('$viewContentLoaded', function() {
+    $rootScope.backlink = '/tables';
+  });
 
 	$scope.$watch('player', function(newValue, oldValue) {
 		if (angular.isDefined(newValue)) {
@@ -120,6 +129,7 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 		}
 		
 	});
+
 	$scope.addPlayer = function() {
 		$scope.currentGame.players.push($scope.player);
 		$scope.player="";
@@ -144,6 +154,7 @@ function TableController($scope, $resource, $routeParams, $location, Games, Game
 	});
 }
 function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, OpenGames, Game, PlayerService, Players, NotificationService) {
+  $rootScope.backlink = false;
   $scope.updateGames = function() {
       $scope.isGamesLoading = true;
       $scope.games = OpenGames.query({}, function() {
@@ -183,6 +194,11 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
 	$scope.table = $routeParams.table;
 	$scope.matches = [];
 	$scope.matchIndex = 0;
+
+  $scope.$on('$viewContentLoaded', function() {
+    $rootScope.backlink = '/tables/' + $scope.table;
+  });
+
 	$scope.game = Game.get({table: $scope.table, gameId: $scope.gameId}, function() {
 		if ($scope.game.numberOfCompletedGames >= 4) {
 			$location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");
@@ -257,9 +273,10 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
 	}
 
 }
-function SummaryController($scope, $resource, $routeParams, Summary, Match) {
+function SummaryController($scope, $rootScope, $resource, $routeParams, Summary, Match) {
 	$scope.table = $routeParams.table;
 	$scope.gameId = $routeParams.gameId;
+  $rootScope.backlink = false;
 	
 	$scope.saveMatch = function(match) {
 		$scope.isMatchSaving = true;
@@ -278,9 +295,10 @@ function SummaryController($scope, $resource, $routeParams, Summary, Match) {
 	};
 	$scope.getSummary();
 }
-function RankingController($scope, $resource, $routeParams, Ranking, Badges) {
+function RankingController($scope, $rootScope, $resource, $routeParams, Ranking, Badges) {
 	$scope.predicate = '-successRate';
 	$scope.isRankingLoading = true;
+  $rootScope.backlink = false;
 	$scope.rankings = Ranking.query({}, function() {
 		$scope.isRankingLoading = false;
 		
@@ -292,10 +310,15 @@ function RankingController($scope, $resource, $routeParams, Ranking, Badges) {
 		});
 	});
 }
-function PlayerController($scope, $routeParams, PlayerService, Player, TimeSeries, Badges) {
+function PlayerController($scope, $rootScope, $routeParams, PlayerService, Player, TimeSeries, Badges) {
 	$scope.player = $routeParams.player;
 	$scope.playerPicture = PlayerService.getPlayerPicture($scope.player);
 	$scope.isPlayerLoading = true;
+
+  $scope.$on('$viewContentLoaded', function() {
+    $rootScope.backlink = '/ranking';
+  });
+  $rootScope.backlink = '/ranking';
 	$scope.playerResult = Player.get({player: $scope.player}, function() {
 		$scope.isPlayerLoading = false;
 	});

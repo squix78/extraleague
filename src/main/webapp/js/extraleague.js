@@ -240,7 +240,7 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   $rootScope.$on("UpdateMatch", function(event, message) {
     console.log("Received change in game from server");
     $scope.$apply(function() {
-      if (message.game.gameId === $scope.game.id) {
+      if (message.game.id === $scope.game.id) {
         $scope.match = new Match(message.match);
         $scope.game = new Game(message.game);
         $scope.checkEndOfMatch();

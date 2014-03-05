@@ -1,5 +1,8 @@
 package ch.squix.extraleague.rest.matches;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.squix.extraleague.model.match.Match;
 
 public class MatchDtoMapper {
@@ -16,6 +19,14 @@ public class MatchDtoMapper {
 		dto.setEndDate(match.getEndDate());
 		dto.setMatchIndex(match.getMatchIndex());
 		return dto;
+	}
+	
+	public static List<MatchDto> mapToDtoList(List<Match> matches) {
+		List<MatchDto> dtos = new ArrayList<>();
+		for (Match match : matches) {
+			dtos.add(mapToDto(match));
+		}
+		return dtos;
 	}
 
 

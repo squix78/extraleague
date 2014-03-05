@@ -34,22 +34,11 @@ public class MatchesResource extends ServerResource {
 	@Get(value = "json")
 	public List<MatchDto> execute() throws UnsupportedEncodingException {
 		String gameId = (String) this.getRequestAttributes().get("gameId");
-		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", Long.valueOf(gameId)).list();
+		List<MatchDto> matches = MatchDtoMapper.mapToDtoList(ofy().load().type(Match.class).filter("gameId = ", Long.valueOf(gameId)).list());
 		sortMatches(matches);
-		Collections.sort(matches, new Comparator<Match>() {
-		    
-		    @Override
-		    public int compare(Match o1, Match o2) {
-		        return o1.getMatchIndex().compareTo(o2.getMatchIndex());
-		    }
-		});
+
 		log.info("Listing table for " + gameId + ". Found " + matches.size() + " matches for this game");
-		List<MatchDto> matchDtos = new ArrayList<>();
-		for (Match match : matches) {
-			MatchDto dto = MatchDtoMapper.mapToDto(match);
-			matchDtos.add(dto);
-		}
-		return matchDtos;
+		return matches;
 	}
 	
 	@Post(value = "json")
@@ -75,10 +64,10 @@ public class MatchesResource extends ServerResource {
 		ofy().save().entity(match).now();
 		
 		// Update game
-		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list();
+		List<MatchDto> matches = MatchDtoMapper.mapToDtoList(ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list());
 		sortMatches(matches);
 		Integer numberOfCompletedMatches = 0;
-		for (Match candiateMatch : matches) {
+		for (MatchDto candiateMatch : matches) {
 			if (candiateMatch.getTeamAScore() >= 5 || candiateMatch.getTeamBScore() >= 5) {
 				numberOfCompletedMatches++;
 			}
@@ -99,11 +88,11 @@ public class MatchesResource extends ServerResource {
 		return dto;
 	}
 
-	private void sortMatches(List<Match> matches) {
-		Collections.sort(matches, new Comparator<Match>() {
+	private void sortMatches(List<MatchDto> matches) {
+		Collections.sort(matches, new Comparator<MatchDto>() {
 
 			@Override
-			public int compare(Match o1, Match o2) {
+			public int compare(MatchDto o1, MatchDto o2) {
 				return o1.getMatchIndex().compareTo(o2.getMatchIndex());
 			}
 		});

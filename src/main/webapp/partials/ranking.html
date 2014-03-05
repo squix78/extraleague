@@ -15,7 +15,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="ranking in rankings | orderBy:predicate:reverse">
-            <td>{{ranking.ranking}} </td>
+            <td>{{$index + 1}} </td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
             <td ng-class="{won: ranking.successRate > 0.5, lost: ranking.successRate < 0.5}">{{ranking.successRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.currentShapeRate > 0.5, lost: ranking.currentShapeRate < 0.5}">{{ranking.currentShapeRate * 100 | number:1}}</td>

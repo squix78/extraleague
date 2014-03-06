@@ -172,6 +172,20 @@ function OpenGamesController($scope, $rootScope, $resource, $timeout, $routePara
         });
     });
   });
+  
+  $rootScope.$on("UpdateMatch", function(event, message) {
+	    console.log("Received change in game from server");
+	    $scope.$apply(function() {
+	    	var game = new Game(message.game);
+	    	var i = 0;
+	    	angular.forEach($scope.games, function(key, value) {
+	    		if (key.id === game.id) {
+	    			$scope.games[i] = game;
+	    			i++;
+	    		}
+	    	});
+	    });
+  });
 
   $scope.continueGame = function(game) {
       $location.path("/tables/" + game.table + "/games/" + game.id);

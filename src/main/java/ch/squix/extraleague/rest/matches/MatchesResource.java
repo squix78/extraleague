@@ -67,13 +67,17 @@ public class MatchesResource extends ServerResource {
 		List<MatchDto> matches = MatchDtoMapper.mapToDtoList(ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list());
 		sortMatches(matches);
 		Integer numberOfCompletedMatches = 0;
+		Integer sumOfMaxGoals = 0;
 		for (MatchDto candiateMatch : matches) {
-			if (candiateMatch.getTeamAScore() >= 5 || candiateMatch.getTeamBScore() >= 5) {
+			Integer maxGoalsPerMatch = Math.max(candiateMatch.getTeamAScore(), candiateMatch.getTeamBScore());
+			sumOfMaxGoals += maxGoalsPerMatch;
+			if (maxGoalsPerMatch >= 5) {
 				numberOfCompletedMatches++;
 			}
 		}
 		Game game = ofy().load().type(Game.class).id(dto.getGameId()).now();
 		game.setNumberOfCompletedMatches(numberOfCompletedMatches);
+		game.setGameProgress(sumOfMaxGoals / 20d);
 		if (numberOfCompletedMatches >=4) {
 			log.info("4 Games reached. Setting game endDate");
 			game.setEndDate(new Date());

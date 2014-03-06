@@ -2,7 +2,11 @@ package ch.squix.extraleague.model.ranking.badge;
 
 public enum BadgeType {
 	
-	Achievement,
+	Bronze,
+	Silver,
+	Gold,
+	Ranking,
+	Honorary,
 	Shamelet;
 
 }

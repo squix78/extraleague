@@ -65,3 +65,30 @@ legend {
 .lost {
 	color: red;
 }
+.Bronze:before {
+	color: rgb(205, 127, 50);
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Silver:before {
+	color: silver;
+	content: "\25A0";
+    margin-right: 6px;
+
+}
+.Gold:before {
+	color: gold;
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Ranking:before {
+	color: white;
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Honorary {
+	background-color: green;
+}
+.Shamelet {
+	background-color: red;
+}

@@ -38,9 +38,12 @@
 	<tbody>
 		<tr class="row" ng-repeat="badge in badgeList | orderBy:index">
 			<td>
-				<span class="label" ng-class="{'label-primary': badge.badgeType === 'Achievement', 'label-danger': badge.badgeType === 'Shamelet'}">
+				<span class="label label-primary {{badge.badgeType}}">
 					<i class="fa {{badge.faClass}}"></i> {{badge.name}}
 				</span>
+			</td>
+			<td>
+				{{badge.badgeType}}
 			</td>
 			<td>
 				{{badge.description}}

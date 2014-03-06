@@ -28,7 +28,8 @@ public class GameDtoMapper {
 				Date estimatedTimeOfArrival = new Date(now + estimatedGameAge);
 				dto.setEstimatedTimeOfArrival(estimatedTimeOfArrival);
 			} else {
-				dto.setEstimatedTimeOfArrival(new Date(now + 500 * 1000));
+				// heuristic;-) A match usually takes between 300-500s, a game as four matches
+				dto.setEstimatedTimeOfArrival(new Date(game.getStartDate().getTime() + 4 * 500 * 1000));
 			}
 		}
 		return dto;

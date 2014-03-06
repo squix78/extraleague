@@ -22,9 +22,15 @@ public class GameDtoMapper {
 			}
 			Long now = new Date().getTime();
 			Long gameAge =  now - game.getStartDate().getTime();
-			Long estimatedGameAge = Math.round((1 / progress) * gameAge);
-			Date estimatedTimeOfArrival = new Date(now + estimatedGameAge);
-			dto.setEstimatedTimeOfArrival(estimatedTimeOfArrival);
+			// only calculate
+			if (gameAge > 10000 && progress >= 0.05) {
+				Long estimatedGameAge = Math.round((1 / progress) * gameAge);
+				Date estimatedTimeOfArrival = new Date(now + estimatedGameAge);
+				dto.setEstimatedTimeOfArrival(estimatedTimeOfArrival);
+			} else {
+				// Average match is about 300-350s
+				dto.setEstimatedTimeOfArrival(new Date(new Date().getTime() + 4 * 350 * 1000));
+			}
 		}
 		return dto;
 	}

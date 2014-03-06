@@ -22,7 +22,7 @@ public class GameDtoMapper {
 			}
 			Long now = new Date().getTime();
 			Long gameAge =  now - game.getStartDate().getTime();
-			Long estimatedGameAge = Math.round((1 - progress) * gameAge);
+			Long estimatedGameAge = Math.round((1 / progress) * gameAge);
 			Date estimatedTimeOfArrival = new Date(now + estimatedGameAge);
 			dto.setEstimatedTimeOfArrival(estimatedTimeOfArrival);
 		}

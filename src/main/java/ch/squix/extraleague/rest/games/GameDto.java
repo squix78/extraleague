@@ -18,6 +18,7 @@ public class GameDto {
 	private Date estimatedTimeOfArrival;
 	
 	private Integer numberOfCompletedGames;
+	private Date firstGoalDate;
 	
 	public Long getId() {
 		return id;
@@ -101,6 +102,13 @@ public class GameDto {
 		this.estimatedTimeOfArrival = estimatedTimeOfArrival;
 	}
 
+	public void setFirstGoalDate(Date firstGoalDate) {
+		this.firstGoalDate = firstGoalDate;
+	}
+
+	public Date getFirstGoalDate() {
+		return firstGoalDate;
+	}
 
 	
 }

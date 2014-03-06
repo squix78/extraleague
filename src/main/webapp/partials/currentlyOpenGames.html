@@ -16,7 +16,7 @@
 	  		<span ng-show="game.endDate"> - {{game.endDate | date:'short'}}</span>
 	  </div>
 	  <div ng-show="game.estimatedTimeOfArrival">
-	  	ETA: {{game.estimatedTimeOfArrival | date:'HH:mm:ss'}} ({{game.gameProgress * 100 | number:0}}%)
+	  	Running. ETA: {{game.estimatedTimeOfArrival | date:'HH:mm:ss'}} ({{game.gameProgress * 100 | number:0}}%)
 	  </div>
 	</div>
 </div>

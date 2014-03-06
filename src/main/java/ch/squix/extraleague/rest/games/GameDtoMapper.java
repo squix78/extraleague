@@ -15,6 +15,7 @@ public class GameDtoMapper {
 		dto.setEndDate(game.getEndDate());
 		dto.setNumberOfCompletedGames(game.getNumberOfCompletedMatches());
 		dto.setGameProgress(game.getGameProgress());
+		dto.setFirstGoalDate(game.getFirstGoalDate());
 		if (game.getFirstGoalDate() != null && game.getEndDate() == null) {
 			Double progress = game.getGameProgress();
 			if (progress == null) {

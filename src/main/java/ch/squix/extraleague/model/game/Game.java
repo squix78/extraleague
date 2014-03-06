@@ -24,6 +24,7 @@ public class Game {
 	
 	private Date startDate;
 	private Date endDate;
+	private Date firstGoalDate;
 
 	private Integer numberOfCompletedMatches;
 
@@ -101,8 +102,22 @@ public class Game {
 	public Double getGameProgress() {
 		return gameProgress;
 	}
-	
-	
+
+
+	/**
+	 * @return the firstGoalDate
+	 */
+	public Date getFirstGoalDate() {
+		return firstGoalDate;
+	}
+
+
+	/**
+	 * @param firstGoalDate the firstGoalDate to set
+	 */
+	public void setFirstGoalDate(Date firstGoalDate) {
+		this.firstGoalDate = firstGoalDate;
+	}
 	
 	
 }

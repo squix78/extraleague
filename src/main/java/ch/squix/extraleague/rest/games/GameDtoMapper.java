@@ -15,21 +15,20 @@ public class GameDtoMapper {
 		dto.setEndDate(game.getEndDate());
 		dto.setNumberOfCompletedGames(game.getNumberOfCompletedMatches());
 		dto.setGameProgress(game.getGameProgress());
-		if (game.getStartDate() != null && game.getEndDate() == null) {
+		if (game.getFirstGoalDate() != null && game.getEndDate() == null) {
 			Double progress = game.getGameProgress();
 			if (progress == null) {
 				progress = 0d;
 			}
 			Long now = new Date().getTime();
-			Long gameAge =  now - game.getStartDate().getTime();
+			Long gameAge =  now - game.getFirstGoalDate().getTime();
 			// only calculate
-			if (gameAge > 10000 && progress >= 0.05) {
-				Long estimatedGameAge = Math.round((1 / progress) * gameAge);
+			if (gameAge > 10000 && progress >= 0.1 ) {
+				Long estimatedGameAge = Math.round((1 / (progress - 0.05)) * gameAge);
 				Date estimatedTimeOfArrival = new Date(now + estimatedGameAge);
 				dto.setEstimatedTimeOfArrival(estimatedTimeOfArrival);
 			} else {
-				// Average match is about 300-350s
-				dto.setEstimatedTimeOfArrival(new Date(new Date().getTime() + 4 * 350 * 1000));
+				dto.setEstimatedTimeOfArrival(new Date(now + 500 * 1000));
 			}
 		}
 		return dto;

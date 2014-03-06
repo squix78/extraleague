@@ -78,6 +78,10 @@ public class MatchesResource extends ServerResource {
 		Game game = ofy().load().type(Game.class).id(dto.getGameId()).now();
 		game.setNumberOfCompletedMatches(numberOfCompletedMatches);
 		game.setGameProgress(sumOfMaxGoals / 20d);
+		// Set the date for the first goal
+		if (sumOfMaxGoals > 0 && game.getFirstGoalDate() == null) {
+			game.setFirstGoalDate(new Date());
+		}
 		if (numberOfCompletedMatches >=4) {
 			log.info("4 Games reached. Setting game endDate");
 			game.setEndDate(new Date());

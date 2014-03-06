@@ -106,7 +106,7 @@ angular.module('PlayerMappings', [])
 			"jh": "joachim-hagger",
 			"": "urs-hardegger",
 			"": "maya-haug",
-			"": "nicola-hefti",
+			"nh": "nicola-hefti",
 			"bhe": "beat-heggli",
 			"fhe": "florian-hengartner",
 			"mhe": "martin-hermann",

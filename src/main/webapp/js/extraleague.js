@@ -177,13 +177,11 @@ function OpenGamesController($scope, $rootScope, $resource, $timeout, $routePara
 	    console.log("Received change in game from server");
 	    $scope.$apply(function() {
 	    	var game = new Game(message.game);
-	    	var i = 0;
-	    	angular.forEach($scope.games, function(key, value) {
-	    		if (key.id === game.id) {
+	    	for (var i=0;i<$scope.games[i].length;i++) {
+	    		if ($scope.games[i].id === game.id) {
 	    			$scope.games[i] = game;
-	    			i++;
 	    		}
-	    	});
+	    	})
 	    });
   });
 

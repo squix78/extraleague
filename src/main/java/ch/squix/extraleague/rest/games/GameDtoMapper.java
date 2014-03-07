@@ -26,7 +26,7 @@ public class GameDtoMapper {
 			// only calculate
 			if (gameAge > 10000 && progress >= 0.1 ) {
 				Long estimatedGameAge = Math.round((1 / (progress - 0.05)) * gameAge);
-				Date estimatedTimeOfArrival = new Date(now + estimatedGameAge);
+				Date estimatedTimeOfArrival = new Date(game.getFirstGoalDate().getTime() + estimatedGameAge);
 				dto.setEstimatedTimeOfArrival(estimatedTimeOfArrival);
 			} else {
 				// heuristic;-) A match usually takes between 300-500s, a game as four matches

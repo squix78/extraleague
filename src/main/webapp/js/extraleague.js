@@ -249,18 +249,18 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
     } 
   };
   
-  $rootScope.$on("UpdateMatch", function(event, message) {
-    console.log("Received change in game from server");
-    $scope.$apply(function() {
-      if (message.game.id === $scope.game.id) {
-        $scope.match = new Match(message.match);
-        $scope.game = new Game(message.game);
-        $scope.checkEndOfMatch();
-      } else {
-        console.log("Received update notification for another game");
-      }
-    });
-  });
+//  $rootScope.$on("UpdateMatch", function(event, message) {
+//    console.log("Received change in game from server");
+//    $scope.$apply(function() {
+//      if (message.game.id === $scope.game.id) {
+//        $scope.match = new Match(message.match);
+//        $scope.game = new Game(message.game);
+//        $scope.checkEndOfMatch();
+//      } else {
+//        console.log("Received update notification for another game");
+//      }
+//    });
+//  });
   
   $scope.increaseScoreTeamB = function() {
     $scope.match.teamBScore++;

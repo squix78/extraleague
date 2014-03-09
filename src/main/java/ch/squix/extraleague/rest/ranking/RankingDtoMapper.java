@@ -34,6 +34,8 @@ public class RankingDtoMapper {
 			rankingDto.setCurrentShapeRate(playerRanking.getCurrentShapeRate());
 			rankingDto.setPlayedWith(playerRanking.getPlayedWith());
 			rankingDto.setNeverPlayedWith(playerRanking.getNeverPlayedWith());
+			rankingDto.setTightlyLostRate(playerRanking.getTightlyLostRate());
+			rankingDto.setTightlyWonRate(playerRanking.getTightlyWonRate());
 			playerRankingList.add(rankingDto);
 		}
 		return playerRankingList;

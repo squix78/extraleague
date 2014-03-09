@@ -47,6 +47,14 @@
             number:2}}%</td>
         </tr>
         <tr>
+          <td>Rate of 5:4 won matches:</td>
+          <td>{{100 * playerResult.statistics.tightlyWonRate | number:2}}%</td>
+        </tr>
+        <tr>
+          <td>Rate of 4:5 lost matches:</td>
+          <td>{{100 * playerResult.statistics.tightlyLostRate | number:2}}%</td>
+        </tr>
+        <tr>
           <td>Average Match length:</td>
           <td>{{playerResult.statistics.averageSecondsPerMatch |
             number}}s</td>

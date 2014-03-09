@@ -30,6 +30,9 @@ public class RankingDto {
     private Double offensivePositionRate;
     private Double defensivePositionRate;
     
+    private Double tightlyLostRate;
+    private Double tightlyWonRate;
+    
     private Long averageSecondsPerMatch;
 	private Set<String> playedWith;
 	private Set<String> neverPlayedWith;
@@ -237,6 +240,34 @@ public class RankingDto {
 	
 	public Set<String> getNeverPlayedWith() {
 		return neverPlayedWith;
+	}
+
+	/**
+	 * @return the tightlyLostRate
+	 */
+	public Double getTightlyLostRate() {
+		return tightlyLostRate;
+	}
+
+	/**
+	 * @param tightlyLostRate the tightlyLostRate to set
+	 */
+	public void setTightlyLostRate(Double tightlyLostRate) {
+		this.tightlyLostRate = tightlyLostRate;
+	}
+
+	/**
+	 * @return the tightlyWonRate
+	 */
+	public Double getTightlyWonRate() {
+		return tightlyWonRate;
+	}
+
+	/**
+	 * @param tightlyWonRate the tightlyWonRate to set
+	 */
+	public void setTightlyWonRate(Double tightlyWonRate) {
+		this.tightlyWonRate = tightlyWonRate;
 	}
 
 

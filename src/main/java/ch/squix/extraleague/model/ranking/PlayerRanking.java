@@ -37,6 +37,9 @@ public class PlayerRanking implements Serializable {
 
 	private Double currentShapeRate;
 	
+	private Double tightlyLostRate;
+	private Double tightlyWonRate;
+	
 	private Set<String> playedWith = new HashSet<>();
 	private Set<String> neverPlayedWith = new HashSet<>();
 
@@ -243,6 +246,34 @@ public class PlayerRanking implements Serializable {
 
 	public void setNeverPlayedWith(Set<String> neverPlayedWith) {
 		this.neverPlayedWith = neverPlayedWith;
+	}
+
+	/**
+	 * @return the tightlyLostRate
+	 */
+	public Double getTightlyLostRate() {
+		return tightlyLostRate;
+	}
+
+	/**
+	 * @param tightlyLostRate the tightlyLostRate to set
+	 */
+	public void setTightlyLostRate(Double tightlyLostRate) {
+		this.tightlyLostRate = tightlyLostRate;
+	}
+
+	/**
+	 * @return the tightlyWonRate
+	 */
+	public Double getTightlyWonRate() {
+		return tightlyWonRate;
+	}
+
+	/**
+	 * @param tightlyWonRate the tightlyWonRate to set
+	 */
+	public void setTightlyWonRate(Double tightlyWonRate) {
+		this.tightlyWonRate = tightlyWonRate;
 	}
 
 }

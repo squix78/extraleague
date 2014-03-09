@@ -35,8 +35,16 @@
 <B>Note:</B> players are only ranked after 2 or more sessions
 <h4>Badges</h4>
 <table class="table table-striped">
+   <thead>
+      <tr>
+        <th>Badge</th>
+        <th>Type</th>
+        <th>#</th>
+        <th>Description</th>
+      </tr>
+    </thead>
 	<tbody>
-		<tr class="row" ng-repeat="badge in badgeList | orderBy:index">
+		<tr ng-repeat="badge in badgeList | orderBy:index">
 			<td>
 				<span class="label label-primary {{badge.badgeType}}">
 					<i class="fa {{badge.faClass}}"></i> {{badge.name}}
@@ -46,6 +54,9 @@
 				{{badge.badgeType}}
 			</td>
 			<td>
+				{{badge.badgeCount}}
+			</td>
+			<td> 
 				{{badge.description}}
 			</td>
 		</tr>

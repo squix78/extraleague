@@ -4,9 +4,6 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +12,9 @@ import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
-import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 import ch.squix.extraleague.model.ranking.tasks.AverageTimePerMatchTask;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
+import ch.squix.extraleague.model.ranking.tasks.BundleOfNervesTask;
 import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
 import ch.squix.extraleague.model.ranking.tasks.FirstPlayerFilterTask;
 import ch.squix.extraleague.model.ranking.tasks.IncestuousTask;
@@ -64,6 +61,7 @@ public class RankingService {
 		rankingTasks.add(new ManualBadgeTask());
 		rankingTasks.add(new CurrentShapeTask());
 		rankingTasks.add(new IncestuousTask());
+		rankingTasks.add(new BundleOfNervesTask());
 		
 		// From here only work on playerRankingMap
 		rankingTasks.add(new FirstPlayerFilterTask());
@@ -79,6 +77,8 @@ public class RankingService {
 		Ranking ranking = new Ranking();
 		ranking.setCreatedDate(new Date());
 		ranking.setPlayerRankings(rankings);
+
+		
 		ofy().save().entities(ranking);
 
 	}

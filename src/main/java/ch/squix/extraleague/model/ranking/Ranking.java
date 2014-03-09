@@ -3,7 +3,6 @@ package ch.squix.extraleague.model.ranking;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -45,5 +44,6 @@ public class Ranking {
 	public void setPlayerRankings(List<PlayerRanking> playerRankings) {
 		this.playerRankings = playerRankings;
 	}
+
 
 }

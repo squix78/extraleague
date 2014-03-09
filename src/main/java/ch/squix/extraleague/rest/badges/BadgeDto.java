@@ -7,6 +7,8 @@ public class BadgeDto {
 	private String faClass;
 	private Integer index;
 	private String description;
+	private Integer badgeCount;
+	
 	/**
 	 * @return the name
 	 */
@@ -66,6 +68,18 @@ public class BadgeDto {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	/**
+	 * @return the badgeCount
+	 */
+	public Integer getBadgeCount() {
+		return badgeCount;
+	}
+	/**
+	 * @param badgeCount the badgeCount to set
+	 */
+	public void setBadgeCount(Integer badgeCount) {
+		this.badgeCount = badgeCount;
 	}
 	
 

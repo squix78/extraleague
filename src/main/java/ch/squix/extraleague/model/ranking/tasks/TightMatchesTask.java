@@ -24,7 +24,6 @@ public class TightMatchesTask implements RankingTask {
     	List<PlayerRanking> playerRankings = new ArrayList<>();
         for (String player : matches.getPlayers()) {
         	PlayerRanking ranking = playerRankingMap.get(player);
-        	playerRankings.add(ranking);
         	int numberOfTightlyLostMatches = 0;
         	int numberOfTightlyWonMatches = 0;
         	int numberOfMatches = 0;
@@ -40,19 +39,24 @@ public class TightMatchesTask implements RankingTask {
         		}
         		numberOfMatches++;
         	}
-        	Double tightlyLostRate = 1d * numberOfTightlyLostMatches / numberOfMatches;
-        	ranking.setTightlyLostRate(tightlyLostRate);
-        	Double tightlyWonRate = 1d * numberOfTightlyWonMatches / numberOfMatches;
-        	ranking.setTightlyWonRate(tightlyWonRate);
+        	if (numberOfMatches >= 8) {
+	        	playerRankings.add(ranking);
+	        	Double tightlyLostRate = 1d * numberOfTightlyLostMatches / numberOfMatches;
+	        	ranking.setTightlyLostRate(tightlyLostRate);
+	        	Double tightlyWonRate = 1d * numberOfTightlyWonMatches / numberOfMatches;
+	        	ranking.setTightlyWonRate(tightlyWonRate);
+        	}
 
         }
         Collections.sort(playerRankings, new TightlyLostComparator());
-        playerRankings.get(0).getBadges().add(BadgeEnum.BundleOfNerves.name());
-        log.info("Bundle of nerves: " + playerRankings.get(0).getPlayer());
+        PlayerRanking maxTightlyLostPlayer = playerRankings.get(0);
+        maxTightlyLostPlayer.getBadges().add(BadgeEnum.BundleOfNerves.name());
+        log.info("Bundle of nerves: " + maxTightlyLostPlayer.getPlayer() + " with " + maxTightlyLostPlayer.getTightlyLostRate());
 
         Collections.sort(playerRankings, new TightlyWonComparator());
-        playerRankings.get(0).getBadges().add(BadgeEnum.SteelRopeNerves.name());
-        log.info("Steel Rope Nerves: " + playerRankings.get(0).getPlayer());
+        PlayerRanking maxTightlyWonPlayer = playerRankings.get(0);
+        maxTightlyWonPlayer.getBadges().add(BadgeEnum.SteelRopeNerves.name());
+        log.info("Steel Rope Nerves: " + maxTightlyWonPlayer.getPlayer() + " with " + maxTightlyWonPlayer.getTightlyWonRate());
         
     }
     

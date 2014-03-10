@@ -319,7 +319,7 @@ function SummaryController($scope, $rootScope, $resource, $routeParams, Summary,
 }
 
 function RankingController($scope, $rootScope, $resource, $routeParams, Ranking, Badges) {
-  $scope.predicate = '-successRate';
+  $scope.predicate = [ '-successRate', '-goalPlusMinus'];
   $scope.isRankingLoading = true;
   $rootScope.backlink = false;
   $scope.rankings = Ranking.query({}, function() {

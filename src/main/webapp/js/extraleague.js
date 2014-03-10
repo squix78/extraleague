@@ -78,8 +78,31 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bo
               ngModel: '=',
               badgeMap: '='
           }
-      }
-    });
+      };
+    })
+	.directive('extraleagueNavbar', function ($location) {
+	  return {
+	    restrict: 'A',
+        link: function link(scope, element) {
+          var listener = function () {
+            return $location.path();
+          };
+          var changeHandler = function (newValue) {
+            $('li[data-match-route]', element).each(function (k, li) {
+              var $li = angular.element(li);
+              var pattern = $li.attr('data-match-route');
+              var regexp = new RegExp('^' + pattern + '$', 'i');
+              if (regexp.test(newValue)) {
+                $li.addClass('active');
+              } else {
+                $li.removeClass('active');
+              }
+		    });
+		  };
+          scope.$watch(listener, changeHandler);
+      	}
+	  };
+  	});
 
 function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
   $scope.tables = [{name: 'Park'}, {name: 'Albis'}, {name: 'Bern'}, {name: 'Skopje'}];
@@ -89,14 +112,6 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
   $scope.selectTable = function(table) {
     console.log("Table selected: " + table.name);
     $location.path("/tables/" + table.name);
-  };
-  
-  $scope.isActive = function(path) {
-     if ($location.path().indexOf(path) !== -1) {
-        return "active";
-     } else {
-        return "";
-     }
   };
   
   $rootScope.backAction = function() {

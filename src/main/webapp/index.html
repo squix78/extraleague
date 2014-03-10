@@ -48,7 +48,7 @@
       <script src="../../assets/js/respond.min.js"></script>
     <![endif]-->
 </head>
-<body ng-controller="MainController">
+<body>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -60,11 +60,11 @@
             <span class="icon-bar"></span>
           </button>
         </div>
-        <div collapse="navCollapsed" class="navbar-collapse collapse navbar-responsive-collapse">
+        <div collapse="navCollapsed" data-extraleague-navbar class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li ng-class="{active: isActive('tables')}"><a ng-click="navCollapsed = true" href="#/tables">New Game</a></li>
-            <li ng-class="{active: isActive('ranking')}"><a  ng-click="navCollapsed = true" href="#/ranking">Ranking</a></li>
-            <li ng-class="{active: isActive('openGames')}"><a  ng-click="navCollapsed = true" href="#/openGames">Open Games</a></li>
+            <li data-match-route="/tables"><a ng-click="navCollapsed = true" href="#/tables">New Game</a></li>
+            <li data-match-route="/ranking"><a ng-click="navCollapsed = true" href="#/ranking">Ranking</a></li>
+            <li data-match-route="/openGames"><a ng-click="navCollapsed = true" href="#/openGames">Open Games</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

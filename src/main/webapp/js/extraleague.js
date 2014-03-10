@@ -1,7 +1,7 @@
 angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bootstrap', 'nvd3ChartDirectives', 'gaeChannelService'])
     .config(function($routeProvider) {
-        $routeProvider.when('/', {
-           controller : 'MainController',
+        $routeProvider.when('/tables', {
+           controller : 'TablesController',
            templateUrl : 'partials/tables.html'
         })
         .when('/tables/:table', {
@@ -29,8 +29,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bo
            templateUrl : 'partials/player.html'
         })
         .otherwise({
-           controller : 'MainController',
-           templateUrl : 'partials/tables.html'
+           redirectTo: '/tables'
         });
     })
     .factory('Ping', ['$resource', function($resource) {
@@ -104,7 +103,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bo
 	  };
   	});
 
-function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
+function TablesController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
   $scope.tables = [{name: 'Park'}, {name: 'Albis'}, {name: 'Bern'}, {name: 'Skopje'}];
   
   $rootScope.backlink = false;

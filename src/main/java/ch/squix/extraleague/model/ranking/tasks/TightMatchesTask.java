@@ -48,15 +48,17 @@ public class TightMatchesTask implements RankingTask {
         	}
 
         }
-        Collections.sort(playerRankings, new TightlyLostComparator());
-        PlayerRanking maxTightlyLostPlayer = playerRankings.get(0);
-        maxTightlyLostPlayer.getBadges().add(BadgeEnum.BundleOfNerves.name());
-        log.info("Bundle of nerves: " + maxTightlyLostPlayer.getPlayer() + " with " + maxTightlyLostPlayer.getTightlyLostRate());
-
-        Collections.sort(playerRankings, new TightlyWonComparator());
-        PlayerRanking maxTightlyWonPlayer = playerRankings.get(0);
-        maxTightlyWonPlayer.getBadges().add(BadgeEnum.SteelRopeNerves.name());
-        log.info("Steel Rope Nerves: " + maxTightlyWonPlayer.getPlayer() + " with " + maxTightlyWonPlayer.getTightlyWonRate());
+        if (playerRankings.size() > 0) {
+            Collections.sort(playerRankings, new TightlyLostComparator());
+            PlayerRanking maxTightlyLostPlayer = playerRankings.get(0);
+            maxTightlyLostPlayer.getBadges().add(BadgeEnum.BundleOfNerves.name());
+            log.info("Bundle of nerves: " + maxTightlyLostPlayer.getPlayer() + " with " + maxTightlyLostPlayer.getTightlyLostRate());
+    
+            Collections.sort(playerRankings, new TightlyWonComparator());
+            PlayerRanking maxTightlyWonPlayer = playerRankings.get(0);
+            maxTightlyWonPlayer.getBadges().add(BadgeEnum.SteelRopeNerves.name());
+            log.info("Steel Rope Nerves: " + maxTightlyWonPlayer.getPlayer() + " with " + maxTightlyWonPlayer.getTightlyWonRate());
+        }
         
     }
     

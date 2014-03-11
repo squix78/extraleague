@@ -103,6 +103,16 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bo
 	  };
   	});
 
+function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
+  
+  $rootScope.backlink = false;
+  
+  $rootScope.backAction = function() {
+    $location.path($rootScope.backlink);
+  }; 
+
+}
+
 function TablesController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
   $scope.tables = [{name: 'Park'}, {name: 'Albis'}, {name: 'Bern'}, {name: 'Skopje'}];
   

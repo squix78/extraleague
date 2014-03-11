@@ -176,7 +176,7 @@ function TableController($scope, $rootScope, $resource, $routeParams, $location,
     $scope.players = playersResult;
   });
 }
-function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, OpenGames, Game, PlayerService, Players, NotificationService) {
+function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, PlayerService, Players, NotificationService) {
   $rootScope.backlink = false;
   $scope.updateGames = function() {
       $scope.isGamesLoading = true;
@@ -216,6 +216,15 @@ function OpenGamesController($scope, $rootScope, $resource, $timeout, $routePara
       Game.remove({table: game.table, gameId: game.id}, function() {
         $scope.updateGames();
       });
+  };
+  
+  $scope.getSumEstimatedRemainingMillis = function(index) {
+	  var sum = 0;
+	    var selectedGames = $scope.games.slice(0, index + 1);
+	    angular.forEach(selectedGames, function(game, index){
+	      sum += game.estimatedRemainingMillis;
+	    });
+	    return sum;
   };
 }
 function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, PlayerService, Players, NotificationService) {

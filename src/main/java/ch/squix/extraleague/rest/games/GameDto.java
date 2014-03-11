@@ -15,7 +15,7 @@ public class GameDto {
 	
 	private Double gameProgress;
 	
-	private Date estimatedTimeOfArrival;
+	private Long estimatedRemainingMilis;
 	
 	private Integer numberOfCompletedGames;
 	private Date firstGoalDate;
@@ -91,15 +91,15 @@ public class GameDto {
 	/**
 	 * @return the estimatedTimeOfArrival
 	 */
-	public Date getEstimatedTimeOfArrival() {
-		return estimatedTimeOfArrival;
+	public Long getEstimatedRemainingMillis() {
+		return estimatedRemainingMilis;
 	}
 
 	/**
 	 * @param estimatedTimeOfArrival the estimatedTimeOfArrival to set
 	 */
-	public void setEstimatedTimeOfArrival(Date estimatedTimeOfArrival) {
-		this.estimatedTimeOfArrival = estimatedTimeOfArrival;
+	public void setEstimatedRemainingMillis(Long estimatedRemainingMilis) {
+		this.estimatedRemainingMilis = estimatedRemainingMilis;
 	}
 
 	public void setFirstGoalDate(Date firstGoalDate) {

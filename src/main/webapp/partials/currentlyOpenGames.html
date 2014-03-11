@@ -1,9 +1,10 @@
-<h2>Open Games</h2>
+<h2>Current/ Next Games</h2>
 <div ng-show="games.length == 0 && !isGamesLoading">
   Currently there are no open games...
 </div>
 <div ng-show="games.length > 0">
-	<div class="alert alert-success" ng-repeat="game in games  | orderBy:'-startDate'">
+	<div class="alert" ng-class="{'alert-success': $index == 0, 'alert-info': $index > 0}"ng-repeat="game in games">
+	  {{$index + 1}}.
 	  <span ng-repeat="player in game.players">{{player}} </span>
 	  @{{game.table}}
 	  <div class="pull-right">
@@ -15,8 +16,11 @@
 	  	{{game.startDate | date:'short'}}
 	  		<span ng-show="game.endDate"> - {{game.endDate | date:'short'}}</span>
 	  </div>
-	  <div ng-show="game.estimatedTimeOfArrival">
-	  	Running. ETA: {{game.estimatedTimeOfArrival | date:'HH:mm:ss'}} ({{game.gameProgress * 100 | number:0}}%)
+	  <div ng-show="game.estimatedRemainingMillis">
+	  	ETA: 
+	  	{{getSumEstimatedRemainingMillis($index) / (60 * 1000) | number:0}}m 
+	  	{{((getSumEstimatedRemainingMillis($index) / 1000) % 60) | number:0}}s
+	  	({{game.gameProgress * 100 | number:0}}%)
 	  </div>
 	</div>
 </div>

@@ -110,6 +110,11 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
   $rootScope.backAction = function() {
     $location.path($rootScope.backlink);
   }; 
+  
+  $scope.navigateTo = function(target) {
+	$scope.navCollapsed = true
+	$location.path(target);  
+  };
 
 }
 

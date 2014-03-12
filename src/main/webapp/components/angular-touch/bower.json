@@ -1,7 +1,7 @@
 {
-  "name": "angular-route",
+  "name": "angular-touch",
   "version": "1.2.14",
-  "main": "./angular-route.js",
+  "main": "./angular-touch.js",
   "dependencies": {
     "angular": "1.2.14"
   }

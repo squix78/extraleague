@@ -21,8 +21,7 @@
 			<div class="row">
 				<div class="col-xs-2" ng-repeat="player in currentGame.players">
 					<div class="text-center">
-						
-						<img class="img img-rounded player" src="{{PlayerService.getPlayerPicture(player)}}"/>
+						<div player="player"></div>
 						<div class="caption">{{player}} <div>#{{(players[player].ranking)}}</div></div>
 						<span class="badge" ng-repeat="badge in players[player].badges">{{badge}} </span>
 					</div>

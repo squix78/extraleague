@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'ngRoute', 'PlayerMappings', 'ui.bootstrap', 'nvd3ChartDirectives', 'gaeChannelService'])
+angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'ui.bootstrap', 'nvd3ChartDirectives', 'gaeChannelService'])
     .config(function($routeProvider) {
         $routeProvider.when('/tables', {
            controller : 'TablesController',

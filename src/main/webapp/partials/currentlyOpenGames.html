@@ -22,7 +22,7 @@
 	  	{{((getSumEstimatedRemainingMillis($index) / 1000) % 60) | number:0}}s
 	  	({{game.gameProgress * 100 | number:0}}%)
 	  </div>
-	  <div circularProgress ng-model="game.gameProgress"></div>
+	  <div circular-progress ng-model="game.gameProgress" width="50" height="50"></div>
 	</div>
 </div>
 <div ng-show="isGamesLoading">

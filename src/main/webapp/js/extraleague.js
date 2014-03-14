@@ -208,7 +208,8 @@ function OpenGamesController($scope, $rootScope, $resource, $timeout, $routePara
 	    	var game = new Game(message.game);
 	    	for (var i=0; i<$scope.games.length; i++) {
 	    		if ($scope.games[i].id === game.id) {
-	    			$scope.games[i] = game;
+	    			//$scope.games[i].gameProgress = game.gameProgress;
+	    			angular.copy(game, $scope.games[i]);
 	    		}
 	    	}
 	    });

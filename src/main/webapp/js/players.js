@@ -406,28 +406,12 @@ angular.module('PlayerMappings', [])
 }])
 .directive('player', ['PlayerService', function(PlayerService) {
     return {
+    	template: '<div><img class="player img img-rounded" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
+    	scope: {
+    		player: "="
+    	},
         link: function(scope, elem, attrs) {
-        	scope.$watch(attrs.player, function(value) {
-        	        elem.children().remove();
-        		if (angular.isDefined(value)) {
-		        	var loadElement = angular.element(document.createElement('img'));
-		        	var playerImgUrl = PlayerService.getPlayerPicture(value);
-		        	loadElement.attr('src', playerImgUrl); 
-		        	//loadElement.attr('width', '140'); 
-		        	loadElement.addClass('player'); 
-		        	loadElement.addClass('img'); 
-		        	loadElement.addClass('img-rounded'); 
-		        	if (angular.isDefined(attrs.team)) {
-		        		loadElement.addClass(attrs.team + 'TeamBorder');
-		        	}
-	
-		        	loadElement.bind('load', function() { 
-		        		loadElement.removeClass('hidden');
-		        	});
-	
-		        	elem.append(loadElement);
-        		} 
-        	});
+		    scope.playerImgUrl = PlayerService.getPlayerPicture(scope.player);
         }
     };
 }]);

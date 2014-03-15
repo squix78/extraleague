@@ -4,25 +4,31 @@
 </div>
 <div ng-show="games.length > 0">
 	<div class="alert" ng-class="{'alert-success': $index == 0, 'alert-info': $index > 0}"ng-repeat="game in games">
-	  {{$index + 1}}.
-	  <span ng-repeat="player in game.players">{{player}} </span>
-	  @{{game.table}}
-	  <div class="pull-right">
-		  <button ng-hide="game.endDate" class="btn btn-primary" ng-click="continueGame(game)">Continue ({{game.numberOfCompletedGames + 1}}/4)</button>
-		  <button ng-hide="game.endDate || isDeleteButtonVisible" class="btn btn-danger" ng-click="isDeleteButtonVisible = true">Delete</button>
-		  <button ng-show="isDeleteButtonVisible" class="btn btn-danger" ng-click="deleteGame(game)">Really?</button>
+	  <div class="pull-right text-center" ng-show="game.estimatedRemainingMillis">
+		 <div style="display: block; margin: auto;" circular-progress ng-model="game.gameProgress" width="50" height="50"></div>
+		 <div class="caption">
+			 <div>ETA</div>
+			 <div>
+			  	{{getSumEstimatedRemainingMillis($index) / (60 * 1000) | number:0}}m 
+			  	{{((getSumEstimatedRemainingMillis($index) / 1000) % 60) | number:0}}s
+			 </div>
+		 </div>
 	  </div>
 	  <div>
-	  	{{game.startDate | date:'short'}}
-	  		<span ng-show="game.endDate"> - {{game.endDate | date:'short'}}</span>
+	  		{{game.table}} // {{game.startDate | date:'dd. MMM. yyyy HH:mm:ss'}}
 	  </div>
-	  <div ng-show="game.estimatedRemainingMillis">
-	  	ETA: 
-	  	{{getSumEstimatedRemainingMillis($index) / (60 * 1000) | number:0}}m 
-	  	{{((getSumEstimatedRemainingMillis($index) / 1000) % 60) | number:0}}s
-	  	({{game.gameProgress * 100 | number:0}}%)
+	  <div class="playerRow">
+		  	<div ng-repeat="player in game.players" player="player"></div>
 	  </div>
-	  <div circular-progress ng-model="game.gameProgress" width="50" height="50"></div>
+
+	  <div>
+	  	  <div>
+		      <button ng-hide="game.endDate" class="btn btn-primary" ng-click="continueGame(game)">Continue ({{game.numberOfCompletedGames + 1}}/4)</button>
+
+			  <button ng-hide="game.endDate || isDeleteButtonVisible" class="btn btn-danger" ng-click="isDeleteButtonVisible = true">Delete</button>
+			  <button ng-show="isDeleteButtonVisible" class="btn btn-danger" ng-click="deleteGame(game)">Really?</button>
+	  	  </div>
+	  </div>
 	</div>
 </div>
 <div ng-show="isGamesLoading">

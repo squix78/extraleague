@@ -40,13 +40,18 @@ angular.module('Charts', []).service('D3', function D3() {
 			              var r = Math.min(w, h) / 2;
 			              var pi = Math.PI;
 		
-			              var svgContainer = svg.attr('width', w).attr(
-									'height', h).append('g').attr('transform',
-									'translate(' + w / 2 + ',' + h / 2 + ')');
+			              var svgContainer = svg
+			              	.attr('width', w)
+			              	.attr('height', h)
+			              	.append('g')
+			              	.attr('transform', 'translate(' + w / 2 + ',' + h / 2 + ')');
 		
-			              var display = svgContainer.append('text').style(
-									"text-anchor", "middle").attr('y', 4).text(
-									(Math.round(scope.ngModel * 100)) + "%");
+			              var display = svgContainer
+			              	.append('text')
+			              	.style("text-anchor", "middle")
+			              	.attr("fill", "#aaaaaa")
+			              	.attr("dominant-baseline", "central")
+			              	.text((Math.round(scope.ngModel * 100)) + "%");
 		
 			              var arc = D3.svg.arc()
 								.innerRadius(r * 0.7)

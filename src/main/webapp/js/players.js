@@ -406,14 +406,19 @@ angular.module('PlayerMappings', [])
 }])
 .directive('player', ['PlayerService', function(PlayerService) {
     return {
-    	template: '<div><img class="player img img-rounded" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
+    	template: '<div><img class="player img img-rounded {{teamColor}}" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
     	scope: {
     		player: "=",
     		team: "="
     	},
         link: function(scope, elem, attrs) {
         	scope.$watch('player', function(newValue) {
-        		scope.playerImgUrl = PlayerService.getPlayerPicture(scope.player);
+        		if (newValue) {
+        			scope.playerImgUrl = PlayerService.getPlayerPicture(scope.player);
+        			if (scope.team) {
+        				scope.teamColor = scope.team + "TeamBorder";
+        			}
+        		}
         	});
         }
     };

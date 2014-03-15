@@ -26,6 +26,10 @@ body {
     margin-left: 0;
   }
 }
+.navbar-nav a { 
+	cursor: pointer; 
+	cursor: hand; 
+}
 
 .even {
   background-color: #efefef;

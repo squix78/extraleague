@@ -408,10 +408,13 @@ angular.module('PlayerMappings', [])
     return {
     	template: '<div><img class="player img img-rounded" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
     	scope: {
-    		player: "="
+    		player: "=",
+    		team: "="
     	},
         link: function(scope, elem, attrs) {
-		    scope.playerImgUrl = PlayerService.getPlayerPicture(scope.player);
+        	scope.$watch('player', function(newValue) {
+        		scope.playerImgUrl = PlayerService.getPlayerPicture(scope.player);
+        	});
         }
     };
 }]);

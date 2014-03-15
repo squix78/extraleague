@@ -19,10 +19,10 @@
 		<div ng-show="currentGame.players.length > 0">
 			<h2>Players</h2>
 			<div class="row">
-				<div class="col-xs-2" ng-repeat="player in currentGame.players">
+				<div class="col-xs-2 text-center" ng-repeat="player in currentGame.players">
 					<div class="text-center">
 						<div player="player"></div>
-						<div class="caption">{{player}} <div>#{{(players[player].ranking)}}</div></div>
+						<div>#{{(players[player].ranking)}}</div></div>
 						<span class="badge" ng-repeat="badge in players[player].badges">{{badge}} </span>
 					</div>
 				</div>

@@ -366,19 +366,23 @@ function PlayerController($scope, $rootScope, $routeParams, PlayerService, Playe
   $scope.$on('$viewContentLoaded', function() {
     $rootScope.backlink = '/ranking';
   });
+  
   $rootScope.backlink = '/ranking';
+  
   $scope.playerResult = Player.get({player: $scope.player}, function() {
     $scope.isPlayerLoading = false;
   });
+  
   $scope.isTimeseriesLoading = true;
-  $scope.timeseries = TimeSeries.get({player: $scope.player}), function() {
+  $scope.timeseries = TimeSeries.get({player: $scope.player}, function() {
     $scope.isTimeseriesLoading = false;
-  };
+  });
+  
   $scope.toolTipContentFunction = function(){
-    return function(key, x, y, e, graph) {
+    return function(key, x, y) {
         return  '<h4>' + key + '</h4>' +
               '<p>' +  y + ' at ' + x + '</p>'
-    }
+    };
   };
   $scope.xAxisTickFormatFunction = function(){
     return function(d){
@@ -389,6 +393,11 @@ function PlayerController($scope, $rootScope, $routeParams, PlayerService, Playe
     return function(d){
       return d * 100 + "%"; //uncomment for date format
     };
+  };
+  $scope.yAxisFormatFunction = function(){
+	  return function(d){
+		  return d; //uncomment for date format
+	  };
   };
   $scope.badgeMap = Badges.get(function() {
     $scope.badgeList = [];

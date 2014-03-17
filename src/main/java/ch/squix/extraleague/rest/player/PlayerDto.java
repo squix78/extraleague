@@ -11,8 +11,10 @@ public class PlayerDto {
 	
 	private String player;
 	private RankingDto statistics;
+	private RankingDto dayEndStatistics;
 	private TimeSeriesDto timeSeries;
 	private List<MatchDto> lastMatches = new ArrayList<>();
+	
 	public String getPlayer() {
 		return player;
 	}
@@ -36,6 +38,12 @@ public class PlayerDto {
 	}
 	public void setLastMatches(List<MatchDto> lastMatches) {
 		this.lastMatches = lastMatches;
+	}
+	public RankingDto getDayEndStatistics() {
+		return dayEndStatistics;
+	}
+	public void setDayEndStatistics(RankingDto dayEndStatistics) {
+		this.dayEndStatistics = dayEndStatistics;
 	}
 
 }

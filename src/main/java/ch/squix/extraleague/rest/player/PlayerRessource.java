@@ -4,6 +4,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.restlet.resource.Get;
@@ -23,9 +24,9 @@ public class PlayerRessource extends ServerResource {
 	@Get(value = "json")
 	public PlayerDto execute() throws UnsupportedEncodingException {
 		String player = (String) this.getRequestAttributes().get("player");
-		Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
+		
+		
 		List<Match> matches = ofy().load().type(Match.class).order("-startDate").filter("players ==", player).limit(8).list();
-		List<RankingDto> rankings = RankingDtoMapper.convertToDto(ranking);
 		PlayerDto playerDto = new PlayerDto();
 		playerDto.setPlayer(player);
 		List<MatchDto> matchDtos = new ArrayList<>();
@@ -35,12 +36,33 @@ public class PlayerRessource extends ServerResource {
 		}
 		
 		playerDto.setLastMatches(matchDtos);
-		for (RankingDto dto : rankings) {
-			if (dto.getPlayer().equals(player)) {
-				playerDto.setStatistics(dto);
-			}
+		
+		Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
+
+		RankingDto rankingDto = getPlayerRanking(player, ranking);
+		playerDto.setStatistics(rankingDto);
+		
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.SECOND, 0);
+		
+		List<Ranking> todaysRankings = ofy().load().type(Ranking.class).filter("createdDate >", today.getTime()).order("-createdDate").list();
+		if (todaysRankings.size() > 1) {
+			RankingDto dayEndRankingDto = getPlayerRanking(player, todaysRankings.get(todaysRankings.size() - 1));
+			playerDto.setDayEndStatistics(dayEndRankingDto);
 		}
 		return playerDto;
+	}
+
+	private RankingDto getPlayerRanking(String player, Ranking ranking) {
+		List<RankingDto> rankings = RankingDtoMapper.convertToDto(ranking);
+		for (RankingDto dto : rankings) {
+			if (dto.getPlayer().equals(player)) {
+				return dto;
+			}
+		}
+		return null;
 	}
 
 }

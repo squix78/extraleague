@@ -48,8 +48,9 @@ public class PlayerRessource extends ServerResource {
 		today.set(Calendar.SECOND, 0);
 		
 		List<Ranking> todaysRankings = ofy().load().type(Ranking.class).filter("createdDate >", today.getTime()).order("-createdDate").list();
-		if (todaysRankings.size() > 1) {
-			RankingDto dayEndRankingDto = getPlayerRanking(player, todaysRankings.get(todaysRankings.size() - 1));
+		if (todaysRankings.size() > 1 && matchDtos.size() > 0 && matchDtos.get(0).getStartDate().compareTo(today.getTime()) > 0) {
+			Ranking latestRanking = todaysRankings.get(todaysRankings.size() - 1);
+			RankingDto dayEndRankingDto = getPlayerRanking(player, latestRanking);
 			playerDto.setDayEndStatistics(dayEndRankingDto);
 		}
 		return playerDto;

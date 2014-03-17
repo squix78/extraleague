@@ -17,7 +17,7 @@
           <td>Rank:</td>
           <td>
           	{{playerResult.statistics.ranking}}
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.ranking}})</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.ranking}})</span>
           </td>
         </tr>
         <tr>
@@ -30,56 +30,56 @@
           <td>Success:</td>
           <td>
           	{{playerResult.statistics.successRate * 100 | number:2}}%
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.successRate * 100 | number:2}}%)</span>	
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.successRate * 100 | number:2}}%)</span>	
           </td>
         </tr>
         <tr>
           <td>Shape:</td>
           <td>
           	{{playerResult.statistics.currentShapeRate * 100 | number:2}}%
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.currentShapeRate * 100 | number:2}}%)</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.currentShapeRate * 100 | number:2}}%)</span>
           </td>
         </tr>
         <tr>
           <td>Goals:</td>
           <td>
           	<span ng-show="playerResult.statistics.goalPlusMinus >= 0">+</span>{{playerResult.statistics.goalPlusMinus | number:2}}
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.goalPlusMinus | number:2}})</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.goalPlusMinus | number:2}})</span>
           </td>
         </tr>
         <tr>
           <td>Offensive:</td>
           <td>
           	 {{100 * playerResult.statistics.offensivePositionRate | number:2}}%
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.offensivePositionRate * 100 | number:2}}%)</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.offensivePositionRate * 100 | number:2}}%)</span>
           </td>
         </tr>
         <tr>
           <td>Defensive:</td>
           <td>
           	 {{100 * playerResult.statistics.defensivePositionRate | number:2}}%
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.defensivePositionRate * 100 | number:2}}%)</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.defensivePositionRate * 100 | number:2}}%)</span>
           </td>
         </tr>
         <tr>
           <td>Rate of 5:4 won matches:</td>
           <td>
           	{{100 * playerResult.statistics.tightlyWonRate | number:2}}%
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.tightlyWonRate * 100 | number:2}}%)</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.tightlyWonRate * 100 | number:2}}%)</span>
           </td>
         </tr>
         <tr>
           <td>Rate of 4:5 lost matches:</td>
           <td>
           	{{100 * playerResult.statistics.tightlyLostRate | number:2}}%
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.tightlyLostRate * 100 | number:2}}%)</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.tightlyLostRate * 100 | number:2}}%)</span>
           </td>
         </tr>
         <tr>
           <td>Average Match length:</td>
           <td>
           	{{playerResult.statistics.averageSecondsPerMatch | number}}s
-          	<span ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.averageSecondsPerMatch}}s)</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.averageSecondsPerMatch}}s)</span>
           </td>
         </tr>
         <tr>

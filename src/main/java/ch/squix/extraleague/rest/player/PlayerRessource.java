@@ -25,14 +25,28 @@ public class PlayerRessource extends ServerResource {
 	public PlayerDto execute() throws UnsupportedEncodingException {
 		String player = (String) this.getRequestAttributes().get("player");
 		
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.SECOND, 0);
 		
+		Calendar yesterday = Calendar.getInstance();
+		yesterday.add(Calendar.DAY_OF_YEAR, -1);
+		yesterday.set(Calendar.HOUR_OF_DAY, 0);
+		yesterday.set(Calendar.MINUTE, 0);
+		yesterday.set(Calendar.SECOND, 0);
+
 		List<Match> matches = ofy().load().type(Match.class).order("-startDate").filter("players ==", player).limit(8).list();
 		PlayerDto playerDto = new PlayerDto();
 		playerDto.setPlayer(player);
 		List<MatchDto> matchDtos = new ArrayList<>();
+		boolean hadMatchToday = false;
 		for (Match match : matches) {
 			MatchDto dto = MatchDtoMapper.mapToDto(match);
 			matchDtos.add(dto);
+			if (dto.getStartDate().compareTo(today.getTime()) > 0) {
+				hadMatchToday = true;
+			}
 		}
 		
 		playerDto.setLastMatches(matchDtos);
@@ -42,17 +56,19 @@ public class PlayerRessource extends ServerResource {
 		RankingDto rankingDto = getPlayerRanking(player, ranking);
 		playerDto.setStatistics(rankingDto);
 		
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.HOUR_OF_DAY, 0);
-		today.set(Calendar.MINUTE, 0);
-		today.set(Calendar.SECOND, 0);
+		Calendar referenceDate = today;
+		if (!hadMatchToday) {
+			referenceDate = yesterday;
+		}
 		
-		List<Ranking> todaysRankings = ofy().load().type(Ranking.class).filter("createdDate >", today.getTime()).order("-createdDate").list();
-		if (todaysRankings.size() > 1 && matchDtos.size() > 0 && matchDtos.get(0).getStartDate().compareTo(today.getTime()) > 0) {
+		List<Ranking> todaysRankings = ofy().load().type(Ranking.class).filter("createdDate >", referenceDate.getTime()).order("-createdDate").list();
+		if (todaysRankings.size() > 1) {
 			Ranking latestRanking = todaysRankings.get(todaysRankings.size() - 1);
 			RankingDto dayEndRankingDto = getPlayerRanking(player, latestRanking);
 			playerDto.setDayEndStatistics(dayEndRankingDto);
 		}
+			
+		
 		return playerDto;
 	}
 

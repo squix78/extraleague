@@ -20,6 +20,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'OpenGamesController',
            templateUrl : 'partials/currentlyOpenGames.html'
         })
+        .when('/stats', {
+        	controller : 'StatsController',
+        	templateUrl : 'partials/stats.html'
+        })
         .when('/ranking', {
            controller : 'RankingController',
            templateUrl : 'partials/ranking.html'
@@ -61,6 +65,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('TimeSeries', ['$resource', function($resource) {
       return $resource('/rest/timeseries/:player');
+    }])
+    .factory('Statistics', ['$resource', function($resource) {
+    	return $resource('/rest/statistics');
     }])
     .factory('Badges', ['$resource', function($resource) {
         return $resource('/rest/badges', {}, {get: {cache: true, method: 'GET' } } );
@@ -406,7 +413,10 @@ function PlayerController($scope, $rootScope, $routeParams, PlayerService, Playe
     });
   });
 }
-
-
-
+function StatsController($scope, $rootScope, $routeParams, Statistics) {
+	$scope.isStatisticsLoading = true;
+	$scope.statistics = Statistics.get({}, function() {
+		$scope.isStatisticsLoading = false;
+	});
+}
 

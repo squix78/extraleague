@@ -22,6 +22,7 @@ import ch.squix.extraleague.rest.player.PlayersRessource;
 import ch.squix.extraleague.rest.ranking.RankingResource;
 import ch.squix.extraleague.rest.ranking.RankingServiceResource;
 import ch.squix.extraleague.rest.result.SummaryResource;
+import ch.squix.extraleague.rest.statistics.StatisticsResource;
 import ch.squix.extraleague.rest.statistics.UpdateStatisticsResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
 import ch.squix.extraleague.rest.timeseries.TimeSeriesResource;
@@ -56,6 +57,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/timeseries/{player}", TimeSeriesResource.class);
         router.attach("/updateRankings", RankingServiceResource.class);
         router.attach("/updateStatistics", UpdateStatisticsResource.class);
+        router.attach("/statistics", StatisticsResource.class);
         router.attach("/migrateMatches", MigrateMatchesResource.class);
         router.attach("/notificationToken", NotificationTokenResource.class);
         router.attach("/badges", BadgesResource.class);

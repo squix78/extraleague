@@ -1,7 +1,87 @@
 angular.module('Charts', []).service('D3', function D3() {
 	return window.d3;
-}).directive(
-		'circularProgress',
+})
+.directive('histogram',
+		function(D3) {
+			return {
+				restrict: 'EA',
+				scope : {
+					'ngModel' : '='
+				},
+				link : function(scope, element, attrs) {
+			          var svg = d3.select(element[0])
+			              .append("svg")
+			              .attr("class", "histogram")
+			              .attr("width", "100%");
+			          
+			          var margin = parseInt(attrs.margin) || 20,
+			          barWidth = parseInt(attrs.barWidth) || 20,
+			          barPadding = parseInt(attrs.barPadding) || 5;
+			          
+			          window.onresize = function() {
+			              return scope.$apply();
+			          };
+			          scope.$watch(function(){
+			                return angular.element(window)[0].innerWidth;
+			              }, function(){
+			                return scope.render(scope.ngModel);
+			              }
+			          );
+			          
+			          // watch for data changes and re-render
+			          scope.$watch('ngModel', function(newValue, oldValue) {
+			            return scope.render(newValue, oldValue);
+			          }, false);
+			          
+			          
+			          
+			          scope.render = function(data, oldValue) {
+			        	    svg.selectAll('*').remove();
+
+			        	    // If we don't pass any data, return out of the element
+			        	    if (!data) return;
+
+			        	    // setup variables
+			        	    var height = d3.select(element[0]).node().offsetHeight - margin;
+			        	        // calculate the height
+			        	    var width = data.length * (barWidth + barPadding);
+			        	        // Use the category20() scale function for multicolor support
+			        	    var color = d3.scale.category20();
+			        	        // our xScale
+			        	    var yScale = d3.scale.linear()
+			        	          .domain([0, d3.max(data, function(d) {
+			        	            return d.value;
+			        	          })])
+			        	          .range([0, height]);
+
+			        	    // set the height based on the calculations above
+			        	    svg.attr('width', width);
+
+			        	    //create the rectangles for the bar chart
+			        	    svg.selectAll('rect')
+			        	      .data(data).enter()
+			        	        .append('rect')
+			        	        .attr('width', barWidth)
+			        	        .attr('height', function(d) {
+			        	        	return Math.max(1, d.value * height);
+			        	        })
+			        	        .attr('x', function(d,i) {
+			        	        	return i * (barWidth + barPadding);
+			        	        })
+			        	        .attr('y', function(d) {
+			        	        	return height - d.value * height;
+			        	        })
+			        	        .attr('fill', 'blue');
+//			        	        .transition()
+//			        	          .duration(1000)
+//			        	          .attr('height', function(d) {
+//			        	            return yScale(d.value);
+//			        	          });
+			          };
+				}
+			}
+})
+.directive('circularProgress',
 		function(D3) {
 			return {
 				restrict: 'EA',

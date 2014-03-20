@@ -417,15 +417,16 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	$scope.isStatisticsLoading = true;
 	$scope.statistics = Statistics.get({}, function() {
 		$scope.isStatisticsLoading = false;
-		$scope.hourHistogram[0]["values"] = [];
+		console.log($scope.hourHistogram.length);		
+		$scope.hourHistogram = [];
 		angular.forEach($scope.statistics.hourHistogram, function(value, key) {
-			$scope.hourHistogram[0]["values"].push([value.key, value.value]);
+			console.log($scope.hourHistogram);
+			$scope.hourHistogram.push(value);
+			console.log($scope.hourHistogram.length);		
 		});
+
 	});
 	
-	$scope.hourHistogram = [{
-	                    	"key": "Series 1",
-	                      	"values": [ [ 1025409600000 , 0] ]
-	                     }];
+	$scope.hourHistogram = [{ "key": 1025409600000 , "value": 0}, { "key": 1025409650000 , "value": 5} ];
 }
 

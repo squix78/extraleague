@@ -1,15 +1,7 @@
-<div ng-repeat="tuple in statistics.hourHistogram | orderBy:key">
-	{{tuple.key}} {{tuple.value}}
-</div>
 
 
-	<nvd3-multi-bar-chart
-    	data="hourHistogram"
-        id="exampleId"
-        xAxisTickFormat="xAxisTickFormatFunction()"
-        width="550"
-        height="350"
-        showXAxis="true"
-        showYAxis="true">
-        	<svg></svg>
-    </nvd3-multi-bar-chart>
+<h4>Overall statistics</h4>
+
+<div histogram ng-model="hourHistogram"></div>
+
+

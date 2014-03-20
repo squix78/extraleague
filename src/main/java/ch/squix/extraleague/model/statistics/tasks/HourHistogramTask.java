@@ -33,7 +33,7 @@ public class HourHistogramTask implements StatisticTask {
 		}
 		Map<Integer, Double> histogram = new TreeMap<>();
 		for (Integer hour : countMap.keySet()) {
-			Double share = 1d * (countMap.get(hour) / totalCountedMatches);
+			Double share = (1d * countMap.get(hour) / totalCountedMatches);
 			histogram.put(hour, share);
 		}
 		statistics.setHourHistogram(histogram);

@@ -126,7 +126,7 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
 }
 
 function TablesController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
-  $scope.tables = [{name: 'Park'}, {name: 'Albis'}, {name: 'Bern'}, {name: 'Skopje'}];
+  $scope.tables = [{name: 'Park'}, {name: 'Albis'}, {name: 'Bern'}, {name: 'Skopje'}, {name: 'Rigi'}];
   
   $rootScope.backlink = false;
   
@@ -417,6 +417,15 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	$scope.isStatisticsLoading = true;
 	$scope.statistics = Statistics.get({}, function() {
 		$scope.isStatisticsLoading = false;
+		$scope.hourHistogram[0]["values"] = [];
+		angular.forEach($scope.statistics.hourHistogram, function(value, key) {
+			$scope.hourHistogram[0]["values"].push([value.key, value.value]);
+		});
 	});
+	
+	$scope.hourHistogram = [{
+	                    	"key": "Series 1",
+	                      	"values": [ [ 1025409600000 , 0] ]
+	                     }];
 }
 

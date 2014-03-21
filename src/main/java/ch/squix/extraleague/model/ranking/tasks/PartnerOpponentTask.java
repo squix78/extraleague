@@ -41,12 +41,14 @@ public class PartnerOpponentTask implements RankingTask {
             List<PlayerCombo> partners = filterLowFrequenceCombos(partnerComboMap);
             if (partners.size() > 0) {
             	Collections.sort(partners, comparator);
-	            ranking.setBestPartner(partners.get(0).getCombo());
-	            ranking.setBestPartnerRate(partners.get(0).getSuccessRate());
-	            ranking.setWorstPartner(partners.get(partners.size() - 1).getCombo());
-	            ranking.setWorstPartnerRate(partners.get(partners.size() - 1).getSuccessRate());
+	            PlayerCombo bestPartner = partners.get(0);
+				ranking.setBestPartner(bestPartner.getCombo());
+	            ranking.setBestPartnerRate(bestPartner.getSuccessRate());
+	            PlayerCombo worstPartner = partners.get(partners.size() - 1);
+				ranking.setWorstPartner(worstPartner.getCombo());
+	            ranking.setWorstPartnerRate(worstPartner.getSuccessRate());
+	            ranking.setPartners(partners);
             }
-
 
             Map<String, PlayerCombo> opponentComboMap = opponentMap.get(player);
 
@@ -54,10 +56,13 @@ public class PartnerOpponentTask implements RankingTask {
             if (opponents.size() > 0) {
 	            Collections.sort(opponents, comparator);
 	
-	            ranking.setBestOpponent(opponents.get(opponents.size() - 1).getCombo());
-	            ranking.setBestOpponentRate(1 - opponents.get(opponents.size() - 1).getSuccessRate());
-	            ranking.setWorstOpponent(opponents.get(0).getCombo());
-	            ranking.setWorstOpponentRate(1 - opponents.get(0).getSuccessRate());
+	            PlayerCombo bestOpponent = opponents.get(0);
+				ranking.setBestOpponent(bestOpponent.getCombo());
+	            ranking.setBestOpponentRate(bestOpponent.getSuccessRate());
+	            PlayerCombo worstOpponent = opponents.get(opponents.size() - 1);
+				ranking.setWorstOpponent(worstOpponent.getCombo());
+	            ranking.setWorstOpponentRate(worstOpponent.getSuccessRate());
+	            ranking.setOpponents(opponents);
             }
             
     }
@@ -87,9 +92,9 @@ public class PartnerOpponentTask implements RankingTask {
             PlayerCombo opponent = getPlayerCombo(opponentMap, playerMatch.getPlayer(),
                     opponentName);
             if (playerMatch.hasWon()) {
-                opponent.increaseGamesLost();
+            	opponent.increaseGamesWon();
             } else {
-                opponent.increaseGamesWon();
+            	opponent.increaseGamesLost();
             }
         }
     }

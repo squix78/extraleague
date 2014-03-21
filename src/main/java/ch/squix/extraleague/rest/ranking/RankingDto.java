@@ -25,6 +25,10 @@ public class RankingDto {
     private String worstOpponent;
     private Double worstOpponentRate;
     
+    private List<PlayerComboDto> partners = new ArrayList<>();
+    private List<PlayerComboDto> opponents = new ArrayList<>();
+    
+    
     private Double currentShapeRate;
     
     private Double offensivePositionRate;
@@ -268,6 +272,22 @@ public class RankingDto {
 	 */
 	public void setTightlyWonRate(Double tightlyWonRate) {
 		this.tightlyWonRate = tightlyWonRate;
+	}
+
+	public List<PlayerComboDto> getPartners() {
+		return partners;
+	}
+
+	public void setPartners(List<PlayerComboDto> partners) {
+		this.partners = partners;
+	}
+
+	public List<PlayerComboDto> getOpponents() {
+		return opponents;
+	}
+
+	public void setOpponents(List<PlayerComboDto> opponents) {
+		this.opponents = opponents;
 	}
 
 

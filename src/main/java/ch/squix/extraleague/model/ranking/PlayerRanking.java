@@ -1,9 +1,13 @@
 package ch.squix.extraleague.model.ranking;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import ch.squix.extraleague.model.match.PlayerCombo;
 
 
 public class PlayerRanking implements Serializable {
@@ -29,6 +33,9 @@ public class PlayerRanking implements Serializable {
     private Double bestOpponentRate;
     private String worstOpponent;
     private Double worstOpponentRate;
+    
+    private List<PlayerCombo> partners = new ArrayList<>();
+    private List<PlayerCombo> opponents = new ArrayList<>();
     
     private Double offensivePositionRate;
     private Double defensivePositionRate;
@@ -274,6 +281,34 @@ public class PlayerRanking implements Serializable {
 	 */
 	public void setTightlyWonRate(Double tightlyWonRate) {
 		this.tightlyWonRate = tightlyWonRate;
+	}
+
+	/**
+	 * @return the partners
+	 */
+	public List<PlayerCombo> getPartners() {
+		return partners;
+	}
+
+	/**
+	 * @param partners the partners to set
+	 */
+	public void setPartners(List<PlayerCombo> partners) {
+		this.partners = partners;
+	}
+
+	/**
+	 * @return the opponents
+	 */
+	public List<PlayerCombo> getOpponents() {
+		return opponents;
+	}
+
+	/**
+	 * @param opponents the opponents to set
+	 */
+	public void setOpponents(List<PlayerCombo> opponents) {
+		this.opponents = opponents;
 	}
 
 }

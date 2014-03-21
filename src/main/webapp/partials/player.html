@@ -145,12 +145,10 @@
       <tbody>
         <tr ng-repeat="match in playerResult.lastMatches | orderBy:predicate:reverse">
           <td ng-class="{won: match.teamAScore > match.teamBScore, lost: match.teamAScore < match.teamBScore}">
-          		<span ng-class="{stressed: match.teamA[0] === player}">{{match.teamA[0]}}</span>-
-          		<span ng-class="{stressed: match.teamA[1] === player}">{{match.teamA[1]}}</span>
+          		<span ng-class="{stressed: match.teamA[0] === player}">{{match.teamA[0]}}</span> - <span ng-class="{stressed: match.teamA[1] === player}">{{match.teamA[1]}}</span>
           </td>
           <td ng-class="{won: match.teamBScore > match.teamAScore, lost: match.teamBScore < match.teamAScore}">
-          		<span ng-class="{stressed: match.teamB[0] === player}">{{match.teamB[0]}}</span>-
-          		<span ng-class="{stressed: match.teamB[1] === player}">{{match.teamB[1]}}</span>
+          		<span ng-class="{stressed: match.teamB[0] === player}">{{match.teamB[0]}}</span> - <span ng-class="{stressed: match.teamB[1] === player}">{{match.teamB[1]}}</span>
           </td>
           <td>{{match.teamAScore}}:{{match.teamBScore}}</td>
         </tr>

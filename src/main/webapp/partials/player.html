@@ -105,19 +105,13 @@
         <tr>
           <td>Played with:</td>
           <td>
-          	<span ng-repeat="playerName in playerResult.statistics.playedWith">
-          		<span ng-show="$index > 0">,</span>
-          		{{playerName}}
-          	</span>
-          	({{playerResult.statistics.playedWith.length}})
+          	{{ playerResult.statistics.playedWith.join(', ') }}
           </td>
         </tr>
         <tr>
           <td>Never played with:</td>
           <td>
-          	<span ng-repeat="playerName in playerResult.statistics.neverPlayedWith">
-          		<span ng-show="$index > 0">,</span>{{playerName}}</span>
-          		({{playerResult.statistics.neverPlayedWith.length}})
+            {{ playerResult.statistics.neverPlayedWith.join(', ') }}
           </td>
         </tr>
       </tbody>

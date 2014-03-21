@@ -124,11 +124,11 @@ legend {
 	color: #BBB;
 }
 
-# remove line from the x-axis
+/* remove line from the x-axis */
 .x.axis path {
   display: none;
 }
 
-svg text small {
-  font: normal 10px Arial;
+.text-small {
+  font-size: 75%;
 }

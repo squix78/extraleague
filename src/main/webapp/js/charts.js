@@ -59,7 +59,7 @@ angular.module('Charts', []).service('D3', function D3() {
 			        	    
 			        	    var y = d3.scale.linear()
 			        	    	.domain([0, 1])
-			        	    	.range([height, 0]);
+			        	    	.range([height, 0], 0.9);
 
 			        	    
 			        	    //create the rectangles for the bar chart
@@ -73,7 +73,7 @@ angular.module('Charts', []).service('D3', function D3() {
 			        	    
 			        	    bar.append("rect")
 				        	    .attr("x", 1)
-				        	    .attr("width", x(1))
+				        	    .attr("width", x(1) - 1) // empty space between bars
 				        	    .attr("fill", "#428bca")
 				        	    .attr("height", function(d) { 
 				        	    	return height - y(d.value); 
@@ -81,8 +81,8 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	    
 				        	bar.append("text")
 				        	   .attr("y", -3)
-				        	   .attr("class", "label")
-				        	   .attr("x", barWidth/5)
+				        	   .attr("class", "text-small")
+				        	   .attr("x", barWidth/6)
 				        	   .text(function(d) { 
 				        	       return d.value > 0 ? 
 				        	           d3.format(".2p")(d.value) : null }); 

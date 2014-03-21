@@ -41,9 +41,9 @@ public class TightMatchesTask implements RankingTask {
         	}
         	if (numberOfMatches >= 8) {
 	        	playerRankings.add(ranking);
-	        	Double tightlyLostRate = 1d * numberOfTightlyLostMatches / numberOfMatches;
+	        	Double tightlyLostRate = 1d * numberOfTightlyLostMatches / (numberOfTightlyLostMatches + numberOfTightlyWonMatches);
 	        	ranking.setTightlyLostRate(tightlyLostRate);
-	        	Double tightlyWonRate = 1d * numberOfTightlyWonMatches / numberOfMatches;
+	        	Double tightlyWonRate = 1d * numberOfTightlyWonMatches / (numberOfTightlyLostMatches + numberOfTightlyWonMatches);
 	        	ranking.setTightlyWonRate(tightlyWonRate);
         	}
 

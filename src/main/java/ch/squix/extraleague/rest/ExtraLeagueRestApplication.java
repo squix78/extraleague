@@ -15,6 +15,7 @@ import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGamesResource;
 import ch.squix.extraleague.rest.maintenance.MigrateMatchesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
+import ch.squix.extraleague.rest.network.PlayerNetworkResource;
 import ch.squix.extraleague.rest.notification.NotificationTokenResource;
 import ch.squix.extraleague.rest.ping.PingResource;
 import ch.squix.extraleague.rest.player.PlayerRessource;
@@ -61,6 +62,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/migrateMatches", MigrateMatchesResource.class);
         router.attach("/notificationToken", NotificationTokenResource.class);
         router.attach("/badges", BadgesResource.class);
+        router.attach("/playerNetwork", PlayerNetworkResource.class);
 
         return router;
     }

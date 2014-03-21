@@ -18,6 +18,9 @@ public class RankingResource extends ServerResource {
 	@Get(value = "json")
 	public List<RankingDto> execute() throws UnsupportedEncodingException {
 		Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
+		if (ranking == null) {
+			return new ArrayList<>();
+		}
 		return RankingDtoMapper.convertToDto(ranking);
 	}
 

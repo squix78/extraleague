@@ -59,7 +59,7 @@ angular.module('Charts', []).service('D3', function D3() {
 			        	    
 			        	    var y = d3.scale.linear()
 			        	    	.domain([0, 1])
-			        	    	.range([height, 0], 0.9);
+			        	    	.range([height, 0]);
 
 			        	    
 			        	    //create the rectangles for the bar chart

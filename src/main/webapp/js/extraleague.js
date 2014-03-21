@@ -427,6 +427,6 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 
 	});
 	
-	$scope.hourHistogram = [{ "key": 1025409600000 , "value": 0}, { "key": 1025409650000 , "value": 5} ];
+	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
 }
 

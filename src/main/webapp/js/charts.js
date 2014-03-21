@@ -41,12 +41,15 @@ angular.module('Charts', []).service('D3', function D3() {
 			        	    // If we don't pass any data, return out of the element
 			        	    if (!data) return;
 
-			        	    // setup variables
+//			        	    // setup variables
 			        	    var height = d3.select(element[0]).node().offsetHeight - margin;
-			        	        // calculate the height
+//			        	        // calculate the height
 			        	    var width = data.length * (barWidth + barPadding);
-			        	        // Use the category20() scale function for multicolor support
-			        	    var color = d3.scale.category20();
+//			        	        // Use the category20() scale function for multicolor support
+//			        	    var color = d3.scale.category20();
+			        	    
+//			        	    var height = 150;
+//			        	    var width = 300;
 			        	        // our xScale
 			        	    var yScale = d3.scale.linear()
 			        	          .domain([0, d3.max(data, function(d) {
@@ -56,27 +59,70 @@ angular.module('Charts', []).service('D3', function D3() {
 
 			        	    // set the height based on the calculations above
 			        	    svg.attr('width', width);
+			        	    
+			        	    var x = d3.scale.linear()
+			        	    .domain([0, 24])
+			        	    .range([0, width]);
+			        	    
+			        	    var y = d3.scale.linear()
+			        	    	.domain([0, 1])
+			        	    	.range([height, 0]);
 
+			        	    //svg.append('rect').attr("x", 1).attr("y", 1).attr("width", 10).attr("height", 20);
+			        	    
 			        	    //create the rectangles for the bar chart
-			        	    svg.selectAll('rect')
+			        	    var bar = svg.selectAll('.bar')
 			        	      .data(data).enter()
-			        	        .append('rect')
-			        	        .attr('width', barWidth)
-			        	        .attr('height', function(d) {
-			        	        	return Math.max(1, d.value * height);
-			        	        })
-			        	        .attr('x', function(d,i) {
-			        	        	return i * (barWidth + barPadding);
-			        	        })
-			        	        .attr('y', function(d) {
-			        	        	return height - d.value * height;
-			        	        })
-			        	        .attr('fill', 'blue');
+			        	        .append('g')
+			        	        .attr('class', 'bar')
+			        	        .attr("transform", function(d) { 
+			        	        	return "translate(" + x(d.key) + "," + y(d.value) + ")"; 
+			        	        });
+			        	    
+			        	    var xAxis = d3.svg.axis()
+			        	    	.scale(x)
+			        	    	.orient("bottom");
+			        	    
+			        	    bar.append("rect")
+				        	    .attr("x", 1)
+				        	    .attr("width", x(1))
+				        	    .attr("fill", "yellow")
+				        	    .attr("height", function(d) { 
+				        	    	return height - y(d.value); 
+				        	    });
+			        	    
+//			        	    bar.append("text")
+//				        	    .attr("dy", ".75em")
+//				        	    .attr("y", 6)
+//				        	    .attr("x", 1)
+//				        	    .attr("text-anchor", "middle")
+//				        	    .text(function(d) { 
+//				        	    	return d.key; 
+//				        	    });
+			        	    
+			        	    svg.append("g")
+			        	    .attr("class", "x axis")
+			        	    .attr("transform", "translate("+ (x(1) /2) + "," + height + ")")
+			        	    .call(xAxis);
+
+//			        	        .attr('width', barWidth)
+//			        	        .attr('height', function(d) {
+//			        	        	return Math.max(1, d.value * height);
+//			        	        })
+//			        	        .attr('x', function(d,i) {
+//			        	        	return i * (barWidth + barPadding);
+//			        	        })
+//			        	        .attr('y', function(d) {
+//			        	        	return height - d.value * height;
+//			        	        })
+//			        	        .attr('fill', 'blue');
 //			        	        .transition()
 //			        	          .duration(1000)
 //			        	          .attr('height', function(d) {
 //			        	            return yScale(d.value);
 //			        	          });
+			        	    
+
 			          };
 				}
 			}

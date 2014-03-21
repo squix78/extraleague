@@ -1,0 +1,18 @@
+<h2>Commit history</h2>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Commit message</th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr ng-repeat="c in commits">
+       <td><a href="{{c.author.html_url}}">{{c.author.login}}</a></td>
+       <td><a href="{{c.html_url}}">{{c.commit.message}}</a></td>
+     </tr>
+    <tbody>
+  </table>
+</div>

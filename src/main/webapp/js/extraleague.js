@@ -32,6 +32,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'PlayerController',
            templateUrl : 'partials/player.html'
         })
+        .when('/about', {
+           controller : 'AboutController',
+           templateUrl : 'partials/about.html'
+        })
         .otherwise({
            redirectTo: '/tables'
         });
@@ -430,3 +434,9 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
 }
 
+function AboutController($scope, $http) {
+    var url = 'https://api.github.com/repos/squix78/extraleague/commits';
+    $http.get(url).success(function(data) {
+        $scope.commits = data;
+    });
+}

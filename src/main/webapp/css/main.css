@@ -123,3 +123,12 @@ legend {
 .discreet {
 	color: #BBB;
 }
+
+# remove line from the x-axis
+.x.axis path {
+  display: none;
+}
+
+svg text small {
+  font: normal 10px Arial;
+}

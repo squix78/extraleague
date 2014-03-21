@@ -105,13 +105,13 @@
         <tr>
           <td>Played with:</td>
           <td>
-          	{{ playerResult.statistics.playedWith.join(', ') }}
+          	{{playerResult.statistics.playedWith.join(', ')}} ({{playerResult.statistics.playedWith.length}})
           </td>
         </tr>
         <tr>
           <td>Never played with:</td>
           <td>
-            {{ playerResult.statistics.neverPlayedWith.join(', ') }}
+            {{playerResult.statistics.neverPlayedWith.join(', ')}} ({{playerResult.statistics.neverPlayedWith.length}})
           </td>
         </tr>
       </tbody>

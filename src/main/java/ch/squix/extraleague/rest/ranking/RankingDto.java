@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import ch.squix.extraleague.model.match.Position;
-
 public class RankingDto {
 
     private String player;
@@ -24,22 +22,24 @@ public class RankingDto {
     private Double bestOpponentRate;
     private String worstOpponent;
     private Double worstOpponentRate;
-    
+
     private List<PlayerComboDto> partners = new ArrayList<>();
     private List<PlayerComboDto> opponents = new ArrayList<>();
-    
-    
+
+
     private Double currentShapeRate;
-    
+
     private Double offensivePositionRate;
     private Double defensivePositionRate;
-    
+
     private Double tightlyLostRate;
     private Double tightlyWonRate;
-    
+
     private Long averageSecondsPerMatch;
-	private Set<String> playedWith;
-	private Set<String> neverPlayedWith;
+    private Set<String> playedWith;
+    private Set<String> neverPlayedWith;
+    private Integer rankingPoints;
+    private int dynamicRanking;
 
     public String getPlayer() {
         return player;
@@ -102,6 +102,7 @@ public class RankingDto {
     public void setGoalsMade(Integer goalsMade) {
         this.goalsMade = goalsMade;
     }
+
     public Double getGoalRate() {
         return 1.0 * goalsMade / (goalsMade + goalsGot);
     }
@@ -109,9 +110,9 @@ public class RankingDto {
     public Double getGoalPlusMinus() {
         return 1.0 * (goalsMade - goalsGot) / getTotalGames();
     }
-    
+
     public Integer getTotalGames() {
-    	return gamesLost + gamesWon;
+        return gamesLost + gamesWon;
     }
 
     public Integer getGoalsGot() {
@@ -122,176 +123,187 @@ public class RankingDto {
         this.goalsGot = goalsGot;
     }
 
-	public String getBestPartner() {
-		return bestPartner;
-	}
+    public String getBestPartner() {
+        return bestPartner;
+    }
 
-	public String getWorstPartner() {
-		return worstPartner;
-	}
+    public String getWorstPartner() {
+        return worstPartner;
+    }
 
-	public String getBestOpponent() {
-		return bestOpponent;
-	}
+    public String getBestOpponent() {
+        return bestOpponent;
+    }
 
-	public String getWorstOpponent() {
-		return worstOpponent;
-	}
+    public String getWorstOpponent() {
+        return worstOpponent;
+    }
 
-	public void setBestPartner(String bestPartner) {
-		this.bestPartner = bestPartner;
-	}
+    public void setBestPartner(String bestPartner) {
+        this.bestPartner = bestPartner;
+    }
 
-	public void setWorstPartner(String worstPartner) {
-		this.worstPartner = worstPartner;
-	}
+    public void setWorstPartner(String worstPartner) {
+        this.worstPartner = worstPartner;
+    }
 
-	public void setBestOpponent(String bestOpponent) {
-		this.bestOpponent = bestOpponent;
-	}
+    public void setBestOpponent(String bestOpponent) {
+        this.bestOpponent = bestOpponent;
+    }
 
-	public void setWorstOpponent(String worstOpponent) {
-		this.worstOpponent = worstOpponent;
-	}
+    public void setWorstOpponent(String worstOpponent) {
+        this.worstOpponent = worstOpponent;
+    }
 
-	public Double getBestPartnerRate() {
-		return bestPartnerRate;
-	}
+    public Double getBestPartnerRate() {
+        return bestPartnerRate;
+    }
 
-	public Double getWorstPartnerRate() {
-		return worstPartnerRate;
-	}
+    public Double getWorstPartnerRate() {
+        return worstPartnerRate;
+    }
 
-	public Double getBestOpponentRate() {
-		return bestOpponentRate;
-	}
+    public Double getBestOpponentRate() {
+        return bestOpponentRate;
+    }
 
-	public Double getWorstOpponentRate() {
-		return worstOpponentRate;
-	}
+    public Double getWorstOpponentRate() {
+        return worstOpponentRate;
+    }
 
-	public void setBestPartnerRate(Double bestPartnerRate) {
-		this.bestPartnerRate = bestPartnerRate;
-	}
+    public void setBestPartnerRate(Double bestPartnerRate) {
+        this.bestPartnerRate = bestPartnerRate;
+    }
 
-	public void setWorstPartnerRate(Double worstPartnerRate) {
-		this.worstPartnerRate = worstPartnerRate;
-	}
+    public void setWorstPartnerRate(Double worstPartnerRate) {
+        this.worstPartnerRate = worstPartnerRate;
+    }
 
-	public void setBestOpponentRate(Double bestOpponentRate) {
-		this.bestOpponentRate = bestOpponentRate;
-	}
+    public void setBestOpponentRate(Double bestOpponentRate) {
+        this.bestOpponentRate = bestOpponentRate;
+    }
 
-	public void setWorstOpponentRate(Double worstOpponentRate) {
-		this.worstOpponentRate = worstOpponentRate;
-	}
+    public void setWorstOpponentRate(Double worstOpponentRate) {
+        this.worstOpponentRate = worstOpponentRate;
+    }
 
-	public Double getOffensivePositionRate() {
-		return offensivePositionRate;
-	}
+    public Double getOffensivePositionRate() {
+        return offensivePositionRate;
+    }
 
-	public Double getDefensivePositionRate() {
-		return defensivePositionRate;
-	}
+    public Double getDefensivePositionRate() {
+        return defensivePositionRate;
+    }
 
-	public void setOffensivePositionRate(Double offensivePositionRate) {
-		this.offensivePositionRate = offensivePositionRate;
-	}
+    public void setOffensivePositionRate(Double offensivePositionRate) {
+        this.offensivePositionRate = offensivePositionRate;
+    }
 
-	public void setDefensivePositionRate(Double defensivePositionRate) {
-		this.defensivePositionRate = defensivePositionRate;
-	}
+    public void setDefensivePositionRate(Double defensivePositionRate) {
+        this.defensivePositionRate = defensivePositionRate;
+    }
 
-	/**
-	 * @return the averageSecondsPerMatch
-	 */
-	public Long getAverageSecondsPerMatch() {
-		return averageSecondsPerMatch;
-	}
+    /**
+     * @return the averageSecondsPerMatch
+     */
+    public Long getAverageSecondsPerMatch() {
+        return averageSecondsPerMatch;
+    }
 
-	/**
-	 * @param averageSecondsPerMatch the averageSecondsPerMatch to set
-	 */
-	public void setAverageSecondsPerMatch(Long averageSecondsPerMatch) {
-		this.averageSecondsPerMatch = averageSecondsPerMatch;
-	}
+    /**
+     * @param averageSecondsPerMatch the averageSecondsPerMatch to set
+     */
+    public void setAverageSecondsPerMatch(Long averageSecondsPerMatch) {
+        this.averageSecondsPerMatch = averageSecondsPerMatch;
+    }
 
-	/**
-	 * @return the currentShapeRate
-	 */
-	public Double getCurrentShapeRate() {
-		return currentShapeRate;
-	}
+    /**
+     * @return the currentShapeRate
+     */
+    public Double getCurrentShapeRate() {
+        return currentShapeRate;
+    }
 
-	/**
-	 * @param currentShapeRate the currentShapeRate to set
-	 */
-	public void setCurrentShapeRate(Double currentShapeRate) {
-		this.currentShapeRate = currentShapeRate;
-	}
+    /**
+     * @param currentShapeRate the currentShapeRate to set
+     */
+    public void setCurrentShapeRate(Double currentShapeRate) {
+        this.currentShapeRate = currentShapeRate;
+    }
 
-	public void setPlayedWith(Set<String> playedWith) {
-		this.playedWith = playedWith;
-	}
-	
-	public Set<String> getPlayedWith() {
-		return playedWith;
-	}
+    public void setPlayedWith(Set<String> playedWith) {
+        this.playedWith = playedWith;
+    }
 
-	public void setNeverPlayedWith(Set<String> neverPlayedWith) {
-		this.neverPlayedWith = neverPlayedWith;
-	}
-	
-	public Set<String> getNeverPlayedWith() {
-		return neverPlayedWith;
-	}
+    public Set<String> getPlayedWith() {
+        return playedWith;
+    }
 
-	/**
-	 * @return the tightlyLostRate
-	 */
-	public Double getTightlyLostRate() {
-		return tightlyLostRate;
-	}
+    public void setNeverPlayedWith(Set<String> neverPlayedWith) {
+        this.neverPlayedWith = neverPlayedWith;
+    }
 
-	/**
-	 * @param tightlyLostRate the tightlyLostRate to set
-	 */
-	public void setTightlyLostRate(Double tightlyLostRate) {
-		this.tightlyLostRate = tightlyLostRate;
-	}
+    public Set<String> getNeverPlayedWith() {
+        return neverPlayedWith;
+    }
 
-	/**
-	 * @return the tightlyWonRate
-	 */
-	public Double getTightlyWonRate() {
-		return tightlyWonRate;
-	}
+    /**
+     * @return the tightlyLostRate
+     */
+    public Double getTightlyLostRate() {
+        return tightlyLostRate;
+    }
 
-	/**
-	 * @param tightlyWonRate the tightlyWonRate to set
-	 */
-	public void setTightlyWonRate(Double tightlyWonRate) {
-		this.tightlyWonRate = tightlyWonRate;
-	}
+    /**
+     * @param tightlyLostRate the tightlyLostRate to set
+     */
+    public void setTightlyLostRate(Double tightlyLostRate) {
+        this.tightlyLostRate = tightlyLostRate;
+    }
 
-	public List<PlayerComboDto> getPartners() {
-		return partners;
-	}
+    /**
+     * @return the tightlyWonRate
+     */
+    public Double getTightlyWonRate() {
+        return tightlyWonRate;
+    }
 
-	public void setPartners(List<PlayerComboDto> partners) {
-		this.partners = partners;
-	}
+    /**
+     * @param tightlyWonRate the tightlyWonRate to set
+     */
+    public void setTightlyWonRate(Double tightlyWonRate) {
+        this.tightlyWonRate = tightlyWonRate;
+    }
 
-	public List<PlayerComboDto> getOpponents() {
-		return opponents;
-	}
+    public List<PlayerComboDto> getPartners() {
+        return partners;
+    }
 
-	public void setOpponents(List<PlayerComboDto> opponents) {
-		this.opponents = opponents;
-	}
+    public void setPartners(List<PlayerComboDto> partners) {
+        this.partners = partners;
+    }
 
+    public List<PlayerComboDto> getOpponents() {
+        return opponents;
+    }
 
+    public void setOpponents(List<PlayerComboDto> opponents) {
+        this.opponents = opponents;
+    }
 
+    public void setRankingPoints(Integer rankingPoints) {
+        this.rankingPoints = rankingPoints;
+    }
 
+    public Integer getRankingPoints() {
+        return rankingPoints;
+    }
 
+    public void setDynamicRanking(int dynamicRanking) {
+        this.dynamicRanking = dynamicRanking;
+    }
+
+    public int getDynamicRanking() {
+        return dynamicRanking;
+    }
 }

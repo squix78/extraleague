@@ -1,6 +1,13 @@
 <h3>Who played today?</h3>
 
+<div ng-show="players.length == 0 && !isPlayedGamesLoading">
+  No one played a game so far.
+</div>
+
 <div class="playerRow">
   <div ng-repeat="player in players" player="player"></div>
 </div>
 
+<div ng-show="isPlayedGamesLoading">
+    <img src="images/ajax-loader.gif"/> Loading Players
+</div>

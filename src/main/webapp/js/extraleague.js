@@ -20,6 +20,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'OpenGamesController',
            templateUrl : 'partials/currentlyOpenGames.html'
         })
+         .when('/playedGames', {
+           controller : 'PlayedGamesController',
+           templateUrl : 'partials/playedGames.html'
+        })
         .when('/stats', {
         	controller : 'StatsController',
         	templateUrl : 'partials/stats.html'
@@ -31,6 +35,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         .when('/player/:player', {
            controller : 'PlayerController',
            templateUrl : 'partials/player.html'
+        })
+        .when('/about', {
+           controller : 'AboutController',
+           templateUrl : 'partials/about.html'
         })
         .when('/about', {
            controller : 'AboutController',
@@ -51,6 +59,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('OpenGames', ['$resource', function($resource) {
       return $resource('/rest/openGames');
+    }])
+    .factory('PlayedGames', ['$resource', function($resource) {
+      return $resource('/rest/playedGames');
     }])
     .factory('Game', ['$resource', function($resource) {
       return $resource('/rest/tables/:table/games/:gameId');
@@ -192,6 +203,19 @@ function TableController($scope, $rootScope, $resource, $routeParams, $location,
     $scope.players = playersResult;
   });
 }
+
+function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, PlayedGames, PlayerService, Players) {
+    PlayedGames.query(function (response) {     
+        $scope.playedGames = response;   
+        $scope.players = [];
+        $scope.playedGames.forEach(function(game) {  $scope.players = $scope.players.concat(game.players) });
+        
+        $scope.players = $scope.players.filter(function onlyUnique(value, index, self) { 
+          return self.indexOf(value) === index;
+        });                 
+    });
+}
+
 function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, PlayerService, Players, NotificationService) {
   $rootScope.backlink = false;
   $scope.updateGames = function() {

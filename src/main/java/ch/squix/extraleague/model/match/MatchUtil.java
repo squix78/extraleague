@@ -14,7 +14,7 @@ public class MatchUtil {
 	
 	public static Map<String, PlayerMatchResult> getPlayerMatchMap(Match match) {
         Map<String, PlayerMatchResult> results = new LinkedHashMap<>();
-        boolean hasTeamAWon = match.getTeamAScore() > match.getTeamBScore();
+        boolean hasTeamAWon = hasTeamAWon(match);
         int index = 0;
         Position[] teamPositions = new Position[] {Position.Offensive, Position.Defensive};
         for (String player : match.getTeamA()) {
@@ -44,7 +44,11 @@ public class MatchUtil {
         }
         return results;
 	}
-	
+
+    public static boolean hasTeamAWon(Match match) {
+        return match.getTeamAScore() > match.getTeamBScore();
+    }
+
     public static List<PlayerMatchResult> getPlayerMatchResults(Match match) {
     	return new ArrayList<PlayerMatchResult>(getPlayerMatchMap(match).values());
     }

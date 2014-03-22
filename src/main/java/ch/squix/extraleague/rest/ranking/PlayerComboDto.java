@@ -1,10 +1,6 @@
-package ch.squix.extraleague.model.match;
+package ch.squix.extraleague.rest.ranking;
 
-import java.io.Serializable;
-
-public class PlayerCombo implements Serializable {
-	
-	private static final long serialVersionUID = -1087465634185379532L;
+public class PlayerComboDto {
 	
 	private String player;
 	private String combo;
@@ -34,14 +30,6 @@ public class PlayerCombo implements Serializable {
 	}
 	public void setGamesLost(Integer gamesLost) {
 		this.gamesLost = gamesLost;
-	}
-	
-	public void increaseGamesWon() {
-		gamesWon++;
-	}
-	
-	public void increaseGamesLost() {
-		gamesLost++;
 	}
 	
 	public Double getSuccessRate() {

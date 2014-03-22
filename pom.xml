@@ -115,6 +115,13 @@
 			<artifactId>logback-classic</artifactId>
 			<version>0.9.24</version>
 		</dependency>
+		
+		<dependency>
+           <groupId>joda-time</groupId>
+           <artifactId>joda-time</artifactId>
+           <version>2.3</version>
+        </dependency>
+            
 
     <!-- Test Dependencies -->
     <dependency>
@@ -182,6 +189,12 @@
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.target.version}</version>
+                <configuration>
+                <jvmFlags>
+                    <jvmFlag>-Xdebug</jvmFlag>
+                    <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
+                 </jvmFlags>
+                </configuration>
             </plugin>
         </plugins>
     </build>

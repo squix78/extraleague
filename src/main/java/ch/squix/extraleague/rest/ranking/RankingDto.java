@@ -303,7 +303,7 @@ public class RankingDto {
         this.dynamicRanking = dynamicRanking;
     }
 
-    public int getDynamicRanking() {
+    public Integer getDynamicRanking() {
         return dynamicRanking;
     }
 }

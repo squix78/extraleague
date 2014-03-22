@@ -1,71 +1,57 @@
  <div class="starter-template text-center">
-   <h4>Match {{matchIndex + 1}}/4</h4>
+   <h6><small>Match {{matchIndex + 1}}/4</small></h6>
  </div>
 
 <div class="row">
-	<div class="col-xs-6">
+	<div class="col-xs-12">
 		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block" ng-click="decreaseScoreTeamA()">
 			<span class="glyphicon glyphicon-minus-sign"></span>
 		</button>
 	</div>
 	<div class="col-xs-6">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block" ng-click="increaseScoreTeamA()">
-			<span class="glyphicon glyphicon-plus-sign"></span>
-		</button>
 	</div>
 
 </div>
 <BR/>
 <div class="row text-center">
-	<div class="col-xs-3">&nbsp;</div>
-	<div class="col-xs-3">
-		<span team="'blue'" player="match.teamA[0]" ng-click="increaseScoreTeamA()"/> 
+	<div class="col-xs-6">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block" ng-click="increaseScoreTeamA()">
+				<span class="glyphicon glyphicon-plus-sign"></span>
+
+				<span player="match.teamA[0]"/> 
+		</button>
 	</div>
-	<div class="col-xs-3">
-		<span team="'blue'" player="match.teamA[1]" ng-click="increaseScoreTeamA()"/>
+	<div class="col-xs-6">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block" ng-click="increaseScoreTeamA()">
+			<span class="glyphicon glyphicon-plus-sign"></span>
+			<span player="match.teamA[1]"/> 
+		</button>
 	</div>
-	<div class="col-xs-3">&nbsp;</div>
 </div>
 <div class="row text-center">
-	<h1><span class="redTeam">{{match.teamBScore}}</span> <img src="images/table.jpg"/> <span class="blueTeam">{{match.teamAScore}}</span></h1>
+	<h1>
+		<span class="redTeam">{{match.teamBScore}}</span> <img src="images/table.jpg"/> <span class="blueTeam">{{match.teamAScore}}</span>
+	</h1>
 </div>	
 <div class="row text-center">
-	<div class="col-xs-3"></div>
-	<div class="col-xs-3">
-		<span team="'red'" player="match.teamB[1]" ng-click="increaseScoreTeamB()"/> 
+	<div class="col-xs-12"></div>
+		<div class="col-xs-6">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block" ng-click="increaseScoreTeamB()">
+			<span class="glyphicon glyphicon-plus-sign"></span>
+			<span player="match.teamB[1]"/> 
+		</button>
 	</div>
-	<div class="col-xs-3">
-		<span team="'red'" player="match.teamB[0]" ng-click="increaseScoreTeamB()"/> 
+	<div class="col-xs-6">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block" ng-click="increaseScoreTeamB()">
+			<span class="glyphicon glyphicon-plus-sign"></span>
+			<span player="match.teamB[0]"/> 
+		</button>
 	</div>
-	<div class="col-xs-3"></div>
 </div>
 <BR/>
 <div class="row">
-	<div class="col-xs-6">
+	<div class="col-xs-12">
 		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block" ng-click="decreaseScoreTeamB()"><span class="glyphicon glyphicon-minus-sign"></span></button>
 	</div>
-	<div class="col-xs-6">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block" ng-click="increaseScoreTeamB()"><span class="glyphicon glyphicon-plus-sign"></span></button>
-	</div>
 </div>
-<div ng-show="matchIsSaving">
-	<img src="images/ajax-loader.gif" /> Saving match
-</div>
-<h2>Summary</h2>
-
-		<div class="row" ng-repeat="match in matches">
-			<div class="col-xs-1">
-				{{match.matchIndex + 1}}
-			</div>
-			<div class="col-xs-4">
-				{{match.teamA[0]}} - {{match.teamA[1]}}
-			</div>
-			<div class="col-xs-4">
-				{{match.teamB[0]}} - {{match.teamB[1]}}
-			</div>
-			<div class="col-xs-2">
-				{{match.teamAScore}}:{{match.teamBScore}}
-			</div>
-		</div>
-
-</div>
+<span ng-show="matchIsSaving"><img src="images/ajax-loader.gif" /></span>

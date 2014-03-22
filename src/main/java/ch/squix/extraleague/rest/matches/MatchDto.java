@@ -1,6 +1,8 @@
 package ch.squix.extraleague.rest.matches;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MatchDto {
 	private Long id; 
@@ -13,6 +15,7 @@ public class MatchDto {
 	private Date endDate;
 	private String table;
 	private Integer matchIndex;
+	private List<String> scorers = new ArrayList<>();
 	
 	public Long getGameId() {
 		return gameId;
@@ -85,6 +88,12 @@ public class MatchDto {
 	}
 	public void setMatchIndex(Integer matchIndex) {
 		this.matchIndex = matchIndex;		
+	}
+	public List<String> getScorers() {
+		return scorers;
+	}
+	public void setScorers(List<String> scorers) {
+		this.scorers = scorers;
 	}
 
 

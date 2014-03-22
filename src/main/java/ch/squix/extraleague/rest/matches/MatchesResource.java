@@ -56,6 +56,7 @@ public class MatchesResource extends ServerResource {
 		match.setTeamB(dto.getTeamB());
 		match.setTeamAScore(dto.getTeamAScore());
 		match.setTeamBScore(dto.getTeamBScore());
+		match.setScorers(dto.getScorers());
 		match.setTable(dto.getTable());
 		if (match.getTeamAScore() >= 5 || match.getTeamBScore() >= 5) {
 			log.info("Game is finished");

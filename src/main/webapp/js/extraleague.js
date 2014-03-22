@@ -40,10 +40,6 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'AboutController',
            templateUrl : 'partials/about.html'
         })
-        .when('/about', {
-           controller : 'AboutController',
-           templateUrl : 'partials/about.html'
-        })
         .otherwise({
            redirectTo: '/tables'
         });
@@ -296,13 +292,21 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
     }
     
   });
-  $scope.increaseScoreTeamA = function() {
+  $scope.increaseScoreTeamA = function(player) {
+	console.log(player);
     $scope.match.teamAScore++;
+    $scope.match.scorers.push(player);
     $scope.saveMatch();
   };
-  $scope.decreaseScoreTeamA = function() {
-    if ($scope.match.teamAScore > 0) {
-      $scope.match.teamAScore--;
+  $scope.decreaseScore = function() {
+    if ($scope.match.scorers.length > 0) {
+      var lastScorer = $scope.match.scorers.pop();
+      
+      if ($scope.match.teamA.indexOf(lastScorer) > -1) {
+    	  $scope.match.teamAScore--;
+      } else {
+    	  $scope.match.teamBScore--;
+      }
       $scope.saveMatch();
     }
   };
@@ -325,26 +329,18 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
     } 
   };
   
-//  $rootScope.$on("UpdateMatch", function(event, message) {
-//    console.log("Received change in game from server");
-//    $scope.$apply(function() {
-//      if (message.game.id === $scope.game.id) {
-//        $scope.match = new Match(message.match);
-//        $scope.game = new Game(message.game);
-//        $scope.checkEndOfMatch();
-//      } else {
-//        console.log("Received update notification for another game");
-//      }
-//    });
-//  });
-  
-  $scope.increaseScoreTeamB = function() {
+  $scope.increaseScoreTeamB = function(player) {
+	console.log(player);
     $scope.match.teamBScore++;
+    $scope.match.scorers.push(player);    	
     $scope.saveMatch();
   }
   $scope.decreaseScoreTeamB = function() {
     if ($scope.match.teamBScore > 0) {
       $scope.match.teamBScore--;
+      if ($scope.match.teamB.indexOf(player) > -1) {
+    	  $scope.match.scorers.pop();
+      }
       $scope.saveMatch();
     }
   }

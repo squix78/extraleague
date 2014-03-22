@@ -23,6 +23,8 @@ public class Match {
 	private Integer teamAScore;
 	private Integer teamBScore;
 	
+	private List<String> scorers = new ArrayList<>();
+	
 	@Index
 	private Date startDate;
 	private Date endDate;
@@ -115,6 +117,12 @@ public class Match {
 	 */
 	public void setPlayers(List<String> players) {
 		this.players = players;
+	}
+	public List<String> getScorers() {
+		return scorers;
+	}
+	public void setScorers(List<String> scorers) {
+		this.scorers = scorers;
 	}
 
 }

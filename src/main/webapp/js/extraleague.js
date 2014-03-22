@@ -205,7 +205,9 @@ function TableController($scope, $rootScope, $resource, $routeParams, $location,
 }
 
 function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, PlayedGames, PlayerService, Players) {
-    PlayedGames.query(function (response) {     
+    $scope.isPlayedGamesLoading = true;
+    PlayedGames.query(function (response) {  
+        $scope.isPlayedGamesLoading = false;   
         $scope.playedGames = response;   
         $scope.players = [];
         $scope.playedGames.forEach(function(game) {  $scope.players = $scope.players.concat(game.players) });

@@ -1,12 +1,12 @@
 package ch.squix.extraleague.rest.network;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerNetworkDto {
 	
 	private String name;
-	private Set<String> partners = new HashSet<>();
+	private List<PartnerDto> partners = new ArrayList<>();
 	
 	public String getName() {
 		return name;
@@ -14,10 +14,10 @@ public class PlayerNetworkDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<String> getPartners() {
+	public List<PartnerDto> getPartners() {
 		return partners;
 	}
-	public void setPartners(Set<String> partners) {
+	public void setPartners(List<PartnerDto> partners) {
 		this.partners = partners;
 	}
 	

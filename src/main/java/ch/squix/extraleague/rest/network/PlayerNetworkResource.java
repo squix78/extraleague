@@ -2,8 +2,10 @@ package ch.squix.extraleague.rest.network;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,22 +28,34 @@ public class PlayerNetworkResource extends ServerResource {
 	public Collection<PlayerNetworkDto> execute() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -30);
-		Map<String, PlayerNetworkDto> networkMap = new HashMap<>();
+		Map<String, List<String>> networkMap = new HashMap<>();
 		List<Game> games = ofy().load().type(Game.class).list();
 		for (Game game : games) {
 			for (String player : game.getPlayers()) {
-				PlayerNetworkDto dto = networkMap.get(player);
-				if (dto == null) {
-					dto = new PlayerNetworkDto();
-					dto.setName(player);
-					networkMap.put(player, dto);
+				List<String> partnerList = networkMap.get(player);
+				if (partnerList == null) {
+					partnerList = new ArrayList<>();
+					networkMap.put(player, partnerList);
 				}
 				Set<String> partners = new HashSet<>(game.getPlayers());
 				partners.remove(player);
-				dto.getPartners().addAll(partners);
+				partnerList.addAll(partners);
 			}
 		}
-		return networkMap.values();
+		List<PlayerNetworkDto> playerList = new ArrayList<>();
+		for (Map.Entry<String, List<String>> entry : networkMap.entrySet()) {
+			PlayerNetworkDto dto = new PlayerNetworkDto();
+			dto.setName(entry.getKey());
+			Set<String> allPartners = new HashSet<>(entry.getValue());
+			for (String partner : allPartners) {
+				PartnerDto partnerDto = new PartnerDto();
+				partnerDto.setPartner(partner);
+				partnerDto.setFrequency(Collections.frequency(entry.getValue(), partner));
+				dto.getPartners().add(partnerDto);
+			}
+			playerList.add(dto);
+		}
+		return playerList;
 	}
 
 

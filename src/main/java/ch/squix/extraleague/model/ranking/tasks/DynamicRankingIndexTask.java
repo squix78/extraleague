@@ -5,7 +5,6 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,12 +55,6 @@ public class DynamicRankingIndexTask implements RankingTask {
             PointsAccumulation pointsAccumulation = playersPointsAccumulation.get(playerRankingEntry.getKey());
             playerRankingEntry.getValue().setRankingPoints(pointsAccumulation.getAveragePoints());
         }
-
-        SortedSet<PlayerRanking> sortedPlayerRanking = getSortedPlayerRanking(playerRankingMap.values());
-        int i = 1;
-        for (PlayerRanking playerRanking : sortedPlayerRanking) {
-            playerRanking.setDynamicRanking(i++);
-        }
     }
 
     private void preparePlayerPointsAccumulation(Map<String, PlayerRanking> playerRankingMap) {
@@ -74,16 +67,7 @@ public class DynamicRankingIndexTask implements RankingTask {
         }
     }
 
-    private SortedSet<PlayerRanking> getSortedPlayerRanking(Collection<PlayerRanking> playerRankings) {
-        TreeSet<PlayerRanking> sortedPlayerRankings = new TreeSet<>(new Comparator<PlayerRanking>() {
-            @Override
-            public int compare(PlayerRanking o1, PlayerRanking o2) {
-                return o2.getRankingPoints().compareTo(o1.getRankingPoints());
-            }
-        });
-        sortedPlayerRankings.addAll(playerRankings);
-        return sortedPlayerRankings;
-    }
+
 
     private float getTeamWeight(String[] teamMembers, Map<String, PlayerRanking> playerRankingMap) {
         float weight = 0;

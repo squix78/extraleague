@@ -3,6 +3,7 @@ package ch.squix.extraleague.rest.result;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +24,11 @@ public class SummaryResource extends ServerResource {
 		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", gameId).list();
 		SummaryDto dto = new SummaryDto();
 		Map<String, Integer> playerScores = new HashMap<>();
+		Map<String, Integer> playerGoals = new HashMap<>();
+		
 		for (String player : game.getPlayers()) {
 			playerScores.put(player, 0);
+			playerGoals.put(player, 0);
 		}
 		for (Match match : matches) {
 			Integer teamAScore = match.getTeamAScore();
@@ -40,9 +44,14 @@ public class SummaryResource extends ServerResource {
 				score++;
 				playerScores.put(winner, score);
 			}
+			for (String player : playerScores.keySet()) {
+				Integer goals = playerGoals.get(player);
+				goals += Collections.frequency(match.getScorers(), player);
+				playerGoals.put(player, goals);
+			}
 		}
 		for (String player : game.getPlayers()) {
-			dto.getPlayerScores().add(new PlayerScoreDto(player, playerScores.get(player)));
+			dto.getPlayerScores().add(new PlayerScoreDto(player, playerScores.get(player), playerGoals.get(player)));
 		}
 		return dto;
 	}

@@ -9,10 +9,13 @@
 	</div>
 </div>
 <div class="row" ng-repeat="playerScore in summary.playerScores | orderBy:'-score'"  ng-class-even="'even'" ng-class-odd="'odd'">
-	<div class="col-xs-6">
+	<div class="col-xs-4">
 		{{playerScore.player}}
 	</div>
-	<div class="col-xs-6">
+	<div class="col-xs-4">
+		{{playerScore.score}}
+	</div>
+	<div class="col-xs-4">
 		{{playerScore.score}}
 	</div>
 </div>

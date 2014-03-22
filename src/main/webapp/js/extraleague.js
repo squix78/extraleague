@@ -40,6 +40,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'AboutController',
            templateUrl : 'partials/about.html'
         })
+        .when('/about', {
+           controller : 'AboutController',
+           templateUrl : 'partials/about.html'
+        })
         .otherwise({
            redirectTo: '/tables'
         });

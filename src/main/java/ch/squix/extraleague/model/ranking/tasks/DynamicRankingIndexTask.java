@@ -7,6 +7,7 @@ import ch.squix.extraleague.model.ranking.PlayerRanking;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -16,33 +17,60 @@ import java.util.TreeSet;
  */
 public class DynamicRankingIndexTask implements RankingTask {
 
-    private static final int POINTS_PER_GAME = 100;
+    private static final int POINTS_PER_GAME = 1000;
+
+    private Map<String, PointsAccumulation> playersPointsAccumulation;
 
     @Override
     public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
+
+        preparePlayerPointsAccumulation(playerRankingMap);
+
         SortedSet<Match> matchesSortedByDate = getMathesSortedByDate(matches);
         for (Match match : matchesSortedByDate) {
             float weightTeamA = getTeamWeight(match.getTeamA(), playerRankingMap);
             float weightTeamB = getTeamWeight(match.getTeamB(), playerRankingMap);
 
-            int rankingPoints = POINTS_PER_GAME;
+
+            int pointsForTeamA = 0;
+            int PointsForTeamB = 0;
+
             if (MatchUtil.hasTeamAWon(match)) {
                 if (weightTeamA != 0) {
-                    rankingPoints = (int) ((weightTeamB / weightTeamA) * POINTS_PER_GAME);
+                    pointsForTeamA = (int) ((weightTeamB / weightTeamA) * POINTS_PER_GAME);
+                }else{
+                    pointsForTeamA = POINTS_PER_GAME;
                 }
-                addRankingPoints(match.getTeamA(), rankingPoints, playerRankingMap);
             } else {
                 if (weightTeamB != 0) {
-                    rankingPoints = (int) ((weightTeamA / weightTeamB) * POINTS_PER_GAME);
+                    PointsForTeamB = (int) ((weightTeamA / weightTeamB) * POINTS_PER_GAME);
+                }else{
+                    PointsForTeamB = POINTS_PER_GAME;
                 }
-                addRankingPoints(match.getTeamB(), rankingPoints, playerRankingMap);
             }
+            addRankingPoints(match.getTeamA(), pointsForTeamA);
+            addRankingPoints(match.getTeamB(), PointsForTeamB);
+        }
+
+        for (Map.Entry<String, PlayerRanking> playerRankingEntry : playerRankingMap.entrySet()) {
+            PointsAccumulation pointsAccumulation = playersPointsAccumulation.get(playerRankingEntry.getKey());
+            playerRankingEntry.getValue().setRankingPoints(pointsAccumulation.getAveragePoints());
         }
 
         SortedSet<PlayerRanking> sortedPlayerRanking = getSortedPlayerRanking(playerRankingMap.values());
         int i = 1;
         for (PlayerRanking playerRanking : sortedPlayerRanking) {
             playerRanking.setDynamicRanking(i++);
+        }
+    }
+
+    private void preparePlayerPointsAccumulation(Map<String, PlayerRanking> playerRankingMap) {
+        playersPointsAccumulation = new HashMap<>();
+        for (PlayerRanking playerRanking : playerRankingMap.values()) {
+            String playerName = playerRanking.getPlayer();
+            if (!playersPointsAccumulation.containsKey(playerName)) {
+                playersPointsAccumulation.put(playerName, new PointsAccumulation());
+            }
         }
     }
 
@@ -61,17 +89,20 @@ public class DynamicRankingIndexTask implements RankingTask {
         float weight = 0;
         for (String teamMember : teamMembers) {
             PlayerRanking playerRanking = playerRankingMap.get(teamMember);
-            if (playerRanking.getTotalGames() > 0) {
-                weight += playerRanking.getRankingPoints() / playerRanking.getTotalGames();
-            }
+           weight += getCurrentAveragePoints(teamMember);
         }
         return weight / teamMembers.length;
     }
 
-    private void addRankingPoints(String[] teamMembers, int rankingPoints, Map<String, PlayerRanking> playerRankingMap) {
+    private int getCurrentAveragePoints(String teamMember) {
+        PointsAccumulation pointsAccumulation = playersPointsAccumulation.get(teamMember);
+        return pointsAccumulation.getAveragePoints();
+    }
+
+    private void addRankingPoints(String[] teamMembers, int rankingPoints) {
         for (String teamMember : teamMembers) {
-            PlayerRanking playerRanking = playerRankingMap.get(teamMember);
-            playerRanking.addRankingPoints(rankingPoints);
+            PointsAccumulation pointsAccumulation = playersPointsAccumulation.get(teamMember);
+            pointsAccumulation.addPointsOfMatch(rankingPoints);
         }
     }
 
@@ -86,5 +117,19 @@ public class DynamicRankingIndexTask implements RankingTask {
         sortedMatches.addAll(matches.getMatches());
         return sortedMatches;
 
+    }
+
+    static class PointsAccumulation {
+        private int numberOfMatches = 0;
+        private int accumulatedPoints = 0;
+
+        void addPointsOfMatch(int pointsToAdd) {
+            numberOfMatches++;
+            accumulatedPoints += pointsToAdd;
+        }
+
+        int getAveragePoints() {
+            return numberOfMatches == 0 ? 0 : accumulatedPoints / numberOfMatches;
+        }
     }
 }

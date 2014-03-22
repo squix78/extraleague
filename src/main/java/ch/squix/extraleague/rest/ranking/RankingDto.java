@@ -39,7 +39,7 @@ public class RankingDto {
     private Set<String> playedWith;
     private Set<String> neverPlayedWith;
     private Integer rankingPoints;
-    private int dynamicRanking;
+    private Integer dynamicRanking;
 
     public String getPlayer() {
         return player;
@@ -299,11 +299,11 @@ public class RankingDto {
         return rankingPoints;
     }
 
-    public void setDynamicRanking(int dynamicRanking) {
+    public void setDynamicRanking(Integer dynamicRanking) {
         this.dynamicRanking = dynamicRanking;
     }
 
-    public int getDynamicRanking() {
+    public Integer getDynamicRanking() {
         return dynamicRanking;
     }
 }

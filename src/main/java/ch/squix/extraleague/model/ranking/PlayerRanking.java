@@ -313,12 +313,12 @@ public class PlayerRanking implements Serializable {
         this.opponents = opponents;
     }
 
-    public void addRankingPoints(Integer rankingPoints) {
-        this.rankingPoints += rankingPoints;
-    }
-
     public Integer getRankingPoints() {
         return rankingPoints;
+    }
+
+    public void setRankingPoints(Integer rankingPoints) {
+        this.rankingPoints = rankingPoints;
     }
 
     public void setDynamicRanking(int dynamicRanking) {

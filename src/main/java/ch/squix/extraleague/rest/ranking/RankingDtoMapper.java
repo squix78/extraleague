@@ -47,5 +47,15 @@ public class RankingDtoMapper {
         }
         return playerRankingList;
     }
+    
+	public static RankingDto getPlayerRanking(String player, Ranking ranking) {
+		List<RankingDto> rankings = convertToDto(ranking);
+		for (RankingDto dto : rankings) {
+			if (dto.getPlayer().equals(player)) {
+				return dto;
+			}
+		}
+		return null;
+	}
 
 }

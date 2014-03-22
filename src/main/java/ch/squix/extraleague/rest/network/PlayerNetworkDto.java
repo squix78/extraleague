@@ -7,6 +7,7 @@ public class PlayerNetworkDto {
 	
 	private String name;
 	private List<PartnerDto> partners = new ArrayList<>();
+	private Integer ranking;
 	
 	public String getName() {
 		return name;
@@ -19,6 +20,12 @@ public class PlayerNetworkDto {
 	}
 	public void setPartners(List<PartnerDto> partners) {
 		this.partners = partners;
+	}
+	public Integer getRanking() {
+		return ranking;
+	}
+	public void setRanking(Integer ranking) {
+		this.ranking = ranking;
 	}
 	
 	

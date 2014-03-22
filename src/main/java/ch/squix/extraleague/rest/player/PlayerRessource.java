@@ -53,7 +53,7 @@ public class PlayerRessource extends ServerResource {
 		
 		Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
 
-		RankingDto rankingDto = getPlayerRanking(player, ranking);
+		RankingDto rankingDto = RankingDtoMapper.getPlayerRanking(player, ranking);
 		playerDto.setStatistics(rankingDto);
 		
 		Calendar referenceDate = today;
@@ -64,7 +64,7 @@ public class PlayerRessource extends ServerResource {
 		List<Ranking> todaysRankings = ofy().load().type(Ranking.class).filter("createdDate >", referenceDate.getTime()).order("-createdDate").list();
 		if (todaysRankings.size() > 1) {
 			Ranking latestRanking = todaysRankings.get(todaysRankings.size() - 1);
-			RankingDto dayEndRankingDto = getPlayerRanking(player, latestRanking);
+			RankingDto dayEndRankingDto = RankingDtoMapper.getPlayerRanking(player, latestRanking);
 			playerDto.setDayEndStatistics(dayEndRankingDto);
 		}
 			
@@ -72,14 +72,6 @@ public class PlayerRessource extends ServerResource {
 		return playerDto;
 	}
 
-	private RankingDto getPlayerRanking(String player, Ranking ranking) {
-		List<RankingDto> rankings = RankingDtoMapper.convertToDto(ranking);
-		for (RankingDto dto : rankings) {
-			if (dto.getPlayer().equals(player)) {
-				return dto;
-			}
-		}
-		return null;
-	}
+
 
 }

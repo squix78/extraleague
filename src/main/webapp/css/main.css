@@ -45,16 +45,26 @@ body {
   margin-right: 5px;
 }
 .redTeam {
-	color: red;
+	color: #D9534F;
 }
 .blueTeam {
-	color: blue;
+	color: #428BCA;
 }
-.redTeamBorder {
-	border: 3px solid red;
+.btn-redTeam {
+	background-color: #D9534F;
+  border-color: #D43F3A;
 }
-.blueTeamBorder {
-	border: 3px solid blue;
+.btn-redTeam:hover {
+  background-color: #D2322D;
+  border-color: #AC2925;
+}
+.btn-blueTeam {
+  background-color: #428BCA;
+  border-color: #357EBD;
+}
+.btn-blueTeam:hover {
+  background-color: #3276B1;
+  border-color: #285E8E;
 }
 legend { 
 	margin:3px; 

@@ -14,9 +14,9 @@ angular.module('Charts', []).service('D3', function D3() {
 			              .attr("class", "histogram")
 			              .attr("width", "100%");
 			          
-			          var margin = parseInt(attrs.margin) || 20,
-			            barWidth = parseInt(attrs.barWidth) || 20,
-			            barPadding = parseInt(attrs.barPadding) || 5;
+			          var margin = parseInt(attrs.margin) || 40,
+			            barWidth = parseInt(attrs.barWidth) || 15,
+			            barPadding = parseInt(attrs.barPadding) || 1;
 			          
 			          window.onresize = function() {
 			              return scope.$apply();
@@ -40,9 +40,12 @@ angular.module('Charts', []).service('D3', function D3() {
 
 			        	    // If we don't pass any data, return out of the element
 			        	    if (!data) return;
-
+			        	    
+			        	    var width = d3.select(element[0]).node().offsetWidth - margin;
+			        	    barWidth = (width) / (data.length | 1);
 			        	    var height = d3.select(element[0]).node().offsetHeight - margin;
-			        	    var width = data.length * (barWidth + barPadding);
+
+			        	    //var width = data.length * (barWidth + barPadding);
 			        	    
 			        	    var yScale = d3.scale.linear()
 			        	          .domain([0, d3.max(data, function(d) {

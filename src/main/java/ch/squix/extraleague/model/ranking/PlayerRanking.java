@@ -52,7 +52,7 @@ public class PlayerRanking implements Serializable {
     private Integer rankingPoints = 0;
     private Integer dynamicRanking;
 
-	private Double averageGoalsPerGame;
+	private Double averageGoalsPerMatch;
 
     public String getPlayer() {
         return player;
@@ -331,11 +331,11 @@ public class PlayerRanking implements Serializable {
         return dynamicRanking;
     }
 
-	public void setAverageGoalsPerGame(Double averageGoalsPerGame) {
-		this.averageGoalsPerGame = averageGoalsPerGame;
+	public void setAverageGoalsPerMatch(Double averageGoalsPerMatch) {
+		this.averageGoalsPerMatch = averageGoalsPerMatch;
 	}
 	
-	public Double getAverageGoalsPerGame() {
-		return averageGoalsPerGame;
+	public Double getAverageGoalsPerMatch() {
+		return averageGoalsPerMatch;
 	}
 }

@@ -7,11 +7,14 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 public class PlayerGoalsTask implements RankingTask {
 
 	@Override
 	public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
+		PlayerRanking topShotRanking = null;
+		Double maxGoalsPerMatch = 0d;
 		for (String player : matches.getPlayers()) {
 			Integer playerGoalSum = 0;
 			Integer matchesWithPlayerGoals = 0;
@@ -23,11 +26,18 @@ public class PlayerGoalsTask implements RankingTask {
 				}
 			}
 			PlayerRanking playerRanking = playerRankingMap.get(player);
-			Double averageGoalsPerGame = 0d;
+			Double averageGoalsPerMatch = 0d;
 			if (matchesWithPlayerGoals > 0) {
-				averageGoalsPerGame = 1d * playerGoalSum / matchesWithPlayerGoals;
+				averageGoalsPerMatch = 1d * playerGoalSum / matchesWithPlayerGoals;
+				if (averageGoalsPerMatch > maxGoalsPerMatch) {
+					topShotRanking = playerRanking;
+					maxGoalsPerMatch = averageGoalsPerMatch;
+				}
 			}
-			playerRanking.setAverageGoalsPerGame(averageGoalsPerGame);
+			playerRanking.setAverageGoalsPerMatch(averageGoalsPerMatch);
+		}
+		if (topShotRanking != null) {
+			topShotRanking.getBadges().add(BadgeEnum.TopShot.name());
 		}
 	}
 

@@ -42,6 +42,7 @@ public class RankingDtoMapper {
                 rankingDto.setOpponents(PlayerComboDtoMapper.mapToDtos(playerRanking.getOpponents()));
                 rankingDto.setRankingPoints(playerRanking.getRankingPoints());
                 rankingDto.setDynamicRanking(playerRanking.getDynamicRanking());
+                rankingDto.setAverageGoalsPerGame(playerRanking.getAverageGoalsPerGame());
                 playerRankingList.add(rankingDto);
             }
         }

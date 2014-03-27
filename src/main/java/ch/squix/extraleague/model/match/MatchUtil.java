@@ -1,6 +1,7 @@
 package ch.squix.extraleague.model.match;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,11 @@ public class MatchUtil {
             result.setGoalsMade(match.getTeamAScore());
             result.setGoalsGot(match.getTeamBScore());
             result.setHasWon(hasTeamAWon);
+            List<String> scorers = match.getScorers();
+            if (scorers != null && scorers.size() > 0) {
+            	result.setHasPlayerGoals(true);
+            	result.setPlayerGoals(Collections.frequency(scorers, player));
+            }
             result.setPosition(teamPositions[index]);
             results.put(player, result);
             index++;

@@ -40,6 +40,8 @@ public class RankingDto {
     private Set<String> neverPlayedWith;
     private Integer rankingPoints;
     private Integer dynamicRanking;
+    
+    private Double averageGoalsPerGame;
 
     public String getPlayer() {
         return player;
@@ -306,4 +308,12 @@ public class RankingDto {
     public Integer getDynamicRanking() {
         return dynamicRanking;
     }
+
+	public Double getAverageGoalsPerGame() {
+		return averageGoalsPerGame;
+	}
+
+	public void setAverageGoalsPerGame(Double averageGoalsPerGame) {
+		this.averageGoalsPerGame = averageGoalsPerGame;
+	}
 }

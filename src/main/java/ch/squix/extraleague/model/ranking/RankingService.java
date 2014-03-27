@@ -11,6 +11,7 @@ import ch.squix.extraleague.model.ranking.tasks.IncestuousTask;
 import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerCountTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
+import ch.squix.extraleague.model.ranking.tasks.PlayerGoalsTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingIndexTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
 import ch.squix.extraleague.model.ranking.tasks.ScoreTask;
@@ -63,6 +64,7 @@ public class RankingService {
 		rankingTasks.add(new CurrentShapeTask());
 		rankingTasks.add(new IncestuousTask());
 		rankingTasks.add(new TightMatchesTask());
+		rankingTasks.add(new PlayerGoalsTask());
         rankingTasks.add(new DynamicRankingIndexTask());
 
 		// From here only work on playerRankingMap

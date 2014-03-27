@@ -10,6 +10,8 @@ public class PlayerMatchResult {
     private String partner = "";
     private String [] opponents = {};
     private Position position;
+	private Integer playerGoals;
+	private Boolean hasPlayerGoals = false;
     
     public boolean hasWon() {
         return hasWon;
@@ -83,5 +85,21 @@ public class PlayerMatchResult {
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	public void setPlayerGoals(Integer playerGoals) {
+		this.playerGoals = playerGoals;
+	}
+	
+	public Integer getPlayerGoals() {
+		return playerGoals;
+	}
+
+	public Boolean hasPlayerGoals() {
+		return hasPlayerGoals;
+	}
+
+	public void setHasPlayerGoals(Boolean hasPlayerGoals) {
+		this.hasPlayerGoals = hasPlayerGoals;
 	}
 }

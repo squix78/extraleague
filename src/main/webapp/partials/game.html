@@ -15,14 +15,14 @@
 <BR/>
 <div class="row text-center">
 	<div class="col-xs-6">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block text-small blueTeamBorder" ng-click="increaseScoreTeamA(match.teamA[0])">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block text-small btn-blueTeam" ng-click="increaseScoreTeamA(match.teamA[0])">
 				<span class="glyphicon glyphicon-plus-sign"></span>
 
 				<span player="match.teamA[0]"/> 
 		</button>
 	</div>
 	<div class="col-xs-6">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block text-small blueTeamBorder" ng-click="increaseScoreTeamA(match.teamA[1])">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block text-small btn-blueTeam" ng-click="increaseScoreTeamA(match.teamA[1])">
 			<span class="glyphicon glyphicon-plus-sign"></span>
 			<span player="match.teamA[1]"/> 
 		</button>
@@ -36,13 +36,13 @@
 <div class="row text-center">
 	<div class="col-xs-12"></div>
 		<div class="col-xs-6">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block text-small redTeamBorder" ng-click="increaseScoreTeamB(match.teamB[1])">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block text-small btn-redTeam" ng-click="increaseScoreTeamB(match.teamB[1])">
 			<span class="glyphicon glyphicon-plus-sign"></span>
 			<span player="match.teamB[1]"/> 
 		</button>
 	</div>
 	<div class="col-xs-6">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block text-small redTeamBorder" ng-click="increaseScoreTeamB(match.teamB[0])">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-primary btn-block text-small btn-redTeam" ng-click="increaseScoreTeamB(match.teamB[0])">
 			<span class="glyphicon glyphicon-plus-sign"></span>
 			<span player="match.teamB[0]"/> 
 		</button>

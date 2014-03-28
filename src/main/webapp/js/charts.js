@@ -6,7 +6,8 @@ angular.module('Charts', []).service('D3', function D3() {
 			return {
 				restrict: 'EA',
 				scope : {
-					'ngModel' : '='
+					'ngModel' : '=',
+					'xAxisFormat' : '&'
 				},
 				link : function(scope, element, attrs) {
 			          var svg = d3.select(element[0])
@@ -14,7 +15,7 @@ angular.module('Charts', []).service('D3', function D3() {
 			              .attr("class", "histogram")
 			              .attr("width", "100%");
 			          
-			          var margin = parseInt(attrs.margin) || 40,
+			          var margin = parseInt(attrs.margin) || 20,
 			            barWidth = parseInt(attrs.barWidth) || 15,
 			            barPadding = parseInt(attrs.barPadding) || 1;
 			          
@@ -57,7 +58,7 @@ angular.module('Charts', []).service('D3', function D3() {
 			        	    svg.attr('width', width);
 			        	    
 			        	    var x = d3.scale.linear()
-			        	    	.domain([0, 24])
+			        	    	.domain([0, data.length])
 			        	     	.range([0, width]);
 			        	    
 			        	    var y = d3.scale.linear()
@@ -89,7 +90,8 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	   .text(function(d) { 
 				        	       return d.value > 0 ? 
 				        	           d3.format(".2p")(d.value) : null }); 
-				        	    
+				        	
+				        	
 				        	var xAxis = d3.svg.axis()
                                 .scale(x)
                                 .tickSubdivide(true)

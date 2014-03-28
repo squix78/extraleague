@@ -15,6 +15,17 @@ public class StatisticsDtoMapper {
 			tuples.add(new DataTuple<>(entry.getKey(), entry.getValue()));
 		}
 		dto.setHourHistogram(tuples);
+		
+		Integer totalCount = 0;
+		for (Map.Entry<Integer, Integer> entry : statistics.getSuccessRateHistogram().entrySet()) {
+			totalCount += entry.getValue();
+		}
+		
+		List<DataTuple<Integer, Double>> successRateTuples = new ArrayList<>();
+		for (Map.Entry<Integer, Integer> entry : statistics.getSuccessRateHistogram().entrySet()) {
+			successRateTuples.add(new DataTuple<>(entry.getKey() , 1d * entry.getValue() / totalCount));
+		}
+		dto.setSuccessRateHistogram(successRateTuples);
 		return dto;
 	}
 

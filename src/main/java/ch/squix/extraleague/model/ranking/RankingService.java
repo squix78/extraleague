@@ -6,6 +6,7 @@ import ch.squix.extraleague.model.ranking.tasks.AverageTimePerMatchTask;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
 import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
 import ch.squix.extraleague.model.ranking.tasks.DynamicRankingIndexTask;
+import ch.squix.extraleague.model.ranking.tasks.EloRankingTask;
 import ch.squix.extraleague.model.ranking.tasks.FirstPlayerFilterTask;
 import ch.squix.extraleague.model.ranking.tasks.IncestuousTask;
 import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
@@ -66,6 +67,7 @@ public class RankingService {
 		rankingTasks.add(new TightMatchesTask());
 		rankingTasks.add(new PlayerGoalsTask());
         rankingTasks.add(new DynamicRankingIndexTask());
+        rankingTasks.add(new EloRankingTask());
 
 		// From here only work on playerRankingMap
 		rankingTasks.add(new FirstPlayerFilterTask());

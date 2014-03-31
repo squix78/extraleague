@@ -6,6 +6,7 @@ import java.util.Map;
 public class StatisticsDto {
 	
 	private List<DataTuple<Integer, Double>> hourHistogram;
+	private List<DataTuple<Integer, Double>> successRateHistogram;
 
 	/**
 	 * @return the hourHistogram
@@ -19,6 +20,14 @@ public class StatisticsDto {
 	 */
 	public void setHourHistogram(List<DataTuple<Integer, Double>> hourHistogram) {
 		this.hourHistogram = hourHistogram;
+	}
+
+	public List<DataTuple<Integer, Double>> getSuccessRateHistogram() {
+		return successRateHistogram;
+	}
+
+	public void setSuccessRateHistogram(List<DataTuple<Integer, Double>> successRateHistogram) {
+		this.successRateHistogram = successRateHistogram;
 	}
 
 

@@ -40,6 +40,8 @@ public class RankingDto {
     private Set<String> neverPlayedWith;
     private Integer rankingPoints;
     private Integer dynamicRanking;
+    private Integer eloValue;
+    private Integer eloRanking;
     
     private Double averageGoalsPerMatch;
 
@@ -315,5 +317,21 @@ public class RankingDto {
 
 	public void setAverageGoalsPerMatch(Double averageGoalsPerMatch) {
 		this.averageGoalsPerMatch = averageGoalsPerMatch;
+	}
+
+	public Integer getEloValue() {
+		return eloValue;
+	}
+
+	public void setEloValue(Integer eloValue) {
+		this.eloValue = eloValue;
+	}
+
+	public Integer getEloRanking() {
+		return eloRanking;
+	}
+
+	public void setEloRanking(Integer eloRanking) {
+		this.eloRanking = eloRanking;
 	}
 }

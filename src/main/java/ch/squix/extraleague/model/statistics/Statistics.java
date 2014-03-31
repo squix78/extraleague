@@ -20,6 +20,9 @@ public class Statistics {
 
 		@Serialize(zip=true)
 		private Map<Integer, Double> histogram;
+
+		@Serialize(zip=true)
+		private Map<Integer, Integer> successRateHistogram;
 		
 		public Map<String, Integer> getBadgeHistogram() {
 			return badgeHistogram;
@@ -35,6 +38,14 @@ public class Statistics {
 		
 		public Map<Integer, Double> getHourHistogram() {
 			return histogram;
+		}
+
+		public void setSuccessRateHistogram(Map<Integer, Integer> successRateHistogram) {
+			this.successRateHistogram = successRateHistogram;
+		}
+		
+		public Map<Integer, Integer> getSuccessRateHistogram() {
+			return successRateHistogram;
 		}
 
 }

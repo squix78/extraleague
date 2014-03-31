@@ -2,13 +2,38 @@ package ch.squix.extraleague.rest.games;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.googlecode.objectify.ObjectifyService;
+
+import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.ranking.Ranking;
 
 public class GamesResourceTest {
+    
+        private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
+    
+        @Before
+        public void setUp() {
+            ObjectifyService.register(Game.class);
+            ObjectifyService.register(Match.class);
+            ObjectifyService.register(BrowserClient.class);
+            ObjectifyService.register(Ranking.class);
+            
+            helper.setUp();
+        }
+    
+        @After
+        public void tearDown() {
+                helper.tearDown();
+        }
 	
 	@Test
 	public void shouldCreateCorrectOrderOfMatches() {

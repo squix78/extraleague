@@ -43,6 +43,11 @@ public class MatchUtil {
             result.setOpponents(match.getTeamA());
             result.setGoalsMade(match.getTeamBScore());
             result.setGoalsGot(match.getTeamAScore());
+            List<String> scorers = match.getScorers();
+            if (scorers != null && scorers.size() > 0) {
+                result.setHasPlayerGoals(true);
+                result.setPlayerGoals(Collections.frequency(scorers, player));
+            }
             result.setPosition(teamPositions[index]);
             result.setHasWon(!hasTeamAWon);
             results.put(player, result);

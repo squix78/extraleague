@@ -9,6 +9,7 @@ import java.util.Map;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Serialize;
 
@@ -25,7 +26,8 @@ public class Ranking {
 	@Serialize(zip=true)
 	private List<PlayerRanking> playerRankings = new ArrayList<>();
 	
-	private transient Map<String, PlayerRanking> playerRankingMap = new HashMap<>();
+	@Ignore
+	private Map<String, PlayerRanking> playerRankingMap = new HashMap<>();
 
 	
 	/**

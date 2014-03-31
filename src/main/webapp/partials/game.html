@@ -29,8 +29,8 @@
 	</div>
 </div>
 <span class="text-small text-center">
-	<small class="blueTeam pull-left">Team Blue: {{( 1 - match.winProbabilityTeamA) * 100 | number:2}}%, 
-		{{match.winPointsTeamB}} win points
+	<small class="blueTeam pull-left">Team Blue: {{(match.winProbabilityTeamA) * 100 | number:2}}%, 
+		{{match.winPointsTeamA}} win points
 	</small>		
 </span>
 <div class="row text-center">
@@ -46,8 +46,8 @@
 </div>	
 <span class="text-small">
 	<small class="redTeam pull-right">
-		Team Red: {{(match.winProbabilityTeamA * 100) | number:2}}%, 
-		{{match.winPointsTeamA}} win points
+		Team Red: {{(1 - match.winProbabilityTeamA * 100) | number:2}}%, 
+		{{match.winPointsTeamB}} win points
 	</small>
 </span>
 <div class="row text-center">

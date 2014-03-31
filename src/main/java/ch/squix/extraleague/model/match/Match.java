@@ -22,6 +22,7 @@ public class Match {
 	private String [] teamB = {};
 	private Integer teamAScore;
 	private Integer teamBScore;
+	private Double winProbabilityTeamA = 0d;
 	
 	private List<String> scorers = new ArrayList<>();
 	
@@ -124,5 +125,11 @@ public class Match {
 	public void setScorers(List<String> scorers) {
 		this.scorers = scorers;
 	}
+    public Double getWinProbabilityTeamA() {
+        return winProbabilityTeamA;
+    }
+    public void setWinProbabilityTeamA(Double winProbabilityTeamA) {
+        this.winProbabilityTeamA = winProbabilityTeamA;
+    }
 
 }

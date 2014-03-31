@@ -16,6 +16,7 @@ public class MatchDto {
 	private String table;
 	private Integer matchIndex;
 	private List<String> scorers = new ArrayList<>();
+	private Double winProbabilityTeamA = 0d;
 	
 	public Long getGameId() {
 		return gameId;
@@ -95,6 +96,12 @@ public class MatchDto {
 	public void setScorers(List<String> scorers) {
 		this.scorers = scorers;
 	}
+    public Double getWinProbabilityTeamA() {
+        return winProbabilityTeamA;
+    }
+    public void setWinProbabilityTeamA(Double winProbabilityTeamA) {
+        this.winProbabilityTeamA = winProbabilityTeamA;
+    }
 
 
 }

@@ -1,5 +1,5 @@
  <div class="starter-template text-center">
-   <h5><small>Match {{matchIndex + 1}}/4. Forecast: Team A wins {{match.winProbabilityTeamA * 100 | number:2}}%</small></h5>
+   <h5><small>Match {{matchIndex + 1}}/4</small></h5>
  </div>
 
 <div class="row">
@@ -28,11 +28,28 @@
 		</button>
 	</div>
 </div>
+<span class="text-small text-center">
+	<small class="blueTeam pull-left">Team Blue: {{( 1 - match.winProbabilityTeamA) * 100 | number:2}}%, 
+		{{match.winPointsTeamB}} win points
+	</small>		
+	<small class="redTeam pull-right">
+		Team Red: {{(match.winProbabilityTeamA * 100) | number:2}}%, 
+		{{match.winPointsTeamA}} win points
+	</small>
+</span>
 <div class="row text-center">
+	
 	<h1>
-		<span class="redTeam">{{match.teamBScore}}</span> <img src="images/table.jpg"/> <span class="blueTeam">{{match.teamAScore}}</span>
+		<span class="redTeam">
+			{{match.teamBScore}}
+		</span> <img src="images/table.jpg"/> 
+		<span class="blueTeam">
+			{{match.teamAScore}}
+		</span>
 	</h1>
 </div>	
+		<span class="text-small">
+		</span>
 <div class="row text-center">
 	<div class="col-xs-12"></div>
 		<div class="col-xs-6">

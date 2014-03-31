@@ -19,6 +19,8 @@ public class MatchDtoMapper {
 		dto.setEndDate(match.getEndDate());
 		dto.setMatchIndex(match.getMatchIndex());
 		dto.setWinProbabilityTeamA(match.getWinProbabilityTeamA());
+		dto.setWinPointsTeamA(match.getWinPointsTeamA());
+		dto.setWinPointsTeamB(match.getWinPointsTeamB());
 		return dto;
 	}
 	

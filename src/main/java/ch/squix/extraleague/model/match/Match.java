@@ -23,6 +23,8 @@ public class Match {
 	private Integer teamAScore;
 	private Integer teamBScore;
 	private Double winProbabilityTeamA = 0d;
+	private Integer winPointsTeamA = 0;
+	private Integer winPointsTeamB = 0;
 	
 	private List<String> scorers = new ArrayList<>();
 	
@@ -131,5 +133,17 @@ public class Match {
     public void setWinProbabilityTeamA(Double winProbabilityTeamA) {
         this.winProbabilityTeamA = winProbabilityTeamA;
     }
+	public Integer getWinPointsTeamA() {
+		return winPointsTeamA;
+	}
+	public void setWinPointsTeamA(Integer winPointsTeamA) {
+		this.winPointsTeamA = winPointsTeamA;
+	}
+	public Integer getWinPointsTeamB() {
+		return winPointsTeamB;
+	}
+	public void setWinPointsTeamB(Integer winPointsTeamB) {
+		this.winPointsTeamB = winPointsTeamB;
+	}
 
 }

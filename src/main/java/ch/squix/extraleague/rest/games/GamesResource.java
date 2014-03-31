@@ -82,6 +82,10 @@ public class GamesResource extends ServerResource {
 			if (currentRanking != null) {
 			    Double winProbabilityTeamA = EloUtil.getExpectedOutcome(getTeamRanking(currentRanking, match.getTeamA()), getTeamRanking(currentRanking, match.getTeamB()));
 			    match.setWinProbabilityTeamA(winProbabilityTeamA);
+			    Integer winPointsTeamA = EloUtil.calculateDelta(1d, winProbabilityTeamA);
+			    match.setWinPointsTeamA(winPointsTeamA);
+			    Integer winPointsTeamB = EloUtil.calculateDelta(1d, 1 - winProbabilityTeamA);
+			    match.setWinPointsTeamB(winPointsTeamB);
 			}
 			matches.add(match);
 		}

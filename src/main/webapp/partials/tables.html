@@ -4,3 +4,6 @@
    <p class="lead">Pick the table for playing a match</p>
  </div>
 <button type="button"  ng-click="selectTable(table)" ng-repeat="table in tables" class="btn btn-primary btn-lg btn-block">{{table.name}}</button>
+<div ng-show="isTablesLoading">
+  <img src="images/ajax-loader.gif" /> Loading available tables...
+</div>

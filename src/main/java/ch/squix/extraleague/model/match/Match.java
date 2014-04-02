@@ -29,8 +29,13 @@ public class Match {
 	private List<String> scorers = new ArrayList<>();
 	
 	@Index
+	private List<String> tags = new ArrayList<>();
+	
+	@Index
 	private Date startDate;
 	private Date endDate;
+	
+	@Index
 	private String table;
 	private Integer matchIndex;
 	
@@ -144,6 +149,12 @@ public class Match {
 	}
 	public void setWinPointsTeamB(Integer winPointsTeamB) {
 		this.winPointsTeamB = winPointsTeamB;
+	}
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 
 }

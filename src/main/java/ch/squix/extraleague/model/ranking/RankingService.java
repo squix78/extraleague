@@ -40,6 +40,14 @@ public class RankingService {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -30);
 		List<Match> matchesList = ofy().load().type(Match.class).filter("startDate > ", calendar.getTime()).list();
+		Ranking ranking = calculateRankingFromMatches(matchesList);
+
+		
+		ofy().save().entities(ranking);
+
+	}
+
+	public static Ranking calculateRankingFromMatches(List<Match> matchesList) {
 		Matches matches = new Matches();
 		matches.setMatches(matchesList);
 		
@@ -83,10 +91,7 @@ public class RankingService {
 		Ranking ranking = new Ranking();
 		ranking.setCreatedDate(new Date());
 		ranking.setPlayerRankings(rankings);
-
-		
-		ofy().save().entities(ranking);
-
+		return ranking;
 	}
 
 

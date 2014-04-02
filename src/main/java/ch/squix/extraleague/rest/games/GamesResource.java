@@ -65,7 +65,7 @@ public class GamesResource extends ServerResource {
 	}
 
 	public List<Match> createMatches(Game game) {
-	        Ranking currentRanking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
+	    Ranking currentRanking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
 		List<String> players = game.getPlayers();
 		List<Match> matches = new ArrayList<>();
 		for (int gameIndex = 0; gameIndex < 4; gameIndex++) {
@@ -78,6 +78,7 @@ public class GamesResource extends ServerResource {
 			match.setTeamBScore(0);
 			match.setPlayers(players);
 			match.setTable(game.getTable());
+			match.getTags().add(game.getTable());
 			match.setMatchIndex(gameIndex);
 			if (currentRanking != null) {
 			    Double winProbabilityTeamA = EloUtil.getExpectedOutcome(getTeamRanking(currentRanking, match.getTeamA()), getTeamRanking(currentRanking, match.getTeamB()));

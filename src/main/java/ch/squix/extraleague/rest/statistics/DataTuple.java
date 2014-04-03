@@ -4,14 +4,16 @@ public class DataTuple<K, V> {
 	
 	private K key;
 	private V value;
+	private String label;
 	
 	public DataTuple() {
 		
 	}
 	
-	public DataTuple(K key, V value) {
+	public DataTuple(K key, V value, String label) {
 		this.key = key;
 		this.value = value;
+		this.label = label;
 	}
 	/**
 	 * @return the key
@@ -36,6 +38,14 @@ public class DataTuple<K, V> {
 	 */
 	public void setValue(V value) {
 		this.value = value;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	

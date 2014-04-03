@@ -15,7 +15,8 @@ angular.module('Charts', []).service('D3', function D3() {
 			              .attr("class", "histogram")
 			              .attr("width", "100%");
 			          
-			          var margin = parseInt(attrs.margin) || 20,
+			          var xMargin = parseInt(attrs.xMargin) || 20,
+			            yMargin = parseInt(attrs.yMargin) || 20,
 			            barWidth = parseInt(attrs.barWidth) || 15,
 			            barPadding = parseInt(attrs.barPadding) || 1;
 			          
@@ -42,9 +43,9 @@ angular.module('Charts', []).service('D3', function D3() {
 			        	    // If we don't pass any data, return out of the element
 			        	    if (!data) return;
 			        	    
-			        	    var width = d3.select(element[0]).node().offsetWidth - margin;
+			        	    var width = d3.select(element[0]).node().offsetWidth - xMargin;
 			        	    barWidth = (width) / (data.length | 1);
-			        	    var height = d3.select(element[0]).node().offsetHeight - margin;
+			        	    var height = d3.select(element[0]).node().offsetHeight - yMargin;
 
 			        	    //var width = data.length * (barWidth + barPadding);
 			        	    
@@ -95,7 +96,16 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	var xAxis = d3.svg.axis()
                                 .scale(x)
                                 .tickSubdivide(true)
-                                .orient("bottom");       
+                                .tickFormat(function(d) { 
+                                	var currentElement = data[d];
+                                	if (angular.isDefined(currentElement)) {
+                                		return currentElement.label; 
+                                	} else {
+                                		return "";
+                                	}
+                                })
+                                .orient("bottom");  
+
 			        	    
 			        	    svg.append("g")
 			        	        .attr("class", "x axis")

@@ -73,6 +73,7 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	    .range([from, to]);
 	
 				        	var xAxis = d3.svg.axis()
+				        		.ticks(5)
 				        	    .scale(x)
 				        	    .tickFormat(timeFormat)
 				        	    .orient("bottom");

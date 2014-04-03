@@ -135,9 +135,8 @@ legend {
 	color: #BBB;
 }
 
-/* remove line from the x-axis */
 .x.axis path {
-  display: none;
+  stroke-width: 1px;
 }
 
 .text-small {
@@ -152,11 +151,11 @@ legend {
 }
 
 .x.axis path {
-  display: none;
+
 }
 
 .line {
   fill: none;
   stroke: steelblue;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
 }

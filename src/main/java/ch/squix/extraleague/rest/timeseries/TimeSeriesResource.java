@@ -3,6 +3,7 @@ package ch.squix.extraleague.rest.timeseries;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,17 +23,49 @@ public class TimeSeriesResource extends ServerResource {
 		String player = (String) this.getRequestAttributes().get("player");
 		List<Ranking> rankings = ofy().load().type(Ranking.class).order("createdDate").list();
 		TimeSeriesDto timeSeriesDto = new TimeSeriesDto();
-
+		NumberFormat percentageFormatter = NumberFormat.getPercentInstance();
 		for (Ranking ranking : rankings) {
 			Date createdDate = ranking.getCreatedDate();
 			for (PlayerRanking playerRanking : ranking.getPlayerRankings()) {
 				if (playerRanking.getPlayer().equals(player)) {
-					DataTuple<Date, Double> successRateTuple = new DataTuple<>(createdDate, playerRanking.getSuccessRate(), "");
-					timeSeriesDto.getSuccessRateSeries().add(successRateTuple);
-					DataTuple<Date, Double> goalRateTuple = new DataTuple<>(createdDate, playerRanking.getGoalRate(), "");
-					timeSeriesDto.getGoalRateSeries().add(goalRateTuple);
-					DataTuple<Date, Integer> rankingTuple = new DataTuple<>(createdDate, playerRanking.getRanking(), "");
-					timeSeriesDto.getRankingSeries().add(rankingTuple);
+					
+					Double successRate = playerRanking.getSuccessRate();
+					if (successRate!= null) {
+						DataTuple<Date, Double> successRateTuple = new DataTuple<>(
+								createdDate, successRate, percentageFormatter.format(successRate));
+						timeSeriesDto.getSuccessRateSeries().add(successRateTuple);
+					}
+					
+					Double goalPlusMinus = playerRanking.getGoalPlusMinus();
+					if (goalPlusMinus != null) {
+						DataTuple<Date, Double> goalRateTuple = new DataTuple<>(
+								createdDate, goalPlusMinus, String.valueOf(goalPlusMinus));
+						timeSeriesDto.getGoalRateSeries().add(goalRateTuple);
+					}
+					
+					Integer rankingValue = playerRanking.getRanking();
+					if (rankingValue != null) {
+						DataTuple<Date, Integer> rankingTuple = new DataTuple<>(createdDate, rankingValue, String.valueOf(rankingValue));
+						timeSeriesDto.getRankingSeries().add(rankingTuple);
+					}
+					
+					Integer eloValue = playerRanking.getEloValue();
+					if (eloValue != null) {
+						DataTuple<Date, Integer> rankingTuple = new DataTuple<>(createdDate, eloValue, String.valueOf(eloValue));
+						timeSeriesDto.getEloValueSeries().add(rankingTuple);
+					}
+					
+					Double goalsPerMatch = playerRanking.getAverageGoalsPerMatch();
+					if (goalsPerMatch != null) {
+						DataTuple<Date, Double> gpmTuple = new DataTuple<>(createdDate, goalsPerMatch, String.valueOf(goalsPerMatch));
+						timeSeriesDto.getGoalsPerMatchSeries().add(gpmTuple);
+					}
+					
+					Double shape = playerRanking.getCurrentShapeRate();
+					if (shape != null) {
+						DataTuple<Date, Double> shapeTuple = new DataTuple<>(createdDate, shape, String.valueOf(shape));
+						timeSeriesDto.getShapeSeries().add(shapeTuple);
+					}
 				}
 			}
 		}

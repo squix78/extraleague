@@ -7,16 +7,25 @@ angular.module('Charts', []).service('D3', function D3() {
 				restrict: 'EA',
 				scope : {
 					'ngModel' : '=',
-					'xAxisFormat' : '&'
+					'xAxisFormat' : '&',
+					'yAxisFormatFunction' : '&'
 				},
 				link : function(scope, element, attrs) {
 			          var svg = d3.select(element[0])
 			              .append("svg")
 			              .attr("class", "linechart")
 			              .attr("width", "100%");
-			          
+
 			          var timeFormat = d3.time.format("%d-%m");
-			          var percentageFormat = d3.format(".0%");
+			          var yAxisFormatFunction = function(d) {
+			        	  return d;
+			          };
+					  if (angular.isDefined(scope.yAxisFormatFunction)) {
+						  yAxisFormatFunction = scope.yAxisFormatFunction();
+					  }
+
+			          var timeFormat = d3.time.format("%d-%m");
+			          var invertYAxis = attrs.invertYAxis;
 			          
 			          var margin = {top: 20, right: 20, bottom: 30, left: 50};
 			          
@@ -51,9 +60,17 @@ angular.module('Charts', []).service('D3', function D3() {
 			        	    
 			        	    var x = d3.time.scale()
 			        	    .range([0, width]);
-
+			        	    
+			        	    var from = height;
+			        	    var to = 0;
+			        	    
+			        	    if (invertYAxis) {
+			        	    	from = 0;
+			        	    	to = height;
+			        	    }
+			        	    
 				        	var y = d3.scale.linear()
-				        	    .range([height, 0]);
+				        	    .range([from, to]);
 	
 				        	var xAxis = d3.svg.axis()
 				        	    .scale(x)
@@ -61,8 +78,9 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	    .orient("bottom");
 	
 				        	var yAxis = d3.svg.axis()
+				        		.ticks(5)
 				        	    .scale(y)
-				        	    .tickFormat(percentageFormat)
+				        	    .tickFormat(yAxisFormatFunction)
 				        	    .orient("left");
 	
 				        	var line = d3.svg.line()

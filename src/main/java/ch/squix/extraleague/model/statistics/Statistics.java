@@ -20,6 +20,12 @@ public class Statistics {
 
 		@Serialize(zip=true)
 		private Map<Integer, Double> histogram;
+
+		@Serialize(zip=true)
+		private Map<Integer, Integer> successRateHistogram;
+
+		@Serialize(zip=true)
+		private Map<Integer, Double> weekdayHistogram;
 		
 		public Map<String, Integer> getBadgeHistogram() {
 			return badgeHistogram;
@@ -35,6 +41,22 @@ public class Statistics {
 		
 		public Map<Integer, Double> getHourHistogram() {
 			return histogram;
+		}
+
+		public void setSuccessRateHistogram(Map<Integer, Integer> successRateHistogram) {
+			this.successRateHistogram = successRateHistogram;
+		}
+		
+		public Map<Integer, Integer> getSuccessRateHistogram() {
+			return successRateHistogram;
+		}
+
+		public void setWeekdayHistogram(Map<Integer, Double> weekdayHistogram) {
+			this.weekdayHistogram = weekdayHistogram;
+		}
+		
+		public Map<Integer, Double> getWeekdayHistogram() {
+			return weekdayHistogram;
 		}
 
 }

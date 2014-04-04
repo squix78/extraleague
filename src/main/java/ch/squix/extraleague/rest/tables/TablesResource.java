@@ -12,7 +12,12 @@ public class TablesResource extends ServerResource {
 	
 	@Get(value = "json")
 	public TablesDto[] execute() throws UnsupportedEncodingException {
-		return new TablesDto[] {new TablesDto("Park"), new TablesDto("Albis"), new TablesDto("Bern"), new TablesDto("Skopje")};
+		return new TablesDto[] {
+				new TablesDto("Park"), 
+				new TablesDto("Albis"), 
+				new TablesDto("Bern"), 
+				new TablesDto("Skopje"), 
+				new TablesDto("Rigi")};
 	}
 
 }

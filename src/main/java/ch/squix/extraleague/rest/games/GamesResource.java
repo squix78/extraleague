@@ -1,7 +1,5 @@
 package ch.squix.extraleague.rest.games;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,8 +13,13 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.Ranking;
+import ch.squix.extraleague.model.ranking.elo.EloUtil;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 
 
@@ -53,6 +56,7 @@ public class GamesResource extends ServerResource {
 		dto.setId(game.getId());
 		
 		// Prepare Matches
+		
 		Collections.shuffle(game.getPlayers());
 		List<Match> matches = createMatches(game);
 		ofy().save().entities(matches).now();
@@ -61,6 +65,7 @@ public class GamesResource extends ServerResource {
 	}
 
 	public List<Match> createMatches(Game game) {
+	    Ranking currentRanking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
 		List<String> players = game.getPlayers();
 		List<Match> matches = new ArrayList<>();
 		for (int gameIndex = 0; gameIndex < 4; gameIndex++) {
@@ -73,10 +78,31 @@ public class GamesResource extends ServerResource {
 			match.setTeamBScore(0);
 			match.setPlayers(players);
 			match.setTable(game.getTable());
+			match.getTags().add(game.getTable());
 			match.setMatchIndex(gameIndex);
+			if (currentRanking != null) {
+			    Double winProbabilityTeamA = EloUtil.getExpectedOutcome(getTeamRanking(currentRanking, match.getTeamA()), getTeamRanking(currentRanking, match.getTeamB()));
+			    match.setWinProbabilityTeamA(winProbabilityTeamA);
+			    Integer winPointsTeamA = EloUtil.calculateDelta(1d, winProbabilityTeamA);
+			    match.setWinPointsTeamA(winPointsTeamA);
+			    Integer winPointsTeamB = EloUtil.calculateDelta(1d, 1 - winProbabilityTeamA);
+			    match.setWinPointsTeamB(winPointsTeamB);
+			}
 			matches.add(match);
 		}
 		return matches;
+	}
+	
+	private Integer getTeamRanking(Ranking ranking, String[] team) {
+	    return (int) Math.round((getPlayerRanking(ranking, team[0]) + getPlayerRanking(ranking, team[1])) / 2d);
+	}
+	
+	private Integer getPlayerRanking(Ranking ranking, String player) {
+	    PlayerRanking playerRanking = ranking.getPlayerRanking(player);
+	    if (playerRanking != null && playerRanking.getEloValue() != null) {
+	        return playerRanking.getEloValue();
+	    }
+	    return EloUtil.INITIAL_RATING;
 	}
 
 }

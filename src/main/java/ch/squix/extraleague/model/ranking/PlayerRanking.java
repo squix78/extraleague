@@ -52,6 +52,11 @@ public class PlayerRanking implements Serializable {
     private Integer rankingPoints = 0;
     private Integer dynamicRanking;
 
+	private Double averageGoalsPerMatch;
+	
+	private Integer eloValue;
+	private Integer eloRanking;
+
     public String getPlayer() {
         return player;
     }
@@ -328,4 +333,28 @@ public class PlayerRanking implements Serializable {
     public Integer getDynamicRanking() {
         return dynamicRanking;
     }
+
+	public void setAverageGoalsPerMatch(Double averageGoalsPerMatch) {
+		this.averageGoalsPerMatch = averageGoalsPerMatch;
+	}
+	
+	public Double getAverageGoalsPerMatch() {
+		return averageGoalsPerMatch;
+	}
+
+	public Integer getEloValue() {
+		return eloValue;
+	}
+
+	public void setEloValue(Integer eloValue) {
+		this.eloValue = eloValue;
+	}
+
+	public Integer getEloRanking() {
+		return eloRanking;
+	}
+
+	public void setEloRanking(Integer eloRanking) {
+		this.eloRanking = eloRanking;
+	}
 }

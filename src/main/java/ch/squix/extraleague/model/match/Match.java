@@ -22,12 +22,20 @@ public class Match {
 	private String [] teamB = {};
 	private Integer teamAScore;
 	private Integer teamBScore;
+	private Double winProbabilityTeamA = 0d;
+	private Integer winPointsTeamA = 0;
+	private Integer winPointsTeamB = 0;
 	
 	private List<String> scorers = new ArrayList<>();
 	
 	@Index
+	private List<String> tags = new ArrayList<>();
+	
+	@Index
 	private Date startDate;
 	private Date endDate;
+	
+	@Index
 	private String table;
 	private Integer matchIndex;
 	
@@ -123,6 +131,30 @@ public class Match {
 	}
 	public void setScorers(List<String> scorers) {
 		this.scorers = scorers;
+	}
+    public Double getWinProbabilityTeamA() {
+        return winProbabilityTeamA;
+    }
+    public void setWinProbabilityTeamA(Double winProbabilityTeamA) {
+        this.winProbabilityTeamA = winProbabilityTeamA;
+    }
+	public Integer getWinPointsTeamA() {
+		return winPointsTeamA;
+	}
+	public void setWinPointsTeamA(Integer winPointsTeamA) {
+		this.winPointsTeamA = winPointsTeamA;
+	}
+	public Integer getWinPointsTeamB() {
+		return winPointsTeamB;
+	}
+	public void setWinPointsTeamB(Integer winPointsTeamB) {
+		this.winPointsTeamB = winPointsTeamB;
+	}
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 
 }

@@ -32,6 +32,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'RankingController',
            templateUrl : 'partials/ranking.html'
         })
+        .when('/ranking/tag/:tag', {
+        	controller : 'RankingByTagController',
+        	templateUrl : 'partials/ranking.html'
+        })
         .when('/player/:player', {
            controller : 'PlayerController',
            templateUrl : 'partials/player.html'
@@ -67,6 +71,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('Ranking', ['$resource', function($resource) {
       return $resource('/rest/ranking');
+    }])
+    .factory('RankingByTag', ['$resource', function($resource) {
+    	return $resource('/rest/rankings/tags/:tag');
     }])
     .factory('Player', ['$resource', function($resource) {
       return $resource('/rest/players/:player');
@@ -137,7 +144,10 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
 }
 
 function TablesController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
-  $scope.tables = [{name: 'Park'}, {name: 'Albis'}, {name: 'Bern'}, {name: 'Skopje'}, {name: 'Rigi'}];
+  $scope.isTablesLoading = true;
+  $scope.tables = Tables.query({}, function() {
+	  $scope.isTablesLoading = false;
+  });
   
   $rootScope.backlink = false;
   
@@ -375,7 +385,8 @@ function SummaryController($scope, $rootScope, $resource, $routeParams, Summary,
   $scope.getSummary();
 }
 
-function RankingController($scope, $rootScope, $resource, $routeParams, Ranking, Badges) {
+function RankingController($scope, $rootScope, $resource, $routeParams, Ranking, Badges, Tables) {
+  
   $scope.predicate = [ '-successRate', '-goalPlusMinus'];
   $scope.isRankingLoading = true;
   $rootScope.backlink = false;
@@ -383,12 +394,34 @@ function RankingController($scope, $rootScope, $resource, $routeParams, Ranking,
     $scope.isRankingLoading = false;
     
   });
+  $scope.tables = Tables.query();
+  //extract this to a service to avoid duplication and provide caching
   $scope.badgeMap = Badges.get(function() {
     $scope.badgeList = [];
     angular.forEach($scope.badgeMap, function(key, value) {
       $scope.badgeList.push(key);
     });
   });
+}
+
+function RankingByTagController($scope, $rootScope, $resource, $routeParams, RankingByTag, Badges, Tables) {
+	$scope.tag = $routeParams.tag;
+	$scope.predicate = [ '-successRate', '-goalPlusMinus'];
+	$scope.isRankingLoading = true;
+	$rootScope.backlink = false;
+	$scope.rankings = RankingByTag.query({tag: $scope.tag}, function() {
+		$scope.isRankingLoading = false;
+		
+	});
+	
+	$scope.tables = Tables.query();
+	// extract this to a service to avoid duplication and provide caching
+	$scope.badgeMap = Badges.get(function() {
+		$scope.badgeList = [];
+		angular.forEach($scope.badgeMap, function(key, value) {
+			$scope.badgeList.push(key);
+		});
+	});
 }
 
 function PlayerController($scope, $rootScope, $routeParams, PlayerService, Player, TimeSeries, Badges) {
@@ -424,7 +457,7 @@ function PlayerController($scope, $rootScope, $routeParams, PlayerService, Playe
   };
   $scope.yAxisPercentFormatFunction = function(){
     return function(d){
-      return d * 100 + "%"; //uncomment for date format
+      return d3.format(".0%")(d);
     };
   };
   $scope.yAxisFormatFunction = function(){

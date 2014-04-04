@@ -135,11 +135,27 @@ legend {
 	color: #BBB;
 }
 
-/* remove line from the x-axis */
 .x.axis path {
-  display: none;
+  stroke-width: 1px;
 }
 
 .text-small {
   font-size: 75%;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
 }

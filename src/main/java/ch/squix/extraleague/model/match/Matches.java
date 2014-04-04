@@ -2,6 +2,8 @@ package ch.squix.extraleague.model.match;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +59,17 @@ public class Matches {
 	}
 	
 	public List<Match> getMatches() {
+		return matches;
+	}
+	
+	public List<Match> getMatchesSortedByTime() {
+		Collections.sort(matches, new Comparator<Match>() {
+
+			@Override
+			public int compare(Match o1, Match o2) {
+				return o1.getStartDate().compareTo(o2.getStartDate());
+			}
+		});
 		return matches;
 	}
 	

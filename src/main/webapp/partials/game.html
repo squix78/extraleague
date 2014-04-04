@@ -28,11 +28,28 @@
 		</button>
 	</div>
 </div>
+<span class="text-small text-center">
+	<small class="blueTeam pull-left">Team Blue: {{(match.winProbabilityTeamA) * 100 | number:2}}%, 
+		{{match.winPointsTeamA}} win points
+	</small>		
+</span>
 <div class="row text-center">
+	
 	<h1>
-		<span class="redTeam">{{match.teamBScore}}</span> <img src="images/table.jpg"/> <span class="blueTeam">{{match.teamAScore}}</span>
+		<span class="redTeam">
+			{{match.teamBScore}}
+		</span> <img src="images/table.jpg"/> 
+		<span class="blueTeam">
+			{{match.teamAScore}}
+		</span>
 	</h1>
 </div>	
+<span class="text-small">
+	<small class="redTeam pull-right">
+		Team Red: {{(1 - match.winProbabilityTeamA) * 100 | number:2}}%, 
+		{{match.winPointsTeamB}} win points
+	</small>
+</span>
 <div class="row text-center">
 	<div class="col-xs-12"></div>
 		<div class="col-xs-6">

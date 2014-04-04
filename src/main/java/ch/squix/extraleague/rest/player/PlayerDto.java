@@ -1,18 +1,18 @@
 package ch.squix.extraleague.rest.player;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ch.squix.extraleague.rest.matches.MatchDto;
 import ch.squix.extraleague.rest.ranking.RankingDto;
-import ch.squix.extraleague.rest.timeseries.TimeSeriesDto;
+import ch.squix.extraleague.rest.statistics.DataTuple;
 
 public class PlayerDto {
 	
 	private String player;
 	private RankingDto statistics;
 	private RankingDto dayEndStatistics;
-	private TimeSeriesDto timeSeries;
 	private List<MatchDto> lastMatches = new ArrayList<>();
 	
 	public String getPlayer() {
@@ -21,9 +21,7 @@ public class PlayerDto {
 	public RankingDto getStatistics() {
 		return statistics;
 	}
-	public TimeSeriesDto getTimeSeries() {
-		return timeSeries;
-	}
+
 	public List<MatchDto> getLastMatches() {
 		return lastMatches;
 	}
@@ -33,9 +31,7 @@ public class PlayerDto {
 	public void setStatistics(RankingDto ranking) {
 		this.statistics = ranking;
 	}
-	public void setTimeSeries(TimeSeriesDto timeSeries) {
-		this.timeSeries = timeSeries;
-	}
+
 	public void setLastMatches(List<MatchDto> lastMatches) {
 		this.lastMatches = lastMatches;
 	}
@@ -45,5 +41,7 @@ public class PlayerDto {
 	public void setDayEndStatistics(RankingDto dayEndStatistics) {
 		this.dayEndStatistics = dayEndStatistics;
 	}
+
+
 
 }

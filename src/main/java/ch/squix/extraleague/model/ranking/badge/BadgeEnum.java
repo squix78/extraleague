@@ -5,7 +5,8 @@ public enum BadgeEnum {
 	// Find more icon classes on http://fortawesome.github.io/Font-Awesome/icons/
 	King(1, BadgeType.Ranking, "fa-trophy", "1st"), 
 	Queen(2, BadgeType.Ranking, "fa-female", "2nd"), 
-	Pawn(3, BadgeType.Shamelet, "fa-ambulance", "Last"), 
+	Pawn(3, BadgeType.Shamelet, "fa-ambulance", "Last"),
+	TopShot(4, BadgeType.Silver, "fa-plane", "Highest Average of Goals Per Match (GPM)"),
 	Shutout(4, BadgeType.Bronze, "fa-star-o", "5:0"), 
 	BackToBackShutout(5, BadgeType.Silver, "fa-star-half-o", "2x5:0"), 
 	IAmLegend(6, BadgeType.Silver, "fa-star", "3x5:0"), 

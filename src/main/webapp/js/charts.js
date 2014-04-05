@@ -147,8 +147,6 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	.attr("class", "charttip")
 				        	.text("a simple tooltip");
 				            
-//				            var tooltip = chart.append("text")
-//				            .attr("class", "charttip");
 
 
 			          };

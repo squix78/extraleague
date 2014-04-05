@@ -36,7 +36,7 @@ public class RankingService {
 	
 	private static final Logger log = Logger.getLogger(RankingService.class.getName());
 
-	public static void calculateRankings() {
+	public static Ranking calculateRankings() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -30);
 		List<Match> matchesList = ofy().load().type(Match.class).filter("startDate > ", calendar.getTime()).list();
@@ -44,6 +44,7 @@ public class RankingService {
 
 		
 		ofy().save().entities(ranking);
+		return ranking;
 
 	}
 

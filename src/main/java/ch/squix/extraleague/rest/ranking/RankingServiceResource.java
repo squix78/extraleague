@@ -8,6 +8,7 @@ import java.util.List;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
+import ch.squix.extraleague.model.mutations.MutationService;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.ranking.RankingService;
 
@@ -19,6 +20,7 @@ public class RankingServiceResource extends ServerResource {
 		List<Ranking> rankings = ofy().load().type(Ranking.class).order("createdDate").list();
 		List<Ranking> inTheDayRankings = InTheDayRankingFilter.getInTheDayRankings(rankings);
 		ofy().delete().entities(inTheDayRankings).now();
+		
 		return "OK";
 	}
 

@@ -145,8 +145,10 @@ legend {
 
 .charttip {
 	padding: 3px;
-	fill: black;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.5);
 	text-anchor: middle;
+	text-align: center;
 }
 
 .axis path,

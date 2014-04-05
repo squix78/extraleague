@@ -116,8 +116,6 @@ angular.module('Charts', []).service('D3', function D3() {
 				            
 				            var currentText = "";
 				            
-				            var tooltip = chart.append("text")
-							.attr("class", "charttip");
 				            
 				            chart.selectAll("dot")
 				            .data(data)
@@ -128,15 +126,29 @@ angular.module('Charts', []).service('D3', function D3() {
 				            .attr("class", "circle")
 				            .on("mouseover", function(d) {
 				            	tooltip
-				            		.attr("x", function(value) {
-				            			return x(d.key);
-				            		})
-				            		.attr("y", function(value) {
-				            			return y(d.value) - 5; 
-				            		})
 				            		.text(d3.time.format("%d-%m-%y")(new Date(d.key)) + ": " + d.label);
+				            	var tooltipWidth = parseInt(tooltip.style("width") );
+				            	console.log(tooltipWidth);
+				            	tooltip
+				            		.style("top", (d3.event.pageY-30)+"px")
+				            		.style("left", (d3.event.pageX -  tooltipWidth / 2)+"px")
+				            		.style("visibility", "visible")
+				            		
+				            })
+				            .on("mouseout", function(){
+				            	return tooltip.style("visibility", "hidden");
 				            });
 				            
+				            var tooltip = d3.select("body")
+				        	.append("div")
+				        	.style("position", "absolute")
+				        	.style("z-index", "10")
+				        	.style("visibility", "hidden")
+				        	.attr("class", "charttip")
+				        	.text("a simple tooltip");
+				            
+//				            var tooltip = chart.append("text")
+//				            .attr("class", "charttip");
 
 
 			          };

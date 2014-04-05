@@ -143,6 +143,12 @@ legend {
   font-size: 75%;
 }
 
+.charttip {
+	padding: 3px;
+	fill: black;
+	text-anchor: middle;
+}
+
 .axis path,
 .axis line {
   fill: none;
@@ -156,6 +162,11 @@ legend {
 
 .line {
   fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
+}
+.circle {
+  fill: white;
   stroke: steelblue;
   stroke-width: 1px;
 }

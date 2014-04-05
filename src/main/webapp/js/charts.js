@@ -54,7 +54,7 @@ angular.module('Charts', []).service('D3', function D3() {
 			        	    
 					        var width = d3.select(element[0]).node().offsetWidth - margin.left - margin.right;
 					        var height = d3.select(element[0]).node().offsetHeight - margin.top - margin.bottom;
-
+					        
 			        	    var chart = svg.append("g")
 			        	    	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 			        	    
@@ -98,8 +98,7 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	y.domain(d3.extent(data, function(d) { 
 				        		return d.value; 
 				        	}));
-				        	
-				            
+				        
 				        	
 				        	chart.append("g")
 				              .attr("class", "x axis")
@@ -114,6 +113,31 @@ angular.module('Charts', []).service('D3', function D3() {
 				              .datum(data)
 				              .attr("class", "line")
 				              .attr("d", line);
+				            
+				            var currentText = "";
+				            
+				            var tooltip = chart.append("text")
+							.attr("class", "charttip");
+				            
+				            chart.selectAll("dot")
+				            .data(data)
+				            .enter().append("circle")
+				            .attr("r", 3.5)
+				            .attr("cx", function(d) { return x(d.key); })
+				            .attr("cy", function(d) { return y(d.value); })
+				            .attr("class", "circle")
+				            .on("mouseover", function(d) {
+				            	tooltip
+				            		.attr("x", function(value) {
+				            			return x(d.key);
+				            		})
+				            		.attr("y", function(value) {
+				            			return y(d.value) - 5; 
+				            		})
+				            		.text(d3.time.format("%d-%m-%y")(new Date(d.key)) + ": " + d.label);
+				            });
+				            
+
 
 			          };
 				}

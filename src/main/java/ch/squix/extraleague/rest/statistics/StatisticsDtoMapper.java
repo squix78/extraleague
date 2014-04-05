@@ -12,7 +12,7 @@ public class StatisticsDtoMapper {
 		StatisticsDto dto = new StatisticsDto();
 		List<DataTuple<Integer, Double>> tuples = new ArrayList<>();
 		for (Map.Entry<Integer, Double> entry : statistics.getHourHistogram().entrySet()) {
-			tuples.add(new DataTuple<>(entry.getKey(), entry.getValue()));
+			tuples.add(new DataTuple<>(entry.getKey(), entry.getValue(), entry.getKey() + "h"));
 		}
 		dto.setHourHistogram(tuples);
 		
@@ -23,9 +23,17 @@ public class StatisticsDtoMapper {
 		
 		List<DataTuple<Integer, Double>> successRateTuples = new ArrayList<>();
 		for (Map.Entry<Integer, Integer> entry : statistics.getSuccessRateHistogram().entrySet()) {
-			successRateTuples.add(new DataTuple<>(entry.getKey() , 1d * entry.getValue() / totalCount));
+			successRateTuples.add(new DataTuple<>(entry.getKey(), 1d * entry.getValue() / totalCount, entry.getKey() * 5 + "%" ));
 		}
 		dto.setSuccessRateHistogram(successRateTuples);
+		
+		String[] weekdays = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+		List<DataTuple<Integer, Double>> weekdayRateTuples = new ArrayList<>();
+		for (Map.Entry<Integer, Double> entry : statistics.getWeekdayHistogram().entrySet()) {
+			weekdayRateTuples.add(new DataTuple<>(entry.getKey(), entry.getValue(), weekdays[entry.getKey()]));
+		}
+		dto.setWeekdayHistogram(weekdayRateTuples);
+		
 		return dto;
 	}
 

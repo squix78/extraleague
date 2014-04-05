@@ -457,7 +457,7 @@ function PlayerController($scope, $rootScope, $routeParams, PlayerService, Playe
   };
   $scope.yAxisPercentFormatFunction = function(){
     return function(d){
-      return d * 100 + "%"; //uncomment for date format
+      return d3.format(".0%")(d);
     };
   };
   $scope.yAxisFormatFunction = function(){

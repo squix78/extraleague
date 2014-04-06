@@ -10,6 +10,7 @@ import java.util.Map;
 import ch.squix.extraleague.model.mutations.tasks.BadgeMutationsTask;
 import ch.squix.extraleague.model.mutations.tasks.CoronationTask;
 import ch.squix.extraleague.model.mutations.tasks.MutationTask;
+import ch.squix.extraleague.model.mutations.tasks.TopTenTask;
 import ch.squix.extraleague.model.ranking.Ranking;
 
 public class MutationService {
@@ -23,6 +24,7 @@ public class MutationService {
 		//mutationTasks.add(new PromotedRelegatedPlayersTask());
 		mutationTasks.add(new BadgeMutationsTask());
 		mutationTasks.add(new CoronationTask());
+		mutationTasks.add(new TopTenTask());
 		
 		Map<String, PlayerMutation> mutationMap = new HashMap<>();
 		for (MutationTask task : mutationTasks) {

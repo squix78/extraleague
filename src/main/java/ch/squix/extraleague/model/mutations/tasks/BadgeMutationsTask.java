@@ -30,12 +30,12 @@ public class BadgeMutationsTask implements MutationTask {
 			}
 			if (newBadges.size() > 0) {
 				String newBadgeText = joiner.join(newBadges);
-				PlayerMutation playerMutation = getOrCreatePlayerMutation(mutationMap, newPlayerRanking.getPlayer());
+				PlayerMutation playerMutation = MutationUtil.getOrCreatePlayerMutation(mutationMap, newPlayerRanking.getPlayer());
 				playerMutation.getDescriptions().add("Badges earned: " + newBadgeText);
 			}
 			if (lostBadges.size() > 0) {
 				String lostBadgeText = joiner.join(lostBadges);
-				PlayerMutation playerMutation = getOrCreatePlayerMutation(mutationMap, newPlayerRanking.getPlayer());
+				PlayerMutation playerMutation = MutationUtil.getOrCreatePlayerMutation(mutationMap, newPlayerRanking.getPlayer());
 				playerMutation.getDescriptions().add("Badges lost: " + lostBadgeText);
 			}
 		}
@@ -43,13 +43,6 @@ public class BadgeMutationsTask implements MutationTask {
 
 		
 	}
-	private PlayerMutation getOrCreatePlayerMutation(Map<String, PlayerMutation> mutationMap, String player) {
-		PlayerMutation mutation = mutationMap.get(player);
-		if (mutation == null) {
-			mutation = new PlayerMutation(player);
-			mutationMap.put(player, mutation);
-		}
-		return mutation;
-	}
+
 
 }

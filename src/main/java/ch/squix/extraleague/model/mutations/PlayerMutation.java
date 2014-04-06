@@ -1,8 +1,9 @@
 package ch.squix.extraleague.model.mutations;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class MutationTuple implements Serializable {
+public class PlayerMutation implements Serializable {
 
 	private static final long serialVersionUID = -4347563309408143937L;
 	
@@ -10,15 +11,17 @@ public class MutationTuple implements Serializable {
 	private String value;
 
 	private String description;
+	private Date createdDate;
 	
-	public MutationTuple() {
+	public PlayerMutation() {
 		
 	}
 	
-	public MutationTuple(String player, String value, String description) {
+	public PlayerMutation(String player, String value, String description) {
 		this.player = player;
 		this.value = value;
 		this.description = description;
+		this.createdDate = new Date();
 	}
 	
 	public String getPlayer() {
@@ -40,6 +43,14 @@ public class MutationTuple implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 	
 }

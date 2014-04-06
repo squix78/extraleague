@@ -40,12 +40,16 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'PlayerController',
            templateUrl : 'partials/player.html'
         })
+        .when('/highlights', {
+        	controller : 'HighlightsController',
+        	templateUrl : 'partials/highlights.html'
+        })
         .when('/about', {
            controller : 'AboutController',
            templateUrl : 'partials/about.html'
         })
         .otherwise({
-           redirectTo: '/tables'
+           redirectTo: '/highlights'
         });
     })
     .factory('Ping', ['$resource', function($resource) {
@@ -89,6 +93,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('Badges', ['$resource', function($resource) {
         return $resource('/rest/badges', {}, {get: {cache: true, method: 'GET' } } );
+    }])
+    .factory('Mutations', ['$resource', function($resource) {
+    	return $resource('/rest/mutations');
     }])
     .factory('Match', ['$resource', function($resource) {
       return $resource('/rest/tables/:table/games/:gameId/matches');
@@ -488,7 +495,12 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	
 	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
 }
-
+function HighlightsController($scope, Mutations) {
+	$scope.isMutationsLoading = true;
+	$scope.mutations = Mutations.query({}, function() {
+		$scope.isMutationsLoading = false;
+	})
+}
 function AboutController($scope, $http) {
     var url = 'https://api.github.com/repos/squix78/extraleague/commits';
     $http.get(url).success(function(data) {

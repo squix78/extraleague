@@ -3,7 +3,6 @@ package ch.squix.extraleague.rest.matches;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -24,6 +23,11 @@ import ch.squix.extraleague.rest.games.GameDto;
 import ch.squix.extraleague.rest.games.GameDtoMapper;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGameService;
+
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
 
 
 
@@ -85,7 +89,8 @@ public class MatchesResource extends ServerResource {
 		if (numberOfCompletedMatches >=4) {
 			log.info("4 Games reached. Setting game endDate");
 			game.setEndDate(new Date());
-			RankingService.calculateRankings();
+			Queue queue = QueueFactory.getDefaultQueue();
+			queue.add(TaskOptions.Builder.withMethod(Method.GET).url("/rest/updateRankings"));
 			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
 		} else {
 			GameDto gameDto = GameDtoMapper.mapToDto(game);

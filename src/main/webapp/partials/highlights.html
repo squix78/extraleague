@@ -1,0 +1,26 @@
+<h2>Highlights</h2>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr ng-repeat="mutation in mutations | orderBy:'-createdDate'">
+       <td><div player="mutation.player"></div></td>
+       <td>
+	       <div>
+	       	<small>
+	       		{{mutation.createdDate | date:'dd-MM-yyyy'}}
+	       		{{mutation.createdDate | date:'shortTime'}}
+	       	</small>
+	       	<div>
+		    	{{mutation.text}}</td>
+	       	</div>
+     </tr>
+    <tbody>
+  </table>
+</div>

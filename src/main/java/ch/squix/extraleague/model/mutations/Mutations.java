@@ -16,14 +16,14 @@ public class Mutations {
 	private Long id;
 	
 	@Serialize(zip=true)
-	private List<MutationTuple> mutationTuples = new ArrayList<>();
+	private List<PlayerMutation> playerMutations = new ArrayList<>();
 
-	public List<MutationTuple> getMutationTuples() {
-		return mutationTuples;
+	public List<PlayerMutation> getPlayerMutations() {
+		return playerMutations;
 	}
 
-	public void setMutationTuples(List<MutationTuple> mutationTuples) {
-		this.mutationTuples = mutationTuples;
+	public void setPlayerMutations(List<PlayerMutation> playerMutations) {
+		this.playerMutations = playerMutations;
 	}
 
 }

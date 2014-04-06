@@ -24,6 +24,8 @@ public class TimeSeriesResource extends ServerResource {
 		List<Ranking> rankings = ofy().load().type(Ranking.class).order("createdDate").list();
 		TimeSeriesDto timeSeriesDto = new TimeSeriesDto();
 		NumberFormat percentageFormatter = NumberFormat.getPercentInstance();
+		NumberFormat numberFormatter =  NumberFormat.getInstance();
+		numberFormatter.setMaximumFractionDigits(2);
 		for (Ranking ranking : rankings) {
 			Date createdDate = ranking.getCreatedDate();
 			for (PlayerRanking playerRanking : ranking.getPlayerRankings()) {
@@ -39,31 +41,31 @@ public class TimeSeriesResource extends ServerResource {
 					Double goalPlusMinus = playerRanking.getGoalPlusMinus();
 					if (goalPlusMinus != null) {
 						DataTuple<Date, Double> goalRateTuple = new DataTuple<>(
-								createdDate, goalPlusMinus, String.valueOf(goalPlusMinus));
+								createdDate, goalPlusMinus, numberFormatter.format(goalPlusMinus));
 						timeSeriesDto.getGoalRateSeries().add(goalRateTuple);
 					}
 					
 					Integer rankingValue = playerRanking.getRanking();
 					if (rankingValue != null) {
-						DataTuple<Date, Integer> rankingTuple = new DataTuple<>(createdDate, rankingValue, String.valueOf(rankingValue));
+						DataTuple<Date, Integer> rankingTuple = new DataTuple<>(createdDate, rankingValue, rankingValue + ". place");
 						timeSeriesDto.getRankingSeries().add(rankingTuple);
 					}
 					
 					Integer eloValue = playerRanking.getEloValue();
 					if (eloValue != null) {
-						DataTuple<Date, Integer> rankingTuple = new DataTuple<>(createdDate, eloValue, String.valueOf(eloValue));
+						DataTuple<Date, Integer> rankingTuple = new DataTuple<>(createdDate, eloValue, eloValue + " elo points");
 						timeSeriesDto.getEloValueSeries().add(rankingTuple);
 					}
 					
 					Double goalsPerMatch = playerRanking.getAverageGoalsPerMatch();
 					if (goalsPerMatch != null) {
-						DataTuple<Date, Double> gpmTuple = new DataTuple<>(createdDate, goalsPerMatch, String.valueOf(goalsPerMatch));
+						DataTuple<Date, Double> gpmTuple = new DataTuple<>(createdDate, goalsPerMatch, numberFormatter.format(goalsPerMatch));
 						timeSeriesDto.getGoalsPerMatchSeries().add(gpmTuple);
 					}
 					
 					Double shape = playerRanking.getCurrentShapeRate();
 					if (shape != null) {
-						DataTuple<Date, Double> shapeTuple = new DataTuple<>(createdDate, shape, String.valueOf(shape));
+						DataTuple<Date, Double> shapeTuple = new DataTuple<>(createdDate, shape, percentageFormatter.format(shape));
 						timeSeriesDto.getShapeSeries().add(shapeTuple);
 					}
 				}

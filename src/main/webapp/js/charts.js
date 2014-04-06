@@ -124,7 +124,8 @@ angular.module('Charts', []).service('D3', function D3() {
 				            .attr("cx", function(d) { return x(d.key); })
 				            .attr("cy", function(d) { return y(d.value); })
 				            .attr("class", "circle")
-				            .on("mouseover", function(d) {
+				            .on("mouseover", function(d, i) {
+				            	d3.event.currentTarget.style.fill = "blue";
 				            	tooltip
 				            		.text(d3.time.format("%d-%m-%y")(new Date(d.key)) + ": " + d.label);
 				            	var tooltipWidth = parseInt(tooltip.style("width") );
@@ -136,7 +137,9 @@ angular.module('Charts', []).service('D3', function D3() {
 				            		
 				            })
 				            .on("mouseout", function(){
-				            	return tooltip.style("visibility", "hidden");
+				            	d3.event.currentTarget.style.fill = "white";
+				            	//tooltip.style("visibility", "hidden");
+				            	return ;
 				            });
 				            
 				            var tooltip = d3.select("body")

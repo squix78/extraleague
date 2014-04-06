@@ -406,7 +406,7 @@ angular.module('PlayerMappings', [])
 }])
 .directive('player', ['PlayerService', function(PlayerService) {
     return {
-    	template: '<div><img class="player img img-rounded {{teamColor}}" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
+    	template: '<div class="playerImage"><img class="player img img-rounded {{teamColor}}" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
     	scope: {
     		player: "=",
     		team: "="

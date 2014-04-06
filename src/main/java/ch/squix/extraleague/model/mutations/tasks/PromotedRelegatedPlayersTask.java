@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ch.squix.extraleague.model.mutations.MutationTuple;
+import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.model.mutations.Mutations;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
@@ -35,19 +35,19 @@ public class PromotedRelegatedPlayersTask implements MutationTask {
 	    Collections.sort(playerDeltas, comparator);
 	    Collections.sort(newcomerDeltas, comparator);
 	    PlayerDelta promotedPlayer = playerDeltas.get(playerDeltas.size() - 1);
-	    mutations.getMutationTuples().add(
-	    		new MutationTuple(promotedPlayer.player, String.valueOf(promotedPlayer.deltaRank), 
+	    mutations.getPlayerMutations().add(
+	    		new PlayerMutation(promotedPlayer.player, String.valueOf(promotedPlayer.deltaRank), 
 	    				"Most promoted: " + promotedPlayer.player + " climbed " + promotedPlayer.deltaRank + " ranks"));
 	    
 	    PlayerDelta relegatedPlayer = playerDeltas.get(0);
-	    mutations.getMutationTuples().add(
-	    		new MutationTuple(relegatedPlayer.player, String.valueOf(relegatedPlayer.deltaRank), 
+	    mutations.getPlayerMutations().add(
+	    		new PlayerMutation(relegatedPlayer.player, String.valueOf(relegatedPlayer.deltaRank), 
 	    				"Most promoted: " + relegatedPlayer.player + " fell " + relegatedPlayer.deltaRank + " ranks"));
 	    
 	    if (newcomerDeltas.size() > 0) {
 	    	PlayerDelta bestNewcomer = newcomerDeltas.get(0);
-	    	mutations.getMutationTuples().add(
-	    			new MutationTuple(bestNewcomer.player, String.valueOf(bestNewcomer.deltaRank), 
+	    	mutations.getPlayerMutations().add(
+	    			new PlayerMutation(bestNewcomer.player, String.valueOf(bestNewcomer.deltaRank), 
 	    					"Best newcomer: " + bestNewcomer.player + " made it directly to rank " + bestNewcomer.deltaRank));
 	    }
 		

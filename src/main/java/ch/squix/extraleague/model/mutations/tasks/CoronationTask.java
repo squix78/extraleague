@@ -1,21 +1,16 @@
 package ch.squix.extraleague.model.mutations.tasks;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Map;
 
-import ch.squix.extraleague.model.mutations.Mutations;
 import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
-import com.google.common.base.Joiner;
-
 public class CoronationTask implements MutationTask {
 
 	@Override
-	public void calculate(Mutations mutations, Ranking oldRanking, Ranking newRanking) {
+	public void calculate(Map<String, PlayerMutation> mutationMap, Ranking oldRanking, Ranking newRanking) {
 
 		String oldKing = "";
 		String newKing = "";
@@ -30,9 +25,14 @@ public class CoronationTask implements MutationTask {
 			}
 		}
 		if (oldKing != null && newKing != null && !newKing.equals(oldKing)) {
-			mutations.getPlayerMutations().add(
-					new PlayerMutation(newKing, oldKing, "The king is dead! Long live the King! " 
-							+ oldKing + " has been purged from the throne by " + newKing));
+				PlayerMutation playerMutation = mutationMap.get(newKing);
+				if (playerMutation == null) {
+					playerMutation = new PlayerMutation(newKing);
+					mutationMap.put(newKing, playerMutation);
+				}
+				playerMutation.getDescriptions().add(
+						"The king is dead! Long live the King! " 
+							+ oldKing + " has been purged from the throne by " + newKing);
 		}
 
 		

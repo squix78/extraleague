@@ -26,6 +26,7 @@ public class MutationsResource extends ServerResource {
 			return new ArrayList<>();
 		}
 		return MutationDtoMapper.mapToDtos(mutations);
+		
 	}
 
 

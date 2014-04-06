@@ -46,6 +46,8 @@ body {
 }
 .playerImage {
 	max-width: 48px;
+	margin-left: auto;
+	margin-right: auto;
 }
 .redTeam {
 	color: #D9534F;

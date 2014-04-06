@@ -1,29 +1,27 @@
 package ch.squix.extraleague.rest.mutations;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PlayerMutationDto {
 
 	private String player;
 	private String value;
-	private String text;
+	private List<String> descriptions = new ArrayList<>();
 	private Date createdDate;
 
 	public String getValue() {
 		return value;
 	}
-	public String getText() {
-		return text;
-	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public void setText(String text) {
-		this.text = text;
-	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
@@ -32,6 +30,12 @@ public class PlayerMutationDto {
 	}
 	public String getPlayer() {
 		return player;
+	}
+	public List<String> getDescriptions() {
+		return descriptions;
+	}
+	public void setDescriptions(List<String> descriptions) {
+		this.descriptions = descriptions;
 	}
 
 }

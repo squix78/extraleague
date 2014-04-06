@@ -19,8 +19,7 @@ public class MutationDtoMapper {
 	private static PlayerMutationDto mapToDto(PlayerMutation mutation) {
 		PlayerMutationDto dto = new PlayerMutationDto();
 		dto.setPlayer(mutation.getPlayer());
-		dto.setValue(mutation.getValue());
-		dto.setText(mutation.getDescription());
+		dto.getDescriptions().addAll(mutation.getDescriptions());
 		dto.setCreatedDate(mutation.getCreatedDate());
 		return dto;
 	}

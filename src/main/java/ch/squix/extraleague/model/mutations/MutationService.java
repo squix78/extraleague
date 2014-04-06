@@ -3,7 +3,9 @@ package ch.squix.extraleague.model.mutations;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ch.squix.extraleague.model.mutations.tasks.BadgeMutationsTask;
 import ch.squix.extraleague.model.mutations.tasks.CoronationTask;
@@ -22,9 +24,11 @@ public class MutationService {
 		mutationTasks.add(new BadgeMutationsTask());
 		mutationTasks.add(new CoronationTask());
 		
+		Map<String, PlayerMutation> mutationMap = new HashMap<>();
 		for (MutationTask task : mutationTasks) {
-			task.calculate(mutations, oldRanking, newRanking);
+			task.calculate(mutationMap, oldRanking, newRanking);
 		}
+		mutations.getPlayerMutations().addAll(mutationMap.values());
 		// Limit the persisted mutations
 		while (mutations.getPlayerMutations().size() > 100) {
 			mutations.getPlayerMutations().remove(0);

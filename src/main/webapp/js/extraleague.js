@@ -111,6 +111,35 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
           }
       };
     })
+    .directive('highlightBadges', ['Badges', function(Badges) {
+	  return {    
+	    restrict: 'A',    
+	    require: 'ngModel',
+	    replace: true,   
+	    scope: { ngModel: '=ngModel' },
+	    link: function compile(scope, element, attrs, controller) {         
+	        scope.$watch('ngModel', function(value) { 
+	        	var badgeMap = Badges.get({}, function() {
+	        		
+		        	if (angular.isDefined(value) && typeof value === 'string') {
+			        	angular.forEach(badgeMap, function(badge, name) {
+				            angular.forEach(value.match(badge.jsRegex), function(word) {
+				            	if (angular.isDefined(badge) && angular.isDefined(badge.badgeType)) {
+				            		value = value.replace(word, 
+				            				'<span class="label label-primary ' 
+				            				+ badge.badgeType + '" title="' 
+				            				+ badge.description + '"> <i class="fa ' 
+				            				+ badge.faClass + '"></i> ' + word + '</span>');
+				            	}
+				            });
+				            element.html(value); 
+			        	});
+		        	}
+	        	});
+	          });                
+	    }
+	  };  
+	}])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {
 	    restrict: 'A',

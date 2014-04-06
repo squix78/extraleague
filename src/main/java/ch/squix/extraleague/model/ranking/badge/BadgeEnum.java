@@ -7,7 +7,7 @@ public enum BadgeEnum {
 	Queen(2, BadgeType.Ranking, "fa-female", null, "2nd"), 
 	Pawn(3, BadgeType.Shamelet, "fa-ambulance", null, "Last"),
 	TopShot(4, BadgeType.Silver, "fa-plane", null, "Highest Average of Goals Per Match (GPM)"),
-	Shutout(4, BadgeType.Bronze, "fa-star-o", null, "5:0"), 
+	Shutout(4, BadgeType.Bronze, "fa-star-o", " Shutout ", "5:0"), 
 	BackToBackShutout(5, BadgeType.Silver, "fa-star-half-o", null, "2x5:0"), 
 	IAmLegend(6, BadgeType.Silver, "fa-star", null, "3x5:0"), 
 	NoMercy(7, BadgeType.Gold, "fa-fighter-jet", null, "4x5:0"), 

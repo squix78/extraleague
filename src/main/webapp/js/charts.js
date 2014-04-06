@@ -138,7 +138,7 @@ angular.module('Charts', []).service('D3', function D3() {
 				            })
 				            .on("mouseout", function(){
 				            	d3.event.currentTarget.style.fill = "white";
-				            	//tooltip.style("visibility", "hidden");
+				            	tooltip.style("visibility", "hidden");
 				            	return ;
 				            });
 				            

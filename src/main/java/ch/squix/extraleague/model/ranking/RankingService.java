@@ -43,7 +43,7 @@ public class RankingService {
 		Ranking ranking = calculateRankingFromMatches(matchesList);
 
 		
-		ofy().save().entities(ranking);
+		ofy().save().entities(ranking).now();
 		return ranking;
 
 	}

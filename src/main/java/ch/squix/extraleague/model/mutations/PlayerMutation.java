@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.common.base.Joiner;
+
 public class PlayerMutation implements Serializable {
 
 	private static final long serialVersionUID = -4347563309408143937L;
@@ -47,5 +49,14 @@ public class PlayerMutation implements Serializable {
 	public void setDescriptions(List<String> descriptions) {
 		this.descriptions = descriptions;
 	}
+
+	@Override
+	public String toString() {
+		Joiner joiner = Joiner.on("/").skipNulls();
+		return player + "/" + joiner.join(descriptions);
+	}
+
+
+	
 	
 }

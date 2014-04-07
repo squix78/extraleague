@@ -50,7 +50,7 @@ public class MutationService {
 			mutations.getPlayerMutations().remove(0);
 		}
 		mutations.setPlayerMutations(newPlayerMutations);
-		ofy().save().entities(mutations);
+		ofy().save().entities(mutations).now();
 		return mutations;
 	}
 

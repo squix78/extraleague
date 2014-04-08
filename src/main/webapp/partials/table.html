@@ -19,9 +19,9 @@
 		<div ng-show="currentGame.players.length > 0">
 			<h3>Players</h3>
 			<div class="row">
-				<div class="col-xs-2 text-center" ng-repeat="player in currentGame.players">
+				<div class="col-xs-2 text-center playerRow" ng-repeat="player in currentGame.players">
 					<div class="text-center">
-						<div player="player"></div>
+						<div player="player" hide-full-name="true"></div>
 						<div>{{(players[player].eloValue)}} Elo</div></div>
 					</div>
 				</div>

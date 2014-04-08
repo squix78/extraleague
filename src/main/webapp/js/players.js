@@ -399,14 +399,21 @@ angular.module('PlayerMappings', [])
 			} else {
 				return "images/person2.png";
 			}
-		}
-	    
-	 	
+		},
+    getPlayerName: function(shortname) {
+      var playerName = playerMap[shortname].split('-');
+      var displayName = '';
+      for (var i in playerName) {
+        var capNameElement = playerName[i].charAt(0).toUpperCase() + playerName[i].slice(1);
+        displayName += (displayName !== '') ? ' ' + capNameElement : capNameElement;
+      }
+      return displayName + ' ('+ shortname + ')';
+    }
 	}
 }])
 .directive('player', ['PlayerService', function(PlayerService) {
     return {
-    	template: '<div class="playerImage"><img class="player img img-rounded {{teamColor}}" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
+    	template: '<div class="playerImage"><img class="player img img-rounded {{teamColor}}" ng-src="{{playerImgUrl}}"/><div class="caption">{{displayName}}</div></div>',
     	scope: {
     		player: "=",
     		team: "="
@@ -415,6 +422,11 @@ angular.module('PlayerMappings', [])
         	scope.$watch('player', function(newValue) {
         		if (newValue) {
         			scope.playerImgUrl = PlayerService.getPlayerPicture(scope.player);
+              if (attrs.hideFullName) {
+                scope.displayName = scope.player;
+              } else {
+                scope.displayName = PlayerService.getPlayerName(scope.player);
+              }
         			if (scope.team) {
         				scope.teamColor = scope.team + "TeamBorder";
         			}
@@ -422,4 +434,16 @@ angular.module('PlayerMappings', [])
         	});
         }
     };
-}]);
+}])
+.directive('playerName', function() {
+  return {
+    restrict: 'E',
+    template: '<div class="player-name">{{playerName}}</div>',
+    scope: {
+      shortName: "="
+    },
+    controller: function($scope, PlayerService) {
+      $scope.playerName = PlayerService.getPlayerName($scope.shortName);
+    }
+  };
+});

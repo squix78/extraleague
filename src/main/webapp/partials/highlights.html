@@ -10,7 +10,7 @@
     </thead>
     <tbody>
      <tr ng-repeat="mutation in mutations | orderBy:'-createdDate'">
-       <td><div player="mutation.player"></div></td>
+       <td><a href="#/player/{{mutation.player}}"><div player="mutation.player" hide-full-name="true"></div></a></td>
        <td>
 	       <div>
 	       	<small>

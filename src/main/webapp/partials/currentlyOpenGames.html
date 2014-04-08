@@ -21,7 +21,7 @@
 	  		<small>{{game.startDate | date:'dd. MMM. yyyy HH:mm:ss'}}</small>
 	  </div>
 	  <div class="playerRow">
-		  	<div ng-repeat="player in game.players" player="player"></div>
+		  	<div class="inline-row" ng-repeat="player in game.players" player="player" hide-full-name="true"></div>
 	  </div>
 
 	  <div>

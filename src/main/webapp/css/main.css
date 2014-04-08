@@ -44,11 +44,19 @@ body {
   margin-bottom: 5px;
   margin-right: 5px;
 }
-.playerImage {
+.playerRow .playerImage {
 	max-width: 48px;
-	margin-left: auto;
-	margin-right: auto;
 }
+
+.playerRow .inline-row {
+  display: inline-block;
+}
+
+.playerImage {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .redTeam {
 	color: #D9534F;
 }

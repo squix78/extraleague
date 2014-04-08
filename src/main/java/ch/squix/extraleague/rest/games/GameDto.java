@@ -13,7 +13,12 @@ public class GameDto {
 	private Date startDate;
 	private Date endDate;
 	
+	private Double gameProgress;
+	
+	private Long estimatedRemainingMilis;
+	
 	private Integer numberOfCompletedGames;
+	private Date firstGoalDate;
 	
 	public Long getId() {
 		return id;
@@ -69,6 +74,41 @@ public class GameDto {
 		this.numberOfCompletedGames = numberOfCompletedGames;
 	}
 
+	/**
+	 * @return the gameProgress
+	 */
+	public Double getGameProgress() {
+		return gameProgress;
+	}
+
+	/**
+	 * @param gameProgress the gameProgress to set
+	 */
+	public void setGameProgress(Double gameProgress) {
+		this.gameProgress = gameProgress;
+	}
+
+	/**
+	 * @return the estimatedTimeOfArrival
+	 */
+	public Long getEstimatedRemainingMillis() {
+		return estimatedRemainingMilis;
+	}
+
+	/**
+	 * @param estimatedTimeOfArrival the estimatedTimeOfArrival to set
+	 */
+	public void setEstimatedRemainingMillis(Long estimatedRemainingMilis) {
+		this.estimatedRemainingMilis = estimatedRemainingMilis;
+	}
+
+	public void setFirstGoalDate(Date firstGoalDate) {
+		this.firstGoalDate = firstGoalDate;
+	}
+
+	public Date getFirstGoalDate() {
+		return firstGoalDate;
+	}
 
 	
 }

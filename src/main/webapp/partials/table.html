@@ -1,7 +1,7 @@
  <div class="row">
 	<div class="col-md-12">
 		 <div class="starter-template">
-		   <h1>Table {{table}}</h1>
+		   <h3>Table {{table}}</h3>
 		 </div>
 		
 		<div class="row">
@@ -17,14 +17,12 @@
 
 		</div>
 		<div ng-show="currentGame.players.length > 0">
-			<h2>Players</h2>
+			<h3>Players</h3>
 			<div class="row">
-				<div class="col-xs-2" ng-repeat="player in currentGame.players">
+				<div class="col-xs-2 text-center" ng-repeat="player in currentGame.players">
 					<div class="text-center">
-						
-						<img class="img img-rounded player" src="{{PlayerService.getPlayerPicture(player)}}"/>
-						<div class="caption">{{player}} <div>#{{(players[player].ranking)}}</div></div>
-						<span class="badge" ng-repeat="badge in players[player].badges">{{badge}} </span>
+						<div player="player"></div>
+						<div>{{(players[player].eloValue)}} Elo</div></div>
 					</div>
 				</div>
 				<div class="col-xs-4"></div>
@@ -32,6 +30,5 @@
 		</div>
 
 		
-		<div ng-include="'partials/currentlyOpenGames.html'" ng-controller="OpenGamesController"></div>
+		<div class="col-md-12" ng-include="'partials/currentlyOpenGames.html'" ng-controller="OpenGamesController"></div>
 	</div>
-</div>

@@ -1,43 +1,100 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.logging.Logger;
+
 
 public class RankingIndexTask implements RankingTask {
+	
+	private static final Logger log = Logger.getLogger(RankingIndexTask.class.getName());
 
     @Override
     public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
-		List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
-		Collections.sort(rankings, new Comparator<PlayerRanking>() {
-
-			@Override
-			public int compare(PlayerRanking o1, PlayerRanking o2) {
-				int result = o2.getSuccessRate().compareTo(o1.getSuccessRate());
-				if (result == 0) {
-					return o2.getGoalRate().compareTo(o1.getGoalRate());
-				}
-				return result;
-			}
-			
-		});
-		int index = 1;
-		for (PlayerRanking ranking : rankings) {
-			ranking.setRanking(index);
-			index++;
-		}
-		calculateBadges(rankings);
+        setSuccessRateRankingIndex(playerRankingMap);
+        setDynamicRankingIndex(playerRankingMap);
+        setEloRankingIndex(playerRankingMap);
+		calculateBadges(playerRankingMap);
     }
 
-	private void calculateBadges(List<PlayerRanking> rankings) {
-		for (PlayerRanking ranking : rankings) {
+    private void setSuccessRateRankingIndex(Map<String, PlayerRanking> playerRankingMap) {
+        List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
+        Collections.sort(rankings, new Comparator<PlayerRanking>() {
+
+            @Override
+            public int compare(PlayerRanking o1, PlayerRanking o2) {
+                int result = o2.getSuccessRate().compareTo(o1.getSuccessRate());
+                if (result == 0) {
+                    return o2.getGoalRate().compareTo(o1.getGoalRate());
+                }
+                return result;
+            }
+
+        });
+        int index = 1;
+        for (PlayerRanking ranking : rankings) {
+            ranking.setRanking(index);
+            index++;
+        }
+    }
+
+    private void setDynamicRankingIndex(Map<String, PlayerRanking> playerRankingMap){
+        SortedSet<PlayerRanking> sortedPlayerRanking = getSortedPlayerRanking(playerRankingMap.values());
+        int i = 1;
+        for (PlayerRanking playerRanking : sortedPlayerRanking) {
+            playerRanking.setDynamicRanking(i++);
+        }
+    }
+
+    private SortedSet<PlayerRanking> getSortedPlayerRanking(Collection<PlayerRanking> playerRankings) {
+        TreeSet<PlayerRanking> sortedPlayerRankings = new TreeSet<>(new Comparator<PlayerRanking>() {
+            @Override
+            public int compare(PlayerRanking o1, PlayerRanking o2) {
+                int result = o2.getRankingPoints().compareTo(o1.getRankingPoints());
+                if (result == 0) {
+                    return o2.getGoalRate().compareTo(o1.getGoalRate());
+                }
+                return result;
+            }
+        });
+        sortedPlayerRankings.addAll(playerRankings);
+        return sortedPlayerRankings;
+    }
+    
+    private void setEloRankingIndex(Map<String, PlayerRanking> playerRankingMap) {
+        List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
+        Collections.sort(rankings, new Comparator<PlayerRanking>() {
+
+            @Override
+            public int compare(PlayerRanking o1, PlayerRanking o2) {
+                int result = o2.getEloValue().compareTo(o1.getEloValue());
+                if (result == 0) {
+                    return o2.getGoalRate().compareTo(o1.getGoalRate());
+                }
+                return result;
+            }
+
+        });
+        int index = 1;
+        for (PlayerRanking ranking : rankings) {
+            ranking.setEloRanking(index);
+            index++;
+        }
+    }
+
+	private void calculateBadges(Map<String, PlayerRanking> playerRankingMap) {
+        Collection<PlayerRanking> rankings = playerRankingMap.values();
+        for (PlayerRanking ranking : rankings) {
 			if (ranking.getRanking() == 1) {
 				ranking.getBadges().add(BadgeEnum.King.name());
 			}

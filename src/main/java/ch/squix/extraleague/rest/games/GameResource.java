@@ -25,6 +25,9 @@ public class GameResource extends ServerResource {
 		String gameIdText = (String) this.getRequestAttributes().get("gameId");
 		Long gameId = Long.valueOf(gameIdText);
 		Game game = ofy().load().type(Game.class).id(gameId).now();
+		if (game == null) {
+			return null;
+		}
 		GameDto dto = GameDtoMapper.mapToDto(game);
 		return dto;
 	}

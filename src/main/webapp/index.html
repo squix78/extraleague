@@ -41,6 +41,7 @@
     <script src="components/angular/angular.js"></script>
     <script src="components/angular-route/angular-route.js"></script>
     <script src="components/angular-resource/angular-resource.js"></script>
+    <script src="components/angular-touch/angular-touch.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -60,11 +61,15 @@
             <span class="icon-bar"></span>
           </button>
         </div>
-        <div collapse="navCollapsed" class="navbar-collapse collapse navbar-responsive-collapse">
+        <div collapse="navCollapsed" data-extraleague-navbar class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li ng-class="{active: isActive('tables')}"><a ng-click="navCollapsed = true" href="#/tables">New Game</a></li>
-            <li ng-class="{active: isActive('ranking')}"><a  ng-click="navCollapsed = true" href="#/ranking">Ranking</a></li>
-            <li ng-class="{active: isActive('openGames')}"><a  ng-click="navCollapsed = true" href="#/openGames">Open Games</a></li>
+            <li data-match-route="/highlights"><a ng-click="navigateTo('highlights')">Highlights</a></li>
+            <li data-match-route="/tables"><a ng-click="navigateTo('tables')">New Game</a></li>
+            <li data-match-route="/ranking"><a ng-click="navigateTo('ranking')">Ranking</a></li>
+            <li data-match-route="/openGames"><a ng-click="navigateTo('openGames')">Open Games</a></li>
+            <li data-match-route="/playedGames"><a ng-click="navigateTo('playedGames')">Who played today?</a></li>
+            <li data-match-route="/stats"><a ng-click="navigateTo('stats')">Statistics</a></li>
+            <li data-match-route="/about"><a ng-click="navigateTo('about')">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -77,6 +82,7 @@
 
     <script src="js/players.js"></script>
     <script src="js/channelservice.js"></script>
+    <script src="js/charts.js"></script>
     <script src="js/extraleague.js"></script>
     <script src="components/jquery/jquery.js"></script>
     <script src="components/bootstrap/dist/js/bootstrap.js"></script>

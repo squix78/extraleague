@@ -24,8 +24,11 @@ public class Game {
 	
 	private Date startDate;
 	private Date endDate;
+	private Date firstGoalDate;
 
 	private Integer numberOfCompletedMatches;
+
+	private Double gameProgress;
 	
 	public Long getId() {
 		return id;
@@ -90,7 +93,31 @@ public class Game {
 	public void setNumberOfCompletedMatches(Integer numberOfCompletedMatches) {
 		this.numberOfCompletedMatches = numberOfCompletedMatches;
 	}
+
+
+	public void setGameProgress(Double gameProgress) {
+		this.gameProgress = gameProgress;
+	}
 	
+	public Double getGameProgress() {
+		return gameProgress;
+	}
+
+
+	/**
+	 * @return the firstGoalDate
+	 */
+	public Date getFirstGoalDate() {
+		return firstGoalDate;
+	}
+
+
+	/**
+	 * @param firstGoalDate the firstGoalDate to set
+	 */
+	public void setFirstGoalDate(Date firstGoalDate) {
+		this.firstGoalDate = firstGoalDate;
+	}
 	
 	
 }

@@ -1,0 +1,33 @@
+<h2>Highlights</h2>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr ng-repeat="mutation in mutations | orderBy:'-createdDate'">
+       <td><div player="mutation.player"></div></td>
+       <td>
+	       <div>
+	       	<small>
+	       		{{mutation.createdDate | date:'dd-MM-yyyy'}}
+	       		{{mutation.createdDate | date:'shortTime'}}
+	       	</small>
+	       	<div ng-repeat="description in mutation.descriptions">
+		    	<div highlight-badges ng-model="description"></div>
+	       	</div>
+	    </td>
+     </tr>
+    <tbody>
+  </table>
+</div>
+<div ng-show="isMutationsLoading">
+	<img src="images/ajax-loader.gif"/> Loading highlights
+</div>
+<div ng-show="mutations.length == 0 && !isMutationsLoading">
+  Boring! There are no highlights...
+</div>

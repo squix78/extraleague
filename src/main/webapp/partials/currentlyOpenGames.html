@@ -1,19 +1,36 @@
-<h2>Open Games</h2>
+<h3>Current/ Next Games</h3>
 <div ng-show="games.length == 0 && !isGamesLoading">
   Currently there are no open games...
 </div>
 <div ng-show="games.length > 0">
-	<div class="alert alert-success" ng-repeat="game in games  | orderBy:'-startDate'">
-	  <span ng-repeat="player in game.players">{{player}} </span>
-	  @{{game.table}}
-	  <div class="pull-right">
-		  <button ng-hide="game.endDate" class="btn btn-primary" ng-click="continueGame(game)">Continue ({{game.numberOfCompletedGames + 1}}/4)</button>
-		  <button ng-hide="game.endDate || isDeleteButtonVisible" class="btn btn-danger" ng-click="isDeleteButtonVisible = true">Delete</button>
-		  <button ng-show="isDeleteButtonVisible" class="btn btn-danger" ng-click="deleteGame(game)">Really?</button>
+	<div class="alert" ng-class="{'alert-success': $index == 0, 'alert-info': $index > 0}"ng-repeat="game in games">
+	  <div class="pull-right text-center" ng-show="game.estimatedRemainingMillis">
+		 <div class="caption">
+			 <div><small>ETA</small></div>
+			 <div>
+			  	<small>{{getSumEstimatedRemainingMillis($index) / (60 * 1000) | number:0}}m 
+			  	{{((getSumEstimatedRemainingMillis($index) / 1000) % 60) | number:0}}s</small>
+			 </div>
+		 </div>
+		 <div style="display: block; margin: auto;" circular-progress ng-model="game.gameProgress" width="50" height="50"></div>
+	  </div>
+	  <div class="label label-info">
+	  		{{game.table}}
 	  </div>
 	  <div>
-	  	{{game.startDate | date:'short'}}
-	  		<span ng-show="game.endDate"> - {{game.endDate | date:'short'}}</span>
+	  		<small>{{game.startDate | date:'dd. MMM. yyyy HH:mm:ss'}}</small>
+	  </div>
+	  <div class="playerRow">
+		  	<div ng-repeat="player in game.players" player="player"></div>
+	  </div>
+
+	  <div>
+	  	  <div>
+		      <button ng-hide="game.endDate" class="btn btn-primary" ng-click="continueGame(game)">Continue ({{game.numberOfCompletedGames + 1}}/4)</button>
+
+			  <button ng-hide="game.endDate || isDeleteButtonVisible" class="btn btn-danger" ng-click="isDeleteButtonVisible = true">Delete</button>
+			  <button ng-show="isDeleteButtonVisible" class="btn btn-danger" ng-click="deleteGame(game)">Really?</button>
+	  	  </div>
 	  </div>
 	</div>
 </div>

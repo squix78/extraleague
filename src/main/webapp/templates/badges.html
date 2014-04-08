@@ -1,4 +1,3 @@
-<span class="label" class="label" title="{{badgeMap[badge].description}}"
-	ng-class="{'label-primary': badgeMap[badge].badgeType !== 'Shamelet', 'label-danger': badgeMap[badge].badgeType === 'Shamelet'}" style="margin-right: 3px;" ng-repeat="badge in ngModel">
+<span class="label label-primary {{badgeMap[badge].badgeType}}" title="{{badgeMap[badge].description}}" style="margin-right: 3px;" ng-repeat="badge in ngModel">
 	<i class="fa {{badgeMap[badge].faClass}}"></i> {{badge}}
 </span>

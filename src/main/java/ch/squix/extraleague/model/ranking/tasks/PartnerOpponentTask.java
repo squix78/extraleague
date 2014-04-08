@@ -32,35 +32,53 @@ public class PartnerOpponentTask implements RankingTask {
     
     private void calculatePartnerAndOpponents(Map<String, PlayerRanking> playerRankingMap,
             Map<String, Map<String, PlayerCombo>> partnerMap, Map<String, Map<String, PlayerCombo>> opponentMap) {
+    PlayerComboComparator comparator = new PlayerComboComparator();
     for (String player : playerRankingMap.keySet()) {
             PlayerRanking ranking = playerRankingMap.get(player);
             Map<String, PlayerCombo> partnerComboMap = partnerMap.get(player);
 
-            PlayerComboComparator comparator = new PlayerComboComparator();
 
-            List<PlayerCombo> partners = new ArrayList<>(partnerComboMap.values());
-            Collections.sort(partners, comparator);
-
-            ranking.setBestPartner(partners.get(0).getCombo());
-            ranking.setBestPartnerRate(partners.get(0).getSuccessRate());
-            ranking.setWorstPartner(partners.get(partners.size() - 1).getCombo());
-            ranking.setWorstPartnerRate(partners.get(partners.size() - 1).getSuccessRate());
-
+            List<PlayerCombo> partners = filterLowFrequenceCombos(partnerComboMap);
+            if (partners.size() > 0) {
+            	Collections.sort(partners, comparator);
+	            PlayerCombo bestPartner = partners.get(0);
+				ranking.setBestPartner(bestPartner.getCombo());
+	            ranking.setBestPartnerRate(bestPartner.getSuccessRate());
+	            PlayerCombo worstPartner = partners.get(partners.size() - 1);
+				ranking.setWorstPartner(worstPartner.getCombo());
+	            ranking.setWorstPartnerRate(worstPartner.getSuccessRate());
+	            ranking.setPartners(partners);
+            }
 
             Map<String, PlayerCombo> opponentComboMap = opponentMap.get(player);
 
-            List<PlayerCombo> opponents = new ArrayList<>(opponentComboMap.values());
-            Collections.sort(opponents, comparator);
-
-            ranking.setBestOpponent(opponents.get(opponents.size() - 1).getCombo());
-            ranking.setBestOpponentRate(1 - opponents.get(opponents.size() - 1).getSuccessRate());
-            ranking.setWorstOpponent(opponents.get(0).getCombo());
-            ranking.setWorstOpponentRate(1 - opponents.get(0).getSuccessRate());
+            List<PlayerCombo> opponents = filterLowFrequenceCombos(opponentComboMap);
+            if (opponents.size() > 0) {
+	            Collections.sort(opponents, comparator);
+	
+	            PlayerCombo bestOpponent = opponents.get(0);
+				ranking.setBestOpponent(bestOpponent.getCombo());
+	            ranking.setBestOpponentRate(bestOpponent.getSuccessRate());
+	            PlayerCombo worstOpponent = opponents.get(opponents.size() - 1);
+				ranking.setWorstOpponent(worstOpponent.getCombo());
+	            ranking.setWorstOpponentRate(worstOpponent.getSuccessRate());
+	            ranking.setOpponents(opponents);
+            }
             
     }
 }
 
-    private void updatePlayerCombo(Map<String, Map<String, PlayerCombo>> partnerMap,
+    private List<PlayerCombo> filterLowFrequenceCombos(Map<String, PlayerCombo> partnerComboMap) {
+		List<PlayerCombo> players = new ArrayList<>();
+		for (PlayerCombo combo : partnerComboMap.values()) {
+			if (combo.getTotalGames() > 2) {
+				players.add(combo);
+			}
+		}
+		return players;
+	}
+
+	private void updatePlayerCombo(Map<String, Map<String, PlayerCombo>> partnerMap,
             Map<String, Map<String, PlayerCombo>> opponentMap,
             PlayerMatchResult playerMatch) {
         PlayerCombo partner = getPlayerCombo(partnerMap, playerMatch.getPlayer(),
@@ -74,9 +92,9 @@ public class PartnerOpponentTask implements RankingTask {
             PlayerCombo opponent = getPlayerCombo(opponentMap, playerMatch.getPlayer(),
                     opponentName);
             if (playerMatch.hasWon()) {
-                opponent.increaseGamesLost();
+            	opponent.increaseGamesWon();
             } else {
-                opponent.increaseGamesWon();
+            	opponent.increaseGamesLost();
             }
         }
     }

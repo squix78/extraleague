@@ -1,16 +1,7 @@
-/*
- * Copyright (C) 2014 by Netcetera AG.
- * All rights reserved.
- *
- * The copyright to the computer program(s) herein is the property of Netcetera AG, Switzerland.
- * The program(s) may be used and/or copied only with the written permission of Netcetera AG or
- * in accordance with the terms and conditions stipulated in the agreement/contract under which 
- * the program(s) have been supplied.
- */
 package ch.squix.extraleague.model.match;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +15,7 @@ public class MatchUtil {
 	
 	public static Map<String, PlayerMatchResult> getPlayerMatchMap(Match match) {
         Map<String, PlayerMatchResult> results = new LinkedHashMap<>();
-        boolean hasTeamAWon = match.getTeamAScore() > match.getTeamBScore();
+        boolean hasTeamAWon = hasTeamAWon(match);
         int index = 0;
         Position[] teamPositions = new Position[] {Position.Offensive, Position.Defensive};
         for (String player : match.getTeamA()) {
@@ -35,6 +26,11 @@ public class MatchUtil {
             result.setGoalsMade(match.getTeamAScore());
             result.setGoalsGot(match.getTeamBScore());
             result.setHasWon(hasTeamAWon);
+            List<String> scorers = match.getScorers();
+            if (scorers != null && scorers.size() > 0) {
+            	result.setHasPlayerGoals(true);
+            	result.setPlayerGoals(Collections.frequency(scorers, player));
+            }
             result.setPosition(teamPositions[index]);
             results.put(player, result);
             index++;
@@ -47,6 +43,11 @@ public class MatchUtil {
             result.setOpponents(match.getTeamA());
             result.setGoalsMade(match.getTeamBScore());
             result.setGoalsGot(match.getTeamAScore());
+            List<String> scorers = match.getScorers();
+            if (scorers != null && scorers.size() > 0) {
+                result.setHasPlayerGoals(true);
+                result.setPlayerGoals(Collections.frequency(scorers, player));
+            }
             result.setPosition(teamPositions[index]);
             result.setHasWon(!hasTeamAWon);
             results.put(player, result);
@@ -54,7 +55,11 @@ public class MatchUtil {
         }
         return results;
 	}
-	
+
+    public static boolean hasTeamAWon(Match match) {
+        return match.getTeamAScore() > match.getTeamBScore();
+    }
+
     public static List<PlayerMatchResult> getPlayerMatchResults(Match match) {
     	return new ArrayList<PlayerMatchResult>(getPlayerMatchMap(match).values());
     }

@@ -26,6 +26,10 @@ body {
     margin-left: 0;
   }
 }
+.navbar-nav a { 
+	cursor: pointer; 
+	cursor: hand; 
+}
 
 .even {
   background-color: #efefef;
@@ -37,18 +41,35 @@ body {
 }
 .player {
   max-width: 48px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+.playerImage {
+	max-width: 48px;
+	margin-left: auto;
+	margin-right: auto;
 }
 .redTeam {
-	color: red;
+	color: #D9534F;
 }
 .blueTeam {
-	color: blue;
+	color: #428BCA;
 }
-.redTeamBorder {
-	border: 3px solid red;
+.btn-redTeam {
+	background-color: #D9534F;
+  border-color: #D43F3A;
 }
-.blueTeamBorder {
-	border: 3px solid blue;
+.btn-redTeam:hover {
+  background-color: #D2322D;
+  border-color: #AC2925;
+}
+.btn-blueTeam {
+  background-color: #428BCA;
+  border-color: #357EBD;
+}
+.btn-blueTeam:hover {
+  background-color: #3276B1;
+  border-color: #285E8E;
 }
 legend { 
 	margin:3px; 
@@ -64,4 +85,95 @@ legend {
 }
 .lost {
 	color: red;
+}
+.Bronze:before {
+	color: rgb(205, 127, 50);
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Silver:before {
+	color: silver;
+	content: "\25A0";
+    margin-right: 6px;
+
+}
+.Gold:before {
+	color: gold;
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Ranking:before {
+	color: white;
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Honorary {
+	background-color: green;
+}
+.Shamelet {
+	background-color: red;
+}
+
+.circularProgress{
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  display: block;
+  margin: auto;
+}
+
+
+.caption {
+    text-align:center;
+}
+
+.playerRow {
+	white-space: nowrap;
+	display: -webkit-box;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.playerRow img {
+	width: 40px;
+}
+.discreet {
+	color: #BBB;
+}
+
+.x.axis path {
+  stroke-width: 1px;
+}
+
+.text-small {
+  font-size: 75%;
+}
+
+.charttip {
+	padding: 3px;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.5);
+	text-anchor: middle;
+	text-align: center;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
+}
+.circle {
+  fill: white;
+  stroke: steelblue;
+  stroke-width: 1px;
 }

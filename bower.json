@@ -15,5 +15,10 @@
     "src/main/webapp/components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular-touch": "~1.2.14",
+    "angular-route": "~1.2.14",
+    "angular-resource": "~1.2.14"
+  }
 }

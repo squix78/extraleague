@@ -1,6 +1,10 @@
 package ch.squix.extraleague.model.match;
 
-public class PlayerCombo {
+import java.io.Serializable;
+
+public class PlayerCombo implements Serializable {
+	
+	private static final long serialVersionUID = -1087465634185379532L;
 	
 	private String player;
 	private String combo;

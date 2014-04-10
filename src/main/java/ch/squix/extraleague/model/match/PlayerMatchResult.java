@@ -1,5 +1,8 @@
 package ch.squix.extraleague.model.match;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class PlayerMatchResult {
 
@@ -12,6 +15,7 @@ public class PlayerMatchResult {
     private Position position;
 	private Integer playerGoals;
 	private Boolean hasPlayerGoals = false;
+	private List<String> inBetweenScores = new ArrayList<>();
     
     public boolean hasWon() {
         return hasWon;
@@ -105,5 +109,19 @@ public class PlayerMatchResult {
 	
 	public String getMatchResultAsPlayersView() {
 		return goalsMade + ":" + goalsGot;
+	}
+
+	/**
+	 * @return the inBetweenScores
+	 */
+	public List<String> getInBetweenScores() {
+		return inBetweenScores;
+	}
+
+	/**
+	 * @param inBetweenScores the inBetweenScores to set
+	 */
+	public void setInBetweenScores(List<String> inBetweenScores) {
+		this.inBetweenScores = inBetweenScores;
 	}
 }

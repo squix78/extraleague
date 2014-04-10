@@ -11,6 +11,8 @@ public enum BadgeEnum {
 	BackToBackShutout(5, BadgeType.Silver, "fa-star-half-o", null, "2x5:0"), 
 	IAmLegend(6, BadgeType.Silver, "fa-star", null, "3x5:0"), 
 	NoMercy(7, BadgeType.Gold, "fa-fighter-jet", null, "4x5:0"), 
+	BruceWillis(8, BadgeType.Silver, "fa-mail-reply", null, "Came back and won the game after 0:4"),
+	ChuckNorris(8, BadgeType.Gold, "fa-mail-reply-all", null, "Came back and won the game after 0:4, twice in a game! Only Chuck can do it!"),
 	NxSlam(8, BadgeType.Bronze, "", "[0-9]{1,2}xSlam", "won N games in a row"), 
 	Strike(9, BadgeType.Bronze, "fa-bolt", null, "won all matches in a round"), 
 	IceMan(10, BadgeType.Gold, "fa-android", null, "won all matches 5:4 in a round"),

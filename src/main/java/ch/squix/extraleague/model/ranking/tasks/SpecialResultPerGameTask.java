@@ -23,6 +23,7 @@ public class SpecialResultPerGameTask implements RankingTask {
     	Map<String, Integer> max5To4PerPlayerMap = new HashMap<>();
         for (Map.Entry<Long, List<Match>> entry : matches.getGameMatches().entrySet()) {
         	Map<String, List<String>> scoreMap = new HashMap<>();
+        	Map<String, Integer> comebackMap = new HashMap<>();
 	        for (Match match : entry.getValue()) {
 	        	
 	            List<PlayerMatchResult> playerMatches = MatchUtil.getPlayerMatchResults(match);
@@ -33,14 +34,31 @@ public class SpecialResultPerGameTask implements RankingTask {
 	            		scoreMap.put(playerMatch.getPlayer(), playerScores);
 	            	}
 	            	playerScores.add(playerMatch.getGoalsMade() + ":" + playerMatch.getGoalsGot());
-	            	
+	            	List<String> inBetweenScores = playerMatch.getInBetweenScores();
+	            	if (inBetweenScores.contains("0:4") && inBetweenScores.contains("5:4")) {
+	            		Integer comebackCount = comebackMap.get(playerMatch.getPlayer());
+	            		if (comebackCount == null) {
+	            			comebackCount = 0;
+	            		}
+	            		comebackCount++;
+	            		comebackMap.put(playerMatch.getPlayer(), comebackCount);
+	            	}
 	            }
 	        }
 	        for (String player : scoreMap.keySet()) {
 	        	calculateMaxSpecialResultPerGame(maxFiveZeroPerPlayerMap, scoreMap, player, "5:0");
 	        	calculateMaxSpecialResultPerGame(max5To4PerPlayerMap, scoreMap, player, "5:4");
-	        	
 	        }
+	        for (String player : comebackMap.keySet()) {
+	        	Integer comebackCount = comebackMap.get(player);
+	        	PlayerRanking playerRanking = playerRankingMap.get(player);
+	        	if (comebackCount == 1) {
+	        		playerRanking.getBadges().add(BadgeEnum.BruceWillis.name());
+	        	} else if (comebackCount >= 2) {
+	        		playerRanking.getBadges().add(BadgeEnum.ChuckNorris.name());
+	        	}
+	        }
+	        
         }
         for(String player : maxFiveZeroPerPlayerMap.keySet()) {
                 Integer fiveZeroes = maxFiveZeroPerPlayerMap.get(player);

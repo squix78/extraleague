@@ -1,8 +1,12 @@
 package ch.squix.extraleague.rest.ranking;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import ch.squix.extraleague.rest.statistics.DataTuple;
 
 public class RankingDto {
 
@@ -44,6 +48,8 @@ public class RankingDto {
     private Integer eloRanking;
     
     private Double averageGoalsPerMatch;
+    
+    private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
 
     public String getPlayer() {
         return player;
@@ -333,5 +339,19 @@ public class RankingDto {
 
 	public void setEloRanking(Integer eloRanking) {
 		this.eloRanking = eloRanking;
+	}
+
+	/**
+	 * @return the scoreHistogram
+	 */
+	public List<DataTuple<Integer, Double>> getScoreHistogram() {
+		return scoreHistogram;
+	}
+
+	/**
+	 * @param scoreHistogram the scoreHistogram to set
+	 */
+	public void setScoreHistogram(List<DataTuple<Integer, Double>> scoreHistogram) {
+		this.scoreHistogram = scoreHistogram;
 	}
 }

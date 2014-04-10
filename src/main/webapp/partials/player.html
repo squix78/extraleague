@@ -188,7 +188,10 @@
     </table>
   </div>
 
+  <h4>Score Distribution</h4>
+  <div histogram height="200" ng-model="playerResult.statistics.scoreHistogram"></div>
 </div>
+
 
 <div ng-show="isPlayerLoading">
   <img src="images/ajax-loader.gif" /> Loading player data...
@@ -214,6 +217,8 @@
 <h4>Elo Value</h4>
 <div linechart  height="200" ng-model="timeseries.eloValueSeries"></div>
 </div>
+
+
 
 
 

@@ -102,4 +102,8 @@ public class PlayerMatchResult {
 	public void setHasPlayerGoals(Boolean hasPlayerGoals) {
 		this.hasPlayerGoals = hasPlayerGoals;
 	}
+	
+	public String getMatchResultAsPlayersView() {
+		return goalsMade + ":" + goalsGot;
+	}
 }

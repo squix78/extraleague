@@ -98,29 +98,11 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	y.domain(d3.extent(data, function(d) { 
 				        		return d.value; 
 				        	}));
-				        
 				        	
-				        	chart.append("g")
-				              .attr("class", "x axis")
-				              .attr("transform", "translate(0," + height + ")")
-				              .call(xAxis);
-
-				            chart.append("g")
-				              .attr("class", "y axis")
-				              .call(yAxis);
-				        	
-				            chart.append("path")
-				              .datum(data)
-				              .attr("class", "line")
-				              .attr("d", line);
-				            
-				            var currentText = "";
-				            
-				            
 				            chart.selectAll("dot")
 				            .data(data)
 				            .enter().append("circle")
-				            .attr("r", 3.5)
+				            .attr("r", 5)
 				            .attr("cx", function(d) { return x(d.key); })
 				            .attr("cy", function(d) { return y(d.value); })
 				            .attr("class", "circle")
@@ -130,6 +112,7 @@ angular.module('Charts', []).service('D3', function D3() {
 				            		.text(d3.time.format("%d-%m-%y")(new Date(d.key)) + ": " + d.label);
 				            	var tooltipWidth = parseInt(tooltip.style("width") );
 				            	console.log(tooltipWidth);
+			
 				            	tooltip
 				            		.style("top", (d3.event.pageY-30)+"px")
 				            		.style("left", (d3.event.pageX -  tooltipWidth / 2)+"px")
@@ -141,6 +124,21 @@ angular.module('Charts', []).service('D3', function D3() {
 				            	tooltip.style("visibility", "hidden");
 				            	return ;
 				            });
+				        
+				        	
+				        	chart.append("g")
+				              .attr("class", "x axis")
+				              .attr("transform", "translate(0," + height + ")")
+				              .call(xAxis);
+
+				            chart.append("g")
+				              .attr("class", "y axis")
+				              .call(yAxis);
+				            
+				            var currentText = "";
+				            
+				            
+
 				            
 				            var tooltip = d3.select("body")
 				        	.append("div")
@@ -149,6 +147,12 @@ angular.module('Charts', []).service('D3', function D3() {
 				        	.style("visibility", "hidden")
 				        	.attr("class", "charttip")
 				        	.text("a simple tooltip");
+				            
+				        	
+				            chart.append("path")
+				              .datum(data)
+				              .attr("class", "line")
+				              .attr("d", line);
 				            
 
 

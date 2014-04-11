@@ -147,6 +147,10 @@ legend {
 .text-small {
   font-size: 75%;
 }
+.text-middle {
+	text-align: center;
+	text-anchor: middle; 
+}
 
 .charttip {
 	padding: 3px;

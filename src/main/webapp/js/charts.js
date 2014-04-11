@@ -315,7 +315,9 @@ angular.module('Charts', []).service('D3', function D3() {
 				.range([0, width]);
 				
 				var y = d3.scale.linear()
-				.domain([0, 1])
+				.domain([0, 1.1* d3.max(data, function(d) {
+						return d.value;
+					})])
 				.range([height, 0]);
 				
 				
@@ -338,8 +340,8 @@ angular.module('Charts', []).service('D3', function D3() {
 				
 				bar.append("text")
 				.attr("y", -3)
-				.attr("class", "text-small")
-				.attr("x", barWidth/6)
+				.attr("class", "text-small text-middle")
+				.attr("x", barWidth / 2)
 				.text(function(d) { 
 					return d.value > 0 ? 
 							d3.format(".2p")(d.value) : null }); 

@@ -19,6 +19,8 @@ public class PlayerUser {
 		private String email;
 		
 		private String imageUrl;
+		
+		private Boolean emailNotification = true;
 
 		/**
 		 * @return the id
@@ -74,5 +76,13 @@ public class PlayerUser {
 		 */
 		public void setEmail(String email) {
 			this.email = email;
+		}
+
+		public Boolean getEmailNotification() {
+			return emailNotification;
+		}
+
+		public void setEmailNotification(Boolean emailNotification) {
+			this.emailNotification = emailNotification;
 		}
 }

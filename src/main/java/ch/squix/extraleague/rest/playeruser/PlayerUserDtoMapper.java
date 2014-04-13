@@ -15,6 +15,14 @@ public class PlayerUserDtoMapper {
 		return dto;
 	}
 	
+	public static PlayerUserDto mapToAdminDto(PlayerUser playerUser) {
+		PlayerUserDto dto = mapToDto(playerUser);
+		dto.setEmail(playerUser.getEmail());
+		dto.setImageUrl(playerUser.getImageUrl());
+		dto.setEmailNotification(playerUser.getEmailNotification());
+		return dto;
+	}
+	
 	public static List<PlayerUserDto> mapToDtos(List<PlayerUser> playerUsers) {
 		List<PlayerUserDto> dtos = new ArrayList<>();
 		for (PlayerUser playerUser : playerUsers) {
@@ -23,12 +31,22 @@ public class PlayerUserDtoMapper {
 		return dtos;
 	}
 	
-	public static PlayerUser mapFromDto(PlayerUserDto dto) {
+	public static List<PlayerUserDto> mapToAdminDtos(List<PlayerUser> playerUsers) {
+		List<PlayerUserDto> dtos = new ArrayList<>();
+		for (PlayerUser playerUser : playerUsers) {
+			dtos.add(mapToAdminDto(playerUser));
+		}
+		return dtos;
+	}
+	
+	public static PlayerUser mapFromAdminDto(PlayerUserDto dto) {
 		PlayerUser playerUser = new PlayerUser();
 		playerUser.setPlayer(dto.getPlayer());
 		playerUser.setEmail(dto.getEmail());
 		playerUser.setImageUrl(dto.getImageUrl());
+		playerUser.setEmailNotification(dto.getEmailNotification());
 		return playerUser;
 	}
+
 
 }

@@ -1,5 +1,6 @@
 <h4>Users</h4>
 
+<input ng-model="searchText"/>
  <div class="table-responsive">
    <table class="table table-striped">
      <thead>
@@ -7,16 +8,16 @@
          <th>#</th>
          <th>Short-Name</th>
          <th>Email</th>
-         <th>Image URL</th>
+         <th>Image</th>
        </tr>
      </thead>
      <tbody>
-       <tr ng-repeat="playerUser in playerUsers | orderBy:'player'">
+       <tr ng-repeat="playerUser in playerUsers | orderBy:'player' | filter:searchText">
          <td>
          	{{$index + 1}}
          </td>
          <td>
-         	{{playerUser.player}}
+         	<a href="#/users/{{playerUser.player}}">{{playerUser.player}}</a>
          </td>
          <td>
          	{{playerUser.email}}

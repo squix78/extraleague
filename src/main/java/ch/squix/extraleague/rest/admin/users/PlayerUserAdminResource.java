@@ -25,30 +25,26 @@ public class PlayerUserAdminResource extends ServerResource {
 	private static final Logger log = Logger.getLogger(OpenGamesResource.class.getName());
 	
 	@Get(value = "json")
-	public List<PlayerUserDto> executeGet() {
-		List<PlayerUser> players = ofy().load().type(PlayerUser.class).list();
-		return PlayerUserDtoMapper.mapToDtos(players);
+	public PlayerUserDto executeGet() {
+		String player = (String) this.getRequestAttributes().get("player");
+		PlayerUser playerUser = ofy().load().type(PlayerUser.class).filter("player == ", player).first().now();
+		if (playerUser != null) {
+			return PlayerUserDtoMapper.mapToAdminDto(playerUser);
+		}
+		return null;
 	}
 	
 	@Post(value = "json")
-	public void executePost(PlayerUserListDto playerUserListDto) {
-		List<PlayerUser> players = ofy().load().type(PlayerUser.class).list();
-		ofy().delete().entities(players).now();
-		Map<String, PlayerUser> existingPlayerMap = new HashMap<>();
-		for (PlayerUser playerUser : players) {
-			existingPlayerMap.put(playerUser.getPlayer(), playerUser);
+	public void executePost(PlayerUserDto playerUserDto) {
+		String player = (String) this.getRequestAttributes().get("player");
+		PlayerUser playerUser = ofy().load().type(PlayerUser.class).filter("player == ", player).first().now();
+		if (playerUser == null) {
+			playerUser = new PlayerUser();
 		}
-		List<PlayerUser> newPlayerUsers = new ArrayList<>();
-		for (PlayerUserDto dto : playerUserListDto.getPlayerUsers()) {
-			PlayerUser existingPlayerUser = existingPlayerMap.get(dto.getPlayer());
-			if (existingPlayerUser == null) {
-				PlayerUser newPlayerUser = PlayerUserDtoMapper.mapFromDto(dto);
-				newPlayerUsers.add(newPlayerUser);
-				existingPlayerMap.put(dto.getPlayer(), newPlayerUser);
-			}
-			
-		}
-		ofy().save().entities(newPlayerUsers).now();
+		playerUser.setEmail(playerUserDto.getEmail());
+		playerUser.setImageUrl(playerUserDto.getImageUrl());
+		playerUser.setEmailNotification(playerUserDto.getEmailNotification());
+		ofy().save().entities(playerUser).now();
 	}
 
 

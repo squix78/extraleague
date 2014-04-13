@@ -5,6 +5,7 @@ public class PlayerUserDto {
 	private String player;
 	private String email;
 	private String imageUrl;
+	private Boolean emailNotification;
 	
 	public String getPlayer() {
 		return player;
@@ -23,6 +24,12 @@ public class PlayerUserDto {
 	}
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+	public Boolean getEmailNotification() {
+		return emailNotification;
+	}
+	public void setEmailNotification(Boolean emailNotification) {
+		this.emailNotification = emailNotification;
 	}
 
 }

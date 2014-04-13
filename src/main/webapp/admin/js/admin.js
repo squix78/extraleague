@@ -4,12 +4,19 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'UserController',
            templateUrl : 'partials/users.html'
         })
+        $routeProvider.when('/users/:player', {
+        	controller : 'UserDetailController',
+        	templateUrl : 'partials/userDetail.html'
+        })
         .otherwise({
            redirectTo: '/users'
         });
     })
     .factory('PlayerUsers', ['$resource', function($resource) {
       return $resource('/rest/admin/playerUsers');
+    }])
+    .factory('PlayerUser', ['$resource', function($resource) {
+    	return $resource('/rest/admin/playerUsers/:player');
     }])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {
@@ -54,11 +61,30 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 		    	$scope.isPlayersSaving = false;
 		    	$scope.loadPlayers();
 		    });
-//		    angular.forEach(playerUsers, function(value, key) {
-//		    	PlayerUsers
-//		    });
 		  }
 		  r.readAsBinaryString(f);
 		}
 
+}
+function UserDetailController($scope, $rootScope, $resource, $location, $routeParams, PlayerUser) {
+	$scope.isPlayerLoading = false;
+	$scope.isPlayerSaving = false;
+	$scope.player = $routeParams.player;
+	$scope.loadPlayer = function() {
+		$scope.isPlayerLoading = true;
+		$scope.playerUser = PlayerUser.get({player: $scope.player}, function() {
+			$scope.isPlayerLoading = false;
+		});
+	}
+	$scope.loadPlayer();
+	
+	$scope.saveUser = function() {
+		$scope.isPlayerSaving = true;
+		$scope.playerUser.$save({player: $scope.player}, function() {
+			$scope.isPlayerSaving = false;
+			$location.path("/users");
+		});
+	}
+
+	
 }

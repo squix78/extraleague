@@ -8,6 +8,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         	controller : 'UserDetailController',
         	templateUrl : 'partials/userDetail.html'
         })
+        $routeProvider.when('/newUser', {
+        	controller : 'UserDetailController',
+        	templateUrl : 'partials/userDetail.html'
+        })
         .otherwise({
            redirectTo: '/users'
         });
@@ -42,7 +46,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 	  };
   	});
 
-function UserController($scope, $rootScope, $resource, $location, $routeParams, PlayerUsers) {
+function UserController($scope, $rootScope, $resource, $location, $routeParams, PlayerUsers, PlayerUser) {
 	$scope.loadPlayers = function() {
 		$scope.isPlayersLoading = true;
 		$scope.playerUsers = PlayerUsers.query({}, function() {
@@ -63,7 +67,18 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 		    });
 		  }
 		  r.readAsBinaryString(f);
-		}
+	};
+	$scope.addUser = function() {
+		$location.path("/newUser");
+	};
+	$scope.deleteUser = function(player) {
+		var playerUser = new PlayerUser();
+		playerUser.player = player;
+		playerUser.$delete({player: player}, function() {
+			$scope.loadPlayers();
+		});
+	}
+		
 
 }
 function UserDetailController($scope, $rootScope, $resource, $location, $routeParams, PlayerUser) {
@@ -75,12 +90,16 @@ function UserDetailController($scope, $rootScope, $resource, $location, $routePa
 		$scope.playerUser = PlayerUser.get({player: $scope.player}, function() {
 			$scope.isPlayerLoading = false;
 		});
+	};
+	if (angular.isDefined($scope.player)) {
+		$scope.loadPlayer();
+	} else {
+		$scope.playerUser = new PlayerUser();
 	}
-	$scope.loadPlayer();
 	
 	$scope.saveUser = function() {
 		$scope.isPlayerSaving = true;
-		$scope.playerUser.$save({player: $scope.player}, function() {
+		$scope.playerUser.$save({player: $scope.playerUser.player}, function() {
 			$scope.isPlayerSaving = false;
 			$location.path("/users");
 		});

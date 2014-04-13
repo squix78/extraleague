@@ -1,6 +1,7 @@
 <h4>Users</h4>
 
 <input ng-model="searchText"/>
+<button type="submit" class="btn btn-primary" ng-click="addUser()">Add User</button>
  <div class="table-responsive">
    <table class="table table-striped">
      <thead>
@@ -9,6 +10,7 @@
          <th>Short-Name</th>
          <th>Email</th>
          <th>Image</th>
+         <th>Action</th>
        </tr>
      </thead>
      <tbody>
@@ -24,6 +26,10 @@
          </td>
          <td>
          	<div class="playerImage"><img class="player img img-rounded" src="{{playerUser.imageUrl}}"/></div>
+		 </td>
+         <td>
+         	<button ng-hide="isDeleteConfirmed" type="submit" class="btn btn-danger btn-xs" ng-click="isDeleteConfirmed = true">Delete</button>
+         	<button ng-show="isDeleteConfirmed" type="submit" class="btn btn-danger btn-xs" ng-click="deleteUser(playerUser.player)">Really?</button>
 		 </td>
        </tr>
      </tbody>

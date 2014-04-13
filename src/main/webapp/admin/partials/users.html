@@ -1,0 +1,34 @@
+<h4>Users</h4>
+
+ <div class="table-responsive">
+   <table class="table table-striped">
+     <thead>
+       <tr>
+         <th>#</th>
+         <th>Short-Name</th>
+         <th>Email</th>
+         <th>Image URL</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr ng-repeat="playerUser in playerUsers | orderBy:'player'">
+         <td>
+         	{{$index + 1}}
+         </td>
+         <td>
+         	{{playerUser.player}}
+         </td>
+         <td>
+         	{{playerUser.email}}
+         </td>
+         <td>
+         	<div class="playerImage"><img class="player img img-rounded" src="{{playerUser.imageUrl}}"/></div>
+		 </td>
+       </tr>
+     </tbody>
+   </table>
+ </div>
+ <span ng-show="isPlayersLoading"><img src="../images/ajax-loader.gif" /></span>
+<input type="file" id="file" name="file"/>
+<button ng-click="add()">Add</button>
+ <span ng-show="isPlayersSaving"><img src="../images/ajax-loader.gif" /></span>

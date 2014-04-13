@@ -7,9 +7,11 @@ import org.restlet.routing.Router;
 import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.mutations.Mutations;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.statistics.Statistics;
+import ch.squix.extraleague.rest.admin.users.PlayerUserAdminResource;
 import ch.squix.extraleague.rest.badges.BadgesResource;
 import ch.squix.extraleague.rest.games.GameResource;
 import ch.squix.extraleague.rest.games.GamesResource;
@@ -23,6 +25,7 @@ import ch.squix.extraleague.rest.notification.NotificationTokenResource;
 import ch.squix.extraleague.rest.ping.PingResource;
 import ch.squix.extraleague.rest.player.PlayerRessource;
 import ch.squix.extraleague.rest.player.PlayersRessource;
+import ch.squix.extraleague.rest.playeruser.PlayerUserResource;
 import ch.squix.extraleague.rest.ranking.CleanInDayRankingsResource;
 import ch.squix.extraleague.rest.ranking.RankingByTagResource;
 import ch.squix.extraleague.rest.ranking.RankingResource;
@@ -44,6 +47,7 @@ public class ExtraLeagueRestApplication extends Application {
         ObjectifyService.register(BrowserClient.class);
         ObjectifyService.register(Statistics.class);
         ObjectifyService.register(Mutations.class);
+        ObjectifyService.register(PlayerUser.class);
     }
 	
 	@Override
@@ -73,6 +77,8 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/badges", BadgesResource.class);
         router.attach("/playerNetwork", PlayerNetworkResource.class);
         router.attach("/mutations", MutationsResource.class);
+        router.attach("/admin/playerUsers", PlayerUserAdminResource.class);
+        router.attach("/playerUsers", PlayerUserResource.class);
         
 
         return router;

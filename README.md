@@ -32,3 +32,10 @@ After every successful commit the latest version will be deployed to
 http://ncaleague-test.appspot.com/
 ```
 If you plan to write a new client I suggest you experiment against this instance, rather than the "production" application.
+
+## Import Player Data 
+Navigate to
+```
+http://localhost:8080/admin
+```
+and import the file src/main/resources/players-example.json

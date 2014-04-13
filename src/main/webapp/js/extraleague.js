@@ -198,9 +198,8 @@ function TablesController($scope, $rootScope, $resource, $location, $routeParams
 
 }
 
-function TableController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, PlayerService, Players) {
+function TableController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, Players) {
    $scope.isSavingGame = false;
-   $scope.PlayerService = PlayerService;
    $scope.table = $routeParams.table;
    $scope.currentGame = new Games();
    $scope.currentGame.table= $scope.table;
@@ -246,7 +245,7 @@ function TableController($scope, $rootScope, $resource, $routeParams, $location,
   });
 }
 
-function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, PlayedGames, PlayerService, Players) {
+function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, PlayedGames, Players) {
     $scope.isPlayedGamesLoading = true;
     PlayedGames.query(function (response) {  
         $scope.isPlayedGamesLoading = false;   
@@ -260,7 +259,7 @@ function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routePa
     });
 }
 
-function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, PlayerService, Players, NotificationService) {
+function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, Players, NotificationService) {
   $rootScope.backlink = false;
   $scope.updateGames = function() {
       $scope.isGamesLoading = true;
@@ -312,8 +311,7 @@ function OpenGamesController($scope, $rootScope, $resource, $timeout, $routePara
 	    return sum;
   };
 }
-function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, PlayerService, Players, NotificationService) {
-  $scope.PlayerService = PlayerService;
+function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, Players, NotificationService) {
   
   $scope.gameId = $routeParams.gameId;
   $scope.table = $routeParams.table;
@@ -460,9 +458,8 @@ function RankingByTagController($scope, $rootScope, $resource, $routeParams, Ran
 	});
 }
 
-function PlayerController($scope, $rootScope, $routeParams, PlayerService, Player, TimeSeries, Badges) {
+function PlayerController($scope, $rootScope, $routeParams, Player, TimeSeries, Badges) {
   $scope.player = $routeParams.player;
-  $scope.playerPicture = PlayerService.getPlayerPicture($scope.player);
   $scope.isPlayerLoading = true;
 
   $scope.$on('$viewContentLoaded', function() {

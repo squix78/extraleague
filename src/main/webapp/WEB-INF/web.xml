@@ -42,6 +42,13 @@
          org.restlet.ext.servlet.ServerServlet
       </servlet-class>
    </servlet>
+
+   <servlet>
+      <servlet-name>PlayerImageServlet</servlet-name>
+      <servlet-class>
+         ch.squix.extraleague.servlets.PlayerImageServlet
+      </servlet-class>
+   </servlet>
    
 	<servlet>
 	  <servlet-name>appstats</servlet-name>
@@ -77,6 +84,11 @@
       <servlet-name>RestletServlet</servlet-name>
       <url-pattern>/rest/*</url-pattern>
       <url-pattern>/admin/rest/*</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>PlayerImageServlet</servlet-name>
+      <url-pattern>/playerImage</url-pattern>
    </servlet-mapping>
 
 

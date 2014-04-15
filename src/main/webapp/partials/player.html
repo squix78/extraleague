@@ -80,6 +80,13 @@
           </td>
         </tr>
         <tr>
+          <td>Most goals per game:</td>
+          <td>
+          	{{playerResult.statistics.maxGoalsPerGame | number:0}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.maxGoalsPerGame | number}})</span>
+          </td>
+        </tr>
+        <tr>
           <td>Offensive:</td>
           <td>
           	 {{100 * playerResult.statistics.offensivePositionRate | number:2}}%

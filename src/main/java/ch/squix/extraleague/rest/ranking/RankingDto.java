@@ -48,6 +48,7 @@ public class RankingDto {
     private Integer eloRanking;
     
     private Double averageGoalsPerMatch;
+    private Integer maxGoalsPerGame;
     
     private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
 
@@ -353,5 +354,13 @@ public class RankingDto {
 	 */
 	public void setScoreHistogram(List<DataTuple<Integer, Double>> scoreHistogram) {
 		this.scoreHistogram = scoreHistogram;
+	}
+
+	public Integer getMaxGoalsPerGame() {
+		return maxGoalsPerGame;
+	}
+
+	public void setMaxGoalsPerGame(Integer maxGoalsPerGame) {
+		this.maxGoalsPerGame = maxGoalsPerGame;
 	}
 }

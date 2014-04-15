@@ -16,6 +16,7 @@ public enum BadgeEnum {
 	NxSlam(8, BadgeType.Bronze, "", "[0-9]{1,2}xSlam", "won N games in a row"), 
 	Strike(9, BadgeType.Bronze, "fa-bolt", null, "won all matches in a round"), 
 	IceMan(10, BadgeType.Gold, "fa-android", null, "won all matches 5:4 in a round"),
+	JohnWayne(10, BadgeType.Gold, "fa-magic", null, "Most goals in a game (4 matches)"),
 	BundleOfNerves(10, BadgeType.Shamelet, "fa-leaf", null, "Highest rate of 4:5 lost matches"),
 	SteelRopeNerves(10, BadgeType.Ranking, "fa-wrench", null, "Highest rate of 5:4 won matches"),
 	BattleAxe(11, BadgeType.Silver, "fa-gavel", null, "highest offensive rate"),

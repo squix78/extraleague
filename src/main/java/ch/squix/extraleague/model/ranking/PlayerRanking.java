@@ -62,6 +62,8 @@ public class PlayerRanking implements Serializable {
 
 	private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
 
+	private Integer maxGoalsPerGame = 0;
+
     public String getPlayer() {
         return player;
     }
@@ -369,5 +371,13 @@ public class PlayerRanking implements Serializable {
 	
 	public List<DataTuple<Integer, Double>> getScoreHistogram() {
 		return scoreHistogram;
+	}
+
+	public Integer getMaxGoalsPerGame() {
+		return maxGoalsPerGame;
+	}
+	
+	public void setMaxGoalsPerGame(Integer maxGoalsPerGame) {
+		this.maxGoalsPerGame = maxGoalsPerGame;
 	}
 }

@@ -68,11 +68,12 @@ public class MatchesResource extends ServerResource {
 		ofy().save().entity(match).now();
 		
 		// Update game
-		List<MatchDto> matches = MatchDtoMapper.mapToDtoList(ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list());
-		sortMatches(matches);
+		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list();
+		List<MatchDto> matchDtos = MatchDtoMapper.mapToDtoList(matches);
+		sortMatches(matchDtos);
 		Integer numberOfCompletedMatches = 0;
 		Integer sumOfMaxGoals = 0;
-		for (MatchDto candiateMatch : matches) {
+		for (MatchDto candiateMatch : matchDtos) {
 			Integer maxGoalsPerMatch = Math.max(candiateMatch.getTeamAScore(), candiateMatch.getTeamBScore());
 			sumOfMaxGoals += maxGoalsPerMatch;
 			if (maxGoalsPerMatch >= 5) {
@@ -92,6 +93,8 @@ public class MatchesResource extends ServerResource {
 			Queue queue = QueueFactory.getDefaultQueue();
 			queue.add(TaskOptions.Builder.withMethod(Method.GET).url("/rest/updateRankings"));
 			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
+			NotificationService.sendSummaryEmail(game, matches);
+			
 		} else {
 			GameDto gameDto = GameDtoMapper.mapToDto(game);
 			NotificationService.sendMessage(new UpdateMatchMessage(gameDto, dto));

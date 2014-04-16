@@ -17,11 +17,9 @@ public class RankingServiceResource extends ServerResource {
 	
 	@Get(value = "json")
 	public String execute() throws UnsupportedEncodingException {
-		RankingService.calculateRankings();
-		List<Ranking> rankings = ofy().load().type(Ranking.class).order("-createdDate").limit(10).list();
-		if (rankings.size() >= 2) {
-			Ranking newRanking = rankings.get(0);
-			Ranking oldRanking = rankings.get(1);
+		Ranking oldRanking = ofy().load().type(Ranking.class).order("-createdDate").limit(1).first().now();
+		Ranking newRanking = RankingService.calculateRankings();
+		if (oldRanking != null && newRanking != null) {
 			MutationService.calculateMutations(oldRanking, newRanking);
 		}
 		

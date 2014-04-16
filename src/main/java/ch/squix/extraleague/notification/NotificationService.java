@@ -102,7 +102,7 @@ public class NotificationService {
 
 		try {
 		    Message msg = new MimeMessage(session);
-		    msg.setFrom(new InternetAddress("daniel.eichhorn@netcetera.com", "NCA League Admin"));
+		    msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
 		    for (String recipient : recipients) {
 			    msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 		    }

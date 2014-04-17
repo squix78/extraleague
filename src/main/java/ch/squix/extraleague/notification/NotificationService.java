@@ -66,17 +66,21 @@ public class NotificationService {
 	public static void sendSummaryEmail(Game game, List<Match> matches) {
 		SummaryDto summaryDto = SummaryService.getSummaryDto(game, matches);
 		StringBuilder emailBody = new StringBuilder();
-		emailBody.append("Player\tWon\tGoals\tElo\n");
+		emailBody.append("<table><thead><tr>");
+		emailBody.append("<th>Player</th><th>Won</th><th>Goals</th><th>Elo</th>");
+		emailBody.append("</tr></thead><tbody>");
 		for (PlayerScoreDto playerScore : summaryDto.getPlayerScores()) {
+			emailBody.append("<tr><td>");
 			emailBody.append(playerScore.getPlayer());
-			emailBody.append("\t");
+			emailBody.append("</td><td>");
 			emailBody.append(playerScore.getScore());
-			emailBody.append("\t");
+			emailBody.append("</td><td>");
 			emailBody.append(playerScore.getGoals());
-			emailBody.append("\t");
+			emailBody.append("</td><td>");
 			emailBody.append(playerScore.getEarnedEloPoints());
-			emailBody.append("\n");
+			emailBody.append("</td></tr>");
 		}
+		emailBody.append("</tbody></table>");
 		List<PlayerUser> players = ofy().load().type(PlayerUser.class).filter("player in", game.getPlayers()).list();
 		List<String> recipients = new ArrayList<>();
 		recipients.add("dani.eichhorn@squix.ch");
@@ -101,13 +105,14 @@ public class NotificationService {
 		Session session = Session.getDefaultInstance(props, null);
 
 		try {
-		    Message msg = new MimeMessage(session);
+			MimeMessage msg = new MimeMessage(session);
 		    msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
 		    for (String recipient : recipients) {
 			    msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 		    }
 		    msg.setSubject(subject);
-		    msg.setText(msgBody);
+		    //msg.setText(msgBody);
+		    msg.setText(msgBody, "utf-8", "html");
 		    Transport.send(msg);
 
 		} catch (Exception e) {

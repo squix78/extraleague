@@ -18,6 +18,8 @@ public class PartnerCountTask implements RankingTask {
 
     @Override
     public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
+    	Integer maxPlayedWithCount = 0;
+    	Integer minPlayedWithCount = Integer.MAX_VALUE;
     	for (String player : playerRankingMap.keySet()) {
     		PlayerRanking ranking = playerRankingMap.get(player);
     		Set<String> playedWith = new HashSet<>();
@@ -30,6 +32,9 @@ public class PartnerCountTask implements RankingTask {
     		playedWith.remove(player);
     		ranking.setPlayedWith(playedWith);
     		ranking.setNeverPlayedWith(neverPlayedWith);
+    		maxPlayedWithCount = Math.max(playedWith.size(), maxPlayedWithCount);
+    		minPlayedWithCount = Math.min(playedWith.size(), minPlayedWithCount);
+
     	}
     	List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
     	Collections.sort(rankings, new Comparator<PlayerRanking>() {
@@ -41,9 +46,13 @@ public class PartnerCountTask implements RankingTask {
 				return o1PlayedWith.compareTo(o2PlayedWith);
 			}
 		});
-    	if (rankings.size() > 0) {
-	    	rankings.get(0).getBadges().add(BadgeEnum.LoneWolf.name());
-	    	rankings.get(rankings.size() - 1).getBadges().add(BadgeEnum.GrayEminence.name());
+    	for (PlayerRanking ranking : rankings) {
+    		if (ranking.getPlayedWith().size() == maxPlayedWithCount) {
+    			ranking.getBadges().add(BadgeEnum.GrayEminence.name());
+    		}
+    		if (ranking.getPlayedWith().size() == minPlayedWithCount) {
+    			ranking.getBadges().add(BadgeEnum.LoneWolf.name());
+    		}
     	}
     	
     	

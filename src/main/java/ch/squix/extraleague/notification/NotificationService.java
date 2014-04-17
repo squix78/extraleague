@@ -81,6 +81,8 @@ public class NotificationService {
 			emailBody.append("</td></tr>");
 		}
 		emailBody.append("</tbody></table>");
+		emailBody.append("Note: this is a new feature. If you want to disable email notification, send an email to DEI.");
+		emailBody.append("There is a feature planned to let you administrate this yourself.");
 		List<PlayerUser> players = ofy().load().type(PlayerUser.class).filter("player in", game.getPlayers()).list();
 		List<String> recipients = new ArrayList<>();
 		recipients.add("dani.eichhorn@squix.ch");

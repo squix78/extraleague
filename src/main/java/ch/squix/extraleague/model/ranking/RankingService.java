@@ -14,6 +14,7 @@ import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerCountTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
 import ch.squix.extraleague.model.ranking.tasks.PlayerGoalsTask;
+import ch.squix.extraleague.model.ranking.tasks.ProjectLeaderTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingIndexTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
 import ch.squix.extraleague.model.ranking.tasks.ScoreHistogramTask;
@@ -81,6 +82,7 @@ public class RankingService {
         rankingTasks.add(new EloRankingTask());
         rankingTasks.add(new ScoreHistogramTask());
         rankingTasks.add(new GoalsPerGameTask());
+        rankingTasks.add(new ProjectLeaderTask());
 
 		// From here only work on playerRankingMap
 		rankingTasks.add(new FirstPlayerFilterTask());

@@ -12,8 +12,8 @@ public class PlayerMatchResult {
     private String player = "";
     private String partner = "";
     private String [] opponents = {};
-    private Position position;
-	private Integer playerGoals;
+    private Position position = Position.Omnivore;
+	private Integer playerGoals = null;
 	private Boolean hasPlayerGoals = false;
 	private List<String> inBetweenScores = new ArrayList<>();
     

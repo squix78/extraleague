@@ -47,7 +47,7 @@ public class MutationService {
 		}
 		// Limit the persisted mutations
 		while (newPlayerMutations.size() > 100) {
-			mutations.getPlayerMutations().remove(0);
+			newPlayerMutations.remove(0);
 		}
 		mutations.setPlayerMutations(newPlayerMutations);
 		ofy().save().entities(mutations).now();

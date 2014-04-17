@@ -17,7 +17,7 @@ public class ScoreHistogramTask implements RankingTask {
 
     @Override
     public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
-    	
+    	String [] sortOrder = {"0:5", "1:5", "2:5", "3:5", "4:5", "5:4", "5:3", "5:2", "5:1", "5:0"};
         for (String player : matches.getPlayers()) {
         	PlayerRanking ranking = playerRankingMap.get(player);
         	Map<String, Integer> frequencyMap = new TreeMap<>();
@@ -35,9 +35,13 @@ public class ScoreHistogramTask implements RankingTask {
         	}
         	List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
         	Integer index = 0;
-        	for (Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
-        		Double percentage = 1d * entry.getValue() / resultCounter;
-        		scoreHistogram.add(new DataTuple<Integer, Double>(index, percentage, entry.getKey()));
+        	for (String result : sortOrder) {
+        		Integer count = frequencyMap.get(result);
+        		if (count == null) {
+        			count = 0;
+        		}
+        		Double percentage = 1d * count / resultCounter;
+        		scoreHistogram.add(new DataTuple<Integer, Double>(index, percentage, result));
         		index++;
         	}
         	ranking.setScoreHistogram(scoreHistogram);

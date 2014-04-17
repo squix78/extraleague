@@ -37,4 +37,29 @@ public class MatchUtilTest {
         Assert.assertEquals(playerGoals, result.getPlayerGoals());
     }
     
+    @Test
+    public void testInBetweenResults() {
+//    	dei:cw - fa:rsp
+//
+//    	dei -> 1:0
+//    	cw -> 2:0
+//    	fa -> 2:1
+//    	dei -> 3:1
+//    	rsp -> 3:2
+//    	cw-> 4:2
+//    	dei->5:2
+    	
+        Match match = new Match();
+        match.setTeamA(new String[]{"dei", "cw"});
+        match.setTeamB(new String[]{"fa", "rsp"});
+        match.setTeamAScore(5);
+        match.setTeamBScore(2);
+        match.getScorers().addAll(Arrays.asList("dei", "cw", "fa", "dei", "rsp", "cw", "dei"));
+        
+        List<String> inBetweenScoresActual = MatchUtil.getInBetweenScores("dei", match);
+        List<String> inBetweenScoreExpected = Arrays.asList("1:0", "2:0", "2:1", "3:1", "3:2", "4:2", "5:2");
+        
+        Assert.assertArrayEquals(inBetweenScoreExpected.toArray(), inBetweenScoresActual.toArray());
+    }
+    
 }

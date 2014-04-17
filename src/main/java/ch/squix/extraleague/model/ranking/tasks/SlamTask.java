@@ -1,6 +1,7 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.badge.Badge;
 
 
 public class SlamTask implements RankingTask {
@@ -21,9 +23,10 @@ public class SlamTask implements RankingTask {
                 PlayerRanking ranking = playerRankingMap.get(player);
                 int victoriesInARow = 0;
                 int maxVictoriesInARow = 0;
+                Date endOfSlam = new Date();
                 List<Match> matchesByPlayer = matches.getMatchesByPlayer(player);
                 Collections.sort(matchesByPlayer, matchDateComparator);
-
+                
                 for (Match match : matchesByPlayer) {
                         PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
                         if (playerMatch.hasWon()) {
@@ -31,11 +34,14 @@ public class SlamTask implements RankingTask {
                         } else {
                                 victoriesInARow = 0;
                         }
-                        maxVictoriesInARow = Math.max(victoriesInARow, maxVictoriesInARow);
+                        if (victoriesInARow > maxVictoriesInARow) {
+                        	maxVictoriesInARow = victoriesInARow;
+                        	endOfSlam = match.getEndDate();
+                        }
                 }
 
                 if (maxVictoriesInARow > 4) {
-                        ranking.getBadges().add(maxVictoriesInARow + "xSlam");
+                        ranking.addBadge(new Badge(maxVictoriesInARow + "xSlam", endOfSlam));
                 }
         }
     }

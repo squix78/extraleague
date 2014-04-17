@@ -7,10 +7,7 @@
         <tr>
           <td>Player</td>
           <td>
-            <div>
-              <img class="img img-rounded player" src="{{playerPicture}}" />
-              <div class="caption">{{player}}</div>
-            </div>
+            <div class="pull-left" player="player"></div>
           </td>
         </tr>
         <tr>
@@ -80,6 +77,13 @@
           <td>
           	{{playerResult.statistics.averageGoalsPerMatch | number:2}}
           	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.averageGoalsPerMatch | number:2}})</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Most goals per game:</td>
+          <td>
+          	{{playerResult.statistics.maxGoalsPerGame | number:0}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.maxGoalsPerGame | number}})</span>
           </td>
         </tr>
         <tr>
@@ -191,7 +195,15 @@
     </table>
   </div>
 
+  <h4>Score Distribution</h4>
+  <div histogram height="350" ng-model="playerResult.statistics.scoreHistogram"></div>
+
+  <h4>Badges (Experimental)</h4>
+  <div timeline height="350" ng-model="playerResult.statistics.datedBadges"></div>
+  
+
 </div>
+
 
 <div ng-show="isPlayerLoading">
   <img src="images/ajax-loader.gif" /> Loading player data...
@@ -217,6 +229,8 @@
 <h4>Elo Value</h4>
 <div linechart  height="200" ng-model="timeseries.eloValueSeries"></div>
 </div>
+
+
 
 
 

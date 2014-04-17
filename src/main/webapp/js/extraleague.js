@@ -40,12 +40,16 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'PlayerController',
            templateUrl : 'partials/player.html'
         })
+        .when('/highlights', {
+        	controller : 'HighlightsController',
+        	templateUrl : 'partials/highlights.html'
+        })
         .when('/about', {
            controller : 'AboutController',
            templateUrl : 'partials/about.html'
         })
         .otherwise({
-           redirectTo: '/tables'
+           redirectTo: '/highlights'
         });
     })
     .factory('Ping', ['$resource', function($resource) {
@@ -90,6 +94,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('Badges', ['$resource', function($resource) {
         return $resource('/rest/badges', {}, {get: {cache: true, method: 'GET' } } );
     }])
+    .factory('Mutations', ['$resource', function($resource) {
+    	return $resource('/rest/mutations');
+    }])
     .factory('Match', ['$resource', function($resource) {
       return $resource('/rest/tables/:table/games/:gameId/matches');
     }])
@@ -104,6 +111,35 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
           }
       };
     })
+    .directive('highlightBadges', ['Badges', function(Badges) {
+	  return {    
+	    restrict: 'A',    
+	    require: 'ngModel',
+	    replace: true,   
+	    scope: { ngModel: '=ngModel' },
+	    link: function compile(scope, element, attrs, controller) {         
+	        scope.$watch('ngModel', function(value) { 
+	        	var badgeMap = Badges.get({}, function() {
+	        		
+		        	if (angular.isDefined(value) && typeof value === 'string') {
+			        	angular.forEach(badgeMap, function(badge, name) {
+				            angular.forEach(value.match(badge.jsRegex), function(word) {
+				            	if (angular.isDefined(badge) && angular.isDefined(badge.badgeType)) {
+				            		value = value.replace(word, 
+				            				'<span class="label label-primary ' 
+				            				+ badge.badgeType + '" title="' 
+				            				+ badge.description + '"> <i class="fa ' 
+				            				+ badge.faClass + '"></i> ' + word + '</span>');
+				            	}
+				            });
+				            element.html(value); 
+			        	});
+		        	}
+	        	});
+	          });                
+	    }
+	  };  
+	}])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {
 	    restrict: 'A',
@@ -162,9 +198,8 @@ function TablesController($scope, $rootScope, $resource, $location, $routeParams
 
 }
 
-function TableController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, PlayerService, Players) {
+function TableController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, Players) {
    $scope.isSavingGame = false;
-   $scope.PlayerService = PlayerService;
    $scope.table = $routeParams.table;
    $scope.currentGame = new Games();
    $scope.currentGame.table= $scope.table;
@@ -210,7 +245,7 @@ function TableController($scope, $rootScope, $resource, $routeParams, $location,
   });
 }
 
-function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, PlayedGames, PlayerService, Players) {
+function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, PlayedGames, Players) {
     $scope.isPlayedGamesLoading = true;
     PlayedGames.query(function (response) {  
         $scope.isPlayedGamesLoading = false;   
@@ -224,7 +259,7 @@ function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routePa
     });
 }
 
-function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, PlayerService, Players, NotificationService) {
+function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, Players, NotificationService) {
   $rootScope.backlink = false;
   $scope.updateGames = function() {
       $scope.isGamesLoading = true;
@@ -276,8 +311,7 @@ function OpenGamesController($scope, $rootScope, $resource, $timeout, $routePara
 	    return sum;
   };
 }
-function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, PlayerService, Players, NotificationService) {
-  $scope.PlayerService = PlayerService;
+function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, Players, NotificationService) {
   
   $scope.gameId = $routeParams.gameId;
   $scope.table = $routeParams.table;
@@ -424,9 +458,8 @@ function RankingByTagController($scope, $rootScope, $resource, $routeParams, Ran
 	});
 }
 
-function PlayerController($scope, $rootScope, $routeParams, PlayerService, Player, TimeSeries, Badges) {
+function PlayerController($scope, $rootScope, $routeParams, Player, TimeSeries, Badges) {
   $scope.player = $routeParams.player;
-  $scope.playerPicture = PlayerService.getPlayerPicture($scope.player);
   $scope.isPlayerLoading = true;
 
   $scope.$on('$viewContentLoaded', function() {
@@ -488,7 +521,12 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	
 	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
 }
-
+function HighlightsController($scope, Mutations) {
+	$scope.isMutationsLoading = true;
+	$scope.mutations = Mutations.query({}, function() {
+		$scope.isMutationsLoading = false;
+	})
+}
 function AboutController($scope, $http) {
     var url = 'https://api.github.com/repos/squix78/extraleague/commits';
     $http.get(url).success(function(data) {

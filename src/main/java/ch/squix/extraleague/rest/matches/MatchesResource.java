@@ -3,7 +3,6 @@ package ch.squix.extraleague.rest.matches;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -24,6 +23,11 @@ import ch.squix.extraleague.rest.games.GameDto;
 import ch.squix.extraleague.rest.games.GameDtoMapper;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGameService;
+
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
 
 
 
@@ -64,11 +68,12 @@ public class MatchesResource extends ServerResource {
 		ofy().save().entity(match).now();
 		
 		// Update game
-		List<MatchDto> matches = MatchDtoMapper.mapToDtoList(ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list());
-		sortMatches(matches);
+		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list();
+		List<MatchDto> matchDtos = MatchDtoMapper.mapToDtoList(matches);
+		sortMatches(matchDtos);
 		Integer numberOfCompletedMatches = 0;
 		Integer sumOfMaxGoals = 0;
-		for (MatchDto candiateMatch : matches) {
+		for (MatchDto candiateMatch : matchDtos) {
 			Integer maxGoalsPerMatch = Math.max(candiateMatch.getTeamAScore(), candiateMatch.getTeamBScore());
 			sumOfMaxGoals += maxGoalsPerMatch;
 			if (maxGoalsPerMatch >= 5) {
@@ -85,8 +90,11 @@ public class MatchesResource extends ServerResource {
 		if (numberOfCompletedMatches >=4) {
 			log.info("4 Games reached. Setting game endDate");
 			game.setEndDate(new Date());
-			RankingService.calculateRankings();
+			Queue queue = QueueFactory.getDefaultQueue();
+			queue.add(TaskOptions.Builder.withMethod(Method.GET).url("/rest/updateRankings"));
 			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
+			NotificationService.sendSummaryEmail(game, matches);
+			
 		} else {
 			GameDto gameDto = GameDtoMapper.mapToDto(game);
 			NotificationService.sendMessage(new UpdateMatchMessage(gameDto, dto));

@@ -1,0 +1,41 @@
+<h4>Users</h4>
+
+<input ng-model="searchText"/>
+<button type="submit" class="btn btn-primary" ng-click="addUser()">Add User</button>
+ <div class="table-responsive">
+   <table class="table table-striped">
+     <thead>
+       <tr>
+         <th>#</th>
+         <th>Short-Name</th>
+         <th>Email</th>
+         <th>Image</th>
+         <th>Action</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr ng-repeat="playerUser in playerUsers | orderBy:'player' | filter:searchText">
+         <td>
+         	{{$index + 1}}
+         </td>
+         <td>
+         	<a href="#/users/{{playerUser.player}}">{{playerUser.player}}</a>
+         </td>
+         <td>
+         	{{playerUser.email}}
+         </td>
+         <td>
+         	<div class="playerImage"><img class="player img img-rounded" src="{{playerUser.imageUrl}}"/></div>
+		 </td>
+         <td>
+         	<button ng-hide="isDeleteConfirmed" type="submit" class="btn btn-danger btn-xs" ng-click="isDeleteConfirmed = true">Delete</button>
+         	<button ng-show="isDeleteConfirmed" type="submit" class="btn btn-danger btn-xs" ng-click="deleteUser(playerUser.player)">Really?</button>
+		 </td>
+       </tr>
+     </tbody>
+   </table>
+ </div>
+ <span ng-show="isPlayersLoading"><img src="../images/ajax-loader.gif" /></span>
+<input type="file" id="file" name="file"/>
+<button ng-click="add()">Add</button>
+ <span ng-show="isPlayersSaving"><img src="../images/ajax-loader.gif" /></span>

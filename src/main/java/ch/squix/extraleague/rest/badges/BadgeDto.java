@@ -8,6 +8,7 @@ public class BadgeDto {
 	private Integer index;
 	private String description;
 	private Integer badgeCount;
+	private String jsRegex;
 	
 	/**
 	 * @return the name
@@ -80,6 +81,12 @@ public class BadgeDto {
 	 */
 	public void setBadgeCount(Integer badgeCount) {
 		this.badgeCount = badgeCount;
+	}
+	public String getJsRegex() {
+		return jsRegex;
+	}
+	public void setJsRegex(String jsRegex) {
+		this.jsRegex = jsRegex;
 	}
 	
 

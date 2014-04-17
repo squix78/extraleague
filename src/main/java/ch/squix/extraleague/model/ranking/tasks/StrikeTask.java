@@ -1,5 +1,6 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.badge.Badge;
 import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 
@@ -20,7 +22,9 @@ public class StrikeTask implements RankingTask {
         Map<Long, List<Match>> gameMatches = matches.getGameMatches();
         for (Map.Entry<Long, List<Match>> gameEntry : gameMatches.entrySet()) {
         	Map<String, Integer> winMap = new HashMap<>();
+        	Date endOfStrike = null;
             for (Match match : gameEntry.getValue()) {
+            	endOfStrike = match.getEndDate();
                 List<PlayerMatchResult> playerMatches = MatchUtil.getPlayerMatchResults(match);
                 for (PlayerMatchResult playerMatch : playerMatches) {
                     if (playerMatch.hasWon()) {
@@ -36,7 +40,7 @@ public class StrikeTask implements RankingTask {
             for (Map.Entry<String, Integer> entry : winMap.entrySet()) {
             	if (entry.getValue() == 4) {
             		PlayerRanking playerRanking = playerRankingMap.get(entry.getKey());
-            		playerRanking.getBadges().add(BadgeEnum.Strike.name());
+            		playerRanking.addBadge(new Badge(BadgeEnum.Strike.name(), endOfStrike));
             	}
             }
         }

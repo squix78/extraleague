@@ -6,6 +6,11 @@
     <schedule>every day 00:05</schedule>
   </cron>
   <cron>
+    <url>/rest/cleanRankings</url>
+    <description>clean in-day rankings</description>
+    <schedule>every day 00:15</schedule>
+  </cron>
+  <cron>
     <url>/rest/updateStatistics</url>
     <description>Create history of highscore for trending</description>
     <schedule>every day 00:15</schedule>

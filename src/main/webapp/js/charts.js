@@ -1,6 +1,26 @@
 angular.module('Charts', []).service('D3', function D3() {
 	return window.d3;
 })
+.directive('timeline', function() {
+	return {
+		restrict: 'EA',
+		scope : {
+			'ngModel' : '=',
+			'xAxisFormat' : '&'
+		},
+		link : function(scope, element, attrs) {
+			scope.$watch('ngModel', function(newValue, oldValue) {
+				return scope.render(newValue, oldValue);
+			}, false);
+			
+			scope.render = function(data) {
+				if (!data) return;
+				var options = {};
+				var timeline = new vis.Timeline(element[0], data, options);
+			}
+		}
+	}
+})
 .directive('piechart',
 		function(D3) {
 	return {
@@ -48,8 +68,8 @@ angular.module('Charts', []).service('D3', function D3() {
 				
 				// set the weight based on the calculations above
 				svg.attr('width', width);
-							
-
+				
+				
 				var pieChart = svg.selectAll('.pie')
 				.data([data]).enter()
 				.append('g')
@@ -57,36 +77,36 @@ angular.module('Charts', []).service('D3', function D3() {
 				.attr("transform", function(d) { 
 					return "translate(" + radius + "," + radius + ")"; 
 				});
-
-			    var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
-		        .outerRadius(radius);
-		 
-			    var pie = d3.layout.pie()           //this will create arc data for us given a list of values
-		        .value(function(d) { 
-		        	return d.value; 
-		        });   
-		 
-		        var arcs = pieChart.selectAll("g.slice")     
-		        .data(pie)                         
-		        .enter()                            
-		            .append("svg:g")                
-		                .attr("class", "slice");    
-		 
-		        arcs.append("svg:path")
-		                .attr("fill", function(d, i) { return color(i); } ) 
-		                .attr("d", arc);                                    
-		 
-		        arcs.append("svg:text")                                     
-		                .attr("transform", function(d) {                    
-		                
-			                d.innerRadius = 0;
-			                d.outerRadius = radius;
-			                return "translate(" + arc.centroid(d) + ")";        
-		                })
-		            .attr("text-anchor", "middle")                          
-		            .text(function(d, i) { 
-		            	return data[i].label; 
-		            });  				
+				
+				var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
+				.outerRadius(radius);
+				
+				var pie = d3.layout.pie()           //this will create arc data for us given a list of values
+				.value(function(d) { 
+					return d.value; 
+				});   
+				
+				var arcs = pieChart.selectAll("g.slice")     
+				.data(pie)                         
+				.enter()                            
+				.append("svg:g")                
+				.attr("class", "slice");    
+				
+				arcs.append("svg:path")
+				.attr("fill", function(d, i) { return color(i); } ) 
+				.attr("d", arc);                                    
+				
+				arcs.append("svg:text")                                     
+				.attr("transform", function(d) {                    
+					
+					d.innerRadius = 0;
+					d.outerRadius = radius;
+					return "translate(" + arc.centroid(d) + ")";        
+				})
+				.attr("text-anchor", "middle")                          
+				.text(function(d, i) { 
+					return data[i].label; 
+				});  				
 				
 			};
 		}

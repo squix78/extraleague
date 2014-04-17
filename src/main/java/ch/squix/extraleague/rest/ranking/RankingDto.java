@@ -51,6 +51,7 @@ public class RankingDto {
     private Integer maxGoalsPerGame;
     
     private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
+    private List<BadgeDto> datedBadges = new ArrayList<>();
 
     public String getPlayer() {
         return player;
@@ -362,5 +363,13 @@ public class RankingDto {
 
 	public void setMaxGoalsPerGame(Integer maxGoalsPerGame) {
 		this.maxGoalsPerGame = maxGoalsPerGame;
+	}
+
+	public List<BadgeDto> getDatedBadges() {
+		return datedBadges;
+	}
+
+	public void setDatedBadges(List<BadgeDto> datedBadges) {
+		this.datedBadges = datedBadges;
 	}
 }

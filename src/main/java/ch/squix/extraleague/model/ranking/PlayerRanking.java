@@ -1,16 +1,15 @@
 package ch.squix.extraleague.model.ranking;
 
-import ch.squix.extraleague.model.match.PlayerCombo;
-import ch.squix.extraleague.rest.statistics.DataTuple;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+
+import ch.squix.extraleague.model.match.PlayerCombo;
+import ch.squix.extraleague.model.ranking.badge.Badge;
+import ch.squix.extraleague.rest.statistics.DataTuple;
 
 
 public class PlayerRanking implements Serializable {
@@ -25,6 +24,7 @@ public class PlayerRanking implements Serializable {
     private Integer gamesLost = 0;
     private Integer ranking;
     private Set<String> badges = new TreeSet<>();
+    private List<Badge> datedBadges = new ArrayList<>();
     private Integer goalsMade = 0;
     private Integer goalsGot = 0;
 
@@ -99,11 +99,14 @@ public class PlayerRanking implements Serializable {
         return badges;
     }
 
-    /**
-     * @param badges the badges to set
-     */
-    public void setBadges(Set<String> badges) {
-        this.badges = badges;
+    
+    public void addBadge(Badge badge) {
+    	this.badges.add(badge.getName());
+    	this.datedBadges.add(badge);
+    }
+    
+    public List<Badge> getDatedBadges() {
+    	return datedBadges;
     }
 
 

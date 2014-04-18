@@ -5,6 +5,7 @@ public class BadgeDto {
 	private Long id;
 	private String content;
 	private String start;
+	private String end;
 	
 	public Long getId() {
 		return id;
@@ -23,6 +24,12 @@ public class BadgeDto {
 	}
 	public void setStart(String start) {
 		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
 	}
 
 }

@@ -1,6 +1,6 @@
 package ch.squix.extraleague.rest.badges;
 
-public class BadgeDto {
+public class BadgeEnumDto {
 	
 	private String name;
 	private String badgeType;

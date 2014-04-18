@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import ch.squix.extraleague.model.match.PlayerCombo;
-import ch.squix.extraleague.model.ranking.badge.Badge;
 import ch.squix.extraleague.rest.statistics.DataTuple;
 
 
@@ -24,7 +23,6 @@ public class PlayerRanking implements Serializable {
     private Integer gamesLost = 0;
     private Integer ranking;
     private Set<String> badges = new TreeSet<>();
-    private List<Badge> datedBadges = new ArrayList<>();
     private Integer goalsMade = 0;
     private Integer goalsGot = 0;
 
@@ -97,16 +95,6 @@ public class PlayerRanking implements Serializable {
      */
     public Set<String> getBadges() {
         return badges;
-    }
-
-    
-    public void addBadge(Badge badge) {
-    	this.badges.add(badge.getName());
-    	this.datedBadges.add(badge);
-    }
-    
-    public List<Badge> getDatedBadges() {
-    	return datedBadges;
     }
 
 

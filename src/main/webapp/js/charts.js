@@ -466,7 +466,7 @@ angular.module('Charts', []).service('D3', function D3() {
 			            	  
 			            	  transition.attrTween("d", function(d) {
 			            		  
-			            		  var interpolate = d3.interpolate(d.endAngle, newAngle);
+			            		  var interpolate = d3.interpolate(0, newAngle);
 			            		  
 			            		  return function(t) {
 			            			  d.endAngle = interpolate(t);

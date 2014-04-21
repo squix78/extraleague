@@ -52,6 +52,7 @@ public class GamesResource extends ServerResource {
 		game.setTable(dto.getTable());
 		game.setStartDate(new Date());
 		game.setNumberOfCompletedMatches(0);
+		game.setIsGameFinished(false);
 		ofy().save().entity(game).now();
 		dto.setId(game.getId());
 		

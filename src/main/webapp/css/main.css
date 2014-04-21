@@ -182,3 +182,7 @@ legend {
 .vis.timeline .item {
 	font-size: 10px;
 }
+
+.vis.timeline .item .content, .vis.timeline .item.range .content {
+	overflow: visible;
+}

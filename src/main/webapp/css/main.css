@@ -44,6 +44,11 @@ body {
   margin-bottom: 5px;
   margin-right: 5px;
 }
+.playerImage {
+	max-width: 48px;
+	margin-left: auto;
+	margin-right: auto;
+}
 .redTeam {
 	color: #D9534F;
 }
@@ -142,6 +147,18 @@ legend {
 .text-small {
   font-size: 75%;
 }
+.text-middle {
+	text-align: center;
+	text-anchor: middle; 
+}
+
+.charttip {
+	padding: 3px;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.5);
+	text-anchor: middle;
+	text-align: center;
+}
 
 .axis path,
 .axis line {
@@ -158,4 +175,14 @@ legend {
   fill: none;
   stroke: steelblue;
   stroke-width: 1px;
+}
+.circle {
+  fill: white;
+}
+.vis.timeline .item {
+	font-size: 10px;
+}
+
+.vis.timeline .item .content, .vis.timeline .item.range .content {
+	overflow: visible;
 }

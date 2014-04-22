@@ -3,7 +3,6 @@ package ch.squix.extraleague.rest.matches;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -25,6 +24,11 @@ import ch.squix.extraleague.rest.games.GameDtoMapper;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGameService;
 
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
+
 
 
 public class MatchesResource extends ServerResource {
@@ -42,21 +46,21 @@ public class MatchesResource extends ServerResource {
 	}
 	
 	@Post(value = "json")
-	public MatchDto update(MatchDto dto) {
+	public MatchDto update(MatchDto matchDto) {
 		log.info("Received game to save");
-		Match match = ofy().load().type(Match.class).id(dto.getId()).now();
+		Match match = ofy().load().type(Match.class).id(matchDto.getId()).now();
 		if (match == null) {
 			match = new Match();
 		}
-		match.setGameId(dto.getGameId());
+		match.setGameId(matchDto.getGameId());
 		if (match.getStartDate() == null) {
-			match.setStartDate(dto.getStartDate());
+			match.setStartDate(matchDto.getStartDate());
 		}
-		match.setTeamA(dto.getTeamA());
-		match.setTeamB(dto.getTeamB());
-		match.setTeamAScore(dto.getTeamAScore());
-		match.setTeamBScore(dto.getTeamBScore());
-		match.setScorers(dto.getScorers());
+		match.setTeamA(matchDto.getTeamA());
+		match.setTeamB(matchDto.getTeamB());
+		match.setTeamAScore(matchDto.getTeamAScore());
+		match.setTeamBScore(matchDto.getTeamBScore());
+		match.setScorers(matchDto.getScorers());
 		if (match.getTeamAScore() >= 5 || match.getTeamBScore() >= 5) {
 			log.info("Game is finished");
 			match.setEndDate(new Date());
@@ -64,18 +68,19 @@ public class MatchesResource extends ServerResource {
 		ofy().save().entity(match).now();
 		
 		// Update game
-		List<MatchDto> matches = MatchDtoMapper.mapToDtoList(ofy().load().type(Match.class).filter("gameId = ", dto.getGameId()).list());
-		sortMatches(matches);
+		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", matchDto.getGameId()).list();
+		List<MatchDto> matchDtos = MatchDtoMapper.mapToDtoList(matches);
+		sortMatches(matchDtos);
 		Integer numberOfCompletedMatches = 0;
 		Integer sumOfMaxGoals = 0;
-		for (MatchDto candiateMatch : matches) {
+		for (MatchDto candiateMatch : matchDtos) {
 			Integer maxGoalsPerMatch = Math.max(candiateMatch.getTeamAScore(), candiateMatch.getTeamBScore());
 			sumOfMaxGoals += maxGoalsPerMatch;
 			if (maxGoalsPerMatch >= 5) {
 				numberOfCompletedMatches++;
 			}
 		}
-		Game game = ofy().load().type(Game.class).id(dto.getGameId()).now();
+		Game game = ofy().load().type(Game.class).id(matchDto.getGameId()).now();
 		game.setNumberOfCompletedMatches(numberOfCompletedMatches);
 		game.setGameProgress(sumOfMaxGoals / 20d);
 		// Set the date for the first goal
@@ -85,15 +90,18 @@ public class MatchesResource extends ServerResource {
 		if (numberOfCompletedMatches >=4) {
 			log.info("4 Games reached. Setting game endDate");
 			game.setEndDate(new Date());
-			RankingService.calculateRankings();
+			game.setIsGameFinished(true);
+			Queue queue = QueueFactory.getDefaultQueue();
+			queue.add(TaskOptions.Builder.withMethod(Method.GET).url("/rest/updateRankings"));
 			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
-		} else {
-			GameDto gameDto = GameDtoMapper.mapToDto(game);
-			NotificationService.sendMessage(new UpdateMatchMessage(gameDto, dto));
-		}
+			NotificationService.sendSummaryEmail(game, matches);
+		} 
+		GameDto gameDto = GameDtoMapper.mapToDto(game);
+		NotificationService.sendMessage(new UpdateMatchMessage(gameDto, matchDto));
+		
 		ofy().save().entity(game).now();
-		dto.setId(match.getId());
-		return dto;
+		matchDto.setId(match.getId());
+		return matchDto;
 	}
 
 	private void sortMatches(List<MatchDto> matches) {

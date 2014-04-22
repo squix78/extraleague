@@ -8,13 +8,16 @@ import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
 import ch.squix.extraleague.model.ranking.tasks.DynamicRankingIndexTask;
 import ch.squix.extraleague.model.ranking.tasks.EloRankingTask;
 import ch.squix.extraleague.model.ranking.tasks.FirstPlayerFilterTask;
+import ch.squix.extraleague.model.ranking.tasks.GoalsPerGameTask;
 import ch.squix.extraleague.model.ranking.tasks.IncestuousTask;
 import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerCountTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
 import ch.squix.extraleague.model.ranking.tasks.PlayerGoalsTask;
+import ch.squix.extraleague.model.ranking.tasks.ProjectLeaderTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingIndexTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
+import ch.squix.extraleague.model.ranking.tasks.ScoreHistogramTask;
 import ch.squix.extraleague.model.ranking.tasks.ScoreTask;
 import ch.squix.extraleague.model.ranking.tasks.SkillBadgesTask;
 import ch.squix.extraleague.model.ranking.tasks.SlamTask;
@@ -36,14 +39,15 @@ public class RankingService {
 	
 	private static final Logger log = Logger.getLogger(RankingService.class.getName());
 
-	public static void calculateRankings() {
+	public static Ranking calculateRankings() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -30);
 		List<Match> matchesList = ofy().load().type(Match.class).filter("startDate > ", calendar.getTime()).list();
 		Ranking ranking = calculateRankingFromMatches(matchesList);
 
 		
-		ofy().save().entities(ranking);
+		ofy().save().entities(ranking).now();
+		return ranking;
 
 	}
 
@@ -76,6 +80,9 @@ public class RankingService {
 		rankingTasks.add(new PlayerGoalsTask());
         rankingTasks.add(new DynamicRankingIndexTask());
         rankingTasks.add(new EloRankingTask());
+        rankingTasks.add(new ScoreHistogramTask());
+        rankingTasks.add(new GoalsPerGameTask());
+        rankingTasks.add(new ProjectLeaderTask());
 
 		// From here only work on playerRankingMap
 		rankingTasks.add(new FirstPlayerFilterTask());

@@ -87,4 +87,25 @@ public class EmployeeExporter {
     String[] split = email.split("@");
     return split[0].replace('.', '-');
   }
+  
+  private static JsonHttpResponse getUsers(String username, String password) throws ClientProtocolException, IOException {
+
+	    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE);
+
+	    System.out.println("Employee export started...");
+	    
+	    HttpClientBuilder builder = HttpClientBuilder.create();
+
+	    CredentialsProvider provider = new SystemDefaultCredentialsProvider();
+	    provider.setCredentials(new AuthScope(PLAZA_WS_BASE_URI.getHost(), 443),
+	        new UsernamePasswordCredentials(username, password));
+	    builder.setDefaultCredentialsProvider(provider);
+
+	    CloseableHttpClient httpClient = builder.build();
+
+	    HttpGet httpGet = new HttpGet(PLAZA_WS_BASE_URI + "/employees");
+	    httpGet.setHeader("Accept", "application/json");
+
+	    return httpClient.execute(httpGet, new JsonResponseHandler());
+  }
 }

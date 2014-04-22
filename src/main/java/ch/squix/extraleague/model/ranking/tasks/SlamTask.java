@@ -23,7 +23,7 @@ public class SlamTask implements RankingTask {
                 int maxVictoriesInARow = 0;
                 List<Match> matchesByPlayer = matches.getMatchesByPlayer(player);
                 Collections.sort(matchesByPlayer, matchDateComparator);
-
+                
                 for (Match match : matchesByPlayer) {
                         PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
                         if (playerMatch.hasWon()) {
@@ -31,7 +31,9 @@ public class SlamTask implements RankingTask {
                         } else {
                                 victoriesInARow = 0;
                         }
-                        maxVictoriesInARow = Math.max(victoriesInARow, maxVictoriesInARow);
+                        if (victoriesInARow > maxVictoriesInARow) {
+                        	maxVictoriesInARow = victoriesInARow;
+                        }
                 }
 
                 if (maxVictoriesInARow > 4) {

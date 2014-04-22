@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ch.squix.extraleague.model.ranking.Ranking;
+import ch.squix.extraleague.rest.ranking.BadgeDto;
 import ch.squix.extraleague.rest.statistics.DataTuple;
 
 public class TimeSeriesDto {
@@ -15,6 +15,7 @@ public class TimeSeriesDto {
 	private List<DataTuple<Date, Integer>> eloValueSeries = new ArrayList<>();
 	private List<DataTuple<Date, Double>> goalsPerMatchSeries = new ArrayList<>();
 	private List<DataTuple<Date, Double>> shapeSeries = new ArrayList<>();
+	private List<BadgeDto> datedBadges = new ArrayList<>();
 
 	
 	public List<DataTuple<Date, Double>> getSuccessRateSeries() {
@@ -55,6 +56,12 @@ public class TimeSeriesDto {
 	
 	public void setShapeSeries(List<DataTuple<Date, Double>> shapeSeries) {
 		this.shapeSeries = shapeSeries;
+	}
+	public List<BadgeDto> getDatedBadges() {
+		return datedBadges;
+	}
+	public void setDatedBadges(List<BadgeDto> datedBadges) {
+		this.datedBadges = datedBadges;
 	}
 
 

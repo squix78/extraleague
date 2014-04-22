@@ -1,6 +1,7 @@
 package ch.squix.extraleague.model.match;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ public class MatchUtil {
             if (scorers != null && scorers.size() > 0) {
             	result.setHasPlayerGoals(true);
             	result.setPlayerGoals(Collections.frequency(scorers, player));
+            	result.setInBetweenScores(getInBetweenScores(player, match));
             }
             result.setPosition(teamPositions[index]);
             results.put(player, result);
@@ -56,7 +58,24 @@ public class MatchUtil {
         return results;
 	}
 
-    public static boolean hasTeamAWon(Match match) {
+    public static List<String> getInBetweenScores(String player, Match match) {
+    	List<String> inBetweenResults = new ArrayList<>();
+    	List<String> teamA = Arrays.asList(match.getTeamA());
+    	List<String> teamB = Arrays.asList(match.getTeamB());
+    	Integer playerTeamScore = 0;
+    	Integer opponentTeamScore = 0;
+    	for (String scorer : match.getScorers()) {
+    		if ((teamA.contains(scorer) && teamA.contains(player)) || teamB.contains(scorer) && teamB.contains(player)) {
+    			playerTeamScore++;
+    		} else {
+    			opponentTeamScore++;
+    		}
+    		inBetweenResults.add(playerTeamScore + ":" + opponentTeamScore);
+    	}
+    	return inBetweenResults;
+	}
+
+	public static boolean hasTeamAWon(Match match) {
         return match.getTeamAScore() > match.getTeamBScore();
     }
 

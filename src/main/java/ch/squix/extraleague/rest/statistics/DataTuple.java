@@ -1,6 +1,13 @@
 package ch.squix.extraleague.rest.statistics;
 
-public class DataTuple<K, V> {
+import java.io.Serializable;
+
+public class DataTuple<K, V> implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 93256439218065025L;
 	
 	private K key;
 	private V value;

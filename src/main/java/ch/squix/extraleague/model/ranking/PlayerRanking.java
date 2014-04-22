@@ -1,13 +1,14 @@
 package ch.squix.extraleague.model.ranking;
 
-import ch.squix.extraleague.model.match.PlayerCombo;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import ch.squix.extraleague.model.match.PlayerCombo;
+import ch.squix.extraleague.rest.statistics.DataTuple;
 
 
 public class PlayerRanking implements Serializable {
@@ -57,6 +58,10 @@ public class PlayerRanking implements Serializable {
 	private Integer eloValue;
 	private Integer eloRanking;
 
+	private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
+
+	private Integer maxGoalsPerGame = 0;
+
     public String getPlayer() {
         return player;
     }
@@ -90,13 +95,6 @@ public class PlayerRanking implements Serializable {
      */
     public Set<String> getBadges() {
         return badges;
-    }
-
-    /**
-     * @param badges the badges to set
-     */
-    public void setBadges(Set<String> badges) {
-        this.badges = badges;
     }
 
 
@@ -356,5 +354,21 @@ public class PlayerRanking implements Serializable {
 
 	public void setEloRanking(Integer eloRanking) {
 		this.eloRanking = eloRanking;
+	}
+
+	public void setScoreHistogram(List<DataTuple<Integer, Double>> scoreHistogram) {
+		this.scoreHistogram = scoreHistogram;
+	}
+	
+	public List<DataTuple<Integer, Double>> getScoreHistogram() {
+		return scoreHistogram;
+	}
+
+	public Integer getMaxGoalsPerGame() {
+		return maxGoalsPerGame;
+	}
+	
+	public void setMaxGoalsPerGame(Integer maxGoalsPerGame) {
+		this.maxGoalsPerGame = maxGoalsPerGame;
 	}
 }

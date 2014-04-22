@@ -45,6 +45,8 @@ public class RankingDtoMapper {
                 rankingDto.setEloValue(playerRanking.getEloValue());
                 rankingDto.setAverageGoalsPerMatch(playerRanking.getAverageGoalsPerMatch());
                 rankingDto.setEloRanking(playerRanking.getEloRanking());
+                rankingDto.setScoreHistogram(playerRanking.getScoreHistogram());
+                rankingDto.setMaxGoalsPerGame(playerRanking.getMaxGoalsPerGame());
                 playerRankingList.add(rankingDto);
             }
         }

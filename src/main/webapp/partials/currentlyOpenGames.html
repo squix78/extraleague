@@ -1,4 +1,4 @@
-<h2>Current/ Next Games</h2>
+<h3>Current/ Next Games</h3>
 <div ng-show="games.length == 0 && !isGamesLoading">
   Currently there are no open games...
 </div>
@@ -13,6 +13,7 @@
 			 </div>
 		 </div>
 		 <div style="display: block; margin: auto;" circular-progress ng-model="game.gameProgress" width="50" height="50"></div>
+		 <div ng-show="game.currentMatch">{{game.currentMatch.teamAScore}}:{{game.currentMatch.teamBScore}}</div>
 	  </div>
 	  <div class="label label-info">
 	  		{{game.table}}

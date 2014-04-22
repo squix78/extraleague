@@ -23,21 +23,22 @@ public class BadgesResource extends ServerResource {
 	private static final Logger log = Logger.getLogger(OpenGamesResource.class.getName());
 	
 	@Get(value = "json")
-	public Map<String, BadgeDto> execute() {
+	public Map<String, BadgeEnumDto> execute() {
 		Statistics statistics = ofy().load().type(Statistics.class).first().now();
 		Map<String, Integer> badgeHistogram = new HashMap<>();
 		if (statistics != null) {
 			badgeHistogram = statistics.getBadgeHistogram();
 		}
-		Map<String, BadgeDto> badgeMap = new LinkedHashMap<>();
+		Map<String, BadgeEnumDto> badgeMap = new LinkedHashMap<>();
 		for (BadgeEnum badge : BadgeEnum.values()) {
-			BadgeDto dto = new BadgeDto();
+			BadgeEnumDto dto = new BadgeEnumDto();
 			dto.setName(badge.name());
 			dto.setBadgeType(badge.getBadgeType().name());
 			dto.setFaClass(badge.getFaClass());
 			dto.setIndex(badge.getIndex());
 			dto.setDescription(badge.getDescription());
 			dto.setBadgeCount(badgeHistogram.get(badge.name()));
+			dto.setJsRegex(badge.getJsRegex());
 			badgeMap.put(badge.name(), dto);
 		}
 		return badgeMap;

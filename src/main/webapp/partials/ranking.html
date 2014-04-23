@@ -15,9 +15,10 @@
             <th><a href="" ng-click="predicate = 'goalPlusMinus'; reverse=!reverse">Goals</a></th>
             <th><a href="" ng-click="predicate = 'averageGoalsPerMatch'; reverse=!reverse">GPM</a></th>
             <th><a href="" ng-click="predicate = 'badges.length'; reverse=!reverse">Badges</a></th>
-            <th><a href="" ng-click="predicate = 'dynamicRanking'; reverse=!reverse">%/rwe/elo</a></th>
+            <th><a href="" ng-click="predicate = 'dynamicRanking'; reverse=!reverse">%/rwe/elo/ts</a></th>
             <th><a href="" ng-click="predicate = 'rankingPoints'; reverse=!reverse">rwe points</a></th>
             <th><a href="" ng-click="predicate = 'eloValue'; reverse=!reverse">elo value</a></th>
+            <th><a href="" ng-click="predicate = 'trueSkillRating'; reverse=!reverse">TrueSkill</a></th>
           </tr>
         </thead>
         <tbody>
@@ -31,9 +32,10 @@
             <td>
 				<div badges ng-model="ranking.badges" badge-map="badgeMap"></div>
             </td>
-            <td>{{ranking.ranking}}/{{ranking.dynamicRanking}}/{{ranking.eloRanking}}</td>
+            <td>{{ranking.ranking}}/{{ranking.dynamicRanking}}/{{ranking.eloRanking}}/{{ranking.trueSkillRanking}}</td>
             <td>{{ranking.rankingPoints}}</td>
             <td>{{ranking.eloValue}}</td>
+            <td>{{ranking.trueSkillRating | number:1}}</td>
           </tr>
         </tbody>
 	</table>

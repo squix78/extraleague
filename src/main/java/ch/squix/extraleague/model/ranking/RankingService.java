@@ -24,7 +24,7 @@ import ch.squix.extraleague.model.ranking.tasks.SlamTask;
 import ch.squix.extraleague.model.ranking.tasks.SpecialResultPerGameTask;
 import ch.squix.extraleague.model.ranking.tasks.StrikeTask;
 import ch.squix.extraleague.model.ranking.tasks.TightMatchesTask;
-import ch.squix.extraleague.model.ranking.tasks.TrueSkillsRankingTask;
+import ch.squix.extraleague.model.ranking.tasks.TrueSkillRankingTask;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class RankingService {
 	
@@ -79,7 +81,7 @@ public class RankingService {
 		rankingTasks.add(new PlayerGoalsTask());
         rankingTasks.add(new DynamicRankingIndexTask());
         rankingTasks.add(new EloRankingTask());
-        rankingTasks.add(new TrueSkillsRankingTask());
+        rankingTasks.add(new TrueSkillRankingTask());
         rankingTasks.add(new ScoreHistogramTask());
         rankingTasks.add(new GoalsPerGameTask());
         rankingTasks.add(new ProjectLeaderTask());

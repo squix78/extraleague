@@ -99,7 +99,7 @@ public class RankingIndexTask implements RankingTask {
 
             @Override
             public int compare(PlayerRanking o1, PlayerRanking o2) {
-                int result = o2.getTrueSkillsRating().compareTo(o1.getTrueSkillsRating());
+                int result = o2.getTrueSkillRating().compareTo(o1.getTrueSkillRating());
                 if (result == 0) {
                     return o2.getGoalRate().compareTo(o1.getGoalRate());
                 }
@@ -109,7 +109,7 @@ public class RankingIndexTask implements RankingTask {
         });
         int index = 1;
         for (PlayerRanking ranking : rankings) {
-            ranking.setTrueSkillsRanking(index);
+            ranking.setTrueSkillRanking(index);
             index++;
         }
     }

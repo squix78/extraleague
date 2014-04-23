@@ -58,10 +58,10 @@ public class PlayerRanking implements Serializable {
 	private Integer eloValue;
 	private Integer eloRanking;
 
-  private Double trueSkillsMean;
-  private Double trueSkillsSigma;
-  private Double trueSkillsRating;
-  private Integer trueSkillsRanking;
+  private Double trueSkillMean;
+  private Double trueSkillSigma;
+  private Double trueSkillRating;
+  private Integer trueSkillRanking;
 
 	private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
 
@@ -361,36 +361,36 @@ public class PlayerRanking implements Serializable {
 		this.eloRanking = eloRanking;
 	}
 	
-  public Double getTrueSkillsMean() {
-    return trueSkillsMean;
+  public Double getTrueSkillMean() {
+    return trueSkillMean;
   }
   
-  public void setTrueSkillsMean(Double trueSkillsMean) {
-    this.trueSkillsMean = trueSkillsMean;
+  public void setTrueSkillMean(Double trueSkillMean) {
+    this.trueSkillMean = trueSkillMean;
   }
   
-  public Double getTrueSkillsSigma() {
-    return trueSkillsSigma;
+  public Double getTrueSkillSigma() {
+    return trueSkillSigma;
   }
   
-  public void setTrueSkillsSigma(Double trueSkillsSigma) {
-    this.trueSkillsSigma = trueSkillsSigma;
+  public void setTrueSkillSigma(Double trueSkillSigma) {
+    this.trueSkillSigma = trueSkillSigma;
   }
   
-  public Double getTrueSkillsRating() {
-    return trueSkillsRating;
+  public Double getTrueSkillRating() {
+    return trueSkillRating;
   }
   
-  public void setTrueSkillsRating(Double trueSkillsRating) {
-    this.trueSkillsRating = trueSkillsRating;
+  public void setTrueSkillRating(Double trueSkillRating) {
+    this.trueSkillRating = trueSkillRating;
   }
 
-  public Integer getTrueSkillsRanking() {
-    return trueSkillsRanking;
+  public Integer getTrueSkillRanking() {
+    return trueSkillRanking;
   }
   
-  public void setTrueSkillsRanking(Integer trueSkillsRanking) {
-    this.trueSkillsRanking = trueSkillsRanking;
+  public void setTrueSkillRanking(Integer trueSkillRanking) {
+    this.trueSkillRanking = trueSkillRanking;
   }
 
   public void setScoreHistogram(List<DataTuple<Integer, Double>> scoreHistogram) {

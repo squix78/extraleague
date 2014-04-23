@@ -58,6 +58,11 @@ public class PlayerRanking implements Serializable {
 	private Integer eloValue;
 	private Integer eloRanking;
 
+  private Double trueSkillsMean;
+  private Double trueSkillsSigma;
+  private Double trueSkillsRating;
+  private Integer trueSkillsRanking;
+
 	private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
 
 	private Integer maxGoalsPerGame = 0;
@@ -355,8 +360,40 @@ public class PlayerRanking implements Serializable {
 	public void setEloRanking(Integer eloRanking) {
 		this.eloRanking = eloRanking;
 	}
+	
+  public Double getTrueSkillsMean() {
+    return trueSkillsMean;
+  }
+  
+  public void setTrueSkillsMean(Double trueSkillsMean) {
+    this.trueSkillsMean = trueSkillsMean;
+  }
+  
+  public Double getTrueSkillsSigma() {
+    return trueSkillsSigma;
+  }
+  
+  public void setTrueSkillsSigma(Double trueSkillsSigma) {
+    this.trueSkillsSigma = trueSkillsSigma;
+  }
+  
+  public Double getTrueSkillsRating() {
+    return trueSkillsRating;
+  }
+  
+  public void setTrueSkillsRating(Double trueSkillsRating) {
+    this.trueSkillsRating = trueSkillsRating;
+  }
 
-	public void setScoreHistogram(List<DataTuple<Integer, Double>> scoreHistogram) {
+  public Integer getTrueSkillsRanking() {
+    return trueSkillsRanking;
+  }
+  
+  public void setTrueSkillsRanking(Integer trueSkillsRanking) {
+    this.trueSkillsRanking = trueSkillsRanking;
+  }
+
+  public void setScoreHistogram(List<DataTuple<Integer, Double>> scoreHistogram) {
 		this.scoreHistogram = scoreHistogram;
 	}
 	

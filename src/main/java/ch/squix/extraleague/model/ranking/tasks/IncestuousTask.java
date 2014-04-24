@@ -26,7 +26,7 @@ public class IncestuousTask implements RankingTask {
     			playerSet.addAll(match.getPlayers());
     		}
     		if (playerSet.size() == 4) {
-    			ranking.addBadge(new Badge(BadgeEnum.Incestuous.name(), lastEightMatches.get(0).getStartDate()));
+    			ranking.getBadges().add(BadgeEnum.Incestuous.name());
     		}
     	}
     }

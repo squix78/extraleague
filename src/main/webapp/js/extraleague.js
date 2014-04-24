@@ -259,7 +259,7 @@ function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routePa
     });
 }
 
-function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, Players, NotificationService) {
+function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, Match, Players, NotificationService) {
   $rootScope.backlink = false;
   $scope.updateGames = function() {
       $scope.isGamesLoading = true;
@@ -284,6 +284,8 @@ function OpenGamesController($scope, $rootScope, $resource, $timeout, $routePara
 	    console.log("Received change in game from server");
 	    $scope.$apply(function() {
 	    	var game = new Game(message.game);
+	    	var match = new Match(message.match);
+	    	game.currentMatch = match;
 	    	for (var i=0; i<$scope.games.length; i++) {
 	    		if ($scope.games[i].id === game.id) {
 	    			//$scope.games[i].gameProgress = game.gameProgress;

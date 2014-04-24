@@ -30,6 +30,8 @@ public class Game {
 
 	private Double gameProgress;
 	
+	private Boolean isGameFinished;
+	
 	public Long getId() {
 		return id;
 	}
@@ -117,6 +119,16 @@ public class Game {
 	 */
 	public void setFirstGoalDate(Date firstGoalDate) {
 		this.firstGoalDate = firstGoalDate;
+	}
+
+
+	public Boolean isGameFinished() {
+		return isGameFinished;
+	}
+
+
+	public void setIsGameFinished(Boolean isGameFinished) {
+		this.isGameFinished = isGameFinished;
 	}
 	
 	

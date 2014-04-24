@@ -22,9 +22,7 @@ public class StrikeTask implements RankingTask {
         Map<Long, List<Match>> gameMatches = matches.getGameMatches();
         for (Map.Entry<Long, List<Match>> gameEntry : gameMatches.entrySet()) {
         	Map<String, Integer> winMap = new HashMap<>();
-        	Date endOfStrike = null;
             for (Match match : gameEntry.getValue()) {
-            	endOfStrike = match.getEndDate();
                 List<PlayerMatchResult> playerMatches = MatchUtil.getPlayerMatchResults(match);
                 for (PlayerMatchResult playerMatch : playerMatches) {
                     if (playerMatch.hasWon()) {
@@ -40,7 +38,7 @@ public class StrikeTask implements RankingTask {
             for (Map.Entry<String, Integer> entry : winMap.entrySet()) {
             	if (entry.getValue() == 4) {
             		PlayerRanking playerRanking = playerRankingMap.get(entry.getKey());
-            		playerRanking.addBadge(new Badge(BadgeEnum.Strike.name(), endOfStrike));
+            		playerRanking.getBadges().add(BadgeEnum.Strike.name());
             	}
             }
         }

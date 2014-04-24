@@ -24,6 +24,7 @@ public class RankingIndexTask implements RankingTask {
         setSuccessRateRankingIndex(playerRankingMap);
         setDynamicRankingIndex(playerRankingMap);
         setEloRankingIndex(playerRankingMap);
+        setTrueSkillsRankingIndex(playerRankingMap);
 		calculateBadges(playerRankingMap);
     }
 
@@ -88,6 +89,27 @@ public class RankingIndexTask implements RankingTask {
         int index = 1;
         for (PlayerRanking ranking : rankings) {
             ranking.setEloRanking(index);
+            index++;
+        }
+    }
+    
+    private void setTrueSkillsRankingIndex(Map<String, PlayerRanking> playerRankingMap) {
+        List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
+        Collections.sort(rankings, new Comparator<PlayerRanking>() {
+
+            @Override
+            public int compare(PlayerRanking o1, PlayerRanking o2) {
+                int result = o2.getTrueSkillRating().compareTo(o1.getTrueSkillRating());
+                if (result == 0) {
+                    return o2.getGoalRate().compareTo(o1.getGoalRate());
+                }
+                return result;
+            }
+
+        });
+        int index = 1;
+        for (PlayerRanking ranking : rankings) {
+            ranking.setTrueSkillRanking(index);
             index++;
         }
     }

@@ -1,9 +1,7 @@
 package ch.squix.extraleague.rest.ranking;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import ch.squix.extraleague.rest.statistics.DataTuple;
@@ -47,11 +45,13 @@ public class RankingDto {
     private Integer eloValue;
     private Integer eloRanking;
     
+    private Double trueSkillRating;
+    private Integer trueSkillRanking;
+    
     private Double averageGoalsPerMatch;
     private Integer maxGoalsPerGame;
     
     private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
-    private List<BadgeDto> datedBadges = new ArrayList<>();
 
     public String getPlayer() {
         return player;
@@ -343,6 +343,22 @@ public class RankingDto {
 		this.eloRanking = eloRanking;
 	}
 
+	public Double getTrueSkillRating() {
+		return trueSkillRating;
+	}
+
+	public void setTrueSkillRating(Double trueSkillRating) {
+		this.trueSkillRating = trueSkillRating;
+	}
+
+	public Integer getTrueSkillRanking() {
+		return trueSkillRanking;
+	}
+
+	public void setTrueSkillRanking(Integer trueSkillRanking) {
+		this.trueSkillRanking = trueSkillRanking;
+	}
+
 	/**
 	 * @return the scoreHistogram
 	 */
@@ -365,11 +381,4 @@ public class RankingDto {
 		this.maxGoalsPerGame = maxGoalsPerGame;
 	}
 
-	public List<BadgeDto> getDatedBadges() {
-		return datedBadges;
-	}
-
-	public void setDatedBadges(List<BadgeDto> datedBadges) {
-		this.datedBadges = datedBadges;
-	}
 }

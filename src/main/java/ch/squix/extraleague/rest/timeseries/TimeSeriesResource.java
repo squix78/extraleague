@@ -4,14 +4,21 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
+import ch.squix.extraleague.rest.ranking.BadgeDto;
 import ch.squix.extraleague.rest.statistics.DataTuple;
 
 
@@ -26,6 +33,10 @@ public class TimeSeriesResource extends ServerResource {
 		NumberFormat percentageFormatter = NumberFormat.getPercentInstance();
 		NumberFormat numberFormatter =  NumberFormat.getInstance();
 		numberFormatter.setMaximumFractionDigits(2);
+		List<BadgeDto> datedBadges = new ArrayList<>();
+		Map<String, BadgeDto> badgeMap = new HashMap<>();
+		Set<String> previousBadges = new HashSet<>();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		for (Ranking ranking : rankings) {
 			Date createdDate = ranking.getCreatedDate();
 			for (PlayerRanking playerRanking : ranking.getPlayerRankings()) {
@@ -68,10 +79,37 @@ public class TimeSeriesResource extends ServerResource {
 						DataTuple<Date, Double> shapeTuple = new DataTuple<>(createdDate, shape, percentageFormatter.format(shape));
 						timeSeriesDto.getShapeSeries().add(shapeTuple);
 					}
+					
+					Set<String> newBadges = new HashSet<>();
+					newBadges.addAll(playerRanking.getBadges());
+					newBadges.removeAll(previousBadges);
+					Set<String> lostBadges = new HashSet<>();
+					lostBadges.addAll(previousBadges);
+					lostBadges.removeAll(playerRanking.getBadges());
+					for (String badge : newBadges) {
+						BadgeDto badgeDto = new BadgeDto();
+						badgeDto.setContent(badge);
+						badgeDto.setId(Long.valueOf(datedBadges.size()));
+						badgeDto.setStart(format.format(ranking.getCreatedDate()));
+						datedBadges.add(badgeDto);
+						badgeMap.put(badge, badgeDto);
+					}
+					for (String badge : lostBadges) {
+						BadgeDto badgeDto = badgeMap.remove(badge);
+						if (badgeDto != null) {
+							badgeDto.setEnd(format.format(ranking.getCreatedDate()));
+							
+						}
+					}
+					previousBadges = playerRanking.getBadges();
 				}
 			}
 		}
-		
+		for (String badge : badgeMap.keySet()) {
+			BadgeDto badgeDto = badgeMap.get(badge);
+			badgeDto.setEnd(format.format(new Date()));
+		}
+		timeSeriesDto.setDatedBadges(datedBadges);
 		return timeSeriesDto;
 	}
 

@@ -15,6 +15,8 @@ public class GameDto {
 	
 	private Double gameProgress;
 	
+	private Boolean isGameFinished;
+	
 	private Long estimatedRemainingMilis;
 	
 	private Integer numberOfCompletedGames;
@@ -108,6 +110,14 @@ public class GameDto {
 
 	public Date getFirstGoalDate() {
 		return firstGoalDate;
+	}
+
+	public Boolean isGameFinished() {
+		return isGameFinished;
+	}
+
+	public void setIsGameFinished(Boolean isGameFinished) {
+		this.isGameFinished = isGameFinished;
 	}
 
 	

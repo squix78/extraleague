@@ -21,6 +21,10 @@
 			<name>Public online Restlet repository</name>
 			<url>http://maven.restlet.org</url>
 		</repository>
+    <repository>
+      <id>projectlombok.org</id>
+      <url>http://projectlombok.org/mavenrepo</url>
+    </repository>
 	</repositories>
 
     <dependencies>
@@ -153,6 +157,11 @@
       <artifactId>appengine-api-stubs</artifactId>
       <version>${appengine.target.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.12.6</version>
     </dependency>
     </dependencies>
 

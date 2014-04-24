@@ -1,9 +1,7 @@
 package ch.squix.extraleague.rest.ranking;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import ch.squix.extraleague.rest.statistics.DataTuple;
@@ -46,6 +44,9 @@ public class RankingDto {
     private Integer dynamicRanking;
     private Integer eloValue;
     private Integer eloRanking;
+    
+    private Double trueSkillRating;
+    private Integer trueSkillRanking;
     
     private Double averageGoalsPerMatch;
     private Integer maxGoalsPerGame;
@@ -340,6 +341,22 @@ public class RankingDto {
 
 	public void setEloRanking(Integer eloRanking) {
 		this.eloRanking = eloRanking;
+	}
+
+	public Double getTrueSkillRating() {
+		return trueSkillRating;
+	}
+
+	public void setTrueSkillRating(Double trueSkillRating) {
+		this.trueSkillRating = trueSkillRating;
+	}
+
+	public Integer getTrueSkillRanking() {
+		return trueSkillRanking;
+	}
+
+	public void setTrueSkillRanking(Integer trueSkillRanking) {
+		this.trueSkillRanking = trueSkillRanking;
 	}
 
 	/**

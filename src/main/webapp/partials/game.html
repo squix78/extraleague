@@ -1,10 +1,26 @@
  <div class="starter-template text-center">
-   <h5><small>Match {{matchIndex + 1}}/4</small></h5>
- </div>
 
+ </div>
+<BR/>
+<div class="row text-center">
+	<div class="col-xs-4">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block text-small" ng-click="moveMatchIndexBy(-1)">
+			<span class="glyphicon glyphicon-chevron-left"></span> Previous 
+		</button>
+	</div>
+	<div class="col-xs-4">
+   		<h5><small>Match {{matchIndex + 1}}/4</small></h5>
+	</div>
+	<div class="col-xs-4">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block text-small" ng-click="moveMatchIndexBy(1)">
+			Next <span class="glyphicon glyphicon-chevron-right"></span> 
+		</button>
+	</div>
+</div>
+<BR/>
 <div class="row">
 	<div class="col-xs-12">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block" ng-click="decreaseScore()">
+		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block text-small" ng-click="decreaseScore()">
 			<span class="glyphicon glyphicon-minus-sign"></span>
 		</button>
 	</div>
@@ -28,28 +44,34 @@
 		</button>
 	</div>
 </div>
-<span class="text-small text-center">
-	<small class="blueTeam pull-left">Team Blue: {{(match.winProbabilityTeamA) * 100 | number:2}}%, 
-		{{match.winPointsTeamA}} win points
-	</small>		
-</span>
-<div class="row text-center">
-	
-	<h1>
-		<span class="redTeam">
-			{{match.teamBScore}}
-		</span> :
-		<span class="blueTeam">
-			{{match.teamAScore}}
-		</span>
-	</h1>
+<BR/>
+<div class="row text-center text-vcenter">
+	<div class="col-xs-4 redTeam text-small">
+		<div>
+				Red: {{(1 - match.winProbabilityTeamA) * 100 | number:2}}% <BR/>
+		</div>
+		<div>
+				{{match.winPointsTeamB}} win points
+		</div>
+	</div>	
+	<div class="col-xs-4  text-center text-large">
+			<span class="redTeam">
+				{{match.teamBScore}}
+			</span> :
+			<span class="blueTeam">
+				{{match.teamAScore}}
+			</span>
+	</div>	
+	<div class="col-xs-4 blueTeam text-small">
+			<div>
+				Blue: {{(match.winProbabilityTeamA) * 100 | number:2}}% <BR/>
+			</div>
+			<div>
+				{{match.winPointsTeamA}} win points	
+			</div>
+	</div>	
 </div>	
-<span class="text-small">
-	<small class="redTeam pull-right">
-		Team Red: {{(1 - match.winProbabilityTeamA) * 100 | number:2}}%, 
-		{{match.winPointsTeamB}} win points
-	</small>
-</span>
+</BR>
 <div class="row text-center">
 	<div class="col-xs-12"></div>
 		<div class="col-xs-6">
@@ -66,20 +88,7 @@
 	</div>
 </div>
 <BR/>
-<span ng-show="matchIsSaving"><img src="images/ajax-loader.gif" /></span>
-<div class="row text-center">
-		<div class="col-xs-6">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block text-small" ng-click="moveMatchIndexBy(-1)">
-			<span class="glyphicon glyphicon-chevron-left"></span> Previous Match
-		</button>
-	</div>
-	<div class="col-xs-6">
-		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block text-small" ng-click="moveMatchIndexBy(1)">
-			Next Match <span class="glyphicon glyphicon-chevron-right"></span> 
-		</button>
-	</div>
-</div>
-<BR/>
+
 <div class="row text-center" >
 	<div class="col-xs-12">
 		<button class="btn btn-lg btn-primary btn-block text-small" ng-disabled="finishedMatches() < 4" ng-click="finishGame()">
@@ -88,4 +97,4 @@
 	</div>
 
 </div>
-<BR/>
+<span ng-show="matchIsSaving"><img src="images/ajax-loader.gif" /> Saving match</span>

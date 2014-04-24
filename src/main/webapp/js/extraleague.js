@@ -395,6 +395,14 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
     $scope.match = $scope.matches[$scope.matchIndex];
     $scope.match.startDate = new Date();
   }
+  
+  $scope.moveMatchIndexBy = function(increment) {
+	  var newMatchIndex = $scope.matchIndex + increment;
+	  if (newMatchIndex >=0 && newMatchIndex <=3) {
+		  $scope.matchIndex = newMatchIndex;
+		  $scope.updateCurrentMatch();
+	  }
+  }
 
 }
 

@@ -38,7 +38,7 @@
 	<h1>
 		<span class="redTeam">
 			{{match.teamBScore}}
-		</span> <img src="images/table.jpg"/> 
+		</span> :
 		<span class="blueTeam">
 			{{match.teamAScore}}
 		</span>
@@ -68,7 +68,6 @@
 <BR/>
 <span ng-show="matchIsSaving"><img src="images/ajax-loader.gif" /></span>
 <div class="row text-center">
-	<div class="col-xs-12"></div>
 		<div class="col-xs-6">
 		<button ng-disabled="matchIsSaving" class="btn btn-lg btn-default btn-block text-small" ng-click="moveMatchIndexBy(-1)">
 			<span class="glyphicon glyphicon-chevron-left"></span> Previous Match
@@ -79,5 +78,14 @@
 			Next Match <span class="glyphicon glyphicon-chevron-right"></span> 
 		</button>
 	</div>
+</div>
+<BR/>
+<div class="row text-center" >
+	<div class="col-xs-12">
+		<button class="btn btn-lg btn-primary btn-block text-small" ng-disabled="finishedMatches() < 4" ng-click="finishGame()">
+			Finish Game ({{ finishedMatches() }} matches finished)
+		</button>
+	</div>
+
 </div>
 <BR/>

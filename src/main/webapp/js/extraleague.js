@@ -325,24 +325,22 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   });
 
   $scope.game = Game.get({table: $scope.table, gameId: $scope.gameId}, function() {
-    if ($scope.game.numberOfCompletedGames >= 4) {
-      $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");
-    } else {
-      $scope.matchIndex = $scope.game.numberOfCompletedGames;
+      $scope.matchIndex = Math.min($scope.game.numberOfCompletedGames, 3);
       if (!angular.isDefined($scope.matchIndex)) {
         $scope.matchIndex = 0;
       }
       $scope.matches = Match.query({table: $scope.table, gameId: $scope.gameId}, function() {
         $scope.updateCurrentMatch();
       });
-    }
     
   });
   $scope.increaseScoreTeamA = function(player) {
 	console.log(player);
-    $scope.match.teamAScore++;
-    $scope.match.scorers.push(player);
-    $scope.saveMatch();
+	if ($scope.match.teamAScore < 5) {
+	    $scope.match.teamAScore++;
+	    $scope.match.scorers.push(player);
+	    $scope.saveMatch();
+	}
   };
   $scope.decreaseScore = function() {
     if ($scope.match.scorers.length > 0) {
@@ -369,27 +367,36 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
       if ($scope.matchIndex < 3) {  
         $scope.matchIndex++;
         $scope.updateCurrentMatch();
-      } else {
-        $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");        
-      }
+      } 
     } 
   };
+  $scope.finishedMatches = function() {
+	  var finishedMatches = 0;
+	  angular.forEach($scope.matches, function(match, key) {
+		  var maxScore = Math.max(match.teamAScore, match.teamBScore);
+		  if (maxScore == 5) {
+			  finishedMatches++;
+		  }
+	  });
+	  return finishedMatches;
+  };
+  $scope.finishGame = function () {
+	  $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");  
+  };
+  
+//  else {
+//      $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");        
+//    }
   
   $scope.increaseScoreTeamB = function(player) {
 	console.log(player);
-    $scope.match.teamBScore++;
-    $scope.match.scorers.push(player);    	
-    $scope.saveMatch();
-  }
-  $scope.decreaseScoreTeamB = function() {
-    if ($scope.match.teamBScore > 0) {
-      $scope.match.teamBScore--;
-      if ($scope.match.teamB.indexOf(player) > -1) {
-    	  $scope.match.scorers.pop();
-      }
-      $scope.saveMatch();
-    }
-  }
+	if ($scope.match.teamBScore < 5) {
+	    $scope.match.teamBScore++;
+	    $scope.match.scorers.push(player);    	
+	    $scope.saveMatch();
+	}
+  };
+
   console.log("Arrived in GameController: " + $scope.gameId);
   $scope.updateCurrentMatch = function() {
     $scope.match = $scope.matches[$scope.matchIndex];

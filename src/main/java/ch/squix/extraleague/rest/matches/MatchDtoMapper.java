@@ -15,6 +15,7 @@ public class MatchDtoMapper {
 		dto.setTeamB(match.getTeamB());
 		dto.setTeamAScore(match.getTeamAScore());
 		dto.setTeamBScore(match.getTeamBScore());
+		dto.setScorers(match.getScorers());
 		dto.setStartDate(match.getStartDate());
 		dto.setEndDate(match.getEndDate());
 		dto.setMatchIndex(match.getMatchIndex());

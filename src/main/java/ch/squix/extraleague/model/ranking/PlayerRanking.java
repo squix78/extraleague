@@ -53,19 +53,19 @@ public class PlayerRanking implements Serializable {
     private Integer rankingPoints = 0;
     private Integer dynamicRanking;
 
-	private Double averageGoalsPerMatch;
-	
-	private Integer eloValue;
-	private Integer eloRanking;
+    private Double averageGoalsPerMatch;
 
-  private Double trueSkillMean;
-  private Double trueSkillSigma;
-  private Double trueSkillRating;
-  private Integer trueSkillRanking;
+    private Integer eloValue;
+    private Integer eloRanking;
 
-	private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
+    private Double trueSkillMean;
+    private Double trueSkillSigma;
+    private Double trueSkillRating;
+    private Integer trueSkillRanking;
 
-	private Integer maxGoalsPerGame = 0;
+    private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
+
+    private Integer maxGoalsPerGame = 0;
 
     public String getPlayer() {
         return player;
@@ -337,75 +337,75 @@ public class PlayerRanking implements Serializable {
         return dynamicRanking;
     }
 
-	public void setAverageGoalsPerMatch(Double averageGoalsPerMatch) {
-		this.averageGoalsPerMatch = averageGoalsPerMatch;
-	}
-	
-	public Double getAverageGoalsPerMatch() {
-		return averageGoalsPerMatch;
-	}
+    public void setAverageGoalsPerMatch(Double averageGoalsPerMatch) {
+        this.averageGoalsPerMatch = averageGoalsPerMatch;
+    }
 
-	public Integer getEloValue() {
-		return eloValue;
-	}
+    public Double getAverageGoalsPerMatch() {
+        return averageGoalsPerMatch;
+    }
 
-	public void setEloValue(Integer eloValue) {
-		this.eloValue = eloValue;
-	}
+    public Integer getEloValue() {
+        return eloValue;
+    }
 
-	public Integer getEloRanking() {
-		return eloRanking;
-	}
+    public void setEloValue(Integer eloValue) {
+        this.eloValue = eloValue;
+    }
 
-	public void setEloRanking(Integer eloRanking) {
-		this.eloRanking = eloRanking;
-	}
-	
-  public Double getTrueSkillMean() {
-    return trueSkillMean;
-  }
-  
-  public void setTrueSkillMean(Double trueSkillMean) {
-    this.trueSkillMean = trueSkillMean;
-  }
-  
-  public Double getTrueSkillSigma() {
-    return trueSkillSigma;
-  }
-  
-  public void setTrueSkillSigma(Double trueSkillSigma) {
-    this.trueSkillSigma = trueSkillSigma;
-  }
-  
-  public Double getTrueSkillRating() {
-    return trueSkillRating;
-  }
-  
-  public void setTrueSkillRating(Double trueSkillRating) {
-    this.trueSkillRating = trueSkillRating;
-  }
+    public Integer getEloRanking() {
+        return eloRanking;
+    }
 
-  public Integer getTrueSkillRanking() {
-    return trueSkillRanking;
-  }
-  
-  public void setTrueSkillRanking(Integer trueSkillRanking) {
-    this.trueSkillRanking = trueSkillRanking;
-  }
+    public void setEloRanking(Integer eloRanking) {
+        this.eloRanking = eloRanking;
+    }
 
-  public void setScoreHistogram(List<DataTuple<Integer, Double>> scoreHistogram) {
-		this.scoreHistogram = scoreHistogram;
-	}
-	
-	public List<DataTuple<Integer, Double>> getScoreHistogram() {
-		return scoreHistogram;
-	}
+    public Double getTrueSkillMean() {
+        return trueSkillMean;
+    }
 
-	public Integer getMaxGoalsPerGame() {
-		return maxGoalsPerGame;
-	}
-	
-	public void setMaxGoalsPerGame(Integer maxGoalsPerGame) {
-		this.maxGoalsPerGame = maxGoalsPerGame;
-	}
+    public void setTrueSkillMean(Double trueSkillMean) {
+        this.trueSkillMean = trueSkillMean;
+    }
+
+    public Double getTrueSkillSigma() {
+        return trueSkillSigma;
+    }
+
+    public void setTrueSkillSigma(Double trueSkillSigma) {
+        this.trueSkillSigma = trueSkillSigma;
+    }
+
+    public Double getTrueSkillRating() {
+        return trueSkillRating;
+    }
+
+    public void setTrueSkillRating(Double trueSkillRating) {
+        this.trueSkillRating = trueSkillRating;
+    }
+
+    public Integer getTrueSkillRanking() {
+        return trueSkillRanking;
+    }
+
+    public void setTrueSkillRanking(Integer trueSkillRanking) {
+        this.trueSkillRanking = trueSkillRanking;
+    }
+
+    public void setScoreHistogram(List<DataTuple<Integer, Double>> scoreHistogram) {
+        this.scoreHistogram = scoreHistogram;
+    }
+
+    public List<DataTuple<Integer, Double>> getScoreHistogram() {
+        return scoreHistogram;
+    }
+
+    public Integer getMaxGoalsPerGame() {
+        return maxGoalsPerGame;
+    }
+
+    public void setMaxGoalsPerGame(Integer maxGoalsPerGame) {
+        this.maxGoalsPerGame = maxGoalsPerGame;
+    }
 }

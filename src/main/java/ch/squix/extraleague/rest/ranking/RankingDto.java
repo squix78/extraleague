@@ -47,6 +47,8 @@ public class RankingDto {
     
     private Double trueSkillRating;
     private Integer trueSkillRanking;
+    private Double trueSkillMean;
+    private Double trueSkillSigma;
     
     private Double averageGoalsPerMatch;
     private Integer maxGoalsPerGame;
@@ -380,5 +382,21 @@ public class RankingDto {
 	public void setMaxGoalsPerGame(Integer maxGoalsPerGame) {
 		this.maxGoalsPerGame = maxGoalsPerGame;
 	}
+
+    public Double getTrueSkillMean() {
+        return trueSkillMean;
+    }
+
+    public void setTrueSkillMean(Double trueSkillMean) {
+        this.trueSkillMean = trueSkillMean;
+    }
+
+    public Double getTrueSkillSigma() {
+        return trueSkillSigma;
+    }
+
+    public void setTrueSkillSigma(Double trueSkillSigma) {
+        this.trueSkillSigma = trueSkillSigma;
+    }
 
 }

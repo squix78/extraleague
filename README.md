@@ -1,5 +1,9 @@
 # Extraleague
 
+## Prerequisites
+Extraleague is using lombok to automatically add getters and setters. In order add this byte code manipulation
+to the IDE of your choise please follow the instructions here: http://projectlombok.org/features/index.html
+
 ## Starting the development server
 
 ```

@@ -71,6 +71,29 @@ body {
   background-color: #3276B1;
   border-color: #285E8E;
 }
+.goal {
+  background-image: linear-gradient(to bottom, #FFFFFF 0px, #E0E0E0 100%);
+  background-repeat: repeat-x;
+}
+.goal-time {
+  background-image: linear-gradient(to bottom, #FFFFFF 0px, #E0E0E0 100%);
+  background-repeat: repeat-x;
+  text-align: right;
+  font-size: 85%;
+  line-height: 1.6939 !important;
+}
+.panel-heading .score {
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+}
+.table .score {
+  background-image: linear-gradient(to bottom, #7d7e7d 0px, #0e0e0e 100%);
+  background-image: linear-gradient(to bottom, rgb(238,238,238) 0%,rgb(204,204,204) 100%);
+  background-repeat: repeat-x;
+  text-align: center;
+  border-bottom: 1px solid rgb(204,204,204);
+}
 legend { 
 	margin:3px; 
 	text-align:center; 

@@ -332,7 +332,6 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
       $scope.matches = Match.query({table: $scope.table, gameId: $scope.gameId}, function() {
         $scope.updateCurrentMatch();
       });
-    
   });
   $scope.increaseScoreTeamA = function(player) {
 	console.log(player);
@@ -367,6 +366,8 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
       if ($scope.matchIndex < 3) {  
         $scope.matchIndex++;
         $scope.updateCurrentMatch();
+      } else {
+        $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");        
       } 
     } 
   };
@@ -380,7 +381,7 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
 	  });
 	  return finishedMatches;
   };
-  $scope.finishGame = function () {
+  $scope.showSummary = function () {
 	  $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");  
   };
   
@@ -413,7 +414,7 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
 
 }
 
-function SummaryController($scope, $rootScope, $resource, $routeParams, Summary, Match) {
+function SummaryController($scope, $rootScope, $resource, $routeParams, $location, Summary, Match) {
   $scope.table = $routeParams.table;
   $scope.gameId = $routeParams.gameId;
   $rootScope.backlink = false;
@@ -434,6 +435,9 @@ function SummaryController($scope, $rootScope, $resource, $routeParams, Summary,
     });
   };
   $scope.getSummary();
+  $scope.editScores = function () {
+	  $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId);  
+  };
 }
 
 function RankingController($scope, $rootScope, $resource, $routeParams, Ranking, Badges, Tables) {

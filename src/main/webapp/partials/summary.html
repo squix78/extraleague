@@ -1,30 +1,34 @@
-<h4>Summary</h4>
-
+<br/>
 <div class="row">
-	<div class="col-xs-3">
-		<b>Player</b>
-	</div>
-	<div class="col-xs-3">
-		<b>Score</b>
-	</div>
-	<div class="col-xs-3">
-		<b>Goals</b>
-	</div>
-	<div class="col-xs-3">
-		<b>Elo</b>
-	</div>
-</div>
-<div class="row" ng-repeat="playerScore in summary.playerScores | orderBy:'-score'"  ng-class-even="'even'" ng-class-odd="'odd'">
-	<div class="col-xs-3">
-		{{playerScore.player}}
-	</div>
-	<div class="col-xs-3">
-		{{playerScore.score}}
-	</div>
-	<div class="col-xs-3">
-		{{playerScore.goals}}
-	</div>
-	<div class="col-xs-3">
-		{{playerScore.earnedEloPoints}}
-	</div>
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span style="line-height:31px">Summary</span>
+          <button class="btn btn-default text-small pull-right" ng-click="editScores()">
+            <span class="glyphicon glyphicon-pencil"></span> 
+          </button>
+        </h3>
+        <div class="clear-fix"></div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Wins</th>
+            <th>Goals</th>
+            <th>Elo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="playerScore in summary.playerScores | orderBy:'-score'">
+            <td>{{playerScore.player}}</td>
+            <td>{{playerScore.score}}</td>
+            <td>{{playerScore.goals}}</td>
+            <td>{{playerScore.earnedEloPoints}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

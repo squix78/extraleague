@@ -29,5 +29,11 @@ public class Statistics {
 
 		@Serialize(zip=true)
 		private Map<Integer, Double> weekdayHistogram;
+		
+		@Serialize(zip=true)
+		private Map<Integer, Integer> eloHistogramm;
+		private Integer minElo;
+		private Integer maxElo;
+		private Double eloBinRange;
 
 }

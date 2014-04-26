@@ -27,6 +27,22 @@ public class StatisticsDtoMapper {
 		}
 		dto.setSuccessRateHistogram(successRateTuples);
 		
+		Integer totalEloCount = 0;
+		for (Map.Entry<Integer, Integer> entry : statistics.getEloHistogramm().entrySet()) {
+			totalEloCount += entry.getValue();
+		}
+		
+		List<DataTuple<Integer, Double>> eloTuples = new ArrayList<>();
+		for (Map.Entry<Integer, Integer> entry : statistics.getEloHistogramm().entrySet()) {
+			eloTuples.add(new DataTuple<Integer, Double>(
+					entry.getKey(), 
+					1d * entry.getValue() / totalEloCount, 
+					String.valueOf(Math.floor(entry.getKey() * statistics.getEloBinRange() + statistics.getMinElo()))));
+		}
+		dto.setEloHistogram(eloTuples);
+		
+
+		
 		String[] weekdays = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 		List<DataTuple<Integer, Double>> weekdayRateTuples = new ArrayList<>();
 		for (Map.Entry<Integer, Double> entry : statistics.getWeekdayHistogram().entrySet()) {

@@ -10,6 +10,7 @@ import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.statistics.tasks.BadgesHistogramTask;
+import ch.squix.extraleague.model.statistics.tasks.EloHistogramTask;
 import ch.squix.extraleague.model.statistics.tasks.HourHistogramTask;
 import ch.squix.extraleague.model.statistics.tasks.StatisticTask;
 import ch.squix.extraleague.model.statistics.tasks.SuccessRateHistogramTask;
@@ -36,6 +37,7 @@ public class StatisticsService {
 		statisticTasks.add(new HourHistogramTask());
 		statisticTasks.add(new WeekdayHistogramTask());
 		statisticTasks.add(new SuccessRateHistogramTask());
+		statisticTasks.add(new EloHistogramTask());
 		
 		for (StatisticTask task : statisticTasks) {
 			task.calculate(statistics, ranking, matches);

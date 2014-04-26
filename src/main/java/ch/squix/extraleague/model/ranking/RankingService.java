@@ -37,48 +37,51 @@ import java.util.logging.Logger;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class RankingService {
-	
-	private static final Logger log = Logger.getLogger(RankingService.class.getName());
 
-	public static Ranking calculateRankings() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, -30);
-		List<Match> matchesList = ofy().load().type(Match.class).filter("startDate > ", calendar.getTime()).list();
-		Ranking ranking = calculateRankingFromMatches(matchesList);
+    private static final Logger log = Logger.getLogger(RankingService.class.getName());
 
-		
-		ofy().save().entities(ranking).now();
-		return ranking;
+    public static Ranking calculateRankings() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -30);
+        List<Match> matchesList = ofy().load()
+                .type(Match.class)
+                .filter("startDate > ", calendar.getTime())
+                .list();
+        Ranking ranking = calculateRankingFromMatches(matchesList);
 
-	}
 
-	public static Ranking calculateRankingFromMatches(List<Match> matchesList) {
-		Matches matches = new Matches();
-		matches.setMatches(matchesList);
-		
-		// Initialize player ranking map
-		Map<String, PlayerRanking> playerRankingMap = new HashMap<>();
-		for (String player : matches.getPlayers()) {
-	                PlayerRanking ranking = new PlayerRanking();
-	                ranking.setPlayer(player);
-	                ranking.setGamesWon(0);
-	                ranking.setGamesLost(0);
-	                playerRankingMap.put(player, ranking);
-		}
-		
-		List<RankingTask> rankingTasks = new ArrayList<>();
-		rankingTasks.add(new ScoreTask());
-		rankingTasks.add(new SpecialResultPerGameTask());
-		rankingTasks.add(new BestPositionTask());
-		rankingTasks.add(new SlamTask());
-		rankingTasks.add(new StrikeTask());
-		rankingTasks.add(new PartnerOpponentTask());
-		rankingTasks.add(new AverageTimePerMatchTask());
-		rankingTasks.add(new ManualBadgeTask());
-		rankingTasks.add(new CurrentShapeTask());
-		rankingTasks.add(new IncestuousTask());
-		rankingTasks.add(new TightMatchesTask());
-		rankingTasks.add(new PlayerGoalsTask());
+        ofy().save().entities(ranking).now();
+        return ranking;
+
+    }
+
+    public static Ranking calculateRankingFromMatches(List<Match> matchesList) {
+        Matches matches = new Matches();
+        matches.setMatches(matchesList);
+
+        // Initialize player ranking map
+        Map<String, PlayerRanking> playerRankingMap = new HashMap<>();
+        for (String player : matches.getPlayers()) {
+            PlayerRanking ranking = new PlayerRanking();
+            ranking.setPlayer(player);
+            ranking.setGamesWon(0);
+            ranking.setGamesLost(0);
+            playerRankingMap.put(player, ranking);
+        }
+
+        List<RankingTask> rankingTasks = new ArrayList<>();
+        rankingTasks.add(new ScoreTask());
+        rankingTasks.add(new SpecialResultPerGameTask());
+        rankingTasks.add(new BestPositionTask());
+        rankingTasks.add(new SlamTask());
+        rankingTasks.add(new StrikeTask());
+        rankingTasks.add(new PartnerOpponentTask());
+        rankingTasks.add(new AverageTimePerMatchTask());
+        rankingTasks.add(new ManualBadgeTask());
+        rankingTasks.add(new CurrentShapeTask());
+        rankingTasks.add(new IncestuousTask());
+        rankingTasks.add(new TightMatchesTask());
+        rankingTasks.add(new PlayerGoalsTask());
         rankingTasks.add(new DynamicRankingIndexTask());
         rankingTasks.add(new EloRankingTask());
         rankingTasks.add(new TrueSkillRankingTask());
@@ -86,24 +89,22 @@ public class RankingService {
         rankingTasks.add(new GoalsPerGameTask());
         rankingTasks.add(new ProjectLeaderTask());
 
-		// From here only work on playerRankingMap
-		rankingTasks.add(new FirstPlayerFilterTask());
-		rankingTasks.add(new RankingIndexTask());
-		rankingTasks.add(new SkillBadgesTask());
-		rankingTasks.add(new PartnerCountTask());
+        // From here only work on playerRankingMap
+        rankingTasks.add(new FirstPlayerFilterTask());
+        rankingTasks.add(new RankingIndexTask());
+        rankingTasks.add(new SkillBadgesTask());
+        rankingTasks.add(new PartnerCountTask());
 
-		for (RankingTask task: rankingTasks) {
-		    task.rankMatches(playerRankingMap, matches);
-		}
-		
-		List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
-		Ranking ranking = new Ranking();
-		ranking.setCreatedDate(new Date());
-		ranking.setPlayerRankings(rankings);
-		return ranking;
-	}
+        for (RankingTask task : rankingTasks) {
+            task.rankMatches(playerRankingMap, matches);
+        }
 
-
+        List<PlayerRanking> rankings = new ArrayList<>(playerRankingMap.values());
+        Ranking ranking = new Ranking();
+        ranking.setCreatedDate(new Date());
+        ranking.setPlayerRankings(rankings);
+        return ranking;
+    }
 
 
 }

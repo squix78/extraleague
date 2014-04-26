@@ -1,48 +1,81 @@
-<h4>Summary</h4>
+<br/>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span style="line-height:31px">Summary</span>
+          <button class="btn btn-default text-small pull-right" ng-click="editScores()">
+            <span class="glyphicon glyphicon-pencil"></span> 
+          </button>
+        </h3>
+        <div class="clear-fix"></div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Wins</th>
+            <th>Goals</th>
+            <th>Elo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="playerScore in summary.playerScores | orderBy:'-score'">
+            <td>{{playerScore.player}}</td>
+            <td>{{playerScore.score}}</td>
+            <td>{{playerScore.goals}}</td>
+            <td>{{playerScore.earnedEloPoints}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <div class="row">
-	<div class="col-xs-3">
-		<b>Player</b>
-	</div>
-	<div class="col-xs-3">
-		<b>Score</b>
-	</div>
-	<div class="col-xs-3">
-		<b>Goals</b>
-	</div>
-	<div class="col-xs-3">
-		<b>Elo</b>
-	</div>
-</div>
-<div class="row" ng-repeat="playerScore in summary.playerScores | orderBy:'-score'"  ng-class-even="'even'" ng-class-odd="'odd'">
-	<div class="col-xs-3">
-		{{playerScore.player}}
-	</div>
-	<div class="col-xs-3">
-		{{playerScore.score}}
-	</div>
-	<div class="col-xs-3">
-		{{playerScore.goals}}
-	</div>
-	<div class="col-xs-3">
-		{{playerScore.earnedEloPoints}}
-	</div>
+  <div class="col-xs-12">
+    <h3>Matches</h3>
+  </div>
 </div>
 
-<BR/>
-<BR/>
-<div ng-class-even="'even'" ng-class-odd="'odd'" ng-repeat="match in matches" class="row">
-	<div class="col-xs-4 text-center">
-		<span ng-repeat="player in match.teamA">{{player}} </span>
-		<input type="text" class="form-control" id="player" ng-model="match.teamAScore">
-		<span>&nbsp;</span>
-	</div>
-	<div class="col-xs-4 text-center">
-		<span ng-repeat="player in match.teamB">{{player}} </span>
-		<input type="text" class="form-control" id="player" ng-model="match.teamBScore">
-	</div>	
-	<div class="col-xs-4 text-center">
-		<span>&nbsp;</span>
-		<button ng-disabled="matchIsSaving" class="btn btn-primary btn-block" ng-click="saveMatch(match)">Save</button>
-	</div>
+<div class="row" ng-repeat="match in summary.matches">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <table style="width:100%">
+          <colgroup>
+            <col style="width:50px"/>
+            <col style="width:50px"/>
+            <col/>
+            <col style="width:50px"/>
+            <col style="width:50px"/>
+          </colgroup>
+          <tbody>
+            <tr>
+              <td><span player="match.teamA[0]"></span></td>
+              <td><span player="match.teamA[1]"></span></td>
+              <td class="score">{{ match.teamAScore }} : {{ match.teamBScore }}</td>
+              <td><span player="match.teamB[0]"></span></td>
+              <td><span player="match.teamB[1]"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table class="table">
+        <colgroup>
+          <col/>
+          <col style="width:50px"/>
+          <col/>
+        </colgroup>
+        <tbody>
+          <tr ng-repeat="goal in match.goals">
+            <td ng-class="{ goal: goal.scorerTeam == 'a' }">{{ goal.scorerTeam == 'a' ? goal.scorer : '' }}</td>
+            <td class="score">{{ goal.teamAScore }} : {{ goal.teamBScore }}</td>
+            <td ng-class="{ goal: goal.scorerTeam == 'b' }">{{ goal.scorerTeam == 'b' ? goal.scorer : '' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

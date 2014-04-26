@@ -46,6 +46,34 @@
           </td>
         </tr>
         <tr>
+          <td>TrueSkill Mean</td>
+          <td>
+          	{{playerResult.statistics.trueSkillMean | number:2}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.trueSkillMean | number:2}})</span>
+          </td>
+        </tr>
+        <tr>
+          <td>TrueSkill Sigma</td>
+          <td>
+          	{{playerResult.statistics.trueSkillSigma | number:2}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.trueSkillSigma | number:2}})</span>
+          </td>
+        </tr>
+        <tr>
+          <td>TrueSkill Rating</td>
+          <td>
+          	{{playerResult.statistics.trueSkillRating | number:2}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.trueSkillRating | number:2}})</span>
+          </td>
+        </tr>
+        <tr>
+          <td>TrueSkill Ranking</td>
+          <td>
+          	{{playerResult.statistics.trueSkillRanking}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.trueSkillRanking}})</span>
+          </td>
+        </tr>
+        <tr>
           <td>Badges:</td>
           <td>
             	<div badges ng-model="playerResult.statistics.badges" badge-map="badgeMap"></div>

@@ -1,5 +1,7 @@
 package ch.squix.extraleague.rest.result;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +55,34 @@ public class SummaryService {
 				goals += Collections.frequency(match.getScorers(), player);
 				playerGoals.put(player, goals);
 			}
+
+			List<GoalDto> goals = new ArrayList<>();
+			List<String> teamAPlayers = Arrays.asList(match.getTeamA());
+			int currentTeamAScore = 0;
+			int currentTeamBScore = 0;
+			for (String player : match.getScorers()) {
+				GoalDto goal = new GoalDto();
+				goal.setScorer(player);
+				
+				if (teamAPlayers.contains(player)) {
+					goal.setScorerTeam("a");
+					currentTeamAScore++;
+				} else {
+					goal.setScorerTeam("b");
+					currentTeamBScore++;
+				}
+				goal.setTeamAScore(currentTeamAScore);
+				goal.setTeamBScore(currentTeamBScore);
+				goals.add(goal);
+			}
+			
+			MatchSummaryDto matchSummary = new MatchSummaryDto();
+			matchSummary.setTeamA(match.getTeamA());
+			matchSummary.setTeamB(match.getTeamB());
+			matchSummary.setTeamAScore(teamAScore);
+			matchSummary.setTeamBScore(teamBScore);
+			matchSummary.setGoals(goals);
+			dto.getMatches().add(matchSummary);
 		}
 		for (String player : game.getPlayers()) {
 			dto.getPlayerScores().add(new PlayerScoreDto(

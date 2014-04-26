@@ -32,3 +32,50 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Matches</h3>
+  </div>
+</div>
+
+<div class="row" ng-repeat="match in summary.matches">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <table style="width:100%">
+          <colgroup>
+            <col style="width:50px"/>
+            <col style="width:50px"/>
+            <col/>
+            <col style="width:50px"/>
+            <col style="width:50px"/>
+          </colgroup>
+          <tbody>
+            <tr>
+              <td><span player="match.teamA[0]"></span></td>
+              <td><span player="match.teamA[1]"></span></td>
+              <td class="score">{{ match.teamAScore }} : {{ match.teamBScore }}</td>
+              <td><span player="match.teamB[0]"></span></td>
+              <td><span player="match.teamB[1]"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table class="table">
+        <colgroup>
+          <col/>
+          <col style="width:50px"/>
+          <col/>
+        </colgroup>
+        <tbody>
+          <tr ng-repeat="goal in match.goals">
+            <td ng-class="{ goal: goal.scorerTeam == 'a' }">{{ goal.scorerTeam == 'a' ? goal.scorer : '' }}</td>
+            <td class="score">{{ goal.teamAScore }} : {{ goal.teamBScore }}</td>
+            <td ng-class="{ goal: goal.scorerTeam == 'b' }">{{ goal.scorerTeam == 'b' ? goal.scorer : '' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

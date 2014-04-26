@@ -20,7 +20,7 @@ public class PlayerGoalsTask implements RankingTask {
 			Integer matchesWithPlayerGoals = 0;
 			for (Match match : matches.getMatchesByPlayer(player)) {
 				PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
-				if (playerMatch.hasPlayerGoals()) {
+				if (playerMatch.getHasPlayerGoals()) {
 					playerGoalSum += playerMatch.getPlayerGoals();
 					matchesWithPlayerGoals++;
 				}

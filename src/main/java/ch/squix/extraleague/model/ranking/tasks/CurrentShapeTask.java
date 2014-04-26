@@ -1,6 +1,5 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +23,7 @@ public class CurrentShapeTask implements RankingTask {
     		Integer gamesWon = 0;
     		for (Match match : lastEightMatches) {
     			PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
-    			if (playerMatch.hasWon()) {
+    			if (playerMatch.isWon()) {
     				gamesWon++;
     			}
     		}

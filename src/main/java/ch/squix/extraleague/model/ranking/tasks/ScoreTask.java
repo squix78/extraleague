@@ -18,7 +18,7 @@ public class ScoreTask implements RankingTask {
             List<PlayerMatchResult> playerMatches = MatchUtil.getPlayerMatchResults(match);
             for (PlayerMatchResult playerMatch : playerMatches) {
                 PlayerRanking playerRanking = playerRankingMap.get(playerMatch.getPlayer());
-                if (playerMatch.hasWon()) {
+                if (playerMatch.isWon()) {
                     playerRanking.increaseGamesWon();
                 } else {
                     playerRanking.increaseGamesLost();

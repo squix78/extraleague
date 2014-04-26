@@ -1,6 +1,5 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
-import ch.squix.extraleague.model.ranking.badge.Badge;
 import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 
@@ -25,7 +23,7 @@ public class StrikeTask implements RankingTask {
             for (Match match : gameEntry.getValue()) {
                 List<PlayerMatchResult> playerMatches = MatchUtil.getPlayerMatchResults(match);
                 for (PlayerMatchResult playerMatch : playerMatches) {
-                    if (playerMatch.hasWon()) {
+                    if (playerMatch.isWon()) {
                         Integer wins = winMap.get(playerMatch.getPlayer());
                         if (wins == null) {
                             wins = 0;

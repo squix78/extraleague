@@ -33,7 +33,7 @@ public class MatchUtilTest {
         Assert.assertArrayEquals(opponents, result.getOpponents());
         Assert.assertEquals(goalsMade, result.getGoalsMade());
         Assert.assertEquals(goalsGot, result.getGoalsGot());
-        Assert.assertEquals(hasWon, result.hasWon());
+        Assert.assertEquals(hasWon, result.isWon());
         Assert.assertEquals(playerGoals, result.getPlayerGoals());
     }
     

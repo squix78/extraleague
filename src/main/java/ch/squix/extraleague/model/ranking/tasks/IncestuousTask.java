@@ -8,7 +8,6 @@ import java.util.Set;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
-import ch.squix.extraleague.model.ranking.badge.Badge;
 import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 public class IncestuousTask implements RankingTask {

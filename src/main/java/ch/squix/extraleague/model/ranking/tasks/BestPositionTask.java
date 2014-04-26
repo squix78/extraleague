@@ -30,7 +30,7 @@ public class BestPositionTask implements RankingTask {
                 for (Match match : matchesByPlayer) {
                         PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
                         Position position = playerMatch.getPosition();
-                        if (playerMatch.hasWon()) {
+                        if (playerMatch.isWon()) {
                                 gamesWonOnPosition.put(position, gamesWonOnPosition.get(position) + 1);
                         }
                         gamesPlayedOnPosition.put(position, gamesPlayedOnPosition.get(position) + 1);

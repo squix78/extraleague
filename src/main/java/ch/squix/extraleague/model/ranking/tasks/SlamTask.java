@@ -26,7 +26,7 @@ public class SlamTask implements RankingTask {
                 
                 for (Match match : matchesByPlayer) {
                         PlayerMatchResult playerMatch = MatchUtil.getPlayerMatchResult(match, player);
-                        if (playerMatch.hasWon()) {
+                        if (playerMatch.isWon()) {
                                 victoriesInARow++;
                         } else {
                                 victoriesInARow = 0;

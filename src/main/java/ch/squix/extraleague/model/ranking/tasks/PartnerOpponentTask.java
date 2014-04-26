@@ -83,7 +83,7 @@ public class PartnerOpponentTask implements RankingTask {
             PlayerMatchResult playerMatch) {
         PlayerCombo partner = getPlayerCombo(partnerMap, playerMatch.getPlayer(),
                 playerMatch.getPartner());
-        if (playerMatch.hasWon()) {
+        if (playerMatch.isWon()) {
             partner.increaseGamesWon();
         } else {
             partner.increaseGamesLost();
@@ -91,7 +91,7 @@ public class PartnerOpponentTask implements RankingTask {
         for (String opponentName : playerMatch.getOpponents()) {
             PlayerCombo opponent = getPlayerCombo(opponentMap, playerMatch.getPlayer(),
                     opponentName);
-            if (playerMatch.hasWon()) {
+            if (playerMatch.isWon()) {
             	opponent.increaseGamesWon();
             } else {
             	opponent.increaseGamesLost();

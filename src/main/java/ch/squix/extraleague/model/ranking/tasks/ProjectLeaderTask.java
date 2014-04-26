@@ -19,7 +19,7 @@ public class ProjectLeaderTask implements RankingTask {
     	for (Match match : matches.getMatches()) {
     		List<PlayerMatchResult> matchResults = MatchUtil.getPlayerMatchResults(match);
     		for (PlayerMatchResult matchResult : matchResults) {
-    			if (matchResult.hasWon() && matchResult.getPlayerGoals() != null && matchResult.getPlayerGoals() == 0 && matchResult.getPosition() == Position.Offensive) {
+    			if (matchResult.isWon() && matchResult.getPlayerGoals() != null && matchResult.getPlayerGoals() == 0 && matchResult.getPosition() == Position.Offensive) {
     				PlayerRanking playerRanking = playerRankingMap.get(matchResult.getPlayer());
     				playerRanking.getBadges().add(BadgeEnum.PL.name());
     			}

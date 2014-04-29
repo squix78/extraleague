@@ -323,7 +323,7 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   $scope.$on('$viewContentLoaded', function() {
     $rootScope.backlink = '/tables/' + $scope.table;
   });
-
+  
   $scope.game = Game.get({table: $scope.table, gameId: $scope.gameId}, function() {
       $scope.matchIndex = Math.min($scope.game.numberOfCompletedGames, 3);
       if (!angular.isDefined($scope.matchIndex)) {

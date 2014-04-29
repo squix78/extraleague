@@ -1,103 +1,46 @@
-'use strict';
-var LIVERELOAD_PORT = 35729;
-var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
+module.exports = function(grunt) {
 
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// use this if you want to recursively match all subfolders:
-// 'test/spec/**/*.js'
-
-module.exports = function (grunt) {
-    // load all grunt tasks
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
+    // 1. All configuration goes here 
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        livereloadx: {
+            dir: 'src/main/webapp',
+            proxy: 'http://localhost:8080/'
+        },
+        concat: {   
+            dist: {
+                src: [
+                    'src/main/webapp/js/*.js'  // This specific file
+                ],
+                dest: 'src/main/webapp/dist/production.js',
+            }
+        },
+        uglify: {
+            build: {
+                src: 'src/main/webapp/dist/production.js',
+                dest: 'src/main/webapp/dist/production.min.js'
+            }
+        },
         watch: {
-            options: {
-                nospawn: true
-            },
-            less: {
-                files: ['src/main/webapp/css/*.less'],
-                tasks: ['less:server']
-            },
-            livereload: {
+            scripts: {
+                files: ['src/main/webapp/js/*.js'],
+                tasks: ['concat', 'uglify'],
                 options: {
-                    livereload: LIVERELOAD_PORT,
-                    middleware: function (connect) {
-                        return [
-                            proxySnippet
-                        ];
-                    }
+                    spawn: false,
                 },
-                files: [
-                    'src/main/webapp/*.html',
-                    'src/main/webapp/partials/*.html',
-                    'src/main/webapp/css/{,*/}*.css',
-                    'src/main/webapp/css/{,*/}*.less',
-                    'src/main/webapp/js/{,*/}*.js',
-                    'src/main/webapp/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-                ]
-            }
-        },
-        connect: {
-            options: {
-                port: 9000,
-                // change this to '0.0.0.0' to access the server from outside
-                hostname: 'localhost',
-                base: 'src/main/webapp/'
-            },
-            proxies: [
-                      {
-                          context: '/rest',
-                          host: 'localhost',
-                          port: 8080,
-                          https: false,
-                          changeOrigin: false,
-                          xforward: false
-                      }
-                  ],
-            livereload: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, 'src/main/webapp'),
-                            proxySnippet ,
-                            lrSnippet
-                        ];
-                    }
-                }
-            }
-        },
-        open: {
-            server: {
-                path: 'http://localhost:<%= connect.options.port %>'
-            }
-        },
-        less: {
-            server: {
-                options: {
-                    paths: ['src/main/webapp/components/bootstrap/less', 'app/styles']
-                },
-                files: {
-                    'src/main/webapp/css/main.css': 'src/main/webapp/css/main.less'
-                }
-            }
-        },
+            } 
+        }
+
     });
 
-    grunt.registerTask('server', function (target) {
+    // 3. Where we tell Grunt we plan to use this plug-in.
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('livereloadx');
+    
 
-        grunt.task.run([
-            'less:server',
-            'configureProxies',
-            'connect:livereload',
-            'open',
-            'watch'
-        ]);
-    });
+    // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
+    grunt.registerTask('default', ['concat', 'uglify', 'livereloadx', 'watch']);
+
 };

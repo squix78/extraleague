@@ -12,6 +12,8 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.notification.NotificationService;
+import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 
 
 
@@ -39,6 +41,7 @@ public class GameResource extends ServerResource {
 		ofy().delete().type(Game.class).id(gameId);
 		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", gameId).list();
 		ofy().delete().entities(matches).now();
+		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
 	}
 
 }

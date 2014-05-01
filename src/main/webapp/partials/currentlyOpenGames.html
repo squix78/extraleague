@@ -8,12 +8,14 @@
 		 <div class="caption">
 			 <div><small>ETA</small></div>
 			 <div>
-			  	<small>{{getSumEstimatedRemainingMillis($index) / (60 * 1000) | number:0}}m 
-			  	{{((getSumEstimatedRemainingMillis($index) / 1000) % 60) | number:0}}s</small>
+			  	<small>{{game.summedRemainingMilis / (60 * 1000) | number:0}}m 
+			  	{{((game.summedRemainingMilis / 1000) % 60) | number:0}}s</small>
 			 </div>
 		 </div>
 		 <div style="display: block; margin: auto;" circular-progress ng-model="game.gameProgress" width="50" height="50"></div>
-		 <div ng-show="game.currentMatch">{{game.currentMatch.teamAScore}}:{{game.currentMatch.teamBScore}}</div>
+		 <div ng-show="game.matches" ng-repeat="match in game.matches">
+		 	{{match.teamAScore}}:{{match.teamBScore}}
+		 </div>
 	  </div>
 	  <div class="label label-info">
 	  		{{game.table}}

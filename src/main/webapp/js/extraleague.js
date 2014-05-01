@@ -162,7 +162,84 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
           scope.$watch(listener, changeHandler);
       	}
 	  };
-  	});
+  	})
+  		.factory('GameService', ['$rootScope', 'OpenGames', 'Game', 'Match', function($rootScope, OpenGames, Game, Match) {
+		var gameMap = {};
+		var gameList = [];
+
+		var service = {
+			setGames: function(games) {
+				var me = this;
+				gameMap = {};
+				gameList.length = 0;
+				var index = 0;
+				angular.forEach(games, function(game, key) {
+					gameMap[game.id] = game;
+					game.matches = Match.query({table: game.table, gameId: game.id});
+					gameList.push(game);
+					console.log("Adding game with id " + game.id);
+					index++;
+				});
+				me.calculateRemainingMillis();
+				if(!$rootScope.$$phase) {
+					$rootScope.$apply();
+				}
+				
+			},
+			loadOpenGames: function() {
+				var me = this;
+				var games = OpenGames.query({});
+				games.$promise.then(function(loadedGames) {
+					me.setGames(loadedGames);
+				});
+				return gameList;
+				
+			},
+			getOpenGames: function() {
+				return gameList;
+			},
+			deleteGame: function(game) {
+			  var me = this;
+		      Game.remove({table: game.table, gameId: game.id}, function() {
+		          me.loadOpenGames();
+		      })
+			},
+			
+			calculateRemainingMillis: function() {
+			  var tableSums = {};
+			  for (i = 0; i < gameList.length; i++) {
+				  var currentGame = gameList[i];
+				  var currentTableSum = (tableSums[currentGame.table] | 0);
+				  tableSums[currentGame.table] = currentGame.estimatedRemainingMillis + currentTableSum;
+				  currentGame.summedRemainingMilis = tableSums[currentGame.table];
+			  }
+			}
+		    
+		 	
+		};
+	    // Update the list, if a state changed on the server
+	    $rootScope.$on("UpdateOpenGames", function(event, message) {
+	       console.log("Received change in open games from server");
+	       service.setGames(message.openGames);
+	    });
+	    $rootScope.$on("UpdateMatch", function(event, message) {
+		    console.log("Received match update from server");
+		    var updatedGame = message.game;
+		    var updatedMatch = message.match;
+		    for (i = 0; i < gameList.length; i++) {
+		    	if (gameList[i].id===updatedGame.id) {
+		    		updatedGame.matches = gameList[i].matches;
+		    		gameList[i] = updatedGame;
+		    		gameList[i].matches[updatedMatch.matchIndex] = updatedMatch;
+		    		service.calculateRemainingMillis();
+					if(!$rootScope.$$phase) {
+						$rootScope.$apply();
+					}
+		    	}
+		    }
+	    });
+		return service;
+	}]);
 
 function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
   
@@ -259,59 +336,22 @@ function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routePa
     });
 }
 
-function OpenGamesController($scope, $rootScope, $resource, $timeout, $routeParams, $location, $filter, OpenGames, Game, Match, Players, NotificationService) {
+function OpenGamesController($scope, $rootScope, $location, GameService) {
   $rootScope.backlink = false;
   $scope.updateGames = function() {
-      $scope.isGamesLoading = true;
-      $scope.games = OpenGames.query({}, function() {
-              $scope.isGamesLoading = false;
-      });
+	  $scope.games = GameService.loadOpenGames();
   };
+  
   $scope.updateGames();
-  
-  // Update the list, if a state changed on the server
-  $rootScope.$on("UpdateOpenGames", function(event, message) {
-     console.log("Received change in open games from server");
-     $scope.$apply(function() {
-        $scope.games = [];
-        angular.forEach(message.openGames, function(key, value) {
-          $scope.games.push(new OpenGames(key));
-        });
-    });
-  });
-  
-  $rootScope.$on("UpdateMatch", function(event, message) {
-	    console.log("Received change in game from server");
-	    $scope.$apply(function() {
-	    	var game = new Game(message.game);
-	    	var match = new Match(message.match);
-	    	game.currentMatch = match;
-	    	for (var i=0; i<$scope.games.length; i++) {
-	    		if ($scope.games[i].id === game.id) {
-	    			//$scope.games[i].gameProgress = game.gameProgress;
-	    			angular.copy(game, $scope.games[i]);
-	    		}
-	    	}
-	    });
-  });
+
 
   $scope.continueGame = function(game) {
       $location.path("/tables/" + game.table + "/games/" + game.id);
   };
   $scope.deleteGame = function(game) {
-      Game.remove({table: game.table, gameId: game.id}, function() {
-        $scope.updateGames();
-      });
+	  GameService.deleteGame(game);
   };
-  
-  $scope.getSumEstimatedRemainingMillis = function(index) {
-	  var sum = 0;
-	    var selectedGames = $scope.games.slice(0, index + 1);
-	    angular.forEach(selectedGames, function(game, index){
-	      sum += game.estimatedRemainingMillis;
-	    });
-	    return sum;
-  };
+
 }
 function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, Players, NotificationService) {
   
@@ -355,6 +395,7 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   };
   $scope.saveMatch = function() {
     $scope.matchIsSaving = true;
+    $scope.match.lastUpdate = new Date();
     $scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
       $scope.matchIsSaving = false;
       $scope.checkEndOfMatch();
@@ -385,10 +426,6 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
 	  $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");  
   };
   
-//  else {
-//      $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");        
-//    }
-  
   $scope.increaseScoreTeamB = function(player) {
 	console.log(player);
 	if ($scope.match.teamBScore < 5) {
@@ -397,8 +434,31 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
 	    $scope.saveMatch();
 	}
   };
+  
+  $rootScope.$on("UpdateMatch", function(event, message) {
+	    console.log("Received match update from server");
+	    $scope.$apply(function() {
+	    	var updatedMatch = new Match(message.match);
+	    	var existingMatch = $scope.match;
+	    	if (existingMatch.matchIndex !== $scope.matchIndex) {
+	    		existingMatch = $scope.matches[updatedMatch.matchIndex];
+	    	}
+	    	if (updatedMatch.gameId === existingMatch.gameId) {
+	    		if (updatedMatch.lastUpdate !== existingMatch.lastUpdated) {
+	    			console.log("This update is news. Updating match");
+	    			$scope.matches[updatedMatch.matchIndex] = updatedMatch;
+	    			$scope.updateCurrentMatch();
+	    			$scope.checkEndOfMatch();
+	    		} else {
+	    			console.log("I am the updater. Ignoring update");
+	    		}
+	    	} else {
+	    		console.log("Match update from different game");
+	    	}
+	    	
+	    });
+  });
 
-  console.log("Arrived in GameController: " + $scope.gameId);
   $scope.updateCurrentMatch = function() {
     $scope.match = $scope.matches[$scope.matchIndex];
     $scope.match.startDate = new Date();

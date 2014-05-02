@@ -163,7 +163,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
       	}
 	  };
   	})
-  		.factory('GameService', ['$rootScope', 'OpenGames', 'Game', 'Match', function($rootScope, OpenGames, Game, Match) {
+  		.factory('GameService', ['$rootScope', 'OpenGames', 'Game', 'Match', 'NotificationService', function($rootScope, OpenGames, Game, Match, NotificationService) {
 		var gameMap = {};
 		var gameList = [];
 

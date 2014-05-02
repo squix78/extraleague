@@ -47,6 +47,7 @@ public class NotificationService {
 			String payload = mapper.writeValueAsString(message);
 			List<BrowserClient> oldClients = new ArrayList<>();
 			long maxClientAge = new Date().getTime() - 1000 * 60 * 60 * 2;
+			
 			for (BrowserClient client : clients) {
 				if (client.getCreatedDate().getTime() > maxClientAge) {
 					ChannelMessage channelMessage = new ChannelMessage(client.getToken(), payload);

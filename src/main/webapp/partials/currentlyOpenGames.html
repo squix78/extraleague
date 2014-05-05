@@ -1,9 +1,9 @@
 <h3>Current/ Next Games</h3>
-<div ng-show="games.length == 0 && !isGamesLoading">
+<div ng-show="openGames.gameList.length == 0 && !isGamesLoading">
   Currently there are no open games...
 </div>
-<div ng-show="games.length > 0">
-	<div class="alert" ng-class="{'alert-success': $index == 0, 'alert-info': $index > 0}"ng-repeat="game in games">
+<div ng-show="openGames.gameList.length > 0">
+	<div class="alert" ng-class="{'alert-success': $index == 0, 'alert-info': $index > 0}" ng-repeat="game in openGames.gameList">
 	  <div class="pull-right text-center" ng-show="game.estimatedRemainingMillis">
 		 <div class="caption">
 			 <div><small>ETA</small></div>

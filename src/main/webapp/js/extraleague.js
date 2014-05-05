@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'ui.bootstrap', 'nvd3ChartDirectives', 'gaeChannelService'])
+angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 'ui.bootstrap', 'nvd3ChartDirectives', 'gaeChannelService'])
     .config(function($routeProvider) {
         $routeProvider.when('/tables', {
            controller : 'TablesController',
@@ -58,18 +58,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('Tables', ['$resource', function($resource) {
       return $resource('/rest/tables');
     }])
-    .factory('Games', ['$resource', function($resource) {
-      return $resource('/rest/tables/:table/games');
-    }])
-    .factory('OpenGames', ['$resource', function($resource) {
-      return $resource('/rest/openGames');
-    }])
-    .factory('PlayedGames', ['$resource', function($resource) {
-      return $resource('/rest/playedGames');
-    }])
-    .factory('Game', ['$resource', function($resource) {
-      return $resource('/rest/tables/:table/games/:gameId');
-    }])
+
     .factory('Summary', ['$resource', function($resource) {
       return $resource('/rest/tables/:table/games/:gameId/summary');
     }])
@@ -96,9 +85,6 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('Mutations', ['$resource', function($resource) {
     	return $resource('/rest/mutations');
-    }])
-    .factory('Match', ['$resource', function($resource) {
-      return $resource('/rest/tables/:table/games/:gameId/matches');
     }])
     .directive('badges', function() {
       return {
@@ -162,84 +148,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
           scope.$watch(listener, changeHandler);
       	}
 	  };
-  	})
-  		.factory('GameService', ['$rootScope', 'OpenGames', 'Game', 'Match', 'NotificationService', function($rootScope, OpenGames, Game, Match, NotificationService) {
-		var gameMap = {};
-		var gameList = [];
-
-		var service = {
-			setGames: function(games) {
-				var me = this;
-				gameMap = {};
-				gameList.length = 0;
-				var index = 0;
-				angular.forEach(games, function(game, key) {
-					gameMap[game.id] = game;
-					game.matches = Match.query({table: game.table, gameId: game.id});
-					gameList.push(game);
-					console.log("Adding game with id " + game.id);
-					index++;
-				});
-				me.calculateRemainingMillis();
-				if(!$rootScope.$$phase) {
-					$rootScope.$apply();
-				}
-				
-			},
-			loadOpenGames: function() {
-				var me = this;
-				var games = OpenGames.query({});
-				games.$promise.then(function(loadedGames) {
-					me.setGames(loadedGames);
-				});
-				return gameList;
-				
-			},
-			getOpenGames: function() {
-				return gameList;
-			},
-			deleteGame: function(game) {
-			  var me = this;
-		      Game.remove({table: game.table, gameId: game.id}, function() {
-		          me.loadOpenGames();
-		      })
-			},
-			
-			calculateRemainingMillis: function() {
-			  var tableSums = {};
-			  for (i = 0; i < gameList.length; i++) {
-				  var currentGame = gameList[i];
-				  var currentTableSum = (tableSums[currentGame.table] | 0);
-				  tableSums[currentGame.table] = currentGame.estimatedRemainingMillis + currentTableSum;
-				  currentGame.summedRemainingMilis = tableSums[currentGame.table];
-			  }
-			}
-		    
-		 	
-		};
-	    // Update the list, if a state changed on the server
-	    $rootScope.$on("UpdateOpenGames", function(event, message) {
-	       console.log("Received change in open games from server");
-	       service.setGames(message.openGames);
-	    });
-	    $rootScope.$on("UpdateMatch", function(event, message) {
-		    console.log("Received match update from server");
-		    var updatedGame = message.game;
-		    var updatedMatch = message.match;
-		    for (i = 0; i < gameList.length; i++) {
-		    	if (gameList[i].id===updatedGame.id) {
-		    		updatedGame.matches = gameList[i].matches;
-		    		gameList[i] = updatedGame;
-		    		gameList[i].matches[updatedMatch.matchIndex] = updatedMatch;
-		    		service.calculateRemainingMillis();
-					if(!$rootScope.$$phase) {
-						$rootScope.$apply();
-					}
-		    	}
-		    }
-	    });
-		return service;
-	}]);
+  	});
 
 function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
   
@@ -339,7 +248,7 @@ function PlayedGamesController($scope, $rootScope, $resource, $timeout, $routePa
 function OpenGamesController($scope, $rootScope, $location, GameService) {
   $rootScope.backlink = false;
   $scope.updateGames = function() {
-	  $scope.games = GameService.loadOpenGames();
+	  $scope.openGames = GameService.loadOpenGames();
   };
   
   $scope.updateGames();
@@ -353,7 +262,7 @@ function OpenGamesController($scope, $rootScope, $location, GameService) {
   };
 
 }
-function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, Players, NotificationService) {
+function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, Players, NotificationService, GameService) {
   
   $scope.gameId = $routeParams.gameId;
   $scope.table = $routeParams.table;
@@ -363,113 +272,30 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   $scope.$on('$viewContentLoaded', function() {
     $rootScope.backlink = '/tables/' + $scope.table;
   });
-  
-  $scope.game = Game.get({table: $scope.table, gameId: $scope.gameId}, function() {
-      $scope.matchIndex = Math.min($scope.game.numberOfCompletedGames, 3);
-      if (!angular.isDefined($scope.matchIndex)) {
-        $scope.matchIndex = 0;
-      }
-      $scope.matches = Match.query({table: $scope.table, gameId: $scope.gameId}, function() {
-        $scope.updateCurrentMatch();
-      });
-  });
-  $scope.increaseScoreTeamA = function(player) {
-	console.log(player);
-	if ($scope.match.teamAScore < 5) {
-	    $scope.match.teamAScore++;
-	    $scope.match.scorers.push(player);
-	    $scope.saveMatch();
-	}
+  $scope.openGames = GameService.loadOpenGames();
+  GameService.setCurrentGame($scope.gameId);
+
+  $scope.addPlayerScore = function(player) {
+	console.log("Scored: " + player);
+	GameService.addPlayerScore(player);
   };
   $scope.decreaseScore = function() {
-    if ($scope.match.scorers.length > 0) {
-      var lastScorer = $scope.match.scorers.pop();
-      
-      if ($scope.match.teamA.indexOf(lastScorer) > -1) {
-    	  $scope.match.teamAScore--;
-      } else {
-    	  $scope.match.teamBScore--;
-      }
-      $scope.saveMatch();
-    }
+	GameService.removeLastGoal();
   };
-  $scope.saveMatch = function() {
-    $scope.matchIsSaving = true;
-    $scope.match.lastUpdate = new Date();
-    $scope.match.$save({table: $scope.table, gameId: $scope.gameId}, function(match) {
-      $scope.matchIsSaving = false;
-      $scope.checkEndOfMatch();
-    });
-  }
-  $scope.checkEndOfMatch = function() {
-    if ($scope.match.teamAScore >= 5 || $scope.match.teamBScore >=5) {
-      $scope.match.endDate = new Date();
-      if ($scope.matchIndex < 3) {  
-        $scope.matchIndex++;
-        $scope.updateCurrentMatch();
-      } else {
-        $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");        
-      } 
-    } 
-  };
-  $scope.finishedMatches = function() {
-	  var finishedMatches = 0;
-	  angular.forEach($scope.matches, function(match, key) {
-		  var maxScore = Math.max(match.teamAScore, match.teamBScore);
-		  if (maxScore == 5) {
-			  finishedMatches++;
-		  }
-	  });
-	  return finishedMatches;
-  };
+
+  
+  $scope.$watch('openGames.isGameFinished', function(newValue, oldValue) { 
+	  if (newValue && !oldValue) {
+		  $scope.showSummary();
+	  }
+  });
+  
   $scope.showSummary = function () {
 	  $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");  
   };
   
-  $scope.increaseScoreTeamB = function(player) {
-	console.log(player);
-	if ($scope.match.teamBScore < 5) {
-	    $scope.match.teamBScore++;
-	    $scope.match.scorers.push(player);    	
-	    $scope.saveMatch();
-	}
-  };
-  
-  $rootScope.$on("UpdateMatch", function(event, message) {
-	    console.log("Received match update from server");
-	    $scope.$apply(function() {
-	    	var updatedMatch = new Match(message.match);
-	    	var existingMatch = $scope.match;
-	    	if (existingMatch.matchIndex !== $scope.matchIndex) {
-	    		existingMatch = $scope.matches[updatedMatch.matchIndex];
-	    	}
-	    	if (updatedMatch.gameId === existingMatch.gameId) {
-	    		if (updatedMatch.lastUpdate !== existingMatch.lastUpdated) {
-	    			console.log("This update is news. Updating match");
-	    			$scope.matches[updatedMatch.matchIndex] = updatedMatch;
-	    			$scope.updateCurrentMatch();
-	    			$scope.checkEndOfMatch();
-	    		} else {
-	    			console.log("I am the updater. Ignoring update");
-	    		}
-	    	} else {
-	    		console.log("Match update from different game");
-	    	}
-	    	
-	    });
-  });
-
-  $scope.updateCurrentMatch = function() {
-    $scope.match = $scope.matches[$scope.matchIndex];
-    $scope.match.startDate = new Date();
-  }
-  
   $scope.moveMatchIndexBy = function(increment) {
-	  var newMatchIndex = $scope.matchIndex + increment;
-	  if (newMatchIndex >=0 && newMatchIndex <=3) {
-		  $scope.matchIndex = newMatchIndex;
-		  $scope.updateCurrentMatch();
-	  }
+	  GameService.moveMatchIndexBy(increment);
   }
 
 }

@@ -60,7 +60,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
 
     .factory('Summary', ['$resource', function($resource) {
-      return $resource('/rest/tables/:table/games/:gameId/summary');
+      return $resource('/rest/games/:gameId/summary');
     }])
     .factory('Ranking', ['$resource', function($resource) {
       return $resource('/rest/ranking');

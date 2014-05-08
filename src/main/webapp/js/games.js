@@ -9,10 +9,10 @@ angular.module('Games', ['gaeChannelService'])
     return $resource('/rest/playedGames');
   }])
   .factory('Game', ['$resource', function($resource) {
-    return $resource('/rest/tables/:table/games/:gameId');
+    return $resource('/rest/games/:gameId');
   }])
   .factory('Match', ['$resource', function($resource) {
-      return $resource('/rest/tables/:table/games/:gameId/matches');
+      return $resource('/rest/games/:gameId/matches');
     }])
   .factory('GameService', ['$rootScope', 'OpenGames', 'Game', 'Match', 'NotificationService', function($rootScope, OpenGames, Game, Match, NotificationService) {
 	
@@ -31,7 +31,7 @@ angular.module('Games', ['gaeChannelService'])
 			openGames.gameMap = {};
 			var index = 0;
 			angular.forEach(games, function(game, key) {
-				game.matches = Match.query({table: game.table, gameId: game.id}, function() {
+				game.matches = Match.query({gameId: game.id}, function() {
 					service.updateCurrentGame();
 				});
 				openGames.gameList.push(game);
@@ -47,13 +47,26 @@ angular.module('Games', ['gaeChannelService'])
 			
 		},
 		updateCurrentGame: function() {
-			if (angular.isDefined(openGames.currentGameId) && angular.isDefined(openGames.gameMap[openGames.currentGameId])) {
-				openGames.currentGame = openGames.gameMap[openGames.currentGameId];
-		        if (!angular.isDefined(openGames.currentMatchIndex)) {
-		        	openGames.currentMatchIndex = Math.min(openGames.currentGame.numberOfCompletedGames, 3);
-		        }
-				openGames.currentMatch = openGames.currentGame.matches[openGames.currentMatchIndex];
+			if (angular.isDefined(openGames.currentGameId)) {
+				var newCurrentGame = openGames.gameMap[openGames.currentGameId];
+				if (angular.isDefined(newCurrentGame)) {
+					openGames.currentGame = newCurrentGame;
+					service.updateCurrentMatch();
+				} else {
+					openGames.currentGame = Game.get({gameId: openGames.currentGameId}, function() {
+						openGames.currentGame.matches = Match.query({gameId: openGames.currentGame.id}, function() {
+							service.updateCurrentMatch();
+						});
+					});
+				}
+
 			} 
+		},
+		updateCurrentMatch: function() {
+			if (!angular.isDefined(openGames.currentMatchIndex)) {
+				openGames.currentMatchIndex = Math.min(openGames.currentGame.numberOfCompletedGames, 3);
+			}
+			openGames.currentMatch = openGames.currentGame.matches[openGames.currentMatchIndex];
 		},
 		loadOpenGames: function() {
 			var me = this;
@@ -121,7 +134,7 @@ angular.module('Games', ['gaeChannelService'])
 		saveCurrentMatch: function() {
 		    openGames.isMatchSaving = true;
 		    openGames.currentMatch.lastUpdate = new Date();
-		    openGames.currentMatch.$save({table: openGames.currentGame.table, gameId: openGames.currentGame.id}, function(match) {
+		    openGames.currentMatch.$save({gameId: openGames.currentGame.id}, function(match) {
 		      openGames.isMatchSaving = false;
 		      service.checkEndOfMatch();
 		    });

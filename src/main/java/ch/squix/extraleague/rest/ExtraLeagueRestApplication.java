@@ -63,9 +63,9 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/tables/{table}/games", GamesResource.class);
         router.attach("/openGames", OpenGamesResource.class);
         router.attach("/playedGames", PlayedGamesResource.class);
-        router.attach("/tables/{table}/games/{gameId}", GameResource.class);
-        router.attach("/tables/{table}/games/{gameId}/matches", MatchesResource.class);
-        router.attach("/tables/{table}/games/{gameId}/summary", SummaryResource.class);
+        router.attach("/games/{gameId}", GameResource.class);
+        router.attach("/games/{gameId}/matches", MatchesResource.class);
+        router.attach("/games/{gameId}/summary", SummaryResource.class);
         router.attach("/players", PlayersRessource.class);
         router.attach("/players/{player}", PlayerRessource.class);
         router.attach("/timeseries/{player}", TimeSeriesResource.class);

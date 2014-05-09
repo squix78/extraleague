@@ -1,10 +1,14 @@
 package ch.squix.extraleague.rest.games;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
@@ -18,8 +22,6 @@ import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.ranking.elo.EloUtil;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 
 
@@ -57,8 +59,6 @@ public class GamesResource extends ServerResource {
 		dto.setId(game.getId());
 		
 		// Prepare Matches
-		
-		Collections.shuffle(game.getPlayers());
 		List<Match> matches = createMatches(game);
 		ofy().save().entities(matches).now();
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
@@ -67,7 +67,11 @@ public class GamesResource extends ServerResource {
 
 	public List<Match> createMatches(Game game) {
 	    Ranking currentRanking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
+
 		List<String> players = game.getPlayers();
+		if (currentRanking != null) {
+				players = sortPlayersByRanking(players, currentRanking);
+		}
 		List<Match> matches = new ArrayList<>();
 		for (int gameIndex = 0; gameIndex < 4; gameIndex++) {
 			Integer [] mutation = mutations[gameIndex];
@@ -94,6 +98,19 @@ public class GamesResource extends ServerResource {
 		return matches;
 	}
 	
+	public List<String> sortPlayersByRanking(List<String> players, Ranking currentRanking) {
+		Map<Integer, String> playerRankMap = new TreeMap<>();
+		for (String player : players) {
+			PlayerRanking playerRanking = currentRanking.getPlayerRanking(player);
+			Integer rank = Integer.MAX_VALUE;
+			if (playerRanking != null) {
+				rank = playerRanking.getEloRanking();
+			}
+			playerRankMap.put(rank, player);
+		}
+		return new ArrayList<>(playerRankMap.values());
+	}
+
 	private Integer getTeamRanking(Ranking ranking, String[] team) {
 	    return (int) Math.round((getPlayerRanking(ranking, team[0]) + getPlayerRanking(ranking, team[1])) / 2d);
 	}

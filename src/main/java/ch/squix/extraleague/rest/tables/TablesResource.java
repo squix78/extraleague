@@ -17,7 +17,7 @@ public class TablesResource extends ServerResource {
 				new TablesDto("Albis"), 
 				new TablesDto("Bern"), 
 				new TablesDto("Skopje"), 
-				new TablesDto("Rigi")};
+				new TablesDto("Flurstrasse")};
 	}
 
 }

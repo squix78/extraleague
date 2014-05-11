@@ -457,6 +457,7 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
     	availableUntil += $scope.availableNextMin * 60 * 1000;
     	$scope.player.availableUntil = new Date(availableUntil);
     	var player = new MeetingPointPlayer($scope.player);
+    	$scope.player = "";
     	player.$save({}, function() {
     		$scope.loadPlayers();
     	});

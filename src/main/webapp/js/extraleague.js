@@ -44,6 +44,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         	controller : 'HighlightsController',
         	templateUrl : 'partials/highlights.html'
         })
+        .when('/meetingPoint', {
+        	controller : 'MeetingPointController',
+        	templateUrl : 'partials/meetingpoint.html'
+        })
         .when('/about', {
            controller : 'AboutController',
            templateUrl : 'partials/about.html'
@@ -73,6 +77,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('Players', ['$resource', function($resource) {
       return $resource('/rest/players');
+    }])
+    .factory('MeetingPointPlayer', ['$resource', function($resource) {
+    	return $resource('/rest/meetingPointPlayers');
     }])
     .factory('TimeSeries', ['$resource', function($resource) {
       return $resource('/rest/timeseries/:player');
@@ -427,6 +434,87 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	});
 	
 	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
+}
+function MeetingPointController($scope, $rootScope, $timeout, $location, MeetingPointPlayer, Tables, Games) {
+	$scope.loadPlayers = function() {
+		$scope.arePlayersLoading = true;
+		$scope.players = MeetingPointPlayer.query({}, function() {
+			$scope.arePlayersLoading = false;
+		});
+	};
+	$scope.loadPlayers();
+    $scope.tables = Tables.query({}, function() {
+	    $scope.isTablesLoading = false;
+    });
+    $scope.availableTimes = [
+       {label: 'next 15min', timeDiff: '15'},
+       {label: 'next 30min', timeDiff: '30'},
+       {label: 'next 1h', timeDiff: '60'},
+       {label: 'next 2h', timeDiff: '120'}                   
+    ];
+    $scope.addPlayer = function() {
+    	var availableUntil = new Date().getTime();
+    	availableUntil += $scope.availableNextMin * 60 * 1000;
+    	$scope.player.availableUntil = new Date(availableUntil);
+    	var player = new MeetingPointPlayer($scope.player);
+    	player.$save({}, function() {
+    		$scope.loadPlayers();
+    	});
+    };
+    $scope.togglePlayer = function(player) {
+    	player.enabled = ! (player.enabled | false);
+    	console.log("Player: " + player.player + ", enabled: " +player.enabled );
+    }
+    $scope.startGame = function() {
+    	var enabledPlayers = $scope.getEnabledPlayers();
+    	if (enabledPlayers.length === 4) {
+    		console.log("We could start playing");
+    		var game = new Games();
+    		game.table= enabledPlayers[0].table;
+    		game.players = [];
+    		angular.forEach(enabledPlayers, function(enabledPlayer) {
+    			game.players.push(enabledPlayer.player);
+    		});
+    	    game.$save({table: game.table}, function(savedGame){
+    	        $location.path("/tables/" + game.table + "/games/" + savedGame.id);      
+    	    });
+    	}
+    }
+    $scope.countEnabledPlayers = function() {
+    	return $scope.getEnabledPlayers().length;
+    }
+    $scope.getEnabledPlayers = function() {
+    	var enabledPlayers = [];
+    	var now = new Date();
+    	angular.forEach($scope.players, function(player) {
+    		if (player.enabled && player.availableUntil > now) {
+    			enabledPlayers.push(player);
+    		}
+    	});
+    	return enabledPlayers;
+    }
+    $scope.refreshFilter = function() {
+    	if(!$scope.$$phase) {
+    		$scope.$apply();
+    	}
+		var timer = $timeout($scope.refreshFilter, 10000);
+		$scope.$on('$locationChangeStart', function(){
+			$timeout.cancel(timer);
+		});
+    }
+    $scope.refreshFilter();
+    $scope.filterOldEntries = function(element) {
+    	var now = new Date();
+    	return element.availableUntil > now;
+    };
+	$rootScope.$on("UpdateMeetingPoint", function(event, message) {
+		   console.log("Received update for meeting point");
+		   $scope.players = message.players;
+	       if(!$scope.$$phase) {
+	         $scope.$apply();
+	       }
+	});
+
 }
 function HighlightsController($scope, Mutations) {
 	$scope.isMutationsLoading = true;

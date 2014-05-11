@@ -9,6 +9,7 @@ import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.mutations.Mutations;
+import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.statistics.Statistics;
 import ch.squix.extraleague.rest.admin.users.PlayerUserAdminResource;
@@ -26,6 +27,7 @@ import ch.squix.extraleague.rest.notification.NotificationTokenResource;
 import ch.squix.extraleague.rest.ping.PingResource;
 import ch.squix.extraleague.rest.player.PlayerRessource;
 import ch.squix.extraleague.rest.player.PlayersRessource;
+import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerResource;
 import ch.squix.extraleague.rest.playeruser.PlayerUserResource;
 import ch.squix.extraleague.rest.ranking.CleanInDayRankingsResource;
 import ch.squix.extraleague.rest.ranking.RankingByTagResource;
@@ -49,6 +51,7 @@ public class ExtraLeagueRestApplication extends Application {
         ObjectifyService.register(Statistics.class);
         ObjectifyService.register(Mutations.class);
         ObjectifyService.register(PlayerUser.class);
+        ObjectifyService.register(MeetingPointPlayer.class);
     }
 	
 	@Override
@@ -69,6 +72,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/players", PlayersRessource.class);
         router.attach("/players/{player}", PlayerRessource.class);
         router.attach("/timeseries/{player}", TimeSeriesResource.class);
+        router.attach("/meetingPointPlayers", MeetingPointPlayerResource.class);
         router.attach("/updateRankings", RankingServiceResource.class);
         router.attach("/cleanRankings", CleanInDayRankingsResource.class);
         router.attach("/updateStatistics", UpdateStatisticsResource.class);

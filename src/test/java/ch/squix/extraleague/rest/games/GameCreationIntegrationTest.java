@@ -13,6 +13,7 @@ import org.restlet.data.Method;
 import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.rest.matches.MatchDto;
 import ch.squix.extraleague.rest.matches.MatchesResource;
@@ -31,6 +32,7 @@ public class GameCreationIntegrationTest {
             ObjectifyService.register(Match.class);
             ObjectifyService.register(BrowserClient.class);
             ObjectifyService.register(Ranking.class);
+            ObjectifyService.register(MeetingPointPlayer.class);
             
 	    helper.setUp();
 	}

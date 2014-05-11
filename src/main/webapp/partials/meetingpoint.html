@@ -1,0 +1,39 @@
+<h2>Meeting Point</h2> 
+<div class="row">
+     <form name="playerForm">
+	<div class="col-md-2 form-group">
+	  <input required type="text" class="form-control" id="player" ng-model="player.player" placeholder="Short sign">
+	</div>
+	<div class="col-md-2 form-group">
+	    <select required class="form-control" ng-model="player.table" ng-options="table.name as table.name for table in tables">
+	      <option value="">-- choose table --</option>
+	    </select>
+	</div>
+	<div class="col-md-2 form-group">
+	    <select required class="form-control" ng-model="availableNextMin" ng-options="available.timeDiff as available.label for available in availableTimes">
+	      <option value="">-- Game starts within --</option>
+	    </select>
+	</div>
+	<div class="col-md-2 form-group">
+		<button ng-disabled="!playerForm.$valid" type="submit" class="btn btn-primary" ng-click="addPlayer()">Add Player</button>
+		<div ng-show="isAddingPlayer">
+		  <img src="images/ajax-loader.gif" /> Adding player...
+		</div>
+	</div>
+  </form>
+</div>
+<div>
+    <button ng-disabled="countEnabledPlayers() !== 4" class="btn btn-primary" ng-click="startGame()">Start Game</button>
+    {{countEnabledPlayers()}} Player(s) selected
+</div>
+<BR/>
+<div>
+	<div class="border" ng-class="{'border-enabled': player.enabled}" ng-repeat="player in players | filter: filterOldEntries | orderBy:availableUntil" ng-click="togglePlayer(player)">
+		  <div class="playerCol" player="player.player"></div>
+		  <div class="playerCol">
+			  <div>Available until {{player.availableUntil | date:'shortTime' }}</div> 
+			  <div>Table: {{player.table }}</div> 
+		  </div>
+	</div>
+</div>
+

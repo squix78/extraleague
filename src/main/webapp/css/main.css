@@ -215,3 +215,28 @@ legend {
 .vis.timeline .item .content, .vis.timeline .item.range .content {
 	overflow: visible;
 }
+.border {
+	padding: 10px;
+	width: 250px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+	cursor: pointer; 
+	cursor: hand; 
+}
+.border:HOVER {
+	background-color: #ccc;
+}
+.border-enabled {
+	background-color: #ddd;
+}
+.playerCol {
+	display:inline-block; 
+	vertical-align: top;
+	margin-right: 10px;
+}

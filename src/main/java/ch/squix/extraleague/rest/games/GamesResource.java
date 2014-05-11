@@ -4,7 +4,6 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +16,14 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.ranking.elo.EloUtil;
 import ch.squix.extraleague.notification.NotificationService;
+import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
+import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
 
 
@@ -62,7 +64,24 @@ public class GamesResource extends ServerResource {
 		List<Match> matches = createMatches(game);
 		ofy().save().entities(matches).now();
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
+		removePlayersFromMeetingPoint(game.getPlayers());
 		return dto;
+	}
+
+	private void removePlayersFromMeetingPoint(List<String> players) {
+		List<MeetingPointPlayer> meetingPointPlayers = ofy().load().type(MeetingPointPlayer.class).list();
+		List<MeetingPointPlayer> playersToDelete = new ArrayList<>();
+		List<MeetingPointPlayer> remainingAtMeetingPoint = new ArrayList<>();
+		
+		for (MeetingPointPlayer meetingPointPlayer : meetingPointPlayers) {
+			if (players.contains(meetingPointPlayer.getPlayer())) {
+				playersToDelete.add(meetingPointPlayer);
+			} else {
+				remainingAtMeetingPoint.add(meetingPointPlayer);
+			}
+		}
+		ofy().delete().entities(playersToDelete).now();
+		NotificationService.sendMessage(new UpdateMeetingPointMessage(MeetingPointPlayerMapper.mapToDtos(remainingAtMeetingPoint)));
 	}
 
 	public List<Match> createMatches(Game game) {

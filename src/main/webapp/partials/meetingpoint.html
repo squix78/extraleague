@@ -24,7 +24,8 @@
 </div>
 <div>
     <button ng-disabled="countEnabledPlayers() !== 4" class="btn btn-primary" ng-click="startGame()">Start Game</button>
-    {{countEnabledPlayers()}} Player(s) selected
+    {{countEnabledPlayers()}} Player(s) selected:
+    <span ng-repeat="player in getEnabledPlayers()"> {{player.player}}</span>
 </div>
 <BR/>
 <div>

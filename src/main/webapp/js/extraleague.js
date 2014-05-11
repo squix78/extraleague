@@ -435,7 +435,7 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	
 	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
 }
-function MeetingPointController($scope, $rootScope, $timeout, $location, MeetingPointPlayer, Tables, Games) {
+function MeetingPointController($scope, $rootScope, $timeout, $location, MeetingPointPlayer, Tables, Games, NotificationService) {
 	$scope.loadPlayers = function() {
 		$scope.arePlayersLoading = true;
 		$scope.players = MeetingPointPlayer.query({}, function() {

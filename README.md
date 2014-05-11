@@ -1,5 +1,7 @@
 # Extraleague
 
+Current build status: [ ![Codeship Status for squix78/extraleague](https://www.codeship.io/projects/85f58d70-b430-0131-7737-3ef5356443ef/status?branch=master)](https://www.codeship.io/projects/20276)
+
 ## Prerequisites
 Extraleague is using lombok to automatically add getters and setters. In order add this byte code manipulation
 to the IDE of your choise please follow the instructions here: http://projectlombok.org/features/index.html

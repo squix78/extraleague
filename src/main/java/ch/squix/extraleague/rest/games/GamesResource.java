@@ -119,11 +119,14 @@ public class GamesResource extends ServerResource {
 	
 	public List<String> sortPlayersByRanking(List<String> players, Ranking currentRanking) {
 		Map<Integer, String> playerRankMap = new TreeMap<>();
+		Integer newPlayerRank = Integer.MAX_VALUE - 10;
 		for (String player : players) {
 			PlayerRanking playerRanking = currentRanking.getPlayerRanking(player);
-			Integer rank = Integer.MAX_VALUE;
+			Integer rank = newPlayerRank;
 			if (playerRanking != null) {
 				rank = playerRanking.getEloRanking();
+			} else {
+			    newPlayerRank++;
 			}
 			playerRankMap.put(rank, player);
 		}

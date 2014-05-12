@@ -61,6 +61,9 @@ public class MatchesResource extends ServerResource {
 		match.setTeamAScore(matchDto.getTeamAScore());
 		match.setTeamBScore(matchDto.getTeamBScore());
 		match.setScorers(matchDto.getScorers());
+		if ((match.getTeamAScore() > 0 || match.getTeamBScore() > 0) && match.getStartDate() == null) {
+		    match.setStartDate(new Date());
+		}
 		if (match.getTeamAScore() >= 5 || match.getTeamBScore() >= 5) {
 			log.info("Game is finished");
 			match.setEndDate(new Date());
@@ -86,6 +89,7 @@ public class MatchesResource extends ServerResource {
 		// Set the date for the first goal
 		if (sumOfMaxGoals > 0 && game.getFirstGoalDate() == null) {
 			game.setFirstGoalDate(new Date());
+			game.setStartDate(new Date());
 		}
 		if (numberOfCompletedMatches >=4) {
 			log.info("4 Games reached. Setting game endDate");

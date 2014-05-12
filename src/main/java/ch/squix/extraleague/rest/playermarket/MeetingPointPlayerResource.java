@@ -32,6 +32,7 @@ public class MeetingPointPlayerResource extends ServerResource {
 		ofy().delete().type(MeetingPointPlayer.class).id(playerId).now();
 		List<MeetingPointPlayer> players = ofy().load().type(MeetingPointPlayer.class).filter("availableUntil >", new Date()).list();
 		NotificationService.sendMessage(new UpdateMeetingPointMessage(MeetingPointPlayerMapper.mapToDtos(players)));
+
 	}
 
 }

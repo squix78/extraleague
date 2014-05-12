@@ -123,4 +123,22 @@ public class NotificationService {
 		} 
 	}
 
+	public static void sendMeetingPointMessage(String recipient, String subject, String message) {
+		try {
+			Properties props = new Properties();
+			Session session = Session.getDefaultInstance(props, null);
+			MimeMessage msg = new MimeMessage(session);
+		    msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+
+		    msg.setSubject(subject);
+		    //msg.setText(msgBody);
+		    msg.setText(message, "utf-8", "html");
+		    Transport.send(msg);
+
+		} catch (Exception e) {
+		    log.log(Level.SEVERE, "Could not send email", e);
+		} 		
+	}
+
 }

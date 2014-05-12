@@ -39,6 +39,9 @@ public class MeetingPointPlayersResource extends ServerResource {
 		ofy().save().entity(player).now();
 		List<MeetingPointPlayer> players = getCurrentPlayersInMarket();
 		NotificationService.sendMessage(new UpdateMeetingPointMessage(MeetingPointPlayerMapper.mapToDtos(players)));
+		NotificationService.sendMeetingPointMessage(
+				"uTHES7Va441GEHJDNbq9voS7Fauuyd@api.pushover.net",
+				"New Player at meeting point: " + playerDto.getPlayer(), "");
 	}
 
 }

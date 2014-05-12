@@ -78,8 +78,11 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('Players', ['$resource', function($resource) {
       return $resource('/rest/players');
     }])
-    .factory('MeetingPointPlayer', ['$resource', function($resource) {
+    .factory('MeetingPointPlayers', ['$resource', function($resource) {
     	return $resource('/rest/meetingPointPlayers');
+    }])
+    .factory('MeetingPointPlayer', ['$resource', function($resource) {
+    	return $resource('/rest/meetingPointPlayers/:playerId');
     }])
     .factory('TimeSeries', ['$resource', function($resource) {
       return $resource('/rest/timeseries/:player');
@@ -435,10 +438,10 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	
 	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
 }
-function MeetingPointController($scope, $rootScope, $timeout, $location, MeetingPointPlayer, Tables, Games, NotificationService) {
+function MeetingPointController($scope, $rootScope, $timeout, $location, MeetingPointPlayers, MeetingPointPlayer, Tables, Games, NotificationService) {
 	$scope.loadPlayers = function() {
 		$scope.arePlayersLoading = true;
-		$scope.players = MeetingPointPlayer.query({}, function() {
+		$scope.players = MeetingPointPlayers.query({}, function() {
 			$scope.arePlayersLoading = false;
 		});
 	};
@@ -457,7 +460,7 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
     	availableUntil += $scope.availableNextMin * 60 * 1000;
     	$scope.player.availableUntil = new Date(availableUntil);
     	$scope.player.player = $scope.player.player.toLowerCase();
-    	var player = new MeetingPointPlayer($scope.player);
+    	var player = new MeetingPointPlayers($scope.player);
     	$scope.player = "";
     	player.$save({}, function() {
     		$scope.loadPlayers();
@@ -509,6 +512,13 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
     	var now = new Date();
     	return element.availableUntil > now;
     };
+    $scope.removePlayer = function(player) {
+    	var playerToDelete = new MeetingPointPlayer(player);
+    	playerToDelete.$delete({playerId: player.id}, function() {
+    		$scope.loadPlayers();
+    	});
+    }
+    
 	$rootScope.$on("UpdateMeetingPoint", function(event, message) {
 		   console.log("Received update for meeting point");
 		   $scope.players = message.players;

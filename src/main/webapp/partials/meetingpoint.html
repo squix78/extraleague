@@ -34,6 +34,7 @@
 		  <div class="playerCol">
 			  <div>Available until {{player.availableUntil | date:'shortTime' }}</div> 
 			  <div>Table: {{player.table }}</div> 
+			  <button class="btn btn-danger btn-xs" ng-click="removePlayer(player)">Remove</button>
 		  </div>
 	</div>
 </div>

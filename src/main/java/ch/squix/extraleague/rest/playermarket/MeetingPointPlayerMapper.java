@@ -26,6 +26,7 @@ public class MeetingPointPlayerMapper {
 	
 	public static MeetingPointPlayer mapFromDto(MeetingPointPlayerDto playerDto) {
 		MeetingPointPlayer player = new MeetingPointPlayer();
+		player.setId(playerDto.getId());
 		player.setPlayer(playerDto.getPlayer());
 		player.setTable(playerDto.getTable());
 		player.setAvailableUntil(playerDto.getAvailableUntil());

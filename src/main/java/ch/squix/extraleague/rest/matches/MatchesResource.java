@@ -61,6 +61,9 @@ public class MatchesResource extends ServerResource {
 		match.setTeamAScore(matchDto.getTeamAScore());
 		match.setTeamBScore(matchDto.getTeamBScore());
 		match.setScorers(matchDto.getScorers());
+		if ((match.getTeamAScore() > 0 || match.getTeamBScore() > 0) && match.getStartDate() == null) {
+		    match.setStartDate(new Date());
+		}
 		if (match.getTeamAScore() >= 5 || match.getTeamBScore() >= 5) {
 			log.info("Game is finished");
 			match.setEndDate(new Date());

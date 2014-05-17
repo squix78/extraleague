@@ -1,41 +1,46 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: white;
-  padding-top: 50px;
-  overflow-x: hidden;
+body{
+    font-family: Arial, sans-serif;
+    background-color: white;
+	padding-top: 50px;	
+	overflow-x: hidden;
 }
+
 .even {
-  background-color: #efefef;
-  margin-bottom: 1px;
+	background-color: #efefef;
+	margin-bottom: 1px;
 }
 .odd {
-  background-color: #dedede;
-  margin-bottom: 1px;
+	background-color: #dedede;
+	margin-bottom: 1px;
 }
 .player {
-  max-width: 48px;
+	max-width: 48px;
 }
 .redTeam {
-  border: 2px solid red;
+	border: 2px solid red;
 }
 .blueTeam {
-  border: 2px solid blue;
+	border: 2px solid blue;
 }
-legend {
-  margin: 3px;
-  text-align: center;
-  width: 100%;
-  border-bottom: none;
+legend { 
+	margin:3px; 
+	text-align:center; 
+	width:100%;
+	border-bottom: none;
 }
+
 #ribbon {
-  display: none;
+	display: none;
 }
+
+// @screen-md-min is 992px in bootstrap
 @media (min-width: 992px) {
-  #ribbon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 0;
-    z-index: 2000;
-  }
+	#ribbon {
+        display: block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		border: 0;
+		z-index: 2000;
+	}
 }

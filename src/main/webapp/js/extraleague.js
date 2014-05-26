@@ -96,6 +96,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('Mutations', ['$resource', function($resource) {
     	return $resource('/rest/mutations');
     }])
+    .factory('AuthUrl', ['$resource', function($resource) {
+    	return $resource('/rest/authUrl');
+    }])
     .directive('badges', function() {
       return {
         restrict: 'A',
@@ -160,7 +163,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 	  };
   	});
 
-function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
+function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables, AuthUrl) {
   
   $rootScope.backlink = false;
   
@@ -172,6 +175,10 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
 	$scope.navCollapsed = true
 	$location.path(target);  
   };
+  
+  $scope.authUrl = AuthUrl.get({}, function() {
+		
+  });
 
 }
 

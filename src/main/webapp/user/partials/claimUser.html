@@ -1,0 +1,18 @@
+<h4>Claim User</h4>
+
+Your Google Account has not been paired with a Extraleague user yet. Please enter your short sign
+to claim this user. You will receive an email to the extraleagues user email address to verify
+your claim.
+
+ <form name="userForm">
+  <div class="form-group">
+    <label for="playerInput">Player</label>
+    <input type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
+  </div>
+
+  <button ng-disabled="!userForm.$valid" type="submit" class="btn btn-primary" ng-click="claimUser()">Claim</button>
+</form>
+
+<span ng-show="isPlayerLoading"><img src="../images/ajax-loader.gif" /> Loading user...</span>
+<span ng-show="isPlayerSaving"><img src="../images/ajax-loader.gif" /> Saving user...</span>
+

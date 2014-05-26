@@ -24,5 +24,10 @@ public class PlayerUser {
 		private String imageUrl;
 		
 		private Boolean emailNotification = true;
+		
+		@Index
+		private String appUserId;
+		
+		private String appUserEmail;
 
 }

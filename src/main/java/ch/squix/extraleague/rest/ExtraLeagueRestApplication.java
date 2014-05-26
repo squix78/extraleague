@@ -39,6 +39,9 @@ import ch.squix.extraleague.rest.statistics.StatisticsResource;
 import ch.squix.extraleague.rest.statistics.UpdateStatisticsResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
 import ch.squix.extraleague.rest.timeseries.TimeSeriesResource;
+import ch.squix.extraleague.rest.user.ClaimUserResource;
+import ch.squix.extraleague.rest.user.CurrentUserResource;
+import ch.squix.extraleague.rest.user.LoginLogoutResource;
 
 import com.googlecode.objectify.ObjectifyService;
 
@@ -86,6 +89,9 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/mutations", MutationsResource.class);
         router.attach("/admin/playerUsers", PlayerUsersAdminResource.class);
         router.attach("/admin/playerUsers/{player}", PlayerUserAdminResource.class);
+        router.attach("/user/current", CurrentUserResource.class);
+        router.attach("/user/claim/{player}", ClaimUserResource.class);
+        router.attach("/authUrl", LoginLogoutResource.class);
         router.attach("/playerUsers", PlayerUserResource.class);
         
 

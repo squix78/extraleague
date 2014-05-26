@@ -74,16 +74,27 @@
 	  <web-resource-collection>
 	    <web-resource-name>admin</web-resource-name>
 	    <url-pattern>/admin/*</url-pattern>
+	    <url-pattern>/rest/admin/*</url-pattern>
 	  </web-resource-collection>
 	  <auth-constraint>
 	    <role-name>admin</role-name>
+	  </auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+	  <web-resource-collection>
+	    <web-resource-name>user</web-resource-name>
+	    <url-pattern>/user/*</url-pattern>
+	    <url-pattern>/rest/user/*</url-pattern>
+	  </web-resource-collection>
+	  <auth-constraint>
+	    <role-name>*</role-name>
 	  </auth-constraint>
 	</security-constraint>
 
    <servlet-mapping>
       <servlet-name>RestletServlet</servlet-name>
       <url-pattern>/rest/*</url-pattern>
-      <url-pattern>/admin/rest/*</url-pattern>
    </servlet-mapping>
 
    <servlet-mapping>

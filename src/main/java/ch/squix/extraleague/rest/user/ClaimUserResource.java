@@ -9,6 +9,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.match.player.PlayerUser;
+import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.rest.games.OpenGamesResource;
 
 import com.google.appengine.api.users.User;
@@ -40,6 +41,7 @@ public class ClaimUserResource extends ServerResource {
 		playerUser.setAppUserId(userId);
 		playerUser.setAppUserEmail(currentUser.getEmail());
 		ofy().save().entity(playerUser).now();
+		NotificationService.sendAdminMessage("User claimed", "GMail: " + currentUser.getEmail() + ", claimed player: " + playerUser.getPlayer());
 		this.setStatus(Status.SUCCESS_OK);
 		return "OK";
 	}

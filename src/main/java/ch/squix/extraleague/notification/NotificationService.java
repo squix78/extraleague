@@ -35,110 +35,133 @@ import com.google.appengine.api.channel.ChannelServiceFactory;
 import com.google.common.base.Joiner;
 
 public class NotificationService {
-	
-	private static final Logger log = Logger.getLogger(NotificationTokenResource.class.getName());
-	private static final Joiner JOINER = Joiner.on(", ");
-	
-	public static void sendMessage(NotificationMessage message) {
-		try {
-			List<BrowserClient> clients = ofy().load().type(BrowserClient.class).list();
-			ChannelService channelService = ChannelServiceFactory.getChannelService();
-			ObjectMapper mapper = new ObjectMapper();
-			String payload = mapper.writeValueAsString(message);
-			List<BrowserClient> oldClients = new ArrayList<>();
-			long maxClientAge = new Date().getTime() - 1000 * 60 * 60 * 2;
-			
-			for (BrowserClient client : clients) {
-				if (client.getCreatedDate().getTime() > maxClientAge) {
-					ChannelMessage channelMessage = new ChannelMessage(client.getToken(), payload);
-					channelService.sendMessage(channelMessage);
-				} else {
-					oldClients.add(client);
-				}
-			}
-			if (oldClients.size() > 0) {
-				ofy().delete().entities(oldClients).now();
-			}
-		} catch (IOException e) {
-			log.log(Level.SEVERE, "Could not convert message to json", e);
-		}
-	}
-	
-	public static void sendSummaryEmail(Game game, List<Match> matches) {
-		SummaryDto summaryDto = SummaryService.getSummaryDto(game, matches);
-		StringBuilder emailBody = new StringBuilder();
-		emailBody.append("<table><thead><tr>");
-		emailBody.append("<th>Player</th><th>Won</th><th>Goals</th><th>Elo</th>");
-		emailBody.append("</tr></thead><tbody>");
-		for (PlayerScoreDto playerScore : summaryDto.getPlayerScores()) {
-			emailBody.append("<tr><td>");
-			emailBody.append(playerScore.getPlayer());
-			emailBody.append("</td><td>");
-			emailBody.append(playerScore.getScore());
-			emailBody.append("</td><td>");
-			emailBody.append(playerScore.getGoals());
-			emailBody.append("</td><td>");
-			emailBody.append(playerScore.getEarnedEloPoints());
-			emailBody.append("</td></tr>");
-		}
-		emailBody.append("</tbody></table>");
-		emailBody.append("Note: this is a new feature. If you want to disable email notification, send an email to DEI.");
-		emailBody.append("There is a feature planned to let you administrate this yourself.");
-		List<PlayerUser> players = ofy().load().type(PlayerUser.class).filter("player in", game.getPlayers()).list();
-		List<String> recipients = new ArrayList<>();
-		recipients.add("dani.eichhorn@squix.ch");
-		for (PlayerUser player : players) {
-			Boolean isEmailNotificationEnabled = player.getEmailNotification();
-			String recipient = player.getEmail();
-			if (isEmailNotificationEnabled != null && isEmailNotificationEnabled && recipient != null) {
-				recipients.add(recipient);
-			}
-		}
-		
-		sendEmail("Summary Game with " + JOINER.join(game.getPlayers()), emailBody.toString(), recipients);
-	}
-	
-	private static void sendEmail(String subject, String msgBody, List<String> recipients) {
-		if (recipients.size() == 0) {
-			log.info("No notifications enabled. Not sending email");
-			return;
-		}
-		log.info("Sending email to " + JOINER.join(recipients));
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
 
-		try {
-			MimeMessage msg = new MimeMessage(session);
-		    msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
-		    for (String recipient : recipients) {
-			    msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-		    }
-		    msg.setSubject(subject);
-		    //msg.setText(msgBody);
-		    msg.setText(msgBody, "utf-8", "html");
-		    Transport.send(msg);
+    private static final Logger log = Logger.getLogger(NotificationTokenResource.class.getName());
+    private static final Joiner JOINER = Joiner.on(", ");
 
-		} catch (Exception e) {
-		    log.log(Level.SEVERE, "Could not send email", e);
-		} 
-	}
+    public static void sendMessage(NotificationMessage message) {
+        try {
+            List<BrowserClient> clients = ofy().load().type(BrowserClient.class).list();
+            ChannelService channelService = ChannelServiceFactory.getChannelService();
+            ObjectMapper mapper = new ObjectMapper();
+            String payload = mapper.writeValueAsString(message);
+            List<BrowserClient> oldClients = new ArrayList<>();
+            long maxClientAge = new Date().getTime() - 1000 * 60 * 60 * 2;
 
-	public static void sendMeetingPointMessage(String recipient, String subject, String message) {
-		try {
-			Properties props = new Properties();
-			Session session = Session.getDefaultInstance(props, null);
-			MimeMessage msg = new MimeMessage(session);
-		    msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            for (BrowserClient client : clients) {
+                if (client.getCreatedDate().getTime() > maxClientAge) {
+                    ChannelMessage channelMessage = new ChannelMessage(client.getToken(), payload);
+                    channelService.sendMessage(channelMessage);
+                } else {
+                    oldClients.add(client);
+                }
+            }
+            if (oldClients.size() > 0) {
+                ofy().delete().entities(oldClients).now();
+            }
+        } catch (IOException e) {
+            log.log(Level.SEVERE, "Could not convert message to json", e);
+        }
+    }
 
-		    msg.setSubject(subject);
-		    //msg.setText(msgBody);
-		    msg.setText(message, "utf-8", "html");
-		    Transport.send(msg);
+    public static void sendSummaryEmail(Game game, List<Match> matches) {
+        SummaryDto summaryDto = SummaryService.getSummaryDto(game, matches);
+        StringBuilder emailBody = new StringBuilder();
+        emailBody.append("<table><thead><tr>");
+        emailBody.append("<th>Player</th><th>Won</th><th>Goals</th><th>Elo</th>");
+        emailBody.append("</tr></thead><tbody>");
+        for (PlayerScoreDto playerScore : summaryDto.getPlayerScores()) {
+            emailBody.append("<tr><td>");
+            emailBody.append(playerScore.getPlayer());
+            emailBody.append("</td><td>");
+            emailBody.append(playerScore.getScore());
+            emailBody.append("</td><td>");
+            emailBody.append(playerScore.getGoals());
+            emailBody.append("</td><td>");
+            emailBody.append(playerScore.getEarnedEloPoints());
+            emailBody.append("</td></tr>");
+        }
+        emailBody.append("</tbody></table>");
+        emailBody.append("Note: this is a new feature. If you want to disable email notification, send an email to DEI.");
+        emailBody.append("There is a feature planned to let you administrate this yourself.");
+        List<PlayerUser> players = ofy().load()
+                .type(PlayerUser.class)
+                .filter("player in", game.getPlayers())
+                .list();
+        List<String> recipients = new ArrayList<>();
+        recipients.add("dani.eichhorn@squix.ch");
+        for (PlayerUser player : players) {
+            Boolean isEmailNotificationEnabled = player.getEmailNotification();
+            String recipient = player.getEmail();
+            if (isEmailNotificationEnabled != null && isEmailNotificationEnabled
+                    && recipient != null) {
+                recipients.add(recipient);
+            }
+        }
 
-		} catch (Exception e) {
-		    log.log(Level.SEVERE, "Could not send email", e);
-		} 		
-	}
+        sendEmail("Summary Game with " + JOINER.join(game.getPlayers()), emailBody.toString(),
+                recipients);
+    }
+
+    private static void sendEmail(String subject, String msgBody, List<String> recipients) {
+        if (recipients.size() == 0) {
+            log.info("No notifications enabled. Not sending email");
+            return;
+        }
+        log.info("Sending email to " + JOINER.join(recipients));
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+
+        try {
+            MimeMessage msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
+            for (String recipient : recipients) {
+                msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            }
+            msg.setSubject(subject);
+            // msg.setText(msgBody);
+            msg.setText(msgBody, "utf-8", "html");
+            Transport.send(msg);
+
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Could not send email", e);
+        }
+    }
+
+    public static void sendMeetingPointMessage(String recipient, String subject, String message) {
+        try {
+            Properties props = new Properties();
+            Session session = Session.getDefaultInstance(props, null);
+            MimeMessage msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
+            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+
+            msg.setSubject(subject);
+            // msg.setText(msgBody);
+            msg.setText(message, "utf-8", "html");
+            Transport.send(msg);
+
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Could not send email", e);
+        }
+    }
+
+    public static void sendAdminMessage(String subject, String body) {
+        try {
+            Properties props = new Properties();
+            Session session = Session.getDefaultInstance(props, null);
+            MimeMessage msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
+            msg.addRecipient(Message.RecipientType.TO, new InternetAddress("squix78@gmail.com"));
+
+            msg.setSubject(subject);
+            // msg.setText(msgBody);
+            msg.setText(body, "utf-8", "html");
+            Transport.send(msg);
+
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Could not send email", e);
+        }
+    }
 
 }

@@ -18,7 +18,7 @@ angular.module('PlayerMappings', [])
 				var playerUser = playerMap[shortname];
 				if (angular.isDefined(playerUser) && shortname.length > 1) {
 					console.log("Getting image address for " + playerUser.player);
-					return playerUser.imageUrl;
+					return "/playerImage?url=" + playerUser.imageUrl;
 				} else {
 					return "images/person2.png";
 				}

@@ -12,15 +12,24 @@
     <input type="email" required class="form-control" id="emailInput" placeholder="Email" ng-model="playerUser.email">
   </div>
   <div class="form-group">
+    <label for="emailInput">Claiming Gmail Account:</label>
+    <input ng-disabled="true" type="email" required class="form-control" id="emailInput" placeholder="Email" ng-model="playerUser.appUserEmail">
+  </div>
+  <div class="form-group">
     <label for="imageUrlInput">Image URL</label>
     <input type="text" required class="form-control" id="imageUrlInput" ng-model="playerUser.imageUrl">
   </div>
   <div class="checkbox">
     <label>
-      <input type="checkbox" ng-model="playerUser.emailNotification"> Email Notification
+      <input type="checkbox" ng-model="playerUser.emailNotification"> Send me summary when game finished
     </label>
   </div>
-  <button ng-disabled="!userForm.$valid" type="submit" class="btn btn-primary" ng-click="saveUser()">Save</button>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="playerUser.meetingPointNotification"> Notify me if someone joins MeetingPoint
+    </label>
+  </div>
+  <button ng-disabled="!userForm.$valid || isPlayerSaving" type="submit" class="btn btn-primary" ng-click="savePlayer()">Save</button>
 
 </form>
 

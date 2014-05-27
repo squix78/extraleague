@@ -2,10 +2,10 @@ package ch.squix.extraleague.rest.user;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
+import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.match.player.PlayerUser;
@@ -33,6 +33,17 @@ public class CurrentUserResource extends ServerResource {
 			return null;
 		}
 		return PlayerUserDtoMapper.mapToDto(player);
+	}
+	
+	@Post(value = "json")
+	public PlayerUserDto executePost(PlayerUserDto dto) {
+		UserService userService = UserServiceFactory.getUserService();
+		User currentUser = userService.getCurrentUser();
+		if (currentUser != null && dto.getAppUserEmail() != null && dto.getAppUserEmail().equals(currentUser.getEmail())) {
+			PlayerUserDtoMapper.savePlayerUser(dto, dto.getPlayer());
+			return dto;
+		}
+		return null;
 	}
 
 }

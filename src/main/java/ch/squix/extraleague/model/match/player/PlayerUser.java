@@ -26,8 +26,12 @@ public class PlayerUser {
 		private Boolean emailNotification = true;
 		
 		@Index
+		private Boolean meetingPointNotification = false;
+		
+		@Index
 		private String appUserId;
 		
 		private String appUserEmail;
+
 
 }

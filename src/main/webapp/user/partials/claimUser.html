@@ -10,9 +10,8 @@ your claim.
     <input type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
   </div>
 
-  <button ng-disabled="!userForm.$valid" type="submit" class="btn btn-primary" ng-click="claimUser()">Claim</button>
+  <button ng-disabled="!userForm.$valid || idClaimLoading" type="submit" class="btn btn-primary" ng-click="claimUser()">Claim</button>
 </form>
 
-<span ng-show="isPlayerLoading"><img src="../images/ajax-loader.gif" /> Loading user...</span>
-<span ng-show="isPlayerSaving"><img src="../images/ajax-loader.gif" /> Saving user...</span>
-
+<span ng-show="isClaimLoading"><img src="../images/ajax-loader.gif" /> Claiming user...</span>
+<div ng-show="errorMessage">{{errorMessage}}</div>

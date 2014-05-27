@@ -35,16 +35,10 @@ public class PlayerUserAdminResource extends ServerResource {
 	@Post(value = "json")
 	public void executePost(PlayerUserDto playerUserDto) {
 		String player = (String) this.getRequestAttributes().get("player");
-		PlayerUser playerUser = ofy().load().type(PlayerUser.class).filter("player == ", player).first().now();
-		if (playerUser == null) {
-			playerUser = new PlayerUser();
-			playerUser.setPlayer(player);
-		}
-		playerUser.setEmail(playerUserDto.getEmail());
-		playerUser.setImageUrl(playerUserDto.getImageUrl());
-		playerUser.setEmailNotification(playerUserDto.getEmailNotification());
-		ofy().save().entities(playerUser).now();
+		PlayerUserDtoMapper.savePlayerUser(playerUserDto, player);
 	}
+
+
 	
 	@Delete(value = "json")
 	public void executePost() {

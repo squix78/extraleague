@@ -1,5 +1,7 @@
 package ch.squix.extraleague.rest.playeruser;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -9,21 +11,15 @@ import ch.squix.extraleague.model.match.player.PlayerUser;
 
 public class PlayerUserDtoMapper {
 	
-	private final static String MAPPING_SERVICE_URL = "/playerImage?url=";
-	
 	public static PlayerUserDto mapToDto(PlayerUser playerUser) {
 		PlayerUserDto dto = new PlayerUserDto();
 		dto.setPlayer(playerUser.getPlayer());
 		dto.setEmail(playerUser.getEmail());
-		String imageUrl = playerUser.getImageUrl();
-		if (imageUrl != null) {
-			try {
-				String imageUrlEncoded = URLEncoder.encode(imageUrl, "utf-8");
-				dto.setImageUrl(MAPPING_SERVICE_URL + imageUrlEncoded);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-		}
+		dto.setAppUserEmail(playerUser.getAppUserEmail());
+		dto.setImageUrl(playerUser.getImageUrl());
+		dto.setEmailNotification(playerUser.getEmailNotification());
+		dto.setMeetingPointNotification(playerUser.getMeetingPointNotification());
+
 		return dto;
 	}
 	
@@ -58,6 +54,19 @@ public class PlayerUserDtoMapper {
 		playerUser.setImageUrl(dto.getImageUrl());
 		playerUser.setEmailNotification(dto.getEmailNotification());
 		return playerUser;
+	}
+	
+	public static void savePlayerUser(PlayerUserDto playerUserDto, String player) {
+		PlayerUser playerUser = ofy().load().type(PlayerUser.class).filter("player == ", player).first().now();
+		if (playerUser == null) {
+			playerUser = new PlayerUser();
+			playerUser.setPlayer(player);
+		}
+		playerUser.setEmail(playerUserDto.getEmail());
+		playerUser.setImageUrl(playerUserDto.getImageUrl());
+		playerUser.setEmailNotification(playerUserDto.getEmailNotification());
+		playerUser.setMeetingPointNotification(playerUserDto.getMeetingPointNotification());
+		ofy().save().entities(playerUser).now();
 	}
 
 

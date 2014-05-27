@@ -128,16 +128,24 @@ public class NotificationService {
         }
     }
 
-    public static void sendMeetingPointMessage(String recipient, String subject, String message) {
-        try {
+    public static void sendMeetingPointMessage(String subject, String message) {
+    	List<PlayerUser> usersWithNotification = ofy().load().type(PlayerUser.class).filter("meetingPointNotification =", true).list();
+        if (usersWithNotification == null || usersWithNotification.size() == 0) {
+        	return;
+        }
+    	try {
             Properties props = new Properties();
             Session session = Session.getDefaultInstance(props, null);
             MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
-            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            for (PlayerUser user : usersWithNotification) {
+            	String recipient = user.getEmail();
+            	if(recipient != null) {
+            		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
+            	}
+            }
 
             msg.setSubject(subject);
-            // msg.setText(msgBody);
             msg.setText(message, "utf-8", "html");
             Transport.send(msg);
 

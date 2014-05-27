@@ -32,11 +32,11 @@ public class ClaimUserResource extends ServerResource {
 		PlayerUser playerUser = ofy().load().type(PlayerUser.class).filter("player = ", player).first().now();
 		if (playerUser == null) {
 			this.setStatus(Status.CLIENT_ERROR_NOT_FOUND);
-			return "User not found";
+			return "Could not find player " + player;
 		}
 		if (playerUser.getAppUserId() != null) {
 			this.setStatus(Status.CLIENT_ERROR_CONFLICT);
-			return "Already claimed";
+			return "This player has already been claimed by another user.";
 		}
 		playerUser.setAppUserId(userId);
 		playerUser.setAppUserEmail(currentUser.getEmail());

@@ -60,6 +60,15 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 		});
 	};
 	$scope.loadPlayer();
+	$scope.savePlayer = function() {
+		$scope.isPlayerSaving = true;
+		$scope.playerUser.$save({}, function() {
+			$scope.isPlayerSaving = false;
+			
+		});
+	}
+		
+	
 	$scope.authUrl = AuthUrl.get({}, function() {
 		
 	});
@@ -67,11 +76,14 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 	
 }
 function ClaimController($scope, $rootScope, $resource, $location, $routeParams, CurrentUser, ClaimUser) {
-
 	$scope.claimUser = function() {
+		$scope.isClaimLoading = true;
 		$scope.claimedUser = ClaimUser.get({player: $scope.playerUser.player}, function() {
+			$scope.isClaimLoading = false;
 			$location.path("/currentUser");
 		}, function(error) {
+			$scope.isClaimLoading = false;
+			$scope.errorMessage = error.data;
 			console.log(error.data + ", " + error.status);
 		})
 	}

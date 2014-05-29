@@ -3,6 +3,11 @@ package ch.squix.extraleague.notification;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,14 +16,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.apache.commons.codec.binary.Base64;
 
 import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
@@ -140,8 +144,12 @@ public class NotificationService {
             msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
             for (PlayerUser user : usersWithNotification) {
             	String recipient = user.getEmail();
-            	if(recipient != null) {
+            	if(recipient != null && !"".equals(recipient)) {
             		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
+            	}
+            	String pushBulletApiKey = user.getPushBulletApiKey();
+            	if (pushBulletApiKey != null && !"".equals(pushBulletApiKey)) {
+            		sendPushPulletMessage(pushBulletApiKey, subject, message);
             	}
             }
 
@@ -171,5 +179,37 @@ public class NotificationService {
             log.log(Level.SEVERE, "Could not send email", e);
         }
     }
+    
+    public static void sendPushPulletMessage(String apiKey, String title, String body) {
+
+        try {
+        	String bodyEncoded = URLEncoder.encode(body, "UTF-8");
+        	String titleEncoded = URLEncoder.encode(title, "UTF-8");
+            URL url = new URL("https://api.pushbullet.com/v2/pushes");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+
+            connection.setRequestProperty("Authorization",
+            		"Basic "+ Base64.encodeBase64String((apiKey).getBytes()));
+
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+            writer.write("type=note&");
+            writer.write("title="+titleEncoded+"&");
+            writer.write("body="+bodyEncoded);
+            writer.close();
+    
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                log.log(Level.INFO, "Sent message");
+            } else {
+            	log.log(Level.SEVERE, "Could not send message: " + connection.getResponseCode() );
+            }
+        } catch (MalformedURLException e) {
+        	log.log(Level.SEVERE, "Could not send message: ", e);
+        } catch (IOException e) {
+        	log.log(Level.SEVERE, "Could not send message: ", e);
+        }
+    }
+
 
 }

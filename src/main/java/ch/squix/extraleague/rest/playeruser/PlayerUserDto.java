@@ -11,6 +11,7 @@ public class PlayerUserDto {
 	private Boolean emailNotification;
 	private Boolean meetingPointNotification;
 	private String appUserEmail;
+	private String pushBulletApiKey;
 	
 
 }

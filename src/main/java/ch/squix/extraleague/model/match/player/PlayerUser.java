@@ -32,6 +32,8 @@ public class PlayerUser {
 		private String appUserId;
 		
 		private String appUserEmail;
+		
+		private String pushBulletApiKey;
 
 
 }

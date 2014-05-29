@@ -19,7 +19,7 @@ public class PlayerUserDtoMapper {
 		dto.setImageUrl(playerUser.getImageUrl());
 		dto.setEmailNotification(playerUser.getEmailNotification());
 		dto.setMeetingPointNotification(playerUser.getMeetingPointNotification());
-
+		dto.setPushBulletApiKey(playerUser.getPushBulletApiKey());
 		return dto;
 	}
 	
@@ -53,6 +53,8 @@ public class PlayerUserDtoMapper {
 		playerUser.setEmail(dto.getEmail());
 		playerUser.setImageUrl(dto.getImageUrl());
 		playerUser.setEmailNotification(dto.getEmailNotification());
+		dto.setMeetingPointNotification(playerUser.getMeetingPointNotification());
+		dto.setPushBulletApiKey(playerUser.getPushBulletApiKey());
 		return playerUser;
 	}
 	
@@ -66,6 +68,7 @@ public class PlayerUserDtoMapper {
 		playerUser.setImageUrl(playerUserDto.getImageUrl());
 		playerUser.setEmailNotification(playerUserDto.getEmailNotification());
 		playerUser.setMeetingPointNotification(playerUserDto.getMeetingPointNotification());
+		playerUser.setPushBulletApiKey(playerUserDto.getPushBulletApiKey());
 		ofy().save().entities(playerUser).now();
 	}
 

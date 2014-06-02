@@ -28,3 +28,19 @@ legend {
 	width:100%;
 	border-bottom: none;
 }
+
+#ribbon {
+	display: none;
+}
+
+// @screen-md-min is 992px in bootstrap
+@media (min-width: 992px) {
+	#ribbon {
+        display: block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		border: 0;
+		z-index: 2000;
+	}
+}

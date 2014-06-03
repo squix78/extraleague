@@ -134,7 +134,7 @@ public class NotificationService {
 
     public static void sendMeetingPointMessage(String subject, String message) {
     	List<PlayerUser> usersWithNotification = ofy().load().type(PlayerUser.class).filter("meetingPointNotification =", true).list();
-        if (usersWithNotification == null || usersWithNotification.size() == 0) {
+        if (!Strings.isNullOrEmpty(usersWithNotification)) {
         	return;
         }
     	try {
@@ -144,12 +144,12 @@ public class NotificationService {
             msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
             for (PlayerUser user : usersWithNotification) {
             	String recipient = user.getEmail();
-            	if(recipient != null && !"".equals(recipient)) {
+            	if(!Strings.isNullOrEmpty(recipient)) {
             		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
             	}
             	String pushBulletApiKey = user.getPushBulletApiKey();
-            	if (pushBulletApiKey != null && !"".equals(pushBulletApiKey)) {
-            		sendPushPulletMessage(pushBulletApiKey, subject, message);
+            	if (!Strings.isNullOrEmpty(pushBulletApiKey)) {
+            		sendPushBulletNote(pushBulletApiKey, subject, message);
             	}
             }
 
@@ -180,11 +180,8 @@ public class NotificationService {
         }
     }
     
-    public static void sendPushPulletMessage(String apiKey, String title, String body) {
-
+    public static void sendPushBulletMessage(String apiKey, String httpBody) {
         try {
-        	String bodyEncoded = URLEncoder.encode(body, "UTF-8");
-        	String titleEncoded = URLEncoder.encode(title, "UTF-8");
             URL url = new URL("https://api.pushbullet.com/v2/pushes");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
@@ -193,10 +190,8 @@ public class NotificationService {
             connection.setRequestProperty("Authorization",
             		"Basic "+ Base64.encodeBase64String((apiKey).getBytes()));
 
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-            writer.write("type=note&");
-            writer.write("title="+titleEncoded+"&");
-            writer.write("body="+bodyEncoded);
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+            writer.write(httpBody);
             writer.close();
     
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -210,6 +205,23 @@ public class NotificationService {
         	log.log(Level.SEVERE, "Could not send message: ", e);
         }
     }
+    public static void sendPushBulletNote(String apiKey, String title, String body) {
+        StringBuilder httpBody = new StringBuilder();
+        httpBody.append("type=note&");
+        httpBody.append("title="+URLEncoder.encode(title, "UTF-8")+"&");
+        httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
+        sendPushBulletMessage(apiKey, httpBody.toString());
+    }
 
+    public static void sendPushBulletLink(String apiKey, String title, String url, String body) {
+        StringBuilder httpBody = new StringBuilder();
+        httpBody.append("type=link&");
+        httpBody.append("title="+URLEncoder.encode("Game starts now.", "UTF-8")+"&");
+        httpBody.append("link="+URLEncoder.encode(url, "UTF-8")+"&");
+        if (!Strings.isNullOrEmpty(body)) {
+            httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
+        }
 
+        sendPushBullet(apiKey, httpBody.toString());
+    }
 }

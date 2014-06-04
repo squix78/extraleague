@@ -28,12 +28,14 @@ import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
-
+import com.google.apphosting.api.ApiProxy;
 
 public class GamesResource extends ServerResource {
 	
 	private static final Logger log = Logger.getLogger(GamesResource.class.getName());
 	private static final Integer [][] mutations = {{0,1,2,3}, {1, 2, 3, 0}, {2, 0, 3, 1}, {0, 3, 1, 2}};
+
+    private static final String baseUrl = ApiProxy.getCurrentEnvironment().get("com.google.appengine.runtime.default_version_hostname");
 	
 	@Get(value = "json")
 	public List<GameDto> execute() throws UnsupportedEncodingException {

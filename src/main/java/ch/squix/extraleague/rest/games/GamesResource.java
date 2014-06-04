@@ -2,6 +2,8 @@ package ch.squix.extraleague.rest.games;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import com.google.common.base.Strings;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
@@ -64,6 +67,13 @@ public class GamesResource extends ServerResource {
 		List<Match> matches = createMatches(game);
 		ofy().save().entities(matches).now();
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
+        List<Player> playersOfGame = ofy().load().type(Player.class).filter("player in", game.getPlayers());
+        for (Player player : playersOfGame()) {
+            if (!Strings.isNullOrEmpty(player.getPushBulletApiKey()) {
+                NotificationService.sendPushBulletLink(player.getPushBulletApiKey(), "Your game started", "absolut URL here/" + game.getId());
+            }
+            // more notifications possible here (email, ...)
+        }
 		removePlayersFromMeetingPoint(game.getPlayers());
 		return dto;
 	}

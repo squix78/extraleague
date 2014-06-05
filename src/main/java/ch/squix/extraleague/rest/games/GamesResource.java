@@ -2,6 +2,8 @@ package ch.squix.extraleague.rest.games;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import com.google.common.base.Strings;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
@@ -25,13 +28,16 @@ import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
+import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.Environment;
 
+import com.google.common.base.Joiner;
 
 public class GamesResource extends ServerResource {
 	
 	private static final Logger log = Logger.getLogger(GamesResource.class.getName());
 	private static final Integer [][] mutations = {{0,1,2,3}, {1, 2, 3, 0}, {2, 0, 3, 1}, {0, 3, 1, 2}};
-	
+
 	@Get(value = "json")
 	public List<GameDto> execute() throws UnsupportedEncodingException {
 		String table = (String) this.getRequestAttributes().get("table");
@@ -64,6 +70,17 @@ public class GamesResource extends ServerResource {
 		List<Match> matches = createMatches(game);
 		ofy().save().entities(matches).now();
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
+        List<PlayerUser> playersOfGame = ofy().load().type(PlayerUser.class).filter("player in", game.getPlayers()).list();
+        for (PlayerUser player : playersOfGame) {
+            if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
+                NotificationService.sendPushBulletLink(
+                        player.getPushBulletApiKey(),
+                        "Extraleage game created",
+                        "http://"+ApiProxy.getCurrentEnvironment().getAppId()+".appspot.com/#/tables/" + game.getTable() + "/games/" + game.getId(),
+                        "The game with " + Joiner.on(", ").join(game.getPlayers()) + " was created.");
+            }
+            // more notifications possible here (email, ...)
+        }
 		removePlayersFromMeetingPoint(game.getPlayers());
 		return dto;
 	}

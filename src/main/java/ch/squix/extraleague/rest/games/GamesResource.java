@@ -31,13 +31,13 @@ import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 import com.google.apphosting.api.ApiProxy;
 import com.google.apphosting.api.ApiProxy.Environment;
 
+import com.google.common.base.Joiner;
+
 public class GamesResource extends ServerResource {
 	
 	private static final Logger log = Logger.getLogger(GamesResource.class.getName());
 	private static final Integer [][] mutations = {{0,1,2,3}, {1, 2, 3, 0}, {2, 0, 3, 1}, {0, 3, 1, 2}};
 
-    private static final String baseUrl = (String)ApiProxy.getCurrentEnvironment().getAttributes().get("com.google.appengine.runtime.default_version_hostname");
-	
 	@Get(value = "json")
 	public List<GameDto> execute() throws UnsupportedEncodingException {
 		String table = (String) this.getRequestAttributes().get("table");
@@ -73,7 +73,11 @@ public class GamesResource extends ServerResource {
         List<PlayerUser> playersOfGame = ofy().load().type(PlayerUser.class).filter("player in", game.getPlayers()).list();
         for (PlayerUser player : playersOfGame) {
             if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
-                NotificationService.sendPushBulletLink(player.getPushBulletApiKey(), "Your game started", "absolut URL here/" + game.getId(),null);
+                NotificationService.sendPushBulletLink(
+                        player.getPushBulletApiKey(),
+                        "Extraleage game created",
+                        "http://"+ApiProxy.getCurrentEnvironment().getAppId()+".appspot.com/#/tables/" + game.getTable() + "/games/" + game.getId(),
+                        "The game with " + Joiner.on(", ").join(game.getPlayers()) + " was created.");
             }
             // more notifications possible here (email, ...)
         }

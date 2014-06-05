@@ -226,7 +226,7 @@ public class NotificationService {
             StringBuilder httpBody = new StringBuilder();
             httpBody.append("type=link&");
             httpBody.append("title="+URLEncoder.encode("Game starts now.", "UTF-8")+"&");
-            httpBody.append("link="+URLEncoder.encode(url, "UTF-8")+"&");
+            httpBody.append("url="+URLEncoder.encode(url, "UTF-8")+"&");
             if (!Strings.isNullOrEmpty(body)) {
                 httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
             }

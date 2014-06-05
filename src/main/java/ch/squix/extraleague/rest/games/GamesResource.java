@@ -29,13 +29,14 @@ import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
 import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.Environment;
 
 public class GamesResource extends ServerResource {
 	
 	private static final Logger log = Logger.getLogger(GamesResource.class.getName());
 	private static final Integer [][] mutations = {{0,1,2,3}, {1, 2, 3, 0}, {2, 0, 3, 1}, {0, 3, 1, 2}};
 
-    private static final String baseUrl = ApiProxy.getCurrentEnvironment().get("com.google.appengine.runtime.default_version_hostname");
+    private static final String baseUrl = (String)ApiProxy.getCurrentEnvironment().getAttributes().get("com.google.appengine.runtime.default_version_hostname");
 	
 	@Get(value = "json")
 	public List<GameDto> execute() throws UnsupportedEncodingException {
@@ -69,10 +70,10 @@ public class GamesResource extends ServerResource {
 		List<Match> matches = createMatches(game);
 		ofy().save().entities(matches).now();
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
-        List<Player> playersOfGame = ofy().load().type(Player.class).filter("player in", game.getPlayers());
-        for (Player player : playersOfGame()) {
-            if (!Strings.isNullOrEmpty(player.getPushBulletApiKey()) {
-                NotificationService.sendPushBulletLink(player.getPushBulletApiKey(), "Your game started", "absolut URL here/" + game.getId());
+        List<PlayerUser> playersOfGame = ofy().load().type(PlayerUser.class).filter("player in", game.getPlayers()).list();
+        for (PlayerUser player : playersOfGame) {
+            if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
+                NotificationService.sendPushBulletLink(player.getPushBulletApiKey(), "Your game started", "absolut URL here/" + game.getId(),null);
             }
             // more notifications possible here (email, ...)
         }

@@ -4,6 +4,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -135,7 +136,7 @@ public class NotificationService {
 
     public static void sendMeetingPointMessage(String subject, String message) {
     	List<PlayerUser> usersWithNotification = ofy().load().type(PlayerUser.class).filter("meetingPointNotification =", true).list();
-        if (!Strings.isNullOrEmpty(usersWithNotification)) {
+        if (usersWithNotification.isEmpty()) {
         	return;
         }
     	try {
@@ -200,6 +201,8 @@ public class NotificationService {
             } else {
             	log.log(Level.SEVERE, "Could not send message: " + connection.getResponseCode() );
             }
+        } catch (UnsupportedEncodingException e) {
+            log.log(Level.SEVERE, "Server does not support UTF-8 encoding");
         } catch (MalformedURLException e) {
         	log.log(Level.SEVERE, "Could not send message: ", e);
         } catch (IOException e) {
@@ -207,22 +210,30 @@ public class NotificationService {
         }
     }
     public static void sendPushBulletNote(String apiKey, String title, String body) {
-        StringBuilder httpBody = new StringBuilder();
-        httpBody.append("type=note&");
-        httpBody.append("title="+URLEncoder.encode(title, "UTF-8")+"&");
-        httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
-        sendPushBulletMessage(apiKey, httpBody.toString());
+        try {
+            StringBuilder httpBody = new StringBuilder();
+            httpBody.append("type=note&");
+            httpBody.append("title="+URLEncoder.encode(title, "UTF-8")+"&");
+            httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
+            sendPushBulletMessage(apiKey, httpBody.toString());
+        } catch (UnsupportedEncodingException e) {
+            log.log(Level.SEVERE, "Server does not support UTF-8 encoding");
+        }
     }
 
     public static void sendPushBulletLink(String apiKey, String title, String url, String body) {
-        StringBuilder httpBody = new StringBuilder();
-        httpBody.append("type=link&");
-        httpBody.append("title="+URLEncoder.encode("Game starts now.", "UTF-8")+"&");
-        httpBody.append("link="+URLEncoder.encode(url, "UTF-8")+"&");
-        if (!Strings.isNullOrEmpty(body)) {
-            httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
-        }
+        try {
+            StringBuilder httpBody = new StringBuilder();
+            httpBody.append("type=link&");
+            httpBody.append("title="+URLEncoder.encode("Game starts now.", "UTF-8")+"&");
+            httpBody.append("link="+URLEncoder.encode(url, "UTF-8")+"&");
+            if (!Strings.isNullOrEmpty(body)) {
+                httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
+            }
 
-        sendPushBullet(apiKey, httpBody.toString());
+            sendPushBulletMessage(apiKey, httpBody.toString());
+        } catch (UnsupportedEncodingException e) {
+            log.log(Level.SEVERE, "Server does not support UTF-8 encoding");
+        }
     }
 }

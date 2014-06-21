@@ -5,23 +5,23 @@
  <form name="userForm">
   <div class="form-group">
     <label for="playerInput">Player</label>
-    <input type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
+    <input ng-disabled="true" type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
   </div>
   <div class="form-group">
     <label for="emailInput">Notification Email</label>
-    <input type="email" required class="form-control" id="emailInput" placeholder="Notificaton email. Leave empty to ignore" ng-model="playerUser.email">
+    <input type="email" class="form-control" id="emailInput" placeholder="Notificaton email. Leave empty to ignore" ng-model="playerUser.email">
   </div>
   <div class="form-group">
     <label for="pushBulletApiKey"><a href="https://www.pushbullet.com/" target="_blank">Pushbullet</a> Api Key</label>
-    <input type="text" required ng-minlength="45" ng-maxlength="45" class="form-control" id="pushBulletApiKey" placeholder="Api Key" ng-model="playerUser.pushBulletApiKey">
+    <input type="text"  ng-minlength="45" ng-maxlength="45" class="form-control" id="pushBulletApiKey" placeholder="Api Key" ng-model="playerUser.pushBulletApiKey">
   </div>
   <div class="form-group">
     <label for="emailInput">Claiming Gmail Account</label>
-    <input ng-disabled="true" type="email" required class="form-control" id="emailInput" placeholder="Email" ng-model="playerUser.appUserEmail">
+    <input ng-disabled="true" type="email" class="form-control" id="emailInput" placeholder="Email" ng-model="playerUser.appUserEmail">
   </div>
   <div class="form-group">
     <label for="imageUrlInput">Image URL</label>
-    <input type="text" required class="form-control" id="imageUrlInput" ng-model="playerUser.imageUrl">
+    <input type="text" class="form-control" id="imageUrlInput" ng-model="playerUser.imageUrl">
   </div>
   <div class="checkbox">
     <label>

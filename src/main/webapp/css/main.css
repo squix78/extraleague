@@ -1,26 +1,98 @@
-body{
-    font-family: Arial, sans-serif;
-    background-color: white;
-	padding-top: 50px;	
-	overflow-x: hidden;
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  padding-top: 50px;
+  overflow-x: hidden;
+}
+
+.btn.btn-default.btn-nav {
+  position: relative;
+  float: left;
+  padding: 5px 15px;
+  margin-top: 8px;
+  margin-right: 5px;
+  margin-left: 15px;
+  margin-bottom: 8px;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #333;
+  border-radius: 4px;
+  height: 34px;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .btn.btn-default.btn-nav {
+    margin-left: 0;
+  }
+}
+.navbar-nav a { 
+	cursor: pointer; 
+	cursor: hand; 
 }
 
 .even {
-	background-color: #efefef;
-	margin-bottom: 1px;
+  background-color: #efefef;
+  margin-bottom: 1px;
 }
 .odd {
-	background-color: #dedede;
-	margin-bottom: 1px;
+  background-color: #dedede;
+  margin-bottom: 1px;
 }
 .player {
+  max-width: 48px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+.playerImage {
 	max-width: 48px;
+	margin-left: auto;
+	margin-right: auto;
 }
 .redTeam {
-	border: 2px solid red;
+	color: #D9534F;
 }
 .blueTeam {
-	border: 2px solid blue;
+	color: #428BCA;
+}
+.btn-redTeam {
+	background-color: #D9534F;
+  border-color: #D43F3A;
+}
+.btn-redTeam:hover {
+  background-color: #D2322D;
+  border-color: #AC2925;
+}
+.btn-blueTeam {
+  background-color: #428BCA;
+  border-color: #357EBD;
+}
+.btn-blueTeam:hover {
+  background-color: #3276B1;
+  border-color: #285E8E;
+}
+.goal {
+  background-image: linear-gradient(to bottom, #FFFFFF 0px, #E0E0E0 100%);
+  background-repeat: repeat-x;
+}
+.goal-time {
+  background-image: linear-gradient(to bottom, #FFFFFF 0px, #E0E0E0 100%);
+  background-repeat: repeat-x;
+  text-align: right;
+  font-size: 85%;
+  line-height: 1.6939 !important;
+}
+.panel-heading .score {
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+}
+.table .score {
+  background-image: linear-gradient(to bottom, #7d7e7d 0px, #0e0e0e 100%);
+  background-image: linear-gradient(to bottom, rgb(238,238,238) 0%,rgb(204,204,204) 100%);
+  background-repeat: repeat-x;
+  text-align: center;
+  border-bottom: 1px solid rgb(204,204,204);
 }
 legend { 
 	margin:3px; 
@@ -28,19 +100,147 @@ legend {
 	width:100%;
 	border-bottom: none;
 }
+.stressed {
+	font-weight: bolder;
+}
+.won {
+	color: green;
+}
+.lost {
+	color: red;
+}
+.Bronze:before {
+	color: rgb(205, 127, 50);
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Silver:before {
+	color: silver;
+	content: "\25A0";
+    margin-right: 6px;
+
+}
+.Gold:before {
+	color: gold;
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Ranking:before {
+	color: white;
+	content: "\25A0";
+    margin-right: 6px;
+}
+.Honorary {
+	background-color: green;
+}
+.Shamelet {
+	background-color: red;
+}
+
+.circularProgress{
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  display: block;
+  margin: auto;
+}
+
+
+.caption {
+    text-align:center;
+}
+
+.playerRow {
+	white-space: nowrap;
+	display: -webkit-box;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.playerRow img {
+	width: 40px;
+}
+.discreet {
+	color: #BBB;
+}
+
+.x.axis path {
+  stroke-width: 1px;
+}
+
+.text-small {
+  font-size: 75%;
+}
+.text-large {
+  font-size: 200%;
+}
+.text-vcenter {
+	vertical-align: middle;
+}
+.text-middle {
+	text-align: center;
+	text-anchor: middle; 
+}
+
+.charttip {
+	padding: 3px;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.5);
+	text-anchor: middle;
+	text-align: center;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
+}
+.circle {
+  fill: white;
+}
+.vis.timeline .item {
+	font-size: 10px;
+}
+
+.vis.timeline .item .content, .vis.timeline .item.range .content {
+	overflow: visible;
+}
+.border {
+	padding: 10px;
+	width: 250px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+	cursor: pointer; 
+	cursor: hand; 
+}
+.border:HOVER {
+	background-color: #ccc;
+}
+.border-enabled {
+	background-color: #ddd;
+}
+.playerCol {
+	display:inline-block; 
+	vertical-align: top;
+	margin-right: 10px;
+}
 
 #ribbon {
 	display: none;
-}
-
-// @screen-md-min is 992px in bootstrap
-@media (min-width: 992px) {
-	#ribbon {
-        display: block;
-		position: absolute;
-		top: 0;
-		right: 0;
-		border: 0;
-		z-index: 2000;
-	}
 }

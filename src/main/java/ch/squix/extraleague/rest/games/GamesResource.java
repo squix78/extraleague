@@ -71,12 +71,15 @@ public class GamesResource extends ServerResource {
 		ofy().save().entities(matches).now();
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
         List<PlayerUser> playersOfGame = ofy().load().type(PlayerUser.class).filter("player in", game.getPlayers()).list();
+        
+        
         for (PlayerUser player : playersOfGame) {
             if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
                 NotificationService.sendPushBulletLink(
                         player.getPushBulletApiKey(),
                         "Extraleage game created",
-                        "http://"+ApiProxy.getCurrentEnvironment().getAppId()+".appspot.com/#/tables/" + game.getTable() + "/games/" + game.getId(),
+                        // TODO: replace with dynamic host name
+                        "http://ncaleague.appspot.com/#/tables/" + game.getTable() + "/games/" + game.getId(),
                         "The game with " + Joiner.on(", ").join(game.getPlayers()) + " was created.");
             }
             // more notifications possible here (email, ...)

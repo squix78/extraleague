@@ -22,7 +22,6 @@ public class RankingIndexTask implements RankingTask {
     @Override
     public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
         setSuccessRateRankingIndex(playerRankingMap);
-        setDynamicRankingIndex(playerRankingMap);
         setEloRankingIndex(playerRankingMap);
         setTrueSkillsRankingIndex(playerRankingMap);
 		calculateBadges(playerRankingMap);
@@ -47,29 +46,6 @@ public class RankingIndexTask implements RankingTask {
             ranking.setRanking(index);
             index++;
         }
-    }
-
-    private void setDynamicRankingIndex(Map<String, PlayerRanking> playerRankingMap){
-        SortedSet<PlayerRanking> sortedPlayerRanking = getSortedPlayerRanking(playerRankingMap.values());
-        int i = 1;
-        for (PlayerRanking playerRanking : sortedPlayerRanking) {
-            playerRanking.setDynamicRanking(i++);
-        }
-    }
-
-    private SortedSet<PlayerRanking> getSortedPlayerRanking(Collection<PlayerRanking> playerRankings) {
-        TreeSet<PlayerRanking> sortedPlayerRankings = new TreeSet<>(new Comparator<PlayerRanking>() {
-            @Override
-            public int compare(PlayerRanking o1, PlayerRanking o2) {
-                int result = o2.getRankingPoints().compareTo(o1.getRankingPoints());
-                if (result == 0) {
-                    return o2.getGoalRate().compareTo(o1.getGoalRate());
-                }
-                return result;
-            }
-        });
-        sortedPlayerRankings.addAll(playerRankings);
-        return sortedPlayerRankings;
     }
     
     private void setEloRankingIndex(Map<String, PlayerRanking> playerRankingMap) {
@@ -117,13 +93,13 @@ public class RankingIndexTask implements RankingTask {
 	private void calculateBadges(Map<String, PlayerRanking> playerRankingMap) {
         Collection<PlayerRanking> rankings = playerRankingMap.values();
         for (PlayerRanking ranking : rankings) {
-			if (ranking.getRanking() == 1) {
+			if (ranking.getEloRanking() == 1) {
 				ranking.getBadges().add(BadgeEnum.King.name());
 			}
-			if (ranking.getRanking() == 2) {
+			if (ranking.getEloRanking() == 2) {
 				ranking.getBadges().add(BadgeEnum.Queen.name());
 			}
-			if (ranking.getRanking() == rankings.size()) {
+			if (ranking.getEloRanking() == rankings.size()) {
 				ranking.getBadges().add(BadgeEnum.Pawn.name());
 			}
 		}

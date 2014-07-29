@@ -40,8 +40,6 @@ public class RankingDtoMapper {
                 rankingDto.setTightlyWonRate(playerRanking.getTightlyWonRate());
                 rankingDto.setPartners(PlayerComboDtoMapper.mapToDtos(playerRanking.getPartners()));
                 rankingDto.setOpponents(PlayerComboDtoMapper.mapToDtos(playerRanking.getOpponents()));
-                rankingDto.setRankingPoints(playerRanking.getRankingPoints());
-                rankingDto.setDynamicRanking(playerRanking.getDynamicRanking());
                 rankingDto.setEloValue(playerRanking.getEloValue());
                 rankingDto.setAverageGoalsPerMatch(playerRanking.getAverageGoalsPerMatch());
                 rankingDto.setEloRanking(playerRanking.getEloRanking());

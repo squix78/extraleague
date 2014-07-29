@@ -50,8 +50,6 @@ public class PlayerRanking implements Serializable {
 
     private Set<String> playedWith = new HashSet<>();
     private Set<String> neverPlayedWith = new HashSet<>();
-    private Integer rankingPoints = 0;
-    private Integer dynamicRanking;
 
     private Double averageGoalsPerMatch;
 

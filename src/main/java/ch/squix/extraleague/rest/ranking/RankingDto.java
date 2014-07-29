@@ -40,8 +40,6 @@ public class RankingDto {
     private Long averageSecondsPerMatch;
     private Set<String> playedWith;
     private Set<String> neverPlayedWith;
-    private Integer rankingPoints;
-    private Integer dynamicRanking;
     private Integer eloValue;
     private Integer eloRanking;
     
@@ -303,22 +301,6 @@ public class RankingDto {
 
     public void setOpponents(List<PlayerComboDto> opponents) {
         this.opponents = opponents;
-    }
-
-    public void setRankingPoints(Integer rankingPoints) {
-        this.rankingPoints = rankingPoints;
-    }
-
-    public Integer getRankingPoints() {
-        return rankingPoints;
-    }
-
-    public void setDynamicRanking(Integer dynamicRanking) {
-        this.dynamicRanking = dynamicRanking;
-    }
-
-    public Integer getDynamicRanking() {
-        return dynamicRanking;
     }
 
 	public Double getAverageGoalsPerMatch() {

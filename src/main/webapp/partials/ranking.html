@@ -10,14 +10,13 @@
           <tr>
             <th><a href="" ng-click="predicate = 'ranking'; reverse=!reverse">#</a></th>
             <th><a href="" ng-click="predicate = 'player'; reverse=!reverse">Who</a></th>
+            <th><a href="" ng-click="predicate = 'eloValue'; reverse=!reverse">elo</a></th>
             <th><a href="" ng-click="predicate = ['successRate', 'goalPlusMinus']; reverse=!reverse">%</a></th>
             <th><a href="" ng-click="predicate = 'currentShapeRate'; reverse=!reverse">Sh %</a></th>
             <th><a href="" ng-click="predicate = 'goalPlusMinus'; reverse=!reverse">Goals</a></th>
             <th><a href="" ng-click="predicate = 'averageGoalsPerMatch'; reverse=!reverse">GPM</a></th>
             <th><a href="" ng-click="predicate = 'badges.length'; reverse=!reverse">Badges</a></th>
-            <th><a href="" ng-click="predicate = 'dynamicRanking'; reverse=!reverse">%/rwe/elo/ts</a></th>
-            <th><a href="" ng-click="predicate = 'rankingPoints'; reverse=!reverse">rwe points</a></th>
-            <th><a href="" ng-click="predicate = 'eloValue'; reverse=!reverse">elo value</a></th>
+            <th><a href="" ng-click="predicate = 'dynamicRanking'; reverse=!reverse">%/elo/ts</a></th>
             <th><a href="" ng-click="predicate = 'trueSkillRating'; reverse=!reverse">TrueSkill</a></th>
           </tr>
         </thead>
@@ -25,6 +24,7 @@
           <tr ng-repeat="ranking in rankings | orderBy:predicate:reverse">
             <td>{{$index + 1}} </td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
+            <td>{{ranking.eloValue}}</td>
             <td ng-class="{won: ranking.successRate > 0.5, lost: ranking.successRate < 0.5}">{{ranking.successRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.currentShapeRate > ranking.successRate, lost: ranking.currentShapeRate < ranking.successRate}">{{ranking.currentShapeRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.goalPlusMinus > 0, lost: ranking.goalPlusMinus < 0}"><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>
@@ -32,9 +32,7 @@
             <td>
 				<div badges ng-model="ranking.badges" badge-map="badgeMap"></div>
             </td>
-            <td>{{ranking.ranking}}/{{ranking.dynamicRanking}}/{{ranking.eloRanking}}/{{ranking.trueSkillRanking}}</td>
-            <td>{{ranking.rankingPoints}}</td>
-            <td>{{ranking.eloValue}}</td>
+            <td>{{ranking.ranking}}//{{ranking.eloRanking}}/{{ranking.trueSkillRanking}}</td>
             <td>{{ranking.trueSkillRating | number:1}}</td>
           </tr>
         </tbody>
@@ -85,14 +83,6 @@
 			</td>
 			<td>
 				Goals Per Match: Personally accounted goals divided by number of matches
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Experimental Ranking
-			</td>
-			<td>
-				No clue, ask RWE;-)
 			</td>
 		</tr>
 	</tbody>

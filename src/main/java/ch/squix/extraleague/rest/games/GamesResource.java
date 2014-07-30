@@ -30,7 +30,6 @@ import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
 import com.google.apphosting.api.ApiProxy;
 import com.google.apphosting.api.ApiProxy.Environment;
-
 import com.google.common.base.Joiner;
 
 public class GamesResource extends ServerResource {
@@ -72,6 +71,8 @@ public class GamesResource extends ServerResource {
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
         List<PlayerUser> playersOfGame = ofy().load().type(PlayerUser.class).filter("player in", game.getPlayers()).list();
         
+		Environment env = ApiProxy.getCurrentEnvironment();
+		String hostname = (String) env.getAttributes().get("com.google.appengine.runtime.default_version_hostname");
         
         for (PlayerUser player : playersOfGame) {
             if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
@@ -79,7 +80,7 @@ public class GamesResource extends ServerResource {
                         player.getPushBulletApiKey(),
                         "Extraleage game created",
                         // TODO: replace with dynamic host name
-                        "http://ncaleague.appspot.com/#/tables/" + game.getTable() + "/games/" + game.getId(),
+                        "http://"+ hostname + "/#/tables/" + game.getTable() + "/games/" + game.getId(),
                         "The game with " + Joiner.on(", ").join(game.getPlayers()) + " was created.");
             }
             // more notifications possible here (email, ...)

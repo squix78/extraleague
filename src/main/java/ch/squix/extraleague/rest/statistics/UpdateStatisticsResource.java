@@ -7,6 +7,9 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.statistics.StatisticsService;
 
+import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.Environment;
+
 
 public class UpdateStatisticsResource extends ServerResource {
 	
@@ -14,7 +17,9 @@ public class UpdateStatisticsResource extends ServerResource {
 	public String execute() throws UnsupportedEncodingException {
 		StatisticsService.updateStatistics();
 
-		return "OK";
+		Environment env = ApiProxy.getCurrentEnvironment();
+		String hostName = (String) env.getAttributes().get("com.google.appengine.runtime.default_version_hostname");
+		return "OK " + hostName;
 	}
 
 }

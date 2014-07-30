@@ -11,52 +11,24 @@
           </td>
         </tr>
         <tr>
-          <td>Rank:</td>
-          <td>
-          	{{playerResult.statistics.ranking}}
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.ranking}})</span>
-          </td>
-        </tr>
-        <tr>
-          <td>RWE Points</td>
-          <td>
-          	{{playerResult.statistics.rankingPoints}}
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.rankingPoints}})</span>
-          </td>
-        </tr>
-        <tr>
-          <td>RWE Ranking</td>
-          <td>
-          	{{playerResult.statistics.dynamicRanking}}
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.dynamicRanking}})</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Elo Value</td>
-          <td>
-          	{{playerResult.statistics.eloValue}}
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.eloValue}})</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Elo Ranking</td>
+          <td>Ranking</td>
           <td>
           	{{playerResult.statistics.eloRanking}}
           	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.eloRanking}})</span>
           </td>
         </tr>
         <tr>
-          <td>TrueSkill Mean</td>
+          <td>Elo</td>
           <td>
-          	{{playerResult.statistics.trueSkillMean | number:2}}
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.trueSkillMean | number:2}})</span>
+          	{{playerResult.statistics.eloValue}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.eloValue}})</span>
           </td>
         </tr>
         <tr>
-          <td>TrueSkill Sigma</td>
+          <td>%-Ranking:</td>
           <td>
-          	{{playerResult.statistics.trueSkillSigma | number:2}}
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.trueSkillSigma | number:2}})</span>
+          	{{playerResult.statistics.ranking}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.ranking}})</span>
           </td>
         </tr>
         <tr>
@@ -239,6 +211,10 @@
 <div timeline height="350" ng-model="timeseries.datedBadges"></div>
 Note: pinch to zoom. Only badges are displayed that were present at the end of the day.
 
+<h4>Elo Value</h4>
+<div linechart  height="200" ng-model="timeseries.eloValueSeries"></div>
+</div>
+
 <h4>Success Rate</h4>
 <div linechart  height="200" y-axis-format-function="yAxisPercentFormatFunction()" ng-model="timeseries.successRateSeries"></div>
 
@@ -255,9 +231,6 @@ Note: pinch to zoom. Only badges are displayed that were present at the end of t
 <h4>Ranking</h4>
 <div linechart  invert-y-Axis="true" height="200" ng-model="timeseries.rankingSeries"></div>
 
-<h4>Elo Value</h4>
-<div linechart  height="200" ng-model="timeseries.eloValueSeries"></div>
-</div>
 
 
 

@@ -56,7 +56,7 @@ public class TimeSeriesResource extends ServerResource {
 						timeSeriesDto.getGoalRateSeries().add(goalRateTuple);
 					}
 					
-					Integer rankingValue = playerRanking.getRanking();
+					Integer rankingValue = playerRanking.getEloRanking();
 					if (rankingValue != null) {
 						DataTuple<Date, Integer> rankingTuple = new DataTuple<>(createdDate, rankingValue, rankingValue + ". place");
 						timeSeriesDto.getRankingSeries().add(rankingTuple);

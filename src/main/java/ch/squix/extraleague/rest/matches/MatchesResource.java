@@ -85,14 +85,14 @@ public class MatchesResource extends ServerResource {
 		}
 		Game game = ofy().load().type(Game.class).id(matchDto.getGameId()).now();
 		game.setNumberOfCompletedMatches(numberOfCompletedMatches);
-		game.setGameProgress(sumOfMaxGoals / 20d);
+		game.setGameProgress(sumOfMaxGoals / (game.getMaxGoals() * game.getMaxMatches() * 1.0d));
 		// Set the date for the first goal
 		if (sumOfMaxGoals > 0 && game.getFirstGoalDate() == null) {
 			game.setFirstGoalDate(new Date());
 			game.setStartDate(new Date());
 		}
-		if (numberOfCompletedMatches >=4) {
-			log.info("4 Games reached. Setting game endDate");
+		if (numberOfCompletedMatches >=game.getMaxMatches()) {
+			log.info("Max matches reached. Setting game endDate");
 			game.setEndDate(new Date());
 			game.setIsGameFinished(true);
 			Queue queue = QueueFactory.getDefaultQueue();

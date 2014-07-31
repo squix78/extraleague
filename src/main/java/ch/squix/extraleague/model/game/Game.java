@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -38,6 +36,8 @@ public class Game {
 	private Boolean isGameFinished;
 	
 	private Integer maxMatches;
+	
+	private Integer maxGoals;
 
 	
 	

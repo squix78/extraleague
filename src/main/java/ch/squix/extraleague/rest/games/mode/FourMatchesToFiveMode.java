@@ -26,6 +26,7 @@ public class FourMatchesToFiveMode implements GameMode {
 	@Override
 	public void initializeGame(Game game) {
 		game.setMaxMatches(MAX_MATCHES);
+		game.setMaxGoals(MAX_GOALS);
 	}
 
 	@Override

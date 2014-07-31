@@ -27,6 +27,7 @@ public class GameDto {
 	private Date firstGoalDate;
 	
 	private Integer maxMatches;
+	private Integer maxGoals;
 
 	
 

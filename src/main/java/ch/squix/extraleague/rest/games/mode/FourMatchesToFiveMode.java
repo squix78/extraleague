@@ -38,8 +38,8 @@ public class FourMatchesToFiveMode implements GameMode {
 				players = sortPlayersByRanking(players, currentRanking);
 		}
 		List<Match> matches = new ArrayList<>();
-		for (int gameIndex = 0; gameIndex < 4; gameIndex++) {
-			Integer [] mutation = mutations[gameIndex];
+		for (int matchIndex = 0; matchIndex < 4; matchIndex++) {
+			Integer [] mutation = mutations[matchIndex];
 			Match match = new Match();
 			match.setGameId(game.getId());
 			match.setTeamA(new String[] {players.get(mutation[0]), players.get(mutation[1])});
@@ -47,10 +47,11 @@ public class FourMatchesToFiveMode implements GameMode {
 			match.setTeamAScore(0);
 			match.setTeamBScore(0);
 			match.setMaxGoals(MAX_GOALS);
+			match.setMaxMatches(MAX_MATCHES);
 			match.setPlayers(players);
 			match.setTable(game.getTable());
 			match.getTags().add(game.getTable());
-			match.setMatchIndex(gameIndex);
+			match.setMatchIndex(matchIndex);
 			if (currentRanking != null) {
 			    Double winProbabilityTeamA = EloUtil.getExpectedOutcome(getTeamRanking(currentRanking, match.getTeamA()), getTeamRanking(currentRanking, match.getTeamB()));
 			    match.setWinProbabilityTeamA(winProbabilityTeamA);

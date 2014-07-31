@@ -46,6 +46,7 @@ public class Match {
 	private List<String> players = new ArrayList<>();
 	
 	private Integer maxGoals;
+	private Integer maxMatches;
 
 
 }

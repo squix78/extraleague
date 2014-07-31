@@ -101,14 +101,17 @@ angular.module('Games', ['gaeChannelService'])
 			openGames.currentMatchIndex = undefined;
 		},
 		addPlayerScore: function(player) {
-			if (angular.isDefined(openGames.currentGame) 
-					&& openGames.currentMatch.teamAScore < 5
-					&& openGames.currentMatch.teamBScore < 5) {
+			
+			if (angular.isDefined(openGames.currentGame)) {
+				var maxGoals = openGames.currentGame.maxGoals;
+				if (openGames.currentMatch.teamAScore < maxGoals
+					&& openGames.currentMatch.teamBScore < maxGoals) {
 
-				openGames.currentMatch.scorers.push(player);
-				service.calculateScores(openGames.currentMatch);
-				service.saveCurrentMatch();
-				service.checkEndOfMatch();
+					openGames.currentMatch.scorers.push(player);
+					service.calculateScores(openGames.currentMatch);
+					service.saveCurrentMatch();
+					service.checkEndOfMatch();
+				}
 			}
 		},
 		removeLastGoal: function() {
@@ -140,24 +143,30 @@ angular.module('Games', ['gaeChannelService'])
 		    });
 		},
 		checkEndOfMatch: function() {
-		    if (angular.isDefined(openGames.currentMatch) 
-		    		&& (openGames.currentMatch.teamAScore >= 5 || openGames.currentMatch.teamBScore >=5)) {
-		      openGames.currentMatch.endDate = new Date();
-		      if (openGames.currentMatchIndex < 3) {  
-		    	openGames.currentMatchIndex++;
-		    	openGames.isGameFinished = false;
-		        service.updateCurrentGame();
-		      } else {
-		    	console.log("This game is finished...")
-		    	openGames.isGameFinished = true;
+		    if (angular.isDefined(openGames.currentMatch)) {
+		      var maxGoals = openGames.currentMatch.maxGoals;
+		      var maxMatches = openGames.currentMatch.maxMatches;
+		      if ((openGames.currentMatch.teamAScore >= maxGoals || openGames.currentMatch.teamBScore >=maxGoals)) {
+			      openGames.currentMatch.endDate = new Date();
+			      if (openGames.currentMatchIndex < maxMatches - 1) {  
+			    	openGames.currentMatchIndex++;
+			    	openGames.isGameFinished = false;
+			        service.updateCurrentGame();
+			      } else {
+			    	console.log("This game is finished...")
+			    	openGames.isGameFinished = true;
+			      }
 		      }
 		    } 
 		 },
 		 moveMatchIndexBy: function(increment) {
-			  var newMatchIndex = openGames.currentMatchIndex + increment;
-			  if (newMatchIndex >=0 && newMatchIndex <=3) {
-				  openGames.currentMatchIndex = newMatchIndex;
-				  service.updateCurrentGame();
+			  if (angular.isDefined(openGames.currentGame)) {
+				  var maxMatches = openGames.currentGame.maxMatches;
+				  var newMatchIndex = openGames.currentMatchIndex + increment;
+				  if (newMatchIndex >=0 && newMatchIndex < maxMatches) {
+					  openGames.currentMatchIndex = newMatchIndex;
+					  service.updateCurrentGame();
+				  }
 			  }
 		 }
 

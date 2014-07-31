@@ -63,10 +63,13 @@ angular.module('Games', ['gaeChannelService'])
 			} 
 		},
 		updateCurrentMatch: function() {
-			if (!angular.isDefined(openGames.currentMatchIndex)) {
-				openGames.currentMatchIndex = Math.min(openGames.currentGame.numberOfCompletedGames, 3);
+			if (angular.isDefined(openGames.currentGame)) {
+				var maxMatches = openGames.currentGame.maxMatches;
+				if (!angular.isDefined(openGames.currentMatchIndex)) {
+					openGames.currentMatchIndex = Math.min(openGames.currentGame.numberOfCompletedGames, maxMatches - 1);
+				}
+				openGames.currentMatch = openGames.currentGame.matches[openGames.currentMatchIndex];
 			}
-			openGames.currentMatch = openGames.currentGame.matches[openGames.currentMatchIndex];
 		},
 		loadOpenGames: function() {
 			var me = this;

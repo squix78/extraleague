@@ -17,8 +17,9 @@ import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
+import ch.squix.extraleague.rest.games.mode.FourMatchesToFiveMode;
 
-public class GamesResourceTest {
+public class FourGamesToFiveModeTest {
     
         private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
     
@@ -39,13 +40,13 @@ public class GamesResourceTest {
 	
 	@Test
 	public void shouldCreateCorrectOrderOfMatches() {
-		GamesResource gameRessource = new GamesResource();
 		Game game = new Game();
 		game.getPlayers().add("a");
 		game.getPlayers().add("b");
 		game.getPlayers().add("c");
 		game.getPlayers().add("d");
-		List<Match> matches = gameRessource.createMatches(game);
+		FourMatchesToFiveMode mode = new FourMatchesToFiveMode();
+		List<Match> matches = mode.createMatches(game);
 		testTeams(matches.get(0), "a", "b", "c", "d");
 		testTeams(matches.get(1), "b", "c", "d", "a");
 		testTeams(matches.get(2), "c", "a", "d", "b");
@@ -65,8 +66,8 @@ public class GamesResourceTest {
 		ranking.getPlayerRankings().add(createPlayerRanking("dei", 1));
 		ranking.getPlayerRankings().add(createPlayerRanking("rsp", 2));
 		ranking.getPlayerRankings().add(createPlayerRanking("cw", 5));
-		GamesResource resource = new GamesResource();
-		List<String> players = resource.sortPlayersByRanking(Arrays.asList("rsp", "cm", "dei", "cw"), ranking);
+		FourMatchesToFiveMode mode = new FourMatchesToFiveMode();
+		List<String> players = mode.sortPlayersByRanking(Arrays.asList("rsp", "cm", "dei", "cw"), ranking);
 		Assert.assertEquals(new String[] {"dei", "rsp", "cw", "cm"}, players.toArray(new String[4]));
 	}
 

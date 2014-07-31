@@ -20,6 +20,7 @@ import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 import ch.squix.extraleague.rest.games.mode.FourMatchesToFiveMode;
+import ch.squix.extraleague.rest.games.mode.GameMode;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
 import com.google.apphosting.api.ApiProxy;
@@ -50,6 +51,8 @@ public class GamesResource extends ServerResource {
 	@Post(value = "json")
 	public GameDto create(GameDto dto) {
 		
+		GameMode mode = new FourMatchesToFiveMode();
+		
 		log.info("Received game to save");
 		Game game = new Game();
 		game.setPlayers(dto.getPlayers());
@@ -57,11 +60,12 @@ public class GamesResource extends ServerResource {
 		game.setStartDate(new Date());
 		game.setNumberOfCompletedMatches(0);
 		game.setIsGameFinished(false);
+		mode.initializeGame(game);
 		ofy().save().entity(game).now();
+		
 		dto.setId(game.getId());
 		
 		// Prepare Matches
-		FourMatchesToFiveMode mode = new FourMatchesToFiveMode();
 		List<Match> matches = mode.createMatches(game);
 		ofy().save().entities(matches).now();
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));

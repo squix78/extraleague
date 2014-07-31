@@ -23,6 +23,7 @@ public class MatchDto {
 	private Integer winPointsTeamA = 0;
 	private Integer winPointsTeamB = 0;
 	private Date lastUpdate;
+	private Integer maxGoals;
 
 
 }

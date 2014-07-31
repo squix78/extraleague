@@ -36,6 +36,8 @@ public class Game {
 	private Double gameProgress;
 	
 	private Boolean isGameFinished;
+	
+	private Integer maxMatches;
 
 	
 	

@@ -22,6 +22,7 @@ public class MatchDtoMapper {
 		dto.setWinProbabilityTeamA(match.getWinProbabilityTeamA());
 		dto.setWinPointsTeamA(match.getWinPointsTeamA());
 		dto.setWinPointsTeamB(match.getWinPointsTeamB());
+		dto.setMaxGoals(match.getMaxGoals());
 		return dto;
 	}
 	

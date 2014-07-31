@@ -44,6 +44,8 @@ public class Match {
 	
 	@Index
 	private List<String> players = new ArrayList<>();
+	
+	private Integer maxGoals;
 
 
 }

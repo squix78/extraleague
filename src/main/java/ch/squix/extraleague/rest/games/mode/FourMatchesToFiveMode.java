@@ -16,6 +16,17 @@ import ch.squix.extraleague.model.ranking.elo.EloUtil;
 public class FourMatchesToFiveMode implements GameMode {
 	
 	private static final Integer [][] mutations = {{0,1,2,3}, {1, 2, 3, 0}, {2, 0, 3, 1}, {0, 3, 1, 2}};
+	
+	private static final Integer MAX_GOALS = 5;
+
+	private static final Integer MAX_MATCHES = 4;
+	
+
+
+	@Override
+	public void initializeGame(Game game) {
+		game.setMaxMatches(MAX_MATCHES);
+	}
 
 	@Override
 	public List<Match> createMatches(Game game) {
@@ -34,6 +45,7 @@ public class FourMatchesToFiveMode implements GameMode {
 			match.setTeamB(new String[] {players.get(mutation[2]), players.get(mutation[3])});
 			match.setTeamAScore(0);
 			match.setTeamBScore(0);
+			match.setMaxGoals(MAX_GOALS);
 			match.setPlayers(players);
 			match.setTable(game.getTable());
 			match.getTags().add(game.getTable());
@@ -81,5 +93,6 @@ public class FourMatchesToFiveMode implements GameMode {
 		}
 		return new ArrayList<>(playerRankMap.values());
 	}
+
 
 }

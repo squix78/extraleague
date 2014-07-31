@@ -64,7 +64,7 @@ public class MatchesResource extends ServerResource {
 		if ((match.getTeamAScore() > 0 || match.getTeamBScore() > 0) && match.getStartDate() == null) {
 		    match.setStartDate(new Date());
 		}
-		if (match.getTeamAScore() >= 5 || match.getTeamBScore() >= 5) {
+		if (match.getTeamAScore() >= match.getMaxGoals() || match.getTeamBScore() >= match.getMaxGoals()) {
 			log.info("Game is finished");
 			match.setEndDate(new Date());
 		}
@@ -79,7 +79,7 @@ public class MatchesResource extends ServerResource {
 		for (MatchDto candiateMatch : matchDtos) {
 			Integer maxGoalsPerMatch = Math.max(candiateMatch.getTeamAScore(), candiateMatch.getTeamBScore());
 			sumOfMaxGoals += maxGoalsPerMatch;
-			if (maxGoalsPerMatch >= 5) {
+			if (maxGoalsPerMatch >= match.getMaxGoals()) {
 				numberOfCompletedMatches++;
 			}
 		}

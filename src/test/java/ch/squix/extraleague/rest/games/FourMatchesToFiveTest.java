@@ -19,7 +19,7 @@ import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.rest.games.mode.FourMatchesToFiveMode;
 
-public class FourGamesToFiveModeTest {
+public class FourMatchesToFiveTest {
     
         private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
     

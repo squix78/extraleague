@@ -7,12 +7,12 @@
           <button ng-class="{ disabled: openGames.currentMatchIndex == 0 }" ng-disabled="openGames.isMatchSaving" class="btn btn-default text-small pull-left" ng-click="moveMatchIndexBy(-1)">
             <span class="glyphicon glyphicon-chevron-left"></span> 
           </button>
-          <span style="line-height:31px">Match {{openGames.currentMatchIndex + 1}} / 4</span>
+          <span style="line-height:31px">Match {{openGames.currentMatchIndex + 1}} / {{openGames.currentGame.maxMatches}}</span>
           <span ng-show="openGames.isMatchSaving"><img src="images/ajax-loader.gif" /></span>
-          <button ng-show="openGames.currentMatchIndex < 3" ng-disabled="openGames.isMatchSaving" class="btn btn-default text-small pull-right" ng-click="moveMatchIndexBy(1)">
+          <button ng-show="openGames.currentMatchIndex < openGames.currentMaxMatches - 1" ng-disabled="openGames.isMatchSaving" class="btn btn-default text-small pull-right" ng-click="moveMatchIndexBy(1)">
             <span class="glyphicon glyphicon-chevron-right"></span> 
           </button>
-          <button ng-show="openGames.currentMatchIndex > 2" ng-disabled="openGames.isMatchSaving" class="btn btn-default text-small pull-right" ng-click="showSummary()">
+          <button ng-show="openGames.currentMatchIndex > openGames.currentMaxMatches - 2" ng-disabled="openGames.isMatchSaving" class="btn btn-default text-small pull-right" ng-click="showSummary()">
             <span class="glyphicon glyphicon-stats"></span> 
           </button>
         </h3>

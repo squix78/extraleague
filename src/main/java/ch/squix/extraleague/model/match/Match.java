@@ -23,8 +23,8 @@ public class Match {
 	private Long gameId;
 	private String [] teamA = {};
 	private String [] teamB = {};
-	private Integer teamAScore;
-	private Integer teamBScore;
+	private Integer teamAScore = 0;
+	private Integer teamBScore = 0;
 	private Double winProbabilityTeamA = 0d;
 	private Integer winPointsTeamA = 0;
 	private Integer winPointsTeamB = 0;

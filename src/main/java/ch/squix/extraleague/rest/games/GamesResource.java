@@ -16,11 +16,12 @@ import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
+import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
-import ch.squix.extraleague.rest.games.mode.FourMatchesToFiveMode;
 import ch.squix.extraleague.rest.games.mode.GameMode;
+import ch.squix.extraleague.rest.games.mode.OneMatchToSevenMode;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
 import com.google.apphosting.api.ApiProxy;
@@ -51,7 +52,8 @@ public class GamesResource extends ServerResource {
 	@Post(value = "json")
 	public GameDto create(GameDto dto) {
 		
-		GameMode mode = new FourMatchesToFiveMode();
+		//GameMode mode = new FourMatchesToFiveMode();
+		GameMode mode = new OneMatchToSevenMode();
 		
 		log.info("Received game to save");
 		Game game = new Game();
@@ -64,6 +66,8 @@ public class GamesResource extends ServerResource {
 		ofy().save().entity(game).now();
 		
 		dto.setId(game.getId());
+		
+	    
 		
 		// Prepare Matches
 		List<Match> matches = mode.createMatches(game);

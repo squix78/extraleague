@@ -23,6 +23,8 @@ angular.module('Games', ['gaeChannelService'])
 	openGames.currentGameId = undefined;
 	openGames.currentMatchIndex = undefined;
 	openGames.currentMatch = undefined;
+	openGames.currentMaxMatches = undefined;
+	openGames.currentMaxGoals = undefined;
 	
 	var service = {
 		setGames: function(games) {
@@ -51,6 +53,8 @@ angular.module('Games', ['gaeChannelService'])
 				var newCurrentGame = openGames.gameMap[openGames.currentGameId];
 				if (angular.isDefined(newCurrentGame)) {
 					openGames.currentGame = newCurrentGame;
+					openGames.currentMaxGoals = newCurrentGame.maxGoals;
+					openGames.currentMaxMatches = newCurrentGame.maxMatches;
 					service.updateCurrentMatch();
 				} else {
 					openGames.currentGame = Game.get({gameId: openGames.currentGameId}, function() {
@@ -120,6 +124,7 @@ angular.module('Games', ['gaeChannelService'])
 		removeLastGoal: function() {
 			if (openGames.currentMatch.scorers.length > 0) {
 				var removedScorer = openGames.currentMatch.scorers.pop();
+				openGames.isGameFinished = false;
 				console.log("Removed scorer: " + removedScorer);
 				service.calculateScores(openGames.currentMatch);
 				service.saveCurrentMatch();
@@ -153,14 +158,25 @@ angular.module('Games', ['gaeChannelService'])
 			      openGames.currentMatch.endDate = new Date();
 			      if (openGames.currentMatchIndex < maxMatches - 1) {  
 			    	openGames.currentMatchIndex++;
-			    	openGames.isGameFinished = false;
-			        service.updateCurrentGame();
-			      } else {
-			    	console.log("This game is finished...")
-			    	openGames.isGameFinished = true;
-			      }
+			      } 
 		      }
+		      service.checkEndOfGame();
 		    } 
+		 },
+		 checkEndOfGame: function() {
+			 var currentGame = openGames.currentGame;
+			 if (angular.isDefined(currentGame)) {
+				 var maxGoals = currentGame.maxGoals;
+				 openGames.isGameFinished = false;
+				 angular.forEach(currentGame.matches, function(match, index) {
+					 if ((match.teamAScore >= maxGoals || match.teamBScore >= maxGoals)) {
+						 openGames.isGameFinished = true;
+					 }
+				 });
+				 if (openGames.isGameFinished) {
+				    service.updateCurrentGame();
+				 }
+			 }
 		 },
 		 moveMatchIndexBy: function(increment) {
 			  if (angular.isDefined(openGames.currentGame)) {

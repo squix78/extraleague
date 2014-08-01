@@ -11,7 +11,9 @@ package ch.squix.extraleague.model.ranking.elo;
 
 import java.util.Map;
 
+import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.Ranking;
 
 
 public class EloUtil {
@@ -33,5 +35,28 @@ public class EloUtil {
     public static Integer calculateDelta(Double score, Double expectedScore) {
         return (int) (K_FACTOR * (score - expectedScore));
     }
+    
+    public static void setEloValuesToMatch(Match match, Ranking ranking) {
+		if (ranking != null) {
+		    Double winProbabilityTeamA = EloUtil.getExpectedOutcome(getTeamRanking(ranking, match.getTeamA()), getTeamRanking(ranking, match.getTeamB()));
+		    match.setWinProbabilityTeamA(winProbabilityTeamA);
+		    Integer winPointsTeamA = EloUtil.calculateDelta(1d, winProbabilityTeamA);
+		    match.setWinPointsTeamA(winPointsTeamA);
+		    Integer winPointsTeamB = EloUtil.calculateDelta(1d, 1 - winProbabilityTeamA);
+		    match.setWinPointsTeamB(winPointsTeamB);
+		}    	
+    }
+    
+	private static Integer getTeamRanking(Ranking ranking, String[] team) {
+	    return (int) Math.round((getPlayerRanking(ranking, team[0]) + getPlayerRanking(ranking, team[1])) / 2d);
+	}
+	
+	private static Integer getPlayerRanking(Ranking ranking, String player) {
+	    PlayerRanking playerRanking = ranking.getPlayerRanking(player);
+	    if (playerRanking != null && playerRanking.getEloValue() != null) {
+	        return playerRanking.getEloValue();
+	    }
+	    return EloUtil.INITIAL_RATING;
+	}
 
 }

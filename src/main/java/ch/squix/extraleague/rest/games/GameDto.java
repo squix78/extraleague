@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
-import ch.squix.extraleague.rest.matches.MatchDto;
+import ch.squix.extraleague.rest.games.mode.GameModeEnum;
 
 @Data
 public class GameDto {
@@ -26,6 +26,7 @@ public class GameDto {
 	private Integer numberOfCompletedGames;
 	private Date firstGoalDate;
 	
+	private GameModeEnum gameMode;
 	private Integer maxMatches;
 	private Integer maxGoals;
 

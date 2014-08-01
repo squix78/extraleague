@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
+import ch.squix.extraleague.rest.games.mode.GameModeEnum;
 
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -35,8 +36,8 @@ public class Game {
 	
 	private Boolean isGameFinished;
 	
+	private GameModeEnum gameMode;
 	private Integer maxMatches;
-	
 	private Integer maxGoals;
 
 	

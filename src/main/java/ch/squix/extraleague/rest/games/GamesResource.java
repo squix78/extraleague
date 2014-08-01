@@ -21,6 +21,7 @@ import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 import ch.squix.extraleague.rest.games.mode.GameMode;
+import ch.squix.extraleague.rest.games.mode.GameModeFactory;
 import ch.squix.extraleague.rest.games.mode.OneMatchToSevenMode;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
@@ -52,8 +53,9 @@ public class GamesResource extends ServerResource {
 	@Post(value = "json")
 	public GameDto create(GameDto dto) {
 		
+		
 		//GameMode mode = new FourMatchesToFiveMode();
-		GameMode mode = new OneMatchToSevenMode();
+		GameMode mode = GameModeFactory.createGameMode(dto.getGameMode());
 		
 		log.info("Received game to save");
 		Game game = new Game();

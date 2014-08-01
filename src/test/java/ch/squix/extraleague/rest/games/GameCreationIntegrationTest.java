@@ -16,6 +16,7 @@ import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.model.ranking.Ranking;
+import ch.squix.extraleague.rest.games.mode.GameModeEnum;
 import ch.squix.extraleague.rest.matches.MatchDto;
 import ch.squix.extraleague.rest.matches.MatchesResource;
 
@@ -52,6 +53,7 @@ public class GameCreationIntegrationTest {
 		gameDto.getPlayers().add("b");
 		gameDto.getPlayers().add("c");
 		gameDto.getPlayers().add("d");
+		gameDto.setGameMode(GameModeEnum.FourMatchesToFive);
 		GameDto game = gameRessource.create(gameDto);
 		
 		MatchesResource matchesRessource = new MatchesResource();

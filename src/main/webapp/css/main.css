@@ -157,12 +157,13 @@ legend {
 
 .playerRow {
 	white-space: nowrap;
-	display: -webkit-box;
+	display: -moz-box;
+    display: -webkit-box;
 	margin-top: 15px;
 	margin-bottom: 15px;
 }
 .playerRow img {
-	width: 40px;
+	width: 32px;
 }
 .discreet {
 	color: #BBB;

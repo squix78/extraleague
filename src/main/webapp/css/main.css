@@ -49,6 +49,11 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 }
+.smallPlayer, .smallPlayer img {
+	max-width: 32px;
+	margin-left: auto;
+	margin-right: auto;
+}
 .redTeam {
 	color: #D9534F;
 }

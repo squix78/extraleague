@@ -436,7 +436,9 @@ function StatsController($scope, $rootScope, $routeParams, Statistics) {
 	
 	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
 }
-function MeetingPointController($scope, $rootScope, $timeout, $location, MeetingPointPlayers, MeetingPointPlayer, Tables, Games, NotificationService) {
+function MeetingPointController($scope, $rootScope, $timeout, $location, MeetingPointPlayers, MeetingPointPlayer, Tables, GameModes, Games, NotificationService) {
+	
+	$scope.game = new Games();
 	$scope.loadPlayers = function() {
 		$scope.arePlayersLoading = true;
 		$scope.players = MeetingPointPlayers.query({}, function() {
@@ -444,8 +446,13 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
 		});
 	};
 	$scope.loadPlayers();
+	$scope.isTablesLoading = true;
     $scope.tables = Tables.query({}, function() {
 	    $scope.isTablesLoading = false;
+    });
+    $scope.isModesLoading = true;
+    $scope.modes = GameModes.query({}, function() {
+ 	  $scope.isModesLoading = false;
     });
     $scope.availableTimes = [
        {label: 'next 15min', timeDiff: '15'},
@@ -467,25 +474,28 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
     $scope.togglePlayer = function(player) {
     	player.enabled = ! (player.enabled | false);
     	console.log("Player: " + player.player + ", enabled: " +player.enabled );
+    	$scope.game.players = [];
+    	angular.forEach($scope.getEnabledPlayers(), function(player, index) {
+    		$scope.game.players.push(player.player);
+    	});
+
     }
     $scope.startGame = function() {
-    	var enabledPlayers = $scope.getEnabledPlayers();
-    	if (enabledPlayers.length === 4) {
-    		console.log("We could start playing");
-    		var game = new Games();
-    		game.table= enabledPlayers[0].table;
-    		game.players = [];
-    		angular.forEach(enabledPlayers, function(enabledPlayer) {
-    			game.players.push(enabledPlayer.player);
-    		});
-    	    game.$save({table: game.table}, function(savedGame){
-    	        $location.path("/games/" + savedGame.id);      
-    	    });
-    	}
+	    $scope.game.$save({}, function(savedGame){
+	        $location.path("/games/" + savedGame.id);      
+	    });
     }
     $scope.countEnabledPlayers = function() {
     	return $scope.getEnabledPlayers().length;
     }
+    $scope.isGameComplete = function() {
+ 	   var game = $scope.game;
+ 	   return angular.isDefined(game.table)
+ 	   	&& angular.isDefined(game.gameMode)
+ 	   	&& angular.isDefined(game.players)
+ 	   	&& game.players.length == 4;
+    }
+    
     $scope.getEnabledPlayers = function() {
     	var enabledPlayers = [];
     	var now = new Date();

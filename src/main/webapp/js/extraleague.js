@@ -1,18 +1,15 @@
 angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 'ui.bootstrap', 'nvd3ChartDirectives', 'gaeChannelService'])
     .config(function($routeProvider) {
-        $routeProvider.when('/tables', {
-           controller : 'TablesController',
-           templateUrl : 'partials/tables.html'
+        $routeProvider
+        .when('/newGame', {
+        	controller : 'NewGameController',
+        	templateUrl : 'partials/newGame.html'
         })
-        .when('/tables/:table', {
-           controller : 'TableController',
-           templateUrl : 'partials/table.html'
-        })
-        .when('/tables/:table/games/:gameId', {
+        .when('/games/:gameId', {
            controller : 'GameController',
            templateUrl : 'partials/game.html'
         })
-        .when('/tables/:table/games/:gameId/summary', {
+        .when('/games/:gameId/summary', {
            controller : 'SummaryController',
            templateUrl : 'partials/summary.html'
         })
@@ -61,6 +58,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('Tables', ['$resource', function($resource) {
       return $resource('/rest/tables');
+    }])
+    .factory('GameModes', ['$resource', function($resource) {
+    	return $resource('/rest/modes');
     }])
 
     .factory('Summary', ['$resource', function($resource) {
@@ -182,31 +182,27 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
 
 }
 
-function TablesController($scope, $rootScope, $resource, $location, $routeParams, Tables) {
-  $scope.isTablesLoading = true;
-  $scope.tables = Tables.query({}, function() {
-	  $scope.isTablesLoading = false;
-  });
-  
-  $rootScope.backlink = false;
-  
-  $scope.selectTable = function(table) {
-    console.log("Table selected: " + table.name);
-    $location.path("/tables/" + table.name);
-  };
-  
-  $rootScope.backAction = function() {
-    $location.path($rootScope.backlink);
-  };
-
-}
-
-function TableController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, Players) {
+function NewGameController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, Players, Tables, GameModes) {
    $scope.isSavingGame = false;
-   $scope.table = $routeParams.table;
-   $scope.currentGame = new Games();
-   $scope.currentGame.table= $scope.table;
-   $scope.currentGame.players = [];
+   $scope.game = new Games();
+   
+   $scope.isTablesLoading = true;
+   $scope.tables = Tables.query({}, function() {
+		  $scope.isTablesLoading = false;
+   });
+   
+   $scope.isModesLoading = true;
+   $scope.modes = GameModes.query({}, function() {
+	  $scope.isModesLoading = false;
+   });
+   
+   $scope.isGameComplete = function() {
+	   var game = $scope.game;
+	   return angular.isDefined(game.table)
+	   	&& angular.isDefined(game.gameMode)
+	   	&& angular.isDefined(game.players)
+	   	&& game.players.length == 4;
+   }
 
    $scope.$on('$viewContentLoaded', function() {
      $rootScope.backlink = '/tables';
@@ -214,28 +210,23 @@ function TableController($scope, $rootScope, $resource, $routeParams, $location,
 
    $scope.$watch('player', function(newValue, oldValue) {
       if (angular.isDefined(newValue)) {
-          $scope.currentGame.players = newValue.toLowerCase().replace(/,/g,'').split(' ');
-          console.log(newValue +", " + $scope.currentGame.players);
+          var players = newValue.toLowerCase().replace(/,/g,'').split(' ');
+          console.log(newValue +", " + $scope.game.players);
+          $scope.game.players = players;
       }
   
    });
-
-  $scope.addPlayer = function() {
-    $scope.currentGame.players.push($scope.player);
-    $scope.player="";
-  };
   
   $scope.startGame = function() {
-    $scope.isSavingGame = true;
-    $scope.currentGame.$save({table: $scope.table}, function(savedGame){
-      $scope.isSavingGame = false;
-      $scope.currentGame = savedGame;
-      $location.path("/tables/" + $scope.table + "/games/" + $scope.currentGame.id);      
-    });
+	  $scope.isGameStarting = true;
+	  $scope.game.$save(function(savedGame) {
+		  $scope.isGameStarting = false;
+		  $location.path("/games/" + savedGame.id);
+	  });
   };
   
   $scope.continueGame = function(gameId) {
-    $location.path("/tables/" + $scope.table + "/games/" + gameId);
+    $location.path("/games/" + gameId);
   };
   
   $scope.deleteGame = function(gameId) {
@@ -272,7 +263,7 @@ function OpenGamesController($scope, $rootScope, $location, GameService) {
 
 
   $scope.continueGame = function(game) {
-      $location.path("/tables/" + game.table + "/games/" + game.id);
+      $location.path("/games/" + game.id);
   };
   $scope.deleteGame = function(game) {
 	  GameService.deleteGame(game);
@@ -308,7 +299,7 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   });
   
   $scope.showSummary = function () {
-	  $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId + "/summary");  
+	  $location.path("/games/" + $scope.gameId + "/summary");  
   };
   
   $scope.moveMatchIndexBy = function(increment) {
@@ -339,7 +330,7 @@ function SummaryController($scope, $rootScope, $resource, $routeParams, $locatio
   };
   $scope.getSummary();
   $scope.editScores = function () {
-	  $location.path("/tables/" + $scope.table + "/games/" + $scope.gameId);  
+	  $location.path("/games/" + $scope.gameId);  
   };
 }
 
@@ -488,7 +479,7 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
     			game.players.push(enabledPlayer.player);
     		});
     	    game.$save({table: game.table}, function(savedGame){
-    	        $location.path("/tables/" + game.table + "/games/" + savedGame.id);      
+    	        $location.path("/games/" + savedGame.id);      
     	    });
     	}
     }

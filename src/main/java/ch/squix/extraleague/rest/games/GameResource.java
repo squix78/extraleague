@@ -23,7 +23,6 @@ public class GameResource extends ServerResource {
 	
 	@Get(value = "json")
 	public GameDto execute() throws UnsupportedEncodingException {
-		//String table = (String) this.getRequestAttributes().get("table");
 		String gameIdText = (String) this.getRequestAttributes().get("gameId");
 		Long gameId = Long.valueOf(gameIdText);
 		Game game = ofy().load().type(Game.class).id(gameId).now();

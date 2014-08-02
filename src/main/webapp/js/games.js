@@ -1,6 +1,6 @@
 angular.module('Games', ['gaeChannelService'])
   .factory('Games', ['$resource', function($resource) {
-    return $resource('/rest/tables/:table/games');
+    return $resource('/rest/games');
   }])
   .factory('OpenGames', ['$resource', function($resource) {
     return $resource('/rest/openGames');
@@ -89,7 +89,10 @@ angular.module('Games', ['gaeChannelService'])
 		},
 		deleteGame: function(game) {
 		  var me = this;
-	      Game.remove({table: game.table, gameId: game.id}, function() {
+	      Game.remove({gameId: game.id}, function() {
+	    	  if (game.id === openGames.currentGameId) {
+	    		  openGames.currentGameId = undefined;
+	    	  }
 	          me.loadOpenGames();
 	      })
 		},

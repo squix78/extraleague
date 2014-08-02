@@ -6,7 +6,7 @@ import ch.squix.extraleague.model.game.Game;
 
 public class GameDtoMapper {
 	
-	private static final Long AVERAGE_GAME_LENGTH_MILLIS = 4 * 350 * 1000L;
+	private static final Long AVERAGE_MILLIS_BETWEEN_GOALS = 70 * 1000L;
 
 	public static GameDto mapToDto(Game game) {
 		GameDto dto = new GameDto();
@@ -31,14 +31,15 @@ public class GameDtoMapper {
 			Long durationSinceFirstGoal =  now - game.getFirstGoalDate().getTime();
 			// only calculate
 			if (durationSinceFirstGoal > 10000 && progress >= 0.1 ) {
-				Long estimatedRemainingMillis = Math.round((1 - progress) * durationSinceFirstGoal / (progress - 0.05));
+				Double goalTimeShare = 1.0d / (game.getMaxMatches() * game.getMaxGoals());
+				Long estimatedRemainingMillis = Math.round((1 - progress) * durationSinceFirstGoal / (progress - goalTimeShare));
 				dto.setEstimatedRemainingMillis(estimatedRemainingMillis);
 			} else {
-				// heuristic;-) A match usually takes between 350s, a game has four matches
-				dto.setEstimatedRemainingMillis(AVERAGE_GAME_LENGTH_MILLIS);
+				// heuristic;-) A match usually takes between 350s
+				dto.setEstimatedRemainingMillis(AVERAGE_MILLIS_BETWEEN_GOALS * game.getMaxMatches() * game.getMaxGoals());
 			}
 		} else {
-			dto.setEstimatedRemainingMillis(AVERAGE_GAME_LENGTH_MILLIS);
+			dto.setEstimatedRemainingMillis(AVERAGE_MILLIS_BETWEEN_GOALS * game.getMaxMatches() * game.getMaxGoals());
 		}
 		return dto;
 	}

@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 'ui.bootstrap', 'nvd3ChartDirectives', 'gaeChannelService'])
+angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 'ui.bootstrap', 'ui.bootstrap.buttons', 'nvd3ChartDirectives', 'gaeChannelService'])
     .config(function($routeProvider) {
         $routeProvider
         .when('/newGame', {

@@ -529,7 +529,15 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
     
 	$rootScope.$on("UpdateMeetingPoint", function(event, message) {
 		   console.log("Received update for meeting point");
-		   $scope.players = message.players;
+		   var previousPlayers = $scope.players;
+	
+		   angular.forEach(previousPlayers, function(previousPlayer) {
+			  angular.forEach($scope.players, function(player) {
+				 if (previousPlayer.id === player.id) {
+					 player.enabled = previousPlayers.enabled;
+				 } 
+			  });
+		   });
 	       if(!$scope.$$phase) {
 	         $scope.$apply();
 	       }

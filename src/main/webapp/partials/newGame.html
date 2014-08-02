@@ -23,9 +23,9 @@
 					placeholder="Shortsign of 4 players separated by space, e.g. dei cw cm yw">
 			</div>
 			<div class="col-md-7 form-group">
-				<button ng-disabled="!isGameComplete()" type="submit"
+				<button ng-disabled="!isGameComplete() || isGameStarting" type="submit"
 					class="btn btn-primary" ng-click="startGame()">Start Game</button>
-				<div ng-show="isStartingGame">
+				<div ng-show="isGameStarting">
 					<img src="images/ajax-loader.gif" /> Please wait. Starting game...
 				</div>
 			</div>

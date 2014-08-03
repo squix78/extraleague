@@ -23,6 +23,8 @@ public class GameModeResource extends ServerResource {
 		for(GameModeEnum mode : GameModeEnum.values()) {
 			GameModeDto dto = new GameModeDto();
 			dto.setName(mode.name());
+			dto.setLabel(mode.getLabel());
+			dto.setDescription(mode.getDescription());
 			dtos.add(dto);
 		}
 		return dtos;

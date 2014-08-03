@@ -6,5 +6,7 @@ import lombok.Data;
 public class GameModeDto {
 	
 	private String name;
+	private String label;
+	private String description;
 
 }

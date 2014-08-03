@@ -47,7 +47,7 @@
 <div class="row">
 	<div class="col-md-12 form-group">
 		<div class=" btn-group">
-			<label ng-repeat="table in tables" class="btn btn-default"
+			<label ng-repeat="table in tables" class="btn btn-default btn-xs"
 				ng-model="game.table" btn-radio="table.name">{{table.name}}</label>
 		</div>
 	</div>
@@ -55,8 +55,8 @@
 <div class="row">
 	<div class="col-md-12 form-group">
 		<div class=" btn-group">
-			<label ng-repeat="mode in modes" class="btn btn-default"
-				ng-model="game.gameMode" btn-radio="mode.name">{{mode.name}}</label>
+			<label ng-repeat="mode in modes" class="btn btn-default btn-xs"
+				ng-model="game.gameMode" btn-radio="mode.name">{{mode.label}}</label>
 		</div>
 	</div>
 </div>

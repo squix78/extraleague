@@ -161,6 +161,7 @@ angular.module('Games', ['gaeChannelService'])
 			      openGames.currentMatch.endDate = new Date();
 			      if (openGames.currentMatchIndex < maxMatches - 1) {  
 			    	openGames.currentMatchIndex++;
+			    	service.updateCurrentMatch();
 			      } 
 		      }
 		      service.checkEndOfGame();
@@ -170,14 +171,17 @@ angular.module('Games', ['gaeChannelService'])
 			 var currentGame = openGames.currentGame;
 			 if (angular.isDefined(currentGame)) {
 				 var maxGoals = currentGame.maxGoals;
-				 openGames.isGameFinished = false;
+				 var maxMatches = currentGame.maxMatches;
+
+				 var finishedMatchCounter = 0;
 				 angular.forEach(currentGame.matches, function(match, index) {
 					 if ((match.teamAScore >= maxGoals || match.teamBScore >= maxGoals)) {
-						 openGames.isGameFinished = true;
+						 finishedMatchCounter++;
 					 }
 				 });
-				 if (openGames.isGameFinished) {
-				    service.updateCurrentGame();
+				 if (finishedMatchCounter === maxMatches) {
+					 openGames.isGameFinished = true;
+					 service.updateCurrentGame();
 				 }
 			 }
 		 },
@@ -206,7 +210,7 @@ angular.module('Games', ['gaeChannelService'])
 	    var updatedMatch = new Match(message.match);
 	    if (!angular.isDefined(openGames.gameMap[updatedGame.id])) {
 	    	console.log("Game to update does not exist here anymore");
-	    	openGames.isGameFinished = true;
+	    	//openGames.isGameFinished = true;
 			if(!$rootScope.$$phase) {
 				$rootScope.$apply();
 			}

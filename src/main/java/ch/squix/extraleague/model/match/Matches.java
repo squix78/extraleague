@@ -13,15 +13,14 @@ public class Matches {
 
 	private Map<String, List<Match>> matchPlayerMap = new HashMap<>();
 	private List<Match> matches = new ArrayList<>();
-        private Map<Long, List<Match>> gameMap = new HashMap<>();
+	private Map<Long, List<Match>> gameMap = new HashMap<>();
 
-	
 	public void setMatches(List<Match> unfilteredMatches) {
 		this.matches = new ArrayList<>();
 		for (Match match : unfilteredMatches) {
-		    if (match.getEndDate() != null) {
-		        matches.add(match); 
-		    }
+			if (match.getEndDate() != null && MatchUtil.isMatchComplete(match)) {
+				matches.add(match);
+			}
 		}
 		matchPlayerMap.clear();
 		for (Match match : matches) {
@@ -36,32 +35,32 @@ public class Matches {
 				playerMatches.add(match);
 			}
 		}
-	        for (Match match : matches) {
-	                List<Match> gameMatches = gameMap.get(match.getGameId());
-	                if (gameMatches == null) {
-	                        gameMatches = new ArrayList<>();
-	                        gameMap.put(match.getGameId(), gameMatches);
-	                }
-	                gameMatches.add(match);
-	        }
+		for (Match match : matches) {
+			List<Match> gameMatches = gameMap.get(match.getGameId());
+			if (gameMatches == null) {
+				gameMatches = new ArrayList<>();
+				gameMap.put(match.getGameId(), gameMatches);
+			}
+			gameMatches.add(match);
+		}
 	}
-	
+
 	public Map<Long, List<Match>> getGameMatches() {
-	    return gameMap;
+		return gameMap;
 	}
-	
+
 	public Set<String> getPlayers() {
 		return matchPlayerMap.keySet();
 	}
-	
+
 	public List<Match> getMatchesByPlayer(String player) {
 		return matchPlayerMap.get(player);
 	}
-	
+
 	public List<Match> getMatches() {
 		return matches;
 	}
-	
+
 	public List<Match> getMatchesSortedByTime() {
 		Collections.sort(matches, new Comparator<Match>() {
 
@@ -72,5 +71,5 @@ public class Matches {
 		});
 		return matches;
 	}
-	
+
 }

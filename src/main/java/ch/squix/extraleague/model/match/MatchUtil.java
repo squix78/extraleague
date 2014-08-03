@@ -74,6 +74,13 @@ public class MatchUtil {
     	}
     	return inBetweenResults;
 	}
+    
+    public static boolean isMatchComplete(Match match) {
+    	Integer teamAScore = match.getTeamAScore();
+    	Integer teamBScore = match.getTeamBScore();
+    	Integer maxScore = Math.max(teamAScore, teamBScore);
+    	return match.getMaxGoals() == maxScore;
+    }
 
 	public static boolean hasTeamAWon(Match match) {
         return match.getTeamAScore() > match.getTeamBScore();

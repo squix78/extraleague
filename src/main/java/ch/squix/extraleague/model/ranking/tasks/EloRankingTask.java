@@ -9,8 +9,6 @@ import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.elo.EloUtil;
 
 public class EloRankingTask implements RankingTask {
-	
-
 
 	@Override
 	public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
@@ -18,7 +16,6 @@ public class EloRankingTask implements RankingTask {
 			entry.getValue().setEloValue(EloUtil.INITIAL_RATING);
 		}
 		for (Match match : matches.getMatchesSortedByTime()) {
-			
 			Integer eloTeamA = EloUtil.getEloValue(playerRankingMap, match.getTeamA());
 			Integer eloTeamB = EloUtil.getEloValue(playerRankingMap, match.getTeamB());
 			Double expectedScore = EloUtil.getExpectedOutcome(eloTeamA, eloTeamB);
@@ -34,14 +31,13 @@ public class EloRankingTask implements RankingTask {
 			applyDelta(playerRankingMap, match.getTeamA()[1], deltaTeamA);
 			applyDelta(playerRankingMap, match.getTeamB()[0], deltaTeamB);
 			applyDelta(playerRankingMap, match.getTeamB()[1], deltaTeamB);
-			
+
 		}
 	}
-	
+
 	private void applyDelta(Map<String, PlayerRanking> playerRankingMap, String player, Integer deltaTeam) {
 		PlayerRanking playerRanking = playerRankingMap.get(player);
 		playerRanking.setEloValue(playerRanking.getEloValue() + deltaTeam);
 	}
-
 
 }

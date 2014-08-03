@@ -27,6 +27,8 @@ public class TestDataUtil {
 		match.setTeamAScore(teamAScore);
 		match.setTeamBScore(teamBScore);
 		match.setEndDate(new Date());
+		match.setMaxGoals(5);
+		match.setMaxMatches(4);
 		return match;
 	}
 

@@ -8,6 +8,8 @@ public class GameModeFactory {
 		switch(gameModeEnum) {
 		case FourMatchesToFive:
 				return new FourMatchesToFiveMode();
+		case ThreeMatchesToFive:
+				return new ThreeMatchesToFiveMode();
 		case OneMatchToSeven:
 				return new OneMatchToSevenMode();
 		}

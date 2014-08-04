@@ -79,7 +79,11 @@ public class MatchUtil {
     	Integer teamAScore = match.getTeamAScore();
     	Integer teamBScore = match.getTeamBScore();
     	Integer maxScore = Math.max(teamAScore, teamBScore);
-    	return match.getMaxGoals() == maxScore;
+    	Integer definedMaxGoals = 5;
+    	if (match.getMaxGoals() != null) {
+    		definedMaxGoals = match.getMaxGoals();
+    	}
+    	return definedMaxGoals == maxScore;
     }
 
 	public static boolean hasTeamAWon(Match match) {

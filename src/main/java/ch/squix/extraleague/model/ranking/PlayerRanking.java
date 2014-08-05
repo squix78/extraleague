@@ -42,6 +42,8 @@ public class PlayerRanking implements Serializable {
     private Double defensivePositionRate;
 
     private Long averageSecondsPerMatch;
+    
+    private Long secondsPlayedToday;
 
     private Double currentShapeRate;
 

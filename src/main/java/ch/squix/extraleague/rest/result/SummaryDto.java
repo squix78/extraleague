@@ -10,5 +10,6 @@ public class SummaryDto {
 	
 	private List<PlayerScoreDto> playerScores = new ArrayList<>();
 	private List<MatchSummaryDto> matches = new ArrayList<>();
+	private Long gameDurationSeconds;
 
 }

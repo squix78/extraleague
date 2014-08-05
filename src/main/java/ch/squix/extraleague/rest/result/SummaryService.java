@@ -3,6 +3,7 @@ package ch.squix.extraleague.rest.result;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,12 @@ public class SummaryService {
 					player, playerScores.get(player), 
 					playerGoals.get(player), 
 					playerEloPoints.get(player)));
+		}
+		Date startDate = game.getStartDate();
+		Date endDate = game.getEndDate();
+		if (startDate != null && endDate != null) {
+			Long durationInSeconds = (endDate.getTime() - startDate.getTime()) / 1000;
+			dto.setGameDurationSeconds(durationInSeconds);
 		}
 		return dto;
 	}

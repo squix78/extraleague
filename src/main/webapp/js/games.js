@@ -120,7 +120,7 @@ angular.module('Games', ['gaeChannelService'])
 					openGames.currentMatch.scorers.push(player);
 					service.calculateScores(openGames.currentMatch);
 					service.saveCurrentMatch();
-					service.checkEndOfMatch();
+					//service.checkEndOfMatch();
 				}
 			}
 		},

@@ -33,6 +33,12 @@
   </div>
 </div>
 
+<div class="row" ng-hide="!summary.gameDurationSeconds">
+  <div class="col-xs-12">
+    This game took {{summary.gameDurationSeconds}}.
+  </div>
+</div>
+
 <div class="row">
   <div class="col-xs-12">
     <h3>Matches</h3>

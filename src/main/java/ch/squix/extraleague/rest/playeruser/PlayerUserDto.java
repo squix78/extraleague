@@ -12,6 +12,7 @@ public class PlayerUserDto {
 	private Boolean meetingPointNotification;
 	private String appUserEmail;
 	private String pushBulletApiKey;
+	private Long secondsPlayedToday;
 	
 
 }

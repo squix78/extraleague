@@ -88,8 +88,7 @@ public class NotificationService {
             emailBody.append("</td></tr>");
         }
         emailBody.append("</tbody></table>");
-        emailBody.append("Note: this is a new feature. If you want to disable email notification, send an email to DEI.");
-        emailBody.append("There is a feature planned to let you administrate this yourself.");
+        emailBody.append("Note: you can disable this notification in the user section.");
         List<PlayerUser> players = ofy().load()
                 .type(PlayerUser.class)
                 .filter("player in", game.getPlayers())
@@ -100,7 +99,7 @@ public class NotificationService {
             Boolean isEmailNotificationEnabled = player.getEmailNotification();
             String recipient = player.getEmail();
             if (isEmailNotificationEnabled != null && isEmailNotificationEnabled
-                    && recipient != null) {
+                    && !Strings.isNullOrEmpty(recipient)) {
                 recipients.add(recipient);
             }
         }
@@ -122,10 +121,11 @@ public class NotificationService {
             MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
             for (String recipient : recipients) {
-                msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            	if (!Strings.isNullOrEmpty(recipient)) {
+            		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            	}
             }
             msg.setSubject(subject);
-            // msg.setText(msgBody);
             msg.setText(msgBody, "utf-8", "html");
             Transport.send(msg);
 

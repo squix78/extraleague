@@ -23,6 +23,7 @@ public class PlayerRanking implements Serializable {
     private Integer gamesLost = 0;
     private Integer ranking;
     private Set<String> badges = new TreeSet<>();
+    private Integer achievementPoints = 0;
     private Integer goalsMade = 0;
     private Integer goalsGot = 0;
 
@@ -89,6 +90,10 @@ public class PlayerRanking implements Serializable {
 
     public void increaseGamesLost() {
         gamesLost++;
+    }
+    
+    public void addAchievementPoints(Integer points) {
+    	achievementPoints += points;
     }
 
 }

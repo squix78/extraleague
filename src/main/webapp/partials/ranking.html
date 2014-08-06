@@ -15,6 +15,7 @@
             <th><a href="" ng-click="predicate = 'currentShapeRate'; reverse=!reverse">Sh %</a></th>
             <th><a href="" ng-click="predicate = 'goalPlusMinus'; reverse=!reverse">Goals</a></th>
             <th><a href="" ng-click="predicate = 'averageGoalsPerMatch'; reverse=!reverse">GPM</a></th>
+            <th><a href="" ng-click="predicate = 'achievementPoints'; reverse=!reverse">RSPCT</a></th>
             <th><a href="" ng-click="predicate = 'badges.length'; reverse=!reverse">Badges</a></th>
             <th><a href="" ng-click="predicate = 'dynamicRanking'; reverse=!reverse">%/elo/ts</a></th>
             <th><a href="" ng-click="predicate = 'trueSkillRating'; reverse=!reverse">TrueSkill</a></th>
@@ -29,6 +30,7 @@
             <td ng-class="{won: ranking.currentShapeRate > ranking.successRate, lost: ranking.currentShapeRate < ranking.successRate}">{{ranking.currentShapeRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.goalPlusMinus > 0, lost: ranking.goalPlusMinus < 0}"><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>
             <td >{{ranking.averageGoalsPerMatch| number:2}}</td>
+            <td >{{ranking.achievementPoints}}</td>
             <td>
 				<div badges ng-model="ranking.badges" badge-map="badgeMap"></div>
             </td>
@@ -85,6 +87,14 @@
 				Goals Per Match: Personally accounted goals divided by number of matches
 			</td>
 		</tr>
+		<tr>
+			<td>
+				RSPCT
+			</td>
+			<td>
+				Degree of Respect: the earned points by badges
+			</td>
+		</tr>
 	</tbody>
 </table>
 <h4>Badges</h4>
@@ -93,6 +103,7 @@
       <tr>
         <th>Badge</th>
         <th>Type</th>
+        <th>RSPCT</th>
         <th>#</th>
         <th>Description</th>
       </tr>
@@ -106,6 +117,9 @@
 			</td>
 			<td>
 				{{badge.badgeType}}
+			</td>
+			<td>
+				{{badge.achievementPoints}}
 			</td>
 			<td>
 				{{badge.badgeCount}}

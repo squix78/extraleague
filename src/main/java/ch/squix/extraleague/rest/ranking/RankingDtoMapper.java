@@ -49,6 +49,7 @@ public class RankingDtoMapper {
                 rankingDto.setTrueSkillMean(playerRanking.getTrueSkillMean());
                 rankingDto.setTrueSkillSigma(playerRanking.getTrueSkillSigma());
                 rankingDto.setMaxGoalsPerGame(playerRanking.getMaxGoalsPerGame());
+                rankingDto.setAchievementPoints(playerRanking.getAchievementPoints());
                 playerRankingList.add(rankingDto);
             }
         }

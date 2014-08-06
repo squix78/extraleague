@@ -39,6 +39,7 @@ public class BadgesResource extends ServerResource {
 			dto.setDescription(badge.getDescription());
 			dto.setBadgeCount(badgeHistogram.get(badge.name()));
 			dto.setJsRegex(badge.getJsRegex());
+			dto.setAchievementPoints(badge.getAchievementPoints());
 			badgeMap.put(badge.name(), dto);
 		}
 		return badgeMap;

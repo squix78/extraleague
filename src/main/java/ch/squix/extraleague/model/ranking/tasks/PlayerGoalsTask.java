@@ -29,7 +29,7 @@ public class PlayerGoalsTask implements RankingTask {
 			Double averageGoalsPerMatch = 0d;
 			if (matchesWithPlayerGoals > 0) {
 				averageGoalsPerMatch = 1d * playerGoalSum / matchesWithPlayerGoals;
-				if (averageGoalsPerMatch > maxGoalsPerMatch) {
+				if (averageGoalsPerMatch > maxGoalsPerMatch && matchesWithPlayerGoals >= 8) {
 					topShotRanking = playerRanking;
 					maxGoalsPerMatch = averageGoalsPerMatch;
 				}

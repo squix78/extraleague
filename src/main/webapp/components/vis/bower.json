@@ -3,6 +3,7 @@
   "version": "0.7.3",
   "description": "A dynamic, browser-based visualization library.",
   "homepage": "http://visjs.org/",
+  "main": "dist.vis.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/almende/vis.git"

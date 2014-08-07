@@ -87,6 +87,13 @@
           </td>
         </tr>
         <tr>
+          <td>Most victories in a row:</td>
+          <td>
+          	{{playerResult.statistics.bestSlam}}
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.bestSlam}})</span>
+          </td>
+        </tr>
+        <tr>
           <td>Offensive:</td>
           <td>
           	 {{100 * playerResult.statistics.offensivePositionRate | number:2}}%
@@ -206,34 +213,34 @@
 </div>
 
 <div ng-hide="isTimeseriesLoading">
+	
+	<h4>Badges</h4>
+	<div timeline height="350" ng-model="timeseries.datedBadges"></div>
+	Note: pinch to zoom. Only badges are displayed that were present at the end of the day.
+	
+	<h4>Elo Value</h4>
+	<div linechart  height="200" ng-model="timeseries.eloValueSeries"></div>
+	
+	
+	<h4>Success Rate</h4>
+	<div linechart  height="200" y-axis-format-function="yAxisPercentFormatFunction()" ng-model="timeseries.successRateSeries"></div>
+	
+	
+	<h4>Goal Plus/Minus</h4>
+	<div linechart  height="200" ng-model="timeseries.goalRateSeries"></div>
+	
+	<h4>Goals Per Match</h4>
+	<div linechart  height="200" ng-model="timeseries.goalsPerMatchSeries"></div>
+	
+	<h4>Shape</h4>
+	<div linechart  height="200" y-axis-format-function="yAxisPercentFormatFunction()" ng-model="timeseries.shapeSeries"></div>
+	
+	<h4>Ranking</h4>
+	<div linechart  invert-y-Axis="true" height="200" ng-model="timeseries.rankingSeries"></div>
 
-<h4>Badges</h4>
-<div timeline height="350" ng-model="timeseries.datedBadges"></div>
-Note: pinch to zoom. Only badges are displayed that were present at the end of the day.
 
-<h4>Elo Value</h4>
-<div linechart  height="200" ng-model="timeseries.eloValueSeries"></div>
+
 </div>
-
-<h4>Success Rate</h4>
-<div linechart  height="200" y-axis-format-function="yAxisPercentFormatFunction()" ng-model="timeseries.successRateSeries"></div>
-
-
-<h4>Goal Plus/Minus</h4>
-<div linechart  height="200" ng-model="timeseries.goalRateSeries"></div>
-
-<h4>Goals Per Match</h4>
-<div linechart  height="200" ng-model="timeseries.goalsPerMatchSeries"></div>
-
-<h4>Shape</h4>
-<div linechart  height="200" y-axis-format-function="yAxisPercentFormatFunction()" ng-model="timeseries.shapeSeries"></div>
-
-<h4>Ranking</h4>
-<div linechart  invert-y-Axis="true" height="200" ng-model="timeseries.rankingSeries"></div>
-
-
-
-
 
 
 <div ng-show="isTimeseriesLoading">

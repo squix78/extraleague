@@ -35,6 +35,8 @@ public class PlayerRanking implements Serializable {
     private Double bestOpponentRate;
     private String worstOpponent;
     private Double worstOpponentRate;
+    
+    private Integer bestSlam;
 
     private List<PlayerCombo> partners = new ArrayList<>();
     private List<PlayerCombo> opponents = new ArrayList<>();

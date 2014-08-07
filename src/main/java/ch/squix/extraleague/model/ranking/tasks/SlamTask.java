@@ -10,6 +10,7 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 
 public class SlamTask implements RankingTask {
@@ -35,10 +36,16 @@ public class SlamTask implements RankingTask {
                         	maxVictoriesInARow = victoriesInARow;
                         }
                 }
-
-                if (maxVictoriesInARow > 4) {
-                        ranking.getBadges().add(maxVictoriesInARow + "xSlam");
-                }
+                ranking.setBestSlam(maxVictoriesInARow);
+                if (maxVictoriesInARow >=20) {
+                        ranking.getBadges().add(BadgeEnum.x20Slam.name());
+                } else if (maxVictoriesInARow >=15) {
+                	ranking.getBadges().add(BadgeEnum.x15Slam.name());
+		        } else if (maxVictoriesInARow >=10) {
+		        	ranking.getBadges().add(BadgeEnum.x10Slam.name());
+		        } else if (maxVictoriesInARow >=5) {
+		        	ranking.getBadges().add(BadgeEnum.x5Slam.name());
+		        }
         }
     }
 

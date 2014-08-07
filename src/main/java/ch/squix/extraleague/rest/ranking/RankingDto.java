@@ -31,6 +31,7 @@ public class RankingDto {
     private List<PlayerComboDto> partners = new ArrayList<>();
     private List<PlayerComboDto> opponents = new ArrayList<>();
 
+    private Integer bestSlam = 0;
 
     private Double currentShapeRate;
 

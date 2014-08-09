@@ -2,10 +2,13 @@
 
 package ch.squix.extraleague.server;
 
+import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
+
 import com.google.appengine.api.NamespaceManager;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,17 +17,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-/**
- * An example App Engine namespace setting filter.  
- * 
- * <p>This namespace filter provides for a number of strategies
- * as an example but is also careful not to override the
- * namespace where it has previously been set, for example, incoming 
- * task queue requests.
- */
+
 public class NamespaceFilter implements Filter {
 
-
+  private static final Logger log = Logger.getLogger(NamespaceFilter.class.getName());
+	
   private FilterConfig filterConfig;
 
 /* @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
@@ -49,7 +46,9 @@ public class NamespaceFilter implements Filter {
       throws IOException, ServletException {
     
 	String namespace = request.getServerName();
-	if (namespace != null && namespace.contains("ncaleague") || namespace.contains("localhost")) {
+	log.info("Server name" + namespace);
+	if (namespace != null && namespace.contains("ncaleague")) {
+		log.info("NCALEAGEUE domain, setting to default namespace");
 		namespace = "";
 	}
     NamespaceManager.set(namespace);

@@ -40,7 +40,7 @@ public class RankingService {
 
     private static final Logger log = Logger.getLogger(RankingService.class.getName());
 
-    public static Ranking calculateRankings() {
+    public static Ranking calculateRankings() { 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -30);
         List<Match> matchesList = ofy().load()

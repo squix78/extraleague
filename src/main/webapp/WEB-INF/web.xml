@@ -35,6 +35,16 @@
 	        <filter-name>ObjectifyFilter</filter-name>
 	        <url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<filter>
+  		<filter-name>NamespaceFilter</filter-name>
+  		<filter-class>ch.squix.extraleague.server.NamespaceFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	  <filter-name>NamespaceFilter</filter-name> 
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
 
    <servlet>
       <servlet-name>RestletServlet</servlet-name>

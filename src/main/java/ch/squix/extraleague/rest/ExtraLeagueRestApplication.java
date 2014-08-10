@@ -6,6 +6,7 @@ import org.restlet.routing.Router;
 
 import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
+import ch.squix.extraleague.model.league.League;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.mutations.Mutations;
@@ -32,10 +33,13 @@ import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerResource;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayersResource;
 import ch.squix.extraleague.rest.playeruser.PlayerUserResource;
 import ch.squix.extraleague.rest.ranking.CleanInDayRankingsResource;
+import ch.squix.extraleague.rest.ranking.CronCleanInDayRankingsResource;
+import ch.squix.extraleague.rest.ranking.CronRankingServiceResource;
 import ch.squix.extraleague.rest.ranking.RankingByTagResource;
 import ch.squix.extraleague.rest.ranking.RankingResource;
 import ch.squix.extraleague.rest.ranking.RankingServiceResource;
 import ch.squix.extraleague.rest.result.SummaryResource;
+import ch.squix.extraleague.rest.statistics.CronUpdateStatisticsResource;
 import ch.squix.extraleague.rest.statistics.StatisticsResource;
 import ch.squix.extraleague.rest.statistics.UpdateStatisticsResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
@@ -43,21 +47,23 @@ import ch.squix.extraleague.rest.timeseries.TimeSeriesResource;
 import ch.squix.extraleague.rest.user.ClaimUserResource;
 import ch.squix.extraleague.rest.user.CurrentUserResource;
 import ch.squix.extraleague.rest.user.LoginLogoutResource;
+import ch.squix.extraleague.server.AddLeagueResource;
 
 import com.googlecode.objectify.ObjectifyService;
 
 public class ExtraLeagueRestApplication extends Application {
 	
-    static {
-        ObjectifyService.register(Game.class);
-        ObjectifyService.register(Match.class);
-        ObjectifyService.register(Ranking.class);
-        ObjectifyService.register(BrowserClient.class);
-        ObjectifyService.register(Statistics.class);
-        ObjectifyService.register(Mutations.class);
-        ObjectifyService.register(PlayerUser.class);
-        ObjectifyService.register(MeetingPointPlayer.class);
-    }
+	static {
+		ObjectifyService.register(Game.class);
+		ObjectifyService.register(Match.class);
+		ObjectifyService.register(Ranking.class);
+		ObjectifyService.register(BrowserClient.class);
+		ObjectifyService.register(Statistics.class);
+		ObjectifyService.register(Mutations.class);
+		ObjectifyService.register(PlayerUser.class);
+		ObjectifyService.register(MeetingPointPlayer.class);
+		ObjectifyService.register(League.class);
+	}
 	
 	@Override
     public Restlet createInboundRoot() {
@@ -81,8 +87,11 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/meetingPointPlayers", MeetingPointPlayersResource.class);
         router.attach("/meetingPointPlayers/{playerId}", MeetingPointPlayerResource.class);
         router.attach("/updateRankings", RankingServiceResource.class);
+        router.attach("/updateRankingsCron", CronRankingServiceResource.class);
         router.attach("/cleanRankings", CleanInDayRankingsResource.class);
+        router.attach("/cleanRankingsCron", CronCleanInDayRankingsResource.class);
         router.attach("/updateStatistics", UpdateStatisticsResource.class);
+        router.attach("/updateStatisticsCron", CronUpdateStatisticsResource.class);
         router.attach("/statistics", StatisticsResource.class);
         router.attach("/migrateMatches", MigrateMatchesResource.class);
         router.attach("/notificationToken", NotificationTokenResource.class);
@@ -91,6 +100,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/mutations", MutationsResource.class);
         router.attach("/admin/playerUsers", PlayerUsersAdminResource.class);
         router.attach("/admin/playerUsers/{player}", PlayerUserAdminResource.class);
+        router.attach("/admin/league/{leagueName}/{domain}", AddLeagueResource.class);
         router.attach("/user/current", CurrentUserResource.class);
         router.attach("/user/claim/{player}", ClaimUserResource.class);
         router.attach("/authUrl", LoginLogoutResource.class);

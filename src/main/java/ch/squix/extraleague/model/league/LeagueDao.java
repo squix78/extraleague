@@ -3,6 +3,7 @@ package ch.squix.extraleague.model.league;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.taskqueue.Queue;
@@ -11,6 +12,8 @@ import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
 
 public class LeagueDao {
+	
+	private static final Logger log = Logger.getLogger(LeagueDao.class.getName());
 	
 	public static List<League> loadLeaguesFromDefaultNamespace() {
 		String oldNamespace = NamespaceManager.get();
@@ -31,11 +34,12 @@ public class LeagueDao {
 		List<League> leagues = LeagueDao.loadLeaguesFromDefaultNamespace();
 		String oldNamespace = NamespaceManager.get();
 		try {
-		for (League league : leagues) {
-			NamespaceManager.set(league.getDomain());
-			Queue queue = QueueFactory.getDefaultQueue();
-			queue.add(TaskOptions.Builder.withMethod(Method.GET).url(taskUrl));
-		}
+			for (League league : leagues) {
+				log.info("Creating task for namespace " + league.getDomain() + " with url " + taskUrl);
+				NamespaceManager.set(league.getDomain());
+				QueueFactory.getDefaultQueue().add(TaskOptions.Builder.withUrl(taskUrl));
+				
+			}
 		} finally {
 			NamespaceManager.set(oldNamespace);
 		}

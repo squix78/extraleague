@@ -84,22 +84,27 @@ public class NamespaceFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
-		String namespace = request.getServerName();
-		log.info("Server name: " + namespace);
-		if (isDefaultNamespace(namespace)) {
-			log.info("NCALEAGEUE domain, setting to default namespace");
-			namespace = "";
-		} else {
-			if (!isLeagueRegistered(namespace)) {
-				log.info("This domain is not a registered league: " + namespace);
-				HttpServletResponse resp = (HttpServletResponse) response;
-				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-				return;
+		String namespace = NamespaceManager.get();
+		log.info("Namespace already defined: " + namespace);
+		if (namespace == null || "".equals(namespace)) {
+			namespace = request.getServerName();
+			log.info("Server name: " + namespace);
+			if (isDefaultNamespace(namespace)) {
+				log.info("NCALEAGEUE domain, setting to default namespace");
+				namespace = "";
+			} else {
+				if (!isLeagueRegistered(namespace)) {
+					log.info("This domain is not a registered league: " + namespace);
+					HttpServletResponse resp = (HttpServletResponse) response;
+					resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+					return;
+				}
 			}
+			NamespaceManager.set(namespace);
+		} else {
+			log.info("Namespace already defined: " + namespace);
 		}
-		NamespaceManager.set(namespace);
-
-		// chain into the next request
+			// chain into the next request
 		chain.doFilter(request, response);
 	}
 }

@@ -85,8 +85,8 @@ public class NamespaceFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		String namespace = NamespaceManager.get();
-		log.info("Namespace already defined: " + namespace);
 		if (namespace == null || "".equals(namespace)) {
+			log.info("Namespace: " + namespace);
 			namespace = request.getServerName();
 			log.info("Server name: " + namespace);
 			if (isDefaultNamespace(namespace)) {

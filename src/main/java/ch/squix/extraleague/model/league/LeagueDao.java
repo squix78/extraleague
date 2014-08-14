@@ -37,7 +37,7 @@ public class LeagueDao {
 			for (League league : leagues) {
 				log.info("Creating task for namespace " + league.getDomain() + " with url " + taskUrl);
 				NamespaceManager.set(league.getDomain());
-				QueueFactory.getDefaultQueue().add(TaskOptions.Builder.withUrl(taskUrl));
+				QueueFactory.getDefaultQueue().add(TaskOptions.Builder.withMethod(Method.GET).url(taskUrl));
 				
 			}
 		} finally {

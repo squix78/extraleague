@@ -22,6 +22,8 @@ import ch.squix.extraleague.rest.games.OpenGamesResource;
 import ch.squix.extraleague.rest.games.PlayedGamesResource;
 import ch.squix.extraleague.rest.maintenance.MigrateMatchesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
+import ch.squix.extraleague.rest.migration.NamespaceMigrationResource;
+import ch.squix.extraleague.rest.migration.NamespaceMigrationTaskResource;
 import ch.squix.extraleague.rest.mode.GameModeResource;
 import ch.squix.extraleague.rest.mutations.MutationsResource;
 import ch.squix.extraleague.rest.network.PlayerNetworkResource;
@@ -101,6 +103,8 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/admin/playerUsers", PlayerUsersAdminResource.class);
         router.attach("/admin/playerUsers/{player}", PlayerUserAdminResource.class);
         router.attach("/admin/league/{leagueName}/{domain}", AddLeagueResource.class);
+        router.attach("/admin/migration/namespace", NamespaceMigrationResource.class);
+        router.attach("/admin/migration/namespace/task", NamespaceMigrationTaskResource.class);
         router.attach("/user/current", CurrentUserResource.class);
         router.attach("/user/claim/{player}", ClaimUserResource.class);
         router.attach("/authUrl", LoginLogoutResource.class);

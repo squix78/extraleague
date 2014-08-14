@@ -27,8 +27,9 @@ public class NamespaceFilter implements Filter {
 
 	private static final Logger log = Logger.getLogger(NamespaceFilter.class.getName());
 
-	private FilterConfig filterConfig;
 	private Map<String, League> registeredLeagues = new HashMap<>();
+	
+	private final static String SUBDOMAIN_MATCH = "(([a-z0-9-]+)[.])*([a-z0-9]+)[.]([a-z0-9]+)";
 
 	static {
 		ObjectifyService.register(League.class);
@@ -39,7 +40,6 @@ public class NamespaceFilter implements Filter {
 	 */
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		filterConfig = config;
 		initializeLeagueMap();
 	}
 
@@ -64,11 +64,11 @@ public class NamespaceFilter implements Filter {
 	 */
 	@Override
 	public void destroy() {
-		this.filterConfig = null;
+
 	}
 	
 	private boolean isDefaultNamespace(String namespace) {
-		String [] defaultDomains = {"ncaleague", "127.0.0.1", "localhost"};
+		String [] defaultDomains = {"127.0.0.1", "localhost"};
 		for (String defaultDomain : defaultDomains) {
 			if (namespace != null & namespace.contains(defaultDomain)) {
 				return true;
@@ -87,11 +87,11 @@ public class NamespaceFilter implements Filter {
 		String namespace = NamespaceManager.get();
 		if (namespace == null || "".equals(namespace)) {
 			log.info("Namespace: " + namespace);
-			namespace = request.getServerName();
-			log.info("Server name: " + namespace);
+			namespace = getSubdomain(request.getServerName());
+			log.info("Subdomain name: " + namespace);
 			if (isDefaultNamespace(namespace)) {
-				log.info("NCALEAGEUE domain, setting to default namespace");
-				namespace = "";
+				log.info("NCALEAGEUE domain, setting to ncaleague namespace");
+				namespace = "ncaleague";
 			} else {
 				if (!isLeagueRegistered(namespace)) {
 					log.info("This domain is not a registered league: " + namespace);
@@ -106,5 +106,12 @@ public class NamespaceFilter implements Filter {
 		}
 			// chain into the next request
 		chain.doFilter(request, response);
+	}
+	
+	public String getSubdomain(String server) {
+		if (server.matches(SUBDOMAIN_MATCH)) {
+			return server.replaceFirst(SUBDOMAIN_MATCH, "$2");
+		}
+		return null;
 	}
 }

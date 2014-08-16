@@ -21,7 +21,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 public class CurrentUserResource extends ServerResource {
 	
-	private static final Logger log = Logger.getLogger(OpenGamesResource.class.getName());
+	private static final Logger log = Logger.getLogger(CurrentUserResource.class.getName());
 	
 	@Get(value = "json")
 	public PlayerUserDto executeGet() {
@@ -38,9 +38,9 @@ public class CurrentUserResource extends ServerResource {
 			dto.setAppUserEmail(currentUser.getEmail());
 			dto.setNickname(currentUser.getNickname());
 			dto.setFederatedIdentity(currentUser.getFederatedIdentity());
-		} 
+		}  
 		dto.setLoggedIn(userService.isUserLoggedIn());
-		dto.setLoginUrl(userService.createLoginURL("/user"));
+		dto.setLoginUrl(userService.createLoginURL("/user/"));
 		dto.setLogoutUrl(userService.createLogoutURL("/"));
 		return dto;
 	}
@@ -49,9 +49,10 @@ public class CurrentUserResource extends ServerResource {
 	public PlayerUserDto executePost(PlayerUserDto dto) {
 		UserService userService = UserServiceFactory.getUserService();
 		User currentUser = userService.getCurrentUser();
-		if (currentUser != null && dto.getAppUserEmail() != null && dto.getAppUserEmail().equals(currentUser.getEmail())) {
-			PlayerUserDtoMapper.savePlayerUser(dto, dto.getPlayer());
-			return dto;
+		if (currentUser != null 
+				&& dto.getAppUserEmail() != null 
+				&& dto.getAppUserEmail().equals(currentUser.getEmail())) {
+			return PlayerUserDtoMapper.savePlayerUser(dto, currentUser);
 		}
 		return null;
 	}

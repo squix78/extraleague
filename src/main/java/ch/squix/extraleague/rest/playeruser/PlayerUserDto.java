@@ -16,6 +16,7 @@ public class PlayerUserDto {
 	private String loginUrl;
 	private String logoutUrl;
 	private boolean isLoggedIn;
+	private boolean isPlayerClaimed;
 	private String nickname;
 	private String federatedIdentity;
 	

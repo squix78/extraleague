@@ -130,11 +130,8 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('Mutations', ['$resource', function($resource) {
     	return $resource('/rest/mutations');
     }])
-    .factory('AuthUrl', ['$resource', function($resource) {
-    	return $resource('/rest/authUrl');
-    }])
     .factory('CurrentUser', ['$resource', function($resource) {
-    	return $resource('/rest/user/current');
+    	return $resource('/rest/currentUser');
     }])
     .directive('badges', function() {
       return {

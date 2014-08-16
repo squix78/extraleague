@@ -5,7 +5,7 @@
  <form name="userForm">
   <div class="form-group">
     <label for="playerInput">Player</label>
-    <input ng-disabled="true" type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
+    <input ng-disabled="playerUser.playerClaimed" type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
   </div>
   <div class="form-group">
     <label for="emailInput">Notification Email</label>
@@ -13,7 +13,7 @@
   </div>
   <div class="form-group">
     <label for="pushBulletApiKey"><a href="https://www.pushbullet.com/" target="_blank">Pushbullet</a> Api Key</label>
-    <input type="text"  ng-minlength="45" ng-maxlength="45" class="form-control" id="pushBulletApiKey" placeholder="Api Key" ng-model="playerUser.pushBulletApiKey">
+    <input type="text"  ng-minlength="20" ng-maxlength="60" class="form-control" id="pushBulletApiKey" placeholder="Api Key" ng-model="playerUser.pushBulletApiKey">
   </div>
   <div class="form-group">
     <label for="emailInput">Claiming Gmail Account</label>

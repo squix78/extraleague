@@ -105,7 +105,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/admin/league/{leagueName}/{domain}", AddLeagueResource.class);
         router.attach("/admin/migration/namespace", NamespaceMigrationResource.class);
         router.attach("/admin/migration/namespace/task", NamespaceMigrationTaskResource.class);
-        router.attach("/user/current", CurrentUserResource.class);
+        router.attach("/currentUser", CurrentUserResource.class);
         router.attach("/user/claim/{player}", ClaimUserResource.class);
         router.attach("/authUrl", LoginLogoutResource.class);
         router.attach("/playerUsers", PlayerUserResource.class);

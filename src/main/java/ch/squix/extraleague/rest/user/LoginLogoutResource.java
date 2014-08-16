@@ -30,7 +30,7 @@ public class LoginLogoutResource extends ServerResource {
 		if (userService.isUserLoggedIn()) {
 			dto.setUrl(userService.createLogoutURL("/"));
 		} else {
-			dto.setUrl(userService.createLoginURL("/user"));
+			dto.setUrl(userService.createLoginURL("/user/"));
 		}
 		return dto;
 	}

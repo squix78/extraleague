@@ -13,7 +13,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         });
     })
     .factory('CurrentUser', ['$resource', function($resource) {
-    	return $resource('/rest/user/current');
+    	return $resource('/rest/currentUser');
     }])
     .factory('ClaimUser', ['$resource', function($resource) {
     	return $resource('/rest/user/claim/:player');

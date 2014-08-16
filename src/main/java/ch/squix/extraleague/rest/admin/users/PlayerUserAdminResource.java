@@ -35,7 +35,8 @@ public class PlayerUserAdminResource extends ServerResource {
 	@Post(value = "json")
 	public void executePost(PlayerUserDto playerUserDto) {
 		String player = (String) this.getRequestAttributes().get("player");
-		PlayerUserDtoMapper.savePlayerUser(playerUserDto, player);
+		playerUserDto.setPlayer(player);
+		PlayerUserDtoMapper.savePlayerUserByAdmin(playerUserDto);
 	}
 
 

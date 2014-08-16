@@ -9,6 +9,9 @@ import java.util.List;
 public class RankingDtoMapper {
 
     public static List<RankingDto> convertToDto(Ranking ranking) {
+    	if (ranking == null || ranking.getPlayerRankings() == null) {
+    		return new ArrayList<>();
+    	}
         List<RankingDto> playerRankingList = new ArrayList<>();
         List<PlayerRanking> playerRankings = ranking.getPlayerRankings();
         if (playerRankings != null) {

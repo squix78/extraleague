@@ -27,12 +27,22 @@ public class CurrentUserResource extends ServerResource {
 	public PlayerUserDto executeGet() {
 		UserService userService = UserServiceFactory.getUserService();
 		User currentUser = userService.getCurrentUser();
-		String userId = currentUser.getUserId();
-		PlayerUser player = ofy().load().type(PlayerUser.class).filter("appUserId = ", userId).first().now();
-		if (player == null) {
-			return null;
-		}
-		return PlayerUserDtoMapper.mapToDto(player);
+		PlayerUserDto dto = new PlayerUserDto();
+		if (userService.isUserLoggedIn()) {
+				
+			String userId = currentUser.getUserId();
+			PlayerUser player = ofy().load().type(PlayerUser.class).filter("appUserId = ", userId).first().now();
+			if (player != null) {
+				dto = PlayerUserDtoMapper.mapToDto(player);
+			} 
+			dto.setAppUserEmail(currentUser.getEmail());
+			dto.setNickname(currentUser.getNickname());
+			dto.setFederatedIdentity(currentUser.getFederatedIdentity());
+		} 
+		dto.setLoggedIn(userService.isUserLoggedIn());
+		dto.setLoginUrl(userService.createLoginURL("/user"));
+		dto.setLogoutUrl(userService.createLogoutURL("/"));
+		return dto;
 	}
 	
 	@Post(value = "json")

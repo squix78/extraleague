@@ -67,10 +67,10 @@ public class NamespaceFilter implements Filter {
 
 	}
 	
-	private boolean isDefaultNamespace(String namespace) {
-		String [] defaultDomains = {"127.0.0.1", "localhost"};
+	private boolean isTestEnvironment(String servername) {
+		String [] defaultDomains = {"127.0.0.1", "localhost", "ncaleague-test"};
 		for (String defaultDomain : defaultDomains) {
-			if (namespace != null & namespace.contains(defaultDomain)) {
+			if (servername != null && servername.contains(defaultDomain)) {
 				return true;
 			}
 		}
@@ -87,10 +87,11 @@ public class NamespaceFilter implements Filter {
 		String namespace = NamespaceManager.get();
 		if (namespace == null || "".equals(namespace)) {
 			log.info("Namespace: " + namespace);
-			namespace = getSubdomain(request.getServerName());
+			String serverName = request.getServerName();
+			namespace = getSubdomain(serverName);
 			log.info("Subdomain name: " + namespace);
-			if (isDefaultNamespace(namespace)) {
-				log.info("NCALEAGEUE domain, setting to ncaleague namespace");
+			if (isTestEnvironment(serverName)) {
+				log.info("Test environment, setting to ncaleague namespace");
 				namespace = "ncaleague";
 			} else {
 				if (!isLeagueRegistered(namespace)) {

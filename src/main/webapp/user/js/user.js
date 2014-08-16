@@ -18,9 +18,6 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('ClaimUser', ['$resource', function($resource) {
     	return $resource('/rest/user/claim/:player');
     }])
-    .factory('AuthUrl', ['$resource', function($resource) {
-    	return $resource('/rest/authUrl');
-    }])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {
 	    restrict: 'A',
@@ -46,12 +43,13 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
   	});
 
 
-function UserController($scope, $rootScope, $resource, $location, $routeParams, CurrentUser, AuthUrl) {
+function UserController($scope, $rootScope, $resource, $location, $routeParams, CurrentUser) {
 	$scope.isPlayerLoading = false;
 	$scope.isPlayerSaving = false;
 	$scope.loadPlayer = function() {
 		$scope.isPlayerLoading = true;
 		$scope.playerUser = CurrentUser.get({}, function() {
+			console.log($scope.playerUser);
 			$scope.isPlayerLoading = false;
 			if (!angular.isDefined($scope.playerUser.player)) {
 				console.log("found no user");
@@ -67,11 +65,6 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 			
 		});
 	}
-		
-	
-	$scope.authUrl = AuthUrl.get({}, function() {
-		
-	});
 
 	
 }

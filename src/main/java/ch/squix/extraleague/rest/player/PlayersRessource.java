@@ -21,6 +21,9 @@ public class PlayersRessource extends ServerResource {
 	@Get(value = "json")
 	public Map<String, RankingDto> execute() throws UnsupportedEncodingException {
 		Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
+		if (ranking != null) {
+			ranking = new Ranking();
+		}
 		List<RankingDto> rankings = RankingDtoMapper.convertToDto(ranking);
 		Map<String, RankingDto> rankingMap = new HashMap<String, RankingDto>();
 		for (RankingDto dto : rankings) {

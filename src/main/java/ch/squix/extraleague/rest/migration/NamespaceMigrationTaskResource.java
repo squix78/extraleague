@@ -33,12 +33,12 @@ public class NamespaceMigrationTaskResource extends ServerResource {
 	public String execute() throws UnsupportedEncodingException {
 		String sourceNamespace = "";
 		String targetNamespace = "ncaleague";
-		migrate(sourceNamespace, targetNamespace, Ranking.class);
-		migrate(sourceNamespace, targetNamespace, Match.class);
-		migrate(sourceNamespace, targetNamespace, Game.class);
-		migrate(sourceNamespace, targetNamespace, Mutations.class);
-		migrate(sourceNamespace, targetNamespace, PlayerUser.class);
-		migrate(sourceNamespace, targetNamespace, Statistics.class);
+//		migrate(sourceNamespace, targetNamespace, Ranking.class);
+//		migrate(sourceNamespace, targetNamespace, Match.class);
+//		migrate(sourceNamespace, targetNamespace, Game.class);
+//		migrate(sourceNamespace, targetNamespace, Mutations.class);
+//		migrate(sourceNamespace, targetNamespace, PlayerUser.class);
+//		migrate(sourceNamespace, targetNamespace, Statistics.class);
 		return "OK";
 	}
 	

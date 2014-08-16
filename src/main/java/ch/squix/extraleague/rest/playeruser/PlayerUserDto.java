@@ -13,6 +13,11 @@ public class PlayerUserDto {
 	private String appUserEmail;
 	private String pushBulletApiKey;
 	private Long secondsPlayedToday;
+	private String loginUrl;
+	private String logoutUrl;
+	private boolean isLoggedIn;
+	private String nickname;
+	private String federatedIdentity;
 	
 
 }

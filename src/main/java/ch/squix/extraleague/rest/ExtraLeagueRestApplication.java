@@ -95,7 +95,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/updateStatistics", UpdateStatisticsResource.class);
         router.attach("/updateStatisticsCron", CronUpdateStatisticsResource.class);
         router.attach("/statistics", StatisticsResource.class);
-        router.attach("/migrateMatches", MigrateMatchesResource.class);
+        //router.attach("/migrateMatches", MigrateMatchesResource.class);
         router.attach("/notificationToken", NotificationTokenResource.class);
         router.attach("/badges", BadgesResource.class);
         router.attach("/playerNetwork", PlayerNetworkResource.class);

@@ -53,6 +53,40 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            redirectTo: '/highlights'
         });
     })
+    .config(['$httpProvider', function($httpProvider) {
+	
+		$httpProvider.responseInterceptors.push(['$q', function($q) {
+	
+	
+			return function(promise) {
+				return promise.then(function(response) {
+					console.log("Response status: " + response.status);
+	
+					response.data.extra = 'Everything ok';
+	
+					return response; 
+	
+				}, function(response) {
+					console.log("Response status: " + response.status);
+					if (response.status === 401) {
+						
+						response.data = { 
+					 		status: false, 
+					 		description: 'Authentication required!'
+					 	};
+	
+						return response;
+	
+					}
+					return $q.reject(response);
+	
+				});
+	
+			}
+	
+		}]);
+	
+	}])
     .factory('Ping', ['$resource', function($resource) {
       return $resource('/rest/ping');
     }])
@@ -98,6 +132,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('AuthUrl', ['$resource', function($resource) {
     	return $resource('/rest/authUrl');
+    }])
+    .factory('CurrentUser', ['$resource', function($resource) {
+    	return $resource('/rest/user/current');
     }])
     .directive('badges', function() {
       return {
@@ -163,7 +200,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 	  };
   	});
 
-function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables, AuthUrl) {
+function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables, CurrentUser) {
   
   $rootScope.backlink = false;
   
@@ -176,8 +213,10 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
 	$location.path(target);  
   };
   
-  $scope.authUrl = AuthUrl.get({}, function() {
-		
+  $scope.isCurrentUserLoading = true;
+  $scope.currentUser = CurrentUser.get({}, function() {
+	  $scope.isCurrentUserLoading = false;
+	  console.log($scope.currentUser);
   });
 
 }

@@ -14,10 +14,10 @@ public class TopTenTask implements MutationTask {
 
 		for (PlayerRanking newPlayerRanking : newRanking.getPlayerRankings()) {
 			PlayerRanking oldPlayerRanking = oldRanking.getPlayerRanking(newPlayerRanking.getPlayer());
-			Integer newRank = newPlayerRanking.getRanking();
+			Integer newRank = newPlayerRanking.getEloRanking();
 			Integer oldRank = 999;
 			if (oldPlayerRanking != null) {
-				oldRank = oldPlayerRanking.getRanking();
+				oldRank = oldPlayerRanking.getEloRanking();
 			}
 			if (oldRank > 10 && newRank <= 10) {
 				PlayerMutation playerMutation = MutationUtil.getOrCreatePlayerMutation(mutationMap, newPlayerRanking.getPlayer());

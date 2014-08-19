@@ -3,6 +3,8 @@ package ch.squix.extraleague.server;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
@@ -22,6 +24,9 @@ public class AddLeagueResource extends ServerResource {
 		League league = new League();
 		league.setDomain(domain);
 		league.setName(leagueName);
+		league.setWebhookUrl("https://qrlee.extranet.netcetera.biz/secure/gameFinished/");
+		Map<String, String> requestHeaders = new HashMap<>();
+		league.setRequestHeaders(requestHeaders);
 
 		String oldNamespace = NamespaceManager.get();
 		try {

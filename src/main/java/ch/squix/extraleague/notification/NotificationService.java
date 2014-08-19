@@ -37,6 +37,9 @@ import ch.squix.extraleague.rest.result.SummaryService;
 import com.google.appengine.api.channel.ChannelMessage;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 
@@ -235,5 +238,10 @@ public class NotificationService {
         } catch (UnsupportedEncodingException e) {
             log.log(Level.SEVERE, "Server does not support UTF-8 encoding");
         }
+    }
+    
+    public static void callWebHooksForEndOfGame(Long gameId) {
+		QueueFactory.getDefaultQueue().add(
+				TaskOptions.Builder.withMethod(Method.POST).url("/rest/notifications/endOfGame/" + gameId));
     }
 }

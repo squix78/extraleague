@@ -28,6 +28,7 @@ import ch.squix.extraleague.rest.mode.GameModeResource;
 import ch.squix.extraleague.rest.mutations.MutationsResource;
 import ch.squix.extraleague.rest.network.PlayerNetworkResource;
 import ch.squix.extraleague.rest.notification.NotificationTokenResource;
+import ch.squix.extraleague.rest.notification.WebhookEndOfGameNotificationResource;
 import ch.squix.extraleague.rest.ping.PingResource;
 import ch.squix.extraleague.rest.player.PlayerRessource;
 import ch.squix.extraleague.rest.player.PlayersRessource;
@@ -50,6 +51,7 @@ import ch.squix.extraleague.rest.user.ClaimUserResource;
 import ch.squix.extraleague.rest.user.CurrentUserResource;
 import ch.squix.extraleague.rest.user.LoginLogoutResource;
 import ch.squix.extraleague.server.AddLeagueResource;
+import ch.squix.extraleague.server.SetLeagueAttributeResource;
 
 import com.googlecode.objectify.ObjectifyService;
 
@@ -103,8 +105,10 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/admin/playerUsers", PlayerUsersAdminResource.class);
         router.attach("/admin/playerUsers/{player}", PlayerUserAdminResource.class);
         router.attach("/admin/league/{leagueName}/{domain}", AddLeagueResource.class);
+        router.attach("/admin/league/setWebhook", SetLeagueAttributeResource.class);
         router.attach("/admin/migration/namespace", NamespaceMigrationResource.class);
         router.attach("/admin/migration/namespace/task", NamespaceMigrationTaskResource.class);
+        router.attach("/notification/endOfGame/{gameId}", WebhookEndOfGameNotificationResource.class);
         router.attach("/currentUser", CurrentUserResource.class);
         router.attach("/user/claim/{player}", ClaimUserResource.class);
         router.attach("/authUrl", LoginLogoutResource.class);

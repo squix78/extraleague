@@ -99,6 +99,7 @@ public class MatchesResource extends ServerResource {
 			queue.add(TaskOptions.Builder.withMethod(Method.GET).url("/rest/updateRankings"));
 			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
 			NotificationService.sendSummaryEmail(game, matches);
+			NotificationService.callWebHooksForEndOfGame(game.getId());
 		} 
 		GameDto gameDto = GameDtoMapper.mapToDto(game);
 		NotificationService.sendMessage(new UpdateMatchMessage(gameDto, matchDto));

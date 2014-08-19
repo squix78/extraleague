@@ -65,14 +65,14 @@
         </div>
         <div collapse="navCollapsed" data-extraleague-navbar class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li data-match-route="/highlights"><a ng-click="navigateTo('highlights')">Highlights</a></li>
             <li data-match-route="/newGame"><a ng-click="navigateTo('newGame')">New Game</a></li>
             <li data-match-route="/ranking"><a ng-click="navigateTo('ranking')">Ranking</a></li>
             <li data-match-route="/meetingPoint"><a ng-click="navigateTo('meetingPoint')">Meetingpoint</a></li>
             <li data-match-route="/openGames"><a ng-click="navigateTo('openGames')">Open Games</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
+	            <li data-match-route="/highlights"><a ng-click="navigateTo('highlights')">Highlights</a></li>
                 <li data-match-route="/about"><a ng-click="navigateTo('about')">Changes</a></li>
 	            <li data-match-route="/playedGames"><a ng-click="navigateTo('playedGames')">Today</a></li>
 	            <li data-match-route="/stats"><a ng-click="navigateTo('stats')">Statistics</a></li>

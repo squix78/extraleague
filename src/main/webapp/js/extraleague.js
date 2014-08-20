@@ -68,10 +68,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 					console.log("Response status: " + response.status);
 					if (response.status === 401) {
 						
-						response.data = { 
-					 		status: false, 
-					 		description: 'Authentication required!'
-					 	};
+//						response.data = { 
+//					 		status: false, 
+//					 		description: 'Authentication required!'
+//					 	};
 	
 						return response;
 	

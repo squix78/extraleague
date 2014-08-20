@@ -28,12 +28,12 @@ angular.module('Games', ['gaeChannelService'])
 	games.currentMaxGoals = undefined;
 	
 	var service = {
-		setGames: function(games) {
+		setGames: function(newGames) {
 			var me = this;
 			games.gameList.length = 0;
 			games.gameMap = {};
 			var index = 0;
-			angular.forEach(games, function(game, key) {
+			angular.forEach(newGames, function(game, key) {
 				game.matches = Match.query({gameId: game.id}, function() {
 					service.updateCurrentGame();
 				});

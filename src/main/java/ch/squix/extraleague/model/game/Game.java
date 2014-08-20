@@ -34,6 +34,7 @@ public class Game {
 
 	private Double gameProgress;
 	
+	@Index
 	private Boolean isGameFinished;
 	
 	private GameModeEnum gameMode;

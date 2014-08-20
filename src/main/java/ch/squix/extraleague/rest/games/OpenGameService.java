@@ -13,7 +13,7 @@ public class OpenGameService {
 	
 
 	public static List<GameDto> getOpenGames() {
-		List<Game> games = ofy().load().type(Game.class).list();
+		List<Game> games = ofy().load().type(Game.class).filter("isGameFinished", "false").list();
 		List<GameDto> gameDtos = new ArrayList<>();
 		for (Game game : games) {
 			if (game.getEndDate() == null) {

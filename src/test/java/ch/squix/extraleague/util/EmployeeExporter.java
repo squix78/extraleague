@@ -52,6 +52,7 @@ public class EmployeeExporter {
         String shortName = emp.get("shortName").asText();
 
         if (!emp.get("active").asBoolean()) {
+          System.out.println("Skipping inactive: " + shortName);
           continue;
         }
 
@@ -72,6 +73,7 @@ public class EmployeeExporter {
         }
         String email = empDetails.get("contact").get("email").asText();
         result.put(shortName.toLowerCase(), parseNameFromEmail(email));
+        System.out.println("Successfully added " + shortName);
       }
 
       new JsonFactory().createJsonGenerator(System.out)

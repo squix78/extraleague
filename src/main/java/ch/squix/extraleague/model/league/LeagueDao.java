@@ -48,7 +48,13 @@ public class LeagueDao {
 	public static League getCurrentLeague() {
 		String namespace = NamespaceManager.get();
 		log.info("Loading leage for namespace: " + namespace);
-		return ofy().load().type(League.class).filter("domain = ", namespace).first().now();
+		String oldNamespace = NamespaceManager.get();
+		try {
+		    NamespaceManager.set("");
+		    return ofy().load().type(League.class).filter("domain = ", namespace).first().now();
+	        } finally {
+	            NamespaceManager.set(oldNamespace);
+	        }
 	}
 
 }

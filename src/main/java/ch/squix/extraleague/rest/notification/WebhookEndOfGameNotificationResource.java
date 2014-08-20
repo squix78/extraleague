@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
@@ -22,12 +23,18 @@ public class WebhookEndOfGameNotificationResource extends ServerResource {
 	private static final Logger log = Logger.getLogger(WebhookEndOfGameNotificationResource.class.getName());
 	
 	@Post(value = "json")
-	public void execute() throws UnsupportedEncodingException {
+	@Get(value = "json")
+	public String execute() throws UnsupportedEncodingException {
 		String gameId = (String) this.getRequestAttributes().get("gameId");
+		log.info("Notifying end of game for id: " + gameId);
 		League league = LeagueDao.getCurrentLeague();
 		if (league != null && league.getWebhookUrl() != null) {
-			callWebhook(league.getWebhookUrl(), league.getRequestHeaders(), gameId);
+		    callWebhook(league.getWebhookUrl(), league.getRequestHeaders(), gameId);
+		} else {
+		    log.info("No matching league found");
+		    return "No league found";
 		}
+		return "OK";
 	}
 	
 	private static void callWebhook(String webhook, Map<String, String> requestHeaders, String gameId) {
@@ -37,8 +44,11 @@ public class WebhookEndOfGameNotificationResource extends ServerResource {
 	            connection.setDoOutput(true);
 	            connection.setRequestMethod("POST");
 	            
-	            for (Map.Entry<String, String> entry : requestHeaders.entrySet()) {
-		            connection.setRequestProperty(entry.getKey(), entry.getValue());
+	            if (requestHeaders != null) {
+        	            for (Map.Entry<String, String> entry : requestHeaders.entrySet()) {
+        		            connection.setRequestProperty(entry.getKey(), entry.getValue());
+        		            log.info("Adding header field: " + entry.getKey() + ": " + entry.getValue());
+        	            }
 	            }
 	    
 	            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {

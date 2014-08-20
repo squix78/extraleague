@@ -62,8 +62,6 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 				return promise.then(function(response) {
 					console.log("Response status: " + response.status);
 	
-					response.data.extra = 'Everything ok';
-	
 					return response; 
 	
 				}, function(response) {

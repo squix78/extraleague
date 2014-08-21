@@ -1,0 +1,41 @@
+<h4>League Admin</h4>
+
+ <form name="userForm" ng-hide="isLoadingLeague">
+  <div class="form-group">
+    <label for="nameInput">Name</label>
+    <input type="text" required class="form-control" id="nameInput" placeholder="League Name" ng-model="league.name"/>
+  </div>
+  <div class="form-group">
+    <label for="subdomainInput">Subdomain</label>
+    <input type="text" required class="form-control" id="subdomainInput" placeholder="Subdomain" ng-model="league.domain"/>
+  </div>
+  <div class="form-group">
+    <label for="webhookInput">Webhook</label>
+    <input type="text" class="form-control" id="webhookInput" ng-model="league.webhookUrl"/>
+  </div>
+  <div class="form-group">
+    <label for="requestHeadersInput">Request Headers</label>
+    <textarea class="form-control" id="requestHeadersInput" ng-model="league.requestHeaders">
+    </textarea>
+  </div>
+
+    <label for="tableInput">Tables</label>
+    <div class="form-group" ng-repeat="table in league.tables track by $index">
+    	<div class="input-group">
+    	<input type="text" class="form-control" id="tableInput" ng-model="league.tables[$index]"/>
+    	 <span class="input-group-btn">
+	    	<button type="submit" class="btn btn-danger" ng-click="removeTable($index)"><span class="glyphicon glyphicon-minus"></span> Remove</button>
+  		</span>
+  		</div>
+    </div>
+  	<button type="submit" class="btn btn-success" ng-click="addTable()"><span class="glyphicon glyphicon-plus"></span> Add Table</button>
+
+
+  <button ng-disabled="!userForm.$valid || isSavingLeague" type="submit" class="btn btn-primary" ng-click="saveLeague()">Save</button>
+
+</form>
+
+<span ng-show="isLoadingLeague"><img src="../images/ajax-loader.gif" /> Loading league...</span>
+<span ng-show="isSavingLeague"><img src="../images/ajax-loader.gif" /> Saving league...</span>
+
+

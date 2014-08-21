@@ -12,6 +12,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         	controller : 'UserDetailController',
         	templateUrl : 'partials/userDetail.html'
         })
+        $routeProvider.when('/league', {
+        	controller : 'LeagueAdminController',
+        	templateUrl : 'partials/league.html'
+        })
         .otherwise({
            redirectTo: '/users'
         });
@@ -21,6 +25,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('PlayerUser', ['$resource', function($resource) {
     	return $resource('/rest/admin/playerUsers/:player');
+    }])
+    .factory('League', ['$resource', function($resource) {
+    	return $resource('/rest/admin/league');
     }])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {
@@ -107,3 +114,24 @@ function UserDetailController($scope, $rootScope, $resource, $location, $routePa
 
 	
 }
+
+function LeagueAdminController($scope, $rootScope, $resource, $location, $routeParams, League) {
+	$scope.isLoadingLeague = true;
+	$scope.league = League.get({}, function() {
+		$scope.isLoadingLeague = false;
+	});
+	
+	$scope.saveLeague = function() {
+		$scope.isSavingLeague = true;
+		$scope.league.$save({}, function() {
+			$scope.isSavingLeague = false;
+		});
+	}
+	$scope.addTable = function() {
+		$scope.league.tables.push("");
+	}
+	$scope.removeTable = function(index) {
+		$scope.league.tables.splice(index, 1);
+	}
+}
+

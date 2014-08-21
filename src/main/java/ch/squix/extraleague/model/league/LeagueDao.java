@@ -57,4 +57,14 @@ public class LeagueDao {
 	        }
 	}
 
+	public static void saveLeague(League league) {
+		String oldNamespace = NamespaceManager.get();
+		try {
+			NamespaceManager.set("");
+			ofy().save().entity(league).now();
+		} finally {
+		  NamespaceManager.set(oldNamespace);
+		}
+	}
+
 }

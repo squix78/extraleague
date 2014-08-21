@@ -10,6 +10,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.league.League;
+import ch.squix.extraleague.model.league.LeagueDao;
 
 import com.google.appengine.api.NamespaceManager;
 
@@ -29,14 +30,8 @@ public class AddLeagueResource extends ServerResource {
 		requestHeaders.put("Auth-Token", "CNI_LMU_MKE_SL_TMI");
 		league.setRequestHeaders(requestHeaders);
 
-		String oldNamespace = NamespaceManager.get();
-		try {
-			NamespaceManager.set("");
-			ofy().save().entity(league).now();
-			return "OK";
-		} finally {
-		  NamespaceManager.set(oldNamespace);
-		}
+		LeagueDao.saveLeague(league);
+		return "OK";
 
 	}
 

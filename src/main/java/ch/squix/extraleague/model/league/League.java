@@ -1,5 +1,8 @@
 package ch.squix.extraleague.model.league;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
@@ -27,6 +30,8 @@ public class League {
 	private String webhookUrl;
 	
 	@EmbedMap
-	private Map<String, String> requestHeaders;
+	private Map<String, String> requestHeaders = new HashMap<>();
+	
+	private List<String> tables = new ArrayList<>();
 
 }

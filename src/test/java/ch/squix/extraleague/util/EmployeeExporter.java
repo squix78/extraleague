@@ -2,6 +2,8 @@ package ch.squix.extraleague.util;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 
@@ -16,14 +18,14 @@ import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.JsonNodeFactory;
-import org.codehaus.jackson.node.ObjectNode;
+
+import ch.squix.extraleague.rest.playeruser.PlayerUserDto;
 
 public class EmployeeExporter {
 
   private static final URI PLAZA_WS_BASE_URI = URI.create("http://plaza.netcetera.com/res");
 
-  public static void main(String[] args) throws ClientProtocolException, IOException {
+  public static void main(String[] args) throws ClientProtocolException, IOException, InterruptedException {
     if (args.length != 2) {
       System.err.println("Give user and password for Plaza as arguments!");
       System.exit(1);
@@ -47,7 +49,8 @@ public class EmployeeExporter {
 
     JsonHttpResponse response = httpClient.execute(httpGet, new JsonResponseHandler());
     if (response.isOk()) {
-      ObjectNode result = JsonNodeFactory.instance.objectNode();
+      //ObjectNode result = JsonNodeFactory.instance.objectNode();
+      List<PlayerUserDto> dtos = new ArrayList<>();
       for (JsonNode emp : response.getJson()) {
         String shortName = emp.get("shortName").asText();
 
@@ -71,15 +74,19 @@ public class EmployeeExporter {
           System.err.println("Skipping " + shortName + " (No email address!)");
           continue;
         }
+        PlayerUserDto dto = new PlayerUserDto();
         String email = empDetails.get("contact").get("email").asText();
-        result.put(shortName.toLowerCase(), parseNameFromEmail(email));
-        System.out.println("Successfully added " + shortName);
+        dto.setEmail(email);
+        dto.setPlayer(shortName.toLowerCase());
+        String fullname = parseNameFromEmail(email);
+        dto.setImageUrl("http://www.netcetera.com/en/data/contacts/Netcetera/" + fullname + "/photo/"+ fullname +".jpeg");
+        dtos.add(dto);
+        System.out.println(dtos.size() + ". Successfully added " + shortName);
+        Thread.sleep(1500L);
       }
 
-      new JsonFactory().createJsonGenerator(System.out)
-          .useDefaultPrettyPrinter()
-          .setCodec(new ObjectMapper())
-          .writeTree(result);
+      ObjectMapper mapper = new ObjectMapper();
+      System.out.println(mapper.writeValueAsString(dtos));
     } else {
       System.err.println("ERROR: " + response);
     }

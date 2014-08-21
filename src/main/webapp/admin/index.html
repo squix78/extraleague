@@ -9,7 +9,7 @@
     <title>Admin</title>
 
     <link rel="stylesheet" type="text/css" href="../components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../dist/main.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     <script src="../components/angular/angular.js"></script>
@@ -37,7 +37,8 @@
         </div>
         <div collapse="navCollapsed" data-extraleague-navbar class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li data-match-route="users"><a ng-click="navigateTo('Users')">Users</a></li>
+            <li data-match-route="/users"><a ng-click="navigateTo('Users')">Users</a></li>
+            <li data-match-route="/league"><a ng-click="navigateTo('league')">League</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

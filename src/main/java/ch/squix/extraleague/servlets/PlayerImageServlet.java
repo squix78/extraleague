@@ -27,7 +27,6 @@ import com.google.appengine.api.images.Transform;
  */
 public class PlayerImageServlet extends HttpServlet {
 
-	public static final String THUMBNAIL_SERVICE_URL = "http://worker.feederator.org:8080/FeedShots/shoot?url=";
 	private static final Logger log = Logger.getLogger(PlayerImageServlet.class.getName());
 
 	@Override
@@ -35,6 +34,7 @@ public class PlayerImageServlet extends HttpServlet {
 		String urlString = req.getParameter("url");
 		
 		resp.setContentType("image/png");
+		resp.setHeader("Cache-Control", "public, max-age=3600");
 		BufferedInputStream bis = null;
 		ByteArrayOutputStream bos = null;
 		try {
@@ -51,7 +51,6 @@ public class PlayerImageServlet extends HttpServlet {
 			}
 			byte[] picture = bos.toByteArray();
 			// only set the cache header after successfull header reading
-			resp.setHeader("Cache-Control", "public, max-age=86400");
 
 			ImagesService imagesService = ImagesServiceFactory.getImagesService();
 

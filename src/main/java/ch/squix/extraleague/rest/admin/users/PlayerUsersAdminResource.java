@@ -45,7 +45,10 @@ public class PlayerUsersAdminResource extends ServerResource {
 				PlayerUser newPlayerUser = PlayerUserDtoMapper.mapFromAdminDto(dto);
 				newPlayerUsers.add(newPlayerUser);
 				existingPlayerMap.put(dto.getPlayer(), newPlayerUser);
+			} else {
+				newPlayerUsers.add(existingPlayerUser);
 			}
+			
 			
 		}
 		ofy().save().entities(newPlayerUsers).now();

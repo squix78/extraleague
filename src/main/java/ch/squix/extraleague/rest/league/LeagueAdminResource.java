@@ -53,7 +53,9 @@ public class LeagueAdminResource extends ServerResource {
 	    Map<String, String> requestHeaderMap = new HashMap<>();
 	    for (String line : lines) {
 	    	String [] tokens = line.split(":[ ]{0,1}");
-	    	requestHeaderMap.put(tokens[0], tokens[1]);
+	    	if (tokens.length == 2) {
+	    		requestHeaderMap.put(tokens[0], tokens[1]);
+	    	}
 	    }
 	    league.setRequestHeaders(requestHeaderMap);
 	    LeagueDao.saveLeague(league);

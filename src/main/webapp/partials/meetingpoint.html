@@ -55,6 +55,7 @@
 		    </div>
 			<label ng-repeat="table in tables" class="btn btn-default btn-xs"
 				ng-model="game.table" btn-radio="table.name">{{table.name}}</label>
+			<div ng-show="isTablesLoading"><img src="images/ajax-loader.gif"/></div>
 		</div>
 	</div>
 </div>
@@ -66,6 +67,7 @@
 		    </div>
 			<label ng-repeat="mode in modes" class="btn btn-default btn-xs"
 				ng-model="game.gameMode" btn-radio="mode.name">{{mode.label}}</label>
+		    <div ng-show="isMoadesLoading"><img src="images/ajax-loader.gif"/></div>
 		</div>
 	</div>
 </div>

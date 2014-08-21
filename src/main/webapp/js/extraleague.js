@@ -570,7 +570,7 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
 		   angular.forEach(previousPlayers, function(previousPlayer) {
 			  angular.forEach($scope.players, function(player) {
 				 if (previousPlayer.id === player.id) {
-					 player.enabled = previousPlayers.enabled;
+					 player.enabled = previousPlayer.enabled;
 				 } 
 			  });
 		   });

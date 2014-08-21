@@ -25,6 +25,12 @@ public class EmployeeExporter {
 
   private static final URI PLAZA_WS_BASE_URI = URI.create("http://plaza.netcetera.com/res");
 
+  private static final long MEGABYTE = 1024L * 1024L;
+
+  public static long bytesToMegabytes(long bytes) {
+    return bytes / MEGABYTE;
+  }
+  
   public static void main(String[] args) throws ClientProtocolException, IOException, InterruptedException {
     if (args.length != 2) {
       System.err.println("Give user and password for Plaza as arguments!");
@@ -58,11 +64,10 @@ public class EmployeeExporter {
           System.out.println("Skipping inactive: " + shortName);
           continue;
         }
-
+        CloseableHttpClient detailClient = builder.build();
         httpGet = new HttpGet(PLAZA_WS_BASE_URI + "/employees/" + shortName);
         httpGet.setHeader("Accept", "application/json");
-
-        response = httpClient.execute(httpGet, new JsonResponseHandler());
+        response = detailClient.execute(httpGet, new JsonResponseHandler());
         if (!response.isOk()) {
           System.err.println("ERROR for employee '" + shortName + "': " + response);
           return;
@@ -82,7 +87,9 @@ public class EmployeeExporter {
         dto.setImageUrl("http://www.netcetera.com/en/data/contacts/Netcetera/" + fullname + "/photo/"+ fullname +".jpeg");
         dtos.add(dto);
         System.out.println(dtos.size() + ". Successfully added " + shortName);
-        Thread.sleep(1500L);
+        //Thread.sleep(1500L);
+        detailClient.close();
+        dumpMemoryInformation();
       }
 
       ObjectMapper mapper = new ObjectMapper();
@@ -90,6 +97,18 @@ public class EmployeeExporter {
     } else {
       System.err.println("ERROR: " + response);
     }
+  }
+  
+  private static void dumpMemoryInformation() {
+	    // Get the Java runtime
+	    Runtime runtime = Runtime.getRuntime();
+	    // Run the garbage collector
+	    //runtime.gc();
+	    // Calculate the used memory
+	    long memory = runtime.totalMemory() - runtime.freeMemory();
+	    System.out.println("Used memory is bytes: " + memory);
+	    System.out.println("Used memory is megabytes: "
+	        + bytesToMegabytes(memory));
   }
 
   private static String parseNameFromEmail(String email) {

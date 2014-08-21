@@ -564,7 +564,9 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
 	$rootScope.$on("UpdateMeetingPoint", function(event, message) {
 		   console.log("Received update for meeting point");
 		   var previousPlayers = $scope.players;
-	
+		   
+		   $scope.players = message.players;
+		   
 		   angular.forEach(previousPlayers, function(previousPlayer) {
 			  angular.forEach($scope.players, function(player) {
 				 if (previousPlayer.id === player.id) {

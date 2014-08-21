@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.appengine.api.NamespaceManager;
-import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
@@ -47,7 +46,7 @@ public class LeagueDao {
 
 	public static League getCurrentLeague() {
 		String namespace = NamespaceManager.get();
-		log.info("Loading leage for namespace: " + namespace);
+		log.info("Loading league for namespace: " + namespace);
 		String oldNamespace = NamespaceManager.get();
 		try {
 		    NamespaceManager.set("");

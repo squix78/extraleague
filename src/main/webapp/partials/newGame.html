@@ -6,19 +6,26 @@
 		</div>
 		<form name="playerForm">
 			<div class="col-md-7 form-group">
-				<div class="btn-group">
+				<div>
+					<label>Table</label>
+				</div>
+				<div class="btn-group" id="tableInput">
 					<label ng-repeat="table in tables" class="btn btn-default btn-xs" ng-model="game.table" 
 					btn-radio="table.name">{{table.name}}</label>
 				</div>
 			</div>
 			<div class="col-md-7 form-group">
-				<div class=" btn-group">
-					<label ng-repeat="mode in modes" class="btn btn-default btn-xs" ng-model="game.gameMode" 
+				<div>
+					<label>Game Mode</label>
+				</div>
+				<div class=" btn-group" >
+					<label id="modeInput" ng-repeat="mode in modes" class="btn btn-default btn-xs" ng-model="game.gameMode" 
 					btn-radio="mode.name">{{mode.label}}</label>
 				</div>
 			</div>
 
 			<div class="col-md-7 form-group">
+				<label for="player">Players</label>
 				<input type="text" class="form-control" id="player"
 					ng-model="player"
 					placeholder="Shortsign of 4 players separated by space, e.g. dei cw cm yw">

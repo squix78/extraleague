@@ -2,17 +2,20 @@
 <div class="row">
 	<form name="playerForm">
 		<div class="col-md-2 form-group">
+			<label for="player">Player</label>
 			<input required type="text" class="form-control" id="player"
 				ng-model="player.player" placeholder="Short sign">
 		</div>
 		<div class="col-md-2 form-group">
-			<select required class="form-control" ng-model="player.table"
+			<label for="tableInput">Table</label>
+			<select id="tableInput" required class="form-control" ng-model="player.table"
 				ng-options="table.name as table.name for table in tables">
 				<option value="">-- choose table --</option>
 			</select>
 		</div>
 		<div class="col-md-2 form-group">
-			<select required class="form-control" ng-model="availableNextMin"
+			<label for="availableInput">Available until</label>
+			<select id="availableInput" required class="form-control" ng-model="availableNextMin"
 				ng-options="available.timeDiff as available.label for available in availableTimes">
 				<option value="">-- Game starts within --</option>
 			</select>
@@ -47,6 +50,9 @@
 <div class="row">
 	<div class="col-md-12 form-group">
 		<div class=" btn-group">
+		    <div>
+		    	<label>Table</label>
+		    </div>
 			<label ng-repeat="table in tables" class="btn btn-default btn-xs"
 				ng-model="game.table" btn-radio="table.name">{{table.name}}</label>
 		</div>
@@ -55,6 +61,9 @@
 <div class="row">
 	<div class="col-md-12 form-group">
 		<div class=" btn-group">
+			<div>
+		    	<label>Mode</label>
+		    </div>
 			<label ng-repeat="mode in modes" class="btn btn-default btn-xs"
 				ng-model="game.gameMode" btn-radio="mode.name">{{mode.label}}</label>
 		</div>

@@ -53,6 +53,17 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 	  };
   	});
 
+function MainController($scope, $rootScope, $resource, $location, $routeParams) {
+
+	  
+	  $scope.navigateTo = function(target) {
+		$scope.navCollapsed = true
+		$location.path(target);  
+	  };
+	  
+
+	}
+
 function UserController($scope, $rootScope, $resource, $location, $routeParams, PlayerUsers, PlayerUser) {
 	$scope.loadPlayers = function() {
 		$scope.isPlayersLoading = true;

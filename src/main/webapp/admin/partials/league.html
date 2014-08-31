@@ -18,6 +18,11 @@
     <textarea class="form-control" id="requestHeadersInput" ng-model="league.requestHeaders">
     </textarea>
   </div>
+  <div class="form-group">
+    <label for="leagueCssInput">League Style (CSS)</label>
+    <textarea rows="10" class="form-control" id="leagueCssInput" ng-model="league.leagueCss">
+    </textarea>
+  </div>
 
     <label for="tableInput">Tables</label>
     <div class="form-group" ng-repeat="table in league.tables track by $index">

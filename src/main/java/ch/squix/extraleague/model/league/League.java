@@ -29,6 +29,8 @@ public class League {
 	
 	private String webhookUrl;
 	
+	private String leagueCss;
+	
 	@EmbedMap
 	private Map<String, String> requestHeaders = new HashMap<>();
 	

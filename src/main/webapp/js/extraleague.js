@@ -131,6 +131,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('CurrentUser', ['$resource', function($resource) {
     	return $resource('/rest/currentUser');
     }])
+    .factory('League', ['$resource', function($resource) {
+    	return $resource('/rest/league');
+    }])
     .directive('badges', function() {
       return {
         restrict: 'A',
@@ -195,7 +198,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 	  };
   	});
 
-function MainController($scope, $rootScope, $resource, $location, $routeParams, Tables, CurrentUser) {
+function MainController($scope, $rootScope, $resource, $location, $routeParams, League, CurrentUser) {
   
   $rootScope.backlink = false;
   
@@ -212,6 +215,9 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
   $scope.currentUser = CurrentUser.get({}, function() {
 	  $scope.isCurrentUserLoading = false;
 	  console.log($scope.currentUser);
+  });
+  $scope.league = League.get({}, function() {
+	  
   });
 
 }

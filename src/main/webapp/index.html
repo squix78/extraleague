@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="components/vis/dist/vis.css" type="text/css" />
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="dist/main.css">
+    <link rel="stylesheet" type="text/css" href="/rest/league/style">
 
     <link rel="shortcut icon" sizes="48x48" href="images/app-icon-mdpi.png">
     <link rel="shortcut icon" sizes="72x72" href="images/app-icon-hdpi.png">
@@ -56,7 +57,7 @@
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="btn btn-default btn-nav" ng-if="backlink" ng-click="backAction()"><span class="glyphicon glyphicon-arrow-left"></span></button>
-          <a class="navbar-brand" href="#">Extraleague</a>
+          <a class="navbar-brand" href="#">{{league.name}}</a>
           <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" >
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>

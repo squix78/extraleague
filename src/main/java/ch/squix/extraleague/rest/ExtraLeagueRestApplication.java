@@ -21,6 +21,8 @@ import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGamesResource;
 import ch.squix.extraleague.rest.games.PlayedGamesResource;
 import ch.squix.extraleague.rest.league.LeagueAdminResource;
+import ch.squix.extraleague.rest.league.LeagueResource;
+import ch.squix.extraleague.rest.league.LeagueStyleResource;
 import ch.squix.extraleague.rest.maintenance.MigrateMatchesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
 import ch.squix.extraleague.rest.migration.NamespaceMigrationResource;
@@ -91,19 +93,26 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/timeseries/{player}", TimeSeriesResource.class);
         router.attach("/meetingPointPlayers", MeetingPointPlayersResource.class);
         router.attach("/meetingPointPlayers/{playerId}", MeetingPointPlayerResource.class);
+        router.attach("/statistics", StatisticsResource.class);
+        router.attach("/notificationToken", NotificationTokenResource.class);
+        router.attach("/badges", BadgesResource.class);
+        router.attach("/playerNetwork", PlayerNetworkResource.class);
+        router.attach("/mutations", MutationsResource.class);
+        router.attach("/league", LeagueResource.class);
+        router.attach("/league/style", LeagueStyleResource.class);
+        
+        
+        // jobs
         router.attach("/updateRankings", RankingServiceResource.class);
         router.attach("/updateRankingsCron", CronRankingServiceResource.class);
         router.attach("/cleanRankings", CleanInDayRankingsResource.class);
         router.attach("/cleanRankingsCron", CronCleanInDayRankingsResource.class);
         router.attach("/updateStatistics", UpdateStatisticsResource.class);
         router.attach("/updateStatisticsCron", CronUpdateStatisticsResource.class);
-        router.attach("/statistics", StatisticsResource.class);
-        //router.attach("/migrateMatches", MigrateMatchesResource.class);
-        router.attach("/notificationToken", NotificationTokenResource.class);
-        router.attach("/badges", BadgesResource.class);
-        router.attach("/playerNetwork", PlayerNetworkResource.class);
-        router.attach("/mutations", MutationsResource.class);
         
+        //router.attach("/migrateMatches", MigrateMatchesResource.class);
+        
+        // admin
         router.attach("/admin/playerUsers", PlayerUsersAdminResource.class);
         router.attach("/admin/playerUsers/{player}", PlayerUserAdminResource.class);
         router.attach("/admin/league/{leagueName}/{domain}", AddLeagueResource.class);

@@ -5,7 +5,6 @@ import java.util.Map;
 import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
-import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 public class TopTenTask implements MutationTask {
 

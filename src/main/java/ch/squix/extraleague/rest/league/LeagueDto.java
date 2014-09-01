@@ -8,6 +8,8 @@ public class LeagueDto {
 	private String name;
 
 	private String domain;
+	
+	private String logoUrl;
 
 
 }

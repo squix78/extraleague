@@ -18,6 +18,8 @@ public class LeagueAdminDto {
 	
 	private String leagueCss;
 	
+	private String logoUrl;
+	
 	private List<String> tables = new ArrayList<>();
 
 }

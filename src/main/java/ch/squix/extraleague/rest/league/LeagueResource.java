@@ -25,6 +25,7 @@ public class LeagueResource extends ServerResource {
 		LeagueDto dto = new LeagueDto();
 		dto.setDomain(league.getDomain());
 		dto.setName(league.getName());
+		dto.setLogoUrl(league.getLogoUrl());
 		return dto;
 	}
 

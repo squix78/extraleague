@@ -31,6 +31,8 @@ public class League {
 	
 	private String leagueCss;
 	
+	private String logoUrl;
+	
 	@EmbedMap
 	private Map<String, String> requestHeaders = new HashMap<>();
 	

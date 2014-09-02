@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -37,6 +38,7 @@ import ch.squix.extraleague.rest.result.SummaryService;
 import com.google.appengine.api.channel.ChannelMessage;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
+import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
@@ -106,36 +108,33 @@ public class NotificationService {
                 recipients.add(recipient);
             }
         }
+        
+        addEmailToSendQueue("Summary Game with " + JOINER.join(game.getPlayers()), emailBody.toString(), recipients);
 
-        sendEmail("Summary Game with " + JOINER.join(game.getPlayers()), emailBody.toString(),
+    }
+
+    public static void addEmailToSendQueue(String subject, String emailBody, List<String> recipients) {
+		Queue notificationQueue = QueueFactory.getQueue("notification");
+        SendEmailDeferredTask emailTask = new SendEmailDeferredTask(
+        		subject, 
+        		emailBody.toString(),
                 recipients);
+		notificationQueue.add(TaskOptions.Builder.withPayload(emailTask));
+	}
+	
+
+    public static void addPushBulletMessageToSendQueue(String pushBulletApiKey, String subject, String message) {
+		Queue notificationQueue = QueueFactory.getQueue("notification");
+        SendPushBulletDeferredTask pushBulletTask = SendPushBulletDeferredTask.createPushBulletNoteTask(pushBulletApiKey, subject, message);
+		notificationQueue.add(TaskOptions.Builder.withPayload(pushBulletTask));
+	}
+    public static void addPushBulletLinkMessageToSendQueue(String apiKey, String title, String url, String body) {
+    	Queue notificationQueue = QueueFactory.getQueue("notification");
+    	SendPushBulletDeferredTask pushBulletTask = SendPushBulletDeferredTask.sendPushBulletLink(apiKey, title, url, body);
+    	notificationQueue.add(TaskOptions.Builder.withPayload(pushBulletTask));
     }
 
-    private static void sendEmail(String subject, String msgBody, List<String> recipients) {
-        if (recipients.size() == 0) {
-            log.info("No notifications enabled. Not sending email");
-            return;
-        }
-        log.info("Sending email to " + JOINER.join(recipients));
-        Properties props = new Properties();
-        Session session = Session.getDefaultInstance(props, null);
 
-        try {
-            MimeMessage msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
-            for (String recipient : recipients) {
-            	if (!Strings.isNullOrEmpty(recipient)) {
-            		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-            	}
-            }
-            msg.setSubject(subject);
-            msg.setText(msgBody, "utf-8", "html");
-            Transport.send(msg);
-
-        } catch (Exception e) {
-            log.log(Level.SEVERE, "Could not send email", e);
-        }
-    }
 
     public static void sendMeetingPointMessage(String subject, String message) {
     	List<PlayerUser> usersWithNotification = ofy().load().type(PlayerUser.class).filter("meetingPointNotification =", true).list();
@@ -143,105 +142,37 @@ public class NotificationService {
         	return;
         }
     	try {
-            Properties props = new Properties();
-            Session session = Session.getDefaultInstance(props, null);
-            MimeMessage msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
+
+            List<String> recipients = new ArrayList<>();
             for (PlayerUser user : usersWithNotification) {
             	String recipient = user.getEmail();
             	if(!Strings.isNullOrEmpty(recipient)) {
-            		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
+            		recipients.add(recipient);
             	}
             	String pushBulletApiKey = user.getPushBulletApiKey();
             	if (!Strings.isNullOrEmpty(pushBulletApiKey)) {
-            		sendPushBulletNote(pushBulletApiKey, subject, message);
+            		addPushBulletMessageToSendQueue(pushBulletApiKey, subject, message);
             	}
             }
 
-            msg.setSubject(subject);
-            msg.setText(message, "utf-8", "html");
-            Transport.send(msg);
+            addEmailToSendQueue(subject, message, recipients);
 
         } catch (Exception e) {
             log.log(Level.SEVERE, "Could not send email", e);
         }
     }
 
-    public static void sendAdminMessage(String subject, String body) {
-        try {
-            Properties props = new Properties();
-            Session session = Session.getDefaultInstance(props, null);
-            MimeMessage msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("squix78@gmail.com", "NCA League Admin"));
-            msg.addRecipient(Message.RecipientType.TO, new InternetAddress("squix78@gmail.com"));
 
-            msg.setSubject(subject);
-            // msg.setText(msgBody);
-            msg.setText(body, "utf-8", "html");
-            Transport.send(msg);
-
-        } catch (Exception e) {
-            log.log(Level.SEVERE, "Could not send email", e);
-        }
+	public static void sendAdminMessage(String subject, String body) {
+		List<String> recipients = Arrays.asList("squix78@gmail.com");
+		addEmailToSendQueue(subject, body, recipients);
     }
     
-    public static void sendPushBulletMessage(String apiKey, String httpBody) {
-        try {
-            URL url = new URL("https://api.pushbullet.com/v2/pushes");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
 
-            connection.setRequestProperty("Authorization",
-            		"Basic "+ Base64.encodeBase64String((apiKey).getBytes()));
-
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
-            writer.write(httpBody);
-            writer.close();
-    
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                log.log(Level.INFO, "Sent message");
-            } else {
-            	log.log(Level.SEVERE, "Could not send message: " + connection.getResponseCode() );
-            }
-        } catch (UnsupportedEncodingException e) {
-            log.log(Level.SEVERE, "Server does not support UTF-8 encoding");
-        } catch (MalformedURLException e) {
-        	log.log(Level.SEVERE, "Could not send message: ", e);
-        } catch (IOException e) {
-        	log.log(Level.SEVERE, "Could not send message: ", e);
-        }
-    }
-    public static void sendPushBulletNote(String apiKey, String title, String body) {
-        try {
-            StringBuilder httpBody = new StringBuilder();
-            httpBody.append("type=note&");
-            httpBody.append("title="+URLEncoder.encode(title, "UTF-8")+"&");
-            httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
-            sendPushBulletMessage(apiKey, httpBody.toString());
-        } catch (UnsupportedEncodingException e) {
-            log.log(Level.SEVERE, "Server does not support UTF-8 encoding");
-        }
-    }
-
-    public static void sendPushBulletLink(String apiKey, String title, String url, String body) {
-        try {
-            StringBuilder httpBody = new StringBuilder();
-            httpBody.append("type=link&");
-            httpBody.append("title="+URLEncoder.encode("Game starts now.", "UTF-8")+"&");
-            httpBody.append("url="+URLEncoder.encode(url, "UTF-8")+"&");
-            if (!Strings.isNullOrEmpty(body)) {
-                httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));
-            }
-
-            sendPushBulletMessage(apiKey, httpBody.toString());
-        } catch (UnsupportedEncodingException e) {
-            log.log(Level.SEVERE, "Server does not support UTF-8 encoding");
-        }
-    }
     
     public static void callWebHooksForEndOfGame(Long gameId) {
 		QueueFactory.getDefaultQueue().add(
 				TaskOptions.Builder.withMethod(Method.POST).url("/rest/notifications/endOfGame/" + gameId));
     }
+
 }

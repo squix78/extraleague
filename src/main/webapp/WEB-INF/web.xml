@@ -96,7 +96,9 @@
 	  <web-resource-collection>
 	    <web-resource-name>user</web-resource-name>
 	    <url-pattern>/user/*</url-pattern>
+	    <url-pattern>/leagueAdmin/*</url-pattern>
 	    <url-pattern>/rest/user/*</url-pattern>
+	    <url-pattern>/rest/leagueAdmin/*</url-pattern>
 	  </web-resource-collection>
 	  <auth-constraint>
 	    <role-name>*</role-name>

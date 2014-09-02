@@ -16,11 +16,15 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ch.squix.extraleague.model.league.League;
 
 import com.google.appengine.api.NamespaceManager;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
 
 public class NamespaceFilter implements Filter {
@@ -85,6 +89,7 @@ public class NamespaceFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		String namespace = NamespaceManager.get();
+		HttpServletRequest req = (HttpServletRequest) request;
 		if (namespace == null || "".equals(namespace)) {
 			log.info("Namespace: " + namespace);
 			String serverName = request.getServerName();
@@ -104,6 +109,22 @@ public class NamespaceFilter implements Filter {
 			NamespaceManager.set(namespace);
 		} else {
 			log.info("Namespace already defined: " + namespace);
+		}
+		
+		String requestUrl = req.getRequestURL().toString();
+		if (requestUrl != null && requestUrl.contains("/leagueAdmin/")) {
+			UserService userService = UserServiceFactory.getUserService();
+			User currentUser = userService.getCurrentUser();
+			League league = registeredLeagues.get(NamespaceManager.get());
+			if (!userService.isUserLoggedIn() 
+					|| currentUser == null 
+					|| (!userService.isUserAdmin() && !league.getLeagueAdminUserIds().contains(currentUser.getUserId()))) {
+				log.info("The current user is not allowed to access leagueAdmin resources");
+				HttpServletResponse resp = (HttpServletResponse) response;
+				resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				return;				
+			}
+			
 		}
 			// chain into the next request
 		chain.doFilter(request, response);

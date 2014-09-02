@@ -1,12 +1,8 @@
 <queue-entries>
   <queue>
     <name>default</name>
-    <rate>0.5/s</rate>
-    <bucket-size>1</bucket-size>
-    <max-concurrent-requests>1</max-concurrent-requests>
-    <retry-parameters>
-      <task-retry-limit>3</task-retry-limit>
-    </retry-parameters>
+    <rate>5/s</rate>
+    <bucket-size>5</bucket-size>
   </queue>
   <queue>
     <name>notification</name>

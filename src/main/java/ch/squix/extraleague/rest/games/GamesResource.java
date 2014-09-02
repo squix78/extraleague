@@ -83,10 +83,9 @@ public class GamesResource extends ServerResource {
         
         for (PlayerUser player : playersOfGame) {
             if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
-                NotificationService.sendPushBulletLink(
+                NotificationService.addPushBulletLinkMessageToSendQueue(
                         player.getPushBulletApiKey(),
                         "Extraleage game created",
-                        // TODO: replace with dynamic host name
                         "http://"+ hostname + "/#/tables/" + game.getTable() + "/games/" + game.getId(),
                         "The game with " + Joiner.on(", ").join(game.getPlayers()) + " was created.");
             }

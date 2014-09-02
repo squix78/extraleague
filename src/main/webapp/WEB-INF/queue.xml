@@ -1,0 +1,19 @@
+<queue-entries>
+  <queue>
+    <name>default</name>
+    <rate>0.5/s</rate>
+    <bucket-size>1</bucket-size>
+    <max-concurrent-requests>1</max-concurrent-requests>
+    <retry-parameters>
+      <task-retry-limit>3</task-retry-limit>
+    </retry-parameters>
+  </queue>
+  <queue>
+    <name>notification</name>
+    <rate>1/s</rate>
+    <retry-parameters>
+      <task-retry-limit>7</task-retry-limit>
+      <task-age-limit>2d</task-age-limit>
+    </retry-parameters>
+  </queue>
+</queue-entries>

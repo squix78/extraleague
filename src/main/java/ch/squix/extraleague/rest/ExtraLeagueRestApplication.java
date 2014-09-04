@@ -11,6 +11,7 @@ import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.mutations.Mutations;
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
+import ch.squix.extraleague.model.ranking.EternalRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.statistics.Statistics;
 import ch.squix.extraleague.rest.admin.users.PlayerUserAdminResource;
@@ -23,7 +24,6 @@ import ch.squix.extraleague.rest.games.PlayedGamesResource;
 import ch.squix.extraleague.rest.league.LeagueAdminResource;
 import ch.squix.extraleague.rest.league.LeagueResource;
 import ch.squix.extraleague.rest.league.LeagueStyleResource;
-import ch.squix.extraleague.rest.maintenance.MigrateMatchesResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
 import ch.squix.extraleague.rest.migration.NamespaceMigrationResource;
 import ch.squix.extraleague.rest.migration.NamespaceMigrationTaskResource;
@@ -40,10 +40,12 @@ import ch.squix.extraleague.rest.playermarket.MeetingPointPlayersResource;
 import ch.squix.extraleague.rest.playeruser.PlayerUserResource;
 import ch.squix.extraleague.rest.ranking.CleanInDayRankingsResource;
 import ch.squix.extraleague.rest.ranking.CronCleanInDayRankingsResource;
-import ch.squix.extraleague.rest.ranking.CronRankingServiceResource;
+import ch.squix.extraleague.rest.ranking.CronUpdateEternalRankingsResource;
+import ch.squix.extraleague.rest.ranking.CronUpdateRankingsResource;
 import ch.squix.extraleague.rest.ranking.RankingByTagResource;
 import ch.squix.extraleague.rest.ranking.RankingResource;
-import ch.squix.extraleague.rest.ranking.RankingServiceResource;
+import ch.squix.extraleague.rest.ranking.UpdateEternalRankingsResource;
+import ch.squix.extraleague.rest.ranking.UpdateRankingsResource;
 import ch.squix.extraleague.rest.result.SummaryResource;
 import ch.squix.extraleague.rest.statistics.CronUpdateStatisticsResource;
 import ch.squix.extraleague.rest.statistics.StatisticsResource;
@@ -64,6 +66,7 @@ public class ExtraLeagueRestApplication extends Application {
 		ObjectifyService.register(Game.class);
 		ObjectifyService.register(Match.class);
 		ObjectifyService.register(Ranking.class);
+		ObjectifyService.register(EternalRanking.class);
 		ObjectifyService.register(BrowserClient.class);
 		ObjectifyService.register(Statistics.class);
 		ObjectifyService.register(Mutations.class);
@@ -103,8 +106,10 @@ public class ExtraLeagueRestApplication extends Application {
         
         
         // jobs
-        router.attach("/updateRankings", RankingServiceResource.class);
-        router.attach("/updateRankingsCron", CronRankingServiceResource.class);
+        router.attach("/updateRankings", UpdateRankingsResource.class);
+        router.attach("/updateRankingsCron", CronUpdateRankingsResource.class);
+        router.attach("/admin/updateEternalRankings", UpdateEternalRankingsResource.class);
+        router.attach("/admin/updateEternalRankingsCron", CronUpdateEternalRankingsResource.class);
         router.attach("/cleanRankings", CleanInDayRankingsResource.class);
         router.attach("/cleanRankingsCron", CronCleanInDayRankingsResource.class);
         router.attach("/updateStatistics", UpdateStatisticsResource.class);

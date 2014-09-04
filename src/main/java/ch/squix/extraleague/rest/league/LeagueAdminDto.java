@@ -21,5 +21,7 @@ public class LeagueAdminDto {
 	private String logoUrl;
 	
 	private List<String> tables = new ArrayList<>();
+	
+	private String principalLeageAdminUserId;
 
 }

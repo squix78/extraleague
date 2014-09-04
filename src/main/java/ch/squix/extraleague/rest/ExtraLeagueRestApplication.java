@@ -113,13 +113,15 @@ public class ExtraLeagueRestApplication extends Application {
         //router.attach("/migrateMatches", MigrateMatchesResource.class);
         
         // admin
-        router.attach("/admin/playerUsers", PlayerUsersAdminResource.class);
-        router.attach("/admin/playerUsers/{player}", PlayerUserAdminResource.class);
         router.attach("/admin/league/{leagueName}/{domain}", AddLeagueResource.class);
-        router.attach("/admin/league/setWebhook", SetLeagueAttributeResource.class);
         router.attach("/admin/migration/namespace", NamespaceMigrationResource.class);
         router.attach("/admin/migration/namespace/task", NamespaceMigrationTaskResource.class);
-        router.attach("/admin/league", LeagueAdminResource.class);
+        router.attach("/admin/league/setWebhook", SetLeagueAttributeResource.class);
+        
+        // league admin
+        router.attach("/leagueAdmin/playerUsers", PlayerUsersAdminResource.class);
+        router.attach("/leagueAdmin/playerUsers/{player}", PlayerUserAdminResource.class);
+        router.attach("/leagueAdmin/league", LeagueAdminResource.class);
         
         router.attach("/notifications/endOfGame/{gameId}", WebhookEndOfGameNotificationResource.class);
         router.attach("/currentUser", CurrentUserResource.class);

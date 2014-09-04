@@ -37,5 +37,7 @@ public class League {
 	private Map<String, String> requestHeaders = new HashMap<>();
 	
 	private List<String> tables = new ArrayList<>();
+	
+	private List<String> leagueAdminUserIds = new ArrayList<>();
 
 }

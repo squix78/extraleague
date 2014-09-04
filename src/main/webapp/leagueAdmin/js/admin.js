@@ -21,13 +21,13 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         });
     })
     .factory('PlayerUsers', ['$resource', function($resource) {
-      return $resource('/rest/admin/playerUsers');
+      return $resource('/rest/leagueAdmin/playerUsers');
     }])
     .factory('PlayerUser', ['$resource', function($resource) {
-    	return $resource('/rest/admin/playerUsers/:player');
+    	return $resource('/rest/leagueAdmin/playerUsers/:player');
     }])
     .factory('League', ['$resource', function($resource) {
-    	return $resource('/rest/admin/league');
+    	return $resource('/rest/leagueAdmin/league');
     }])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {

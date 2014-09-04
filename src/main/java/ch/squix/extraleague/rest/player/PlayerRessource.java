@@ -11,6 +11,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.ranking.EternalRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.rest.matches.MatchDto;
 import ch.squix.extraleague.rest.matches.MatchDtoMapper;
@@ -67,7 +68,10 @@ public class PlayerRessource extends ServerResource {
 			RankingDto dayEndRankingDto = RankingDtoMapper.getPlayerRanking(player, latestRanking);
 			playerDto.setDayEndStatistics(dayEndRankingDto);
 		}
-			
+		
+		EternalRanking eternalRanking = ofy().load().type(EternalRanking.class).first().now();
+		RankingDto eternalPlayerRankings = RankingDtoMapper.getPlayerRanking(player, eternalRanking);
+		playerDto.setEternalStatistics(eternalPlayerRankings);
 		
 		return playerDto;
 	}

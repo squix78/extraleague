@@ -38,6 +38,8 @@ public class League {
 	
 	private List<String> tables = new ArrayList<>();
 	
+	private String principalLeageAdminUserId;
+	
 	private List<String> leagueAdminUserIds = new ArrayList<>();
 
 }

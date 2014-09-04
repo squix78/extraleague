@@ -32,6 +32,7 @@ public class LeagueAdminResource extends ServerResource {
 		dto.setTables(league.getTables());
 		dto.setLeagueCss(league.getLeagueCss());
 		dto.setLogoUrl(league.getLogoUrl());
+		dto.setPrincipalLeageAdminUserId(league.getPrincipalLeageAdminUserId());
 		StringBuilder builder = new StringBuilder();
 		for (Map.Entry<String, String> entry : league.getRequestHeaders().entrySet()) {
 			builder.append(entry.getKey());
@@ -52,6 +53,7 @@ public class LeagueAdminResource extends ServerResource {
 		league.setTables(dto.getTables());
 		league.setLeagueCss(dto.getLeagueCss());
 		league.setLogoUrl(dto.getLogoUrl());
+		league.setPrincipalLeageAdminUserId(dto.getPrincipalLeageAdminUserId());
 	    String requestHeaders = dto.getRequestHeaders();
 	    String [] lines = requestHeaders.split("\n");
 	    Map<String, String> requestHeaderMap = new HashMap<>();

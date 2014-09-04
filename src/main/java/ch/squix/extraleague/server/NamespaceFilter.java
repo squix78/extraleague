@@ -117,8 +117,11 @@ public class NamespaceFilter implements Filter {
 			User currentUser = userService.getCurrentUser();
 			League league = registeredLeagues.get(NamespaceManager.get());
 			if (!userService.isUserLoggedIn() 
-					|| currentUser == null 
-					|| (!userService.isUserAdmin() && !league.getLeagueAdminUserIds().contains(currentUser.getUserId()))) {
+					|| currentUser == null
+					|| currentUser.getUserId() == null
+					|| !(userService.isUserAdmin() 
+							|| currentUser.getUserId().equals(league.getPrincipalLeageAdminUserId())
+							|| league.getLeagueAdminUserIds().contains(currentUser.getUserId()))) {
 				log.info("The current user is not allowed to access leagueAdmin resources");
 				HttpServletResponse resp = (HttpServletResponse) response;
 				resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

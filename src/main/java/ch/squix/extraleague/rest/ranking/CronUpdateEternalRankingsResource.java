@@ -22,7 +22,7 @@ public class CronUpdateEternalRankingsResource extends ServerResource {
 	
 	@Get(value = "json")
 	public String execute() throws UnsupportedEncodingException {
-		LeagueDao.runCronOverNamespaces("/rest/updateEternalRankings");
+		LeagueDao.runCronOverNamespaces("/rest/admin/updateEternalRankings");
 		
 		return "OK";
 	}

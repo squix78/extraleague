@@ -13,7 +13,9 @@ public class PlayerDto {
 	private String player;
 	private RankingDto statistics;
 	private RankingDto dayEndStatistics;
+	private RankingDto eternalStatistics;
 	private List<MatchDto> lastMatches = new ArrayList<>();
+	
 	
 	public String getPlayer() {
 		return player;
@@ -41,7 +43,13 @@ public class PlayerDto {
 	public void setDayEndStatistics(RankingDto dayEndStatistics) {
 		this.dayEndStatistics = dayEndStatistics;
 	}
+	public RankingDto getEternalStatistics() {
+		return eternalStatistics;
+	}
 
+	public void setEternalStatistics(RankingDto eternalStatistics) {
+		this.eternalStatistics = eternalStatistics;
+	}
 
 
 }

@@ -18,11 +18,11 @@ import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
 
-public class CronRankingServiceResource extends ServerResource {
+public class CronUpdateEternalRankingsResource extends ServerResource {
 	
 	@Get(value = "json")
 	public String execute() throws UnsupportedEncodingException {
-		LeagueDao.runCronOverNamespaces("/rest/updateRankings");
+		LeagueDao.runCronOverNamespaces("/rest/updateEternalRankings");
 		
 		return "OK";
 	}

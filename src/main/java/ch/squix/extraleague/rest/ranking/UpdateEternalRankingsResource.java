@@ -17,9 +17,9 @@ import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.ranking.RankingService;
 import ch.squix.extraleague.server.NamespaceFilter;
 
-public class RankingServiceResource extends ServerResource {
+public class UpdateEternalRankingsResource extends ServerResource {
 	
-	private static final Logger log = Logger.getLogger(RankingServiceResource.class.getName());
+	private static final Logger log = Logger.getLogger(UpdateEternalRankingsResource.class.getName());
 	
 	@Get(value = "json")
 	public String execute() throws UnsupportedEncodingException {

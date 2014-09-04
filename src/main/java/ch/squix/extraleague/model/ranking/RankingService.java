@@ -54,6 +54,19 @@ public class RankingService {
         return ranking;
 
     }
+    
+    public static void calculateEternalRankings() {
+        List<Match> matchesList = ofy().load()
+                .type(Match.class)
+                .list();
+        Ranking ranking = calculateRankingFromMatches(matchesList);
+        EternalRanking eternalRanking = ofy().load().type(EternalRanking.class).first().now();
+        if (eternalRanking == null) {
+        	eternalRanking = new EternalRanking();
+        }
+        eternalRanking.setPlayerRankings(ranking.getPlayerRankings());
+        ofy().save().entities(eternalRanking).now();	
+    }
 
     public static Ranking calculateRankingFromMatches(List<Match> matchesList) {
         Matches matches = new Matches();

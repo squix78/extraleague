@@ -33,6 +33,7 @@ import ch.squix.extraleague.rest.network.PlayerNetworkResource;
 import ch.squix.extraleague.rest.notification.NotificationTokenResource;
 import ch.squix.extraleague.rest.notification.WebhookEndOfGameNotificationResource;
 import ch.squix.extraleague.rest.ping.PingResource;
+import ch.squix.extraleague.rest.ping.VersionResource;
 import ch.squix.extraleague.rest.player.PlayerRessource;
 import ch.squix.extraleague.rest.player.PlayersRessource;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerResource;
@@ -81,6 +82,7 @@ public class ExtraLeagueRestApplication extends Application {
         // new instance of HelloWorldResource.
         Router router = new Router(getContext());
         router.attach("/ping", PingResource.class);
+        router.attach("/version", VersionResource.class);
         router.attach("/tables", TablesResource.class);
         router.attach("/modes", GameModeResource.class);
         router.attach("/ranking", RankingResource.class);

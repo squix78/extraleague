@@ -13,7 +13,7 @@ public class VersionResource extends ServerResource {
 	
 	@Get(value = "json")
 	public String execute() throws UnsupportedEncodingException {
-		return SystemProperty.Environment.applicationVersion.get();
+		return SystemProperty.Environment.applicationVersion.get().replaceAll("(\\d*)\\.(\\d*)$", "$1");
 	}
 
 }

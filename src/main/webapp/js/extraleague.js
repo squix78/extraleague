@@ -395,7 +395,7 @@ function RankingController($scope, $rootScope, $resource, $routeParams, Ranking,
 
 function RankingByTagController($scope, $rootScope, $resource, $routeParams, RankingByTag, Badges, Tables) {
 	$scope.tag = $routeParams.tag;
-	$scope.predicate = [ '-successRate', '-goalPlusMinus'];
+	$scope.predicate = [ '-eloValue', '-successRate'];
 	$scope.isRankingLoading = true;
 	$rootScope.backlink = false;
 	$scope.rankings = RankingByTag.query({tag: $scope.tag}, function() {

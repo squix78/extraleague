@@ -1,20 +1,16 @@
 package ch.squix.extraleague.rest.migration;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
+import ch.squix.extraleague.rest.games.GamesResource;
+
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
-
-import ch.squix.extraleague.rest.games.GamesResource;
-import ch.squix.extraleague.rest.games.mode.GameModeEnum;
-import ch.squix.extraleague.rest.mode.GameModeDto;
 
 
 

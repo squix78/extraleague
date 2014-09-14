@@ -16,13 +16,11 @@ import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
-import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 import ch.squix.extraleague.rest.games.mode.GameMode;
 import ch.squix.extraleague.rest.games.mode.GameModeFactory;
-import ch.squix.extraleague.rest.games.mode.OneMatchToSevenMode;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
 import com.google.apphosting.api.ApiProxy;

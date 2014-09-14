@@ -6,10 +6,6 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.league.LeagueDao;
-import ch.squix.extraleague.model.statistics.StatisticsService;
-
-import com.google.apphosting.api.ApiProxy;
-import com.google.apphosting.api.ApiProxy.Environment;
 
 
 public class CronUpdateStatisticsResource extends ServerResource {

@@ -2,8 +2,6 @@ package ch.squix.extraleague.rest.badges;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

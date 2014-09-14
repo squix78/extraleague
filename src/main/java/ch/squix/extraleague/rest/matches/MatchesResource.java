@@ -15,7 +15,6 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
-import ch.squix.extraleague.model.ranking.RankingService;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateMatchMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;

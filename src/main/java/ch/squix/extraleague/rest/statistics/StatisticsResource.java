@@ -2,15 +2,12 @@ package ch.squix.extraleague.rest.statistics;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
-import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
 import ch.squix.extraleague.model.statistics.Statistics;
-import ch.squix.extraleague.model.statistics.StatisticsService;
 
 
 public class StatisticsResource extends ServerResource {

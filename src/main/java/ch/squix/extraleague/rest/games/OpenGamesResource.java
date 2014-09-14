@@ -1,16 +1,11 @@
 package ch.squix.extraleague.rest.games;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
-
-import ch.squix.extraleague.model.game.Game;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 
 

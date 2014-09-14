@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.player.PlayerUser;
-import ch.squix.extraleague.rest.user.CurrentUserResource;
 
 import com.google.appengine.api.users.User;
 

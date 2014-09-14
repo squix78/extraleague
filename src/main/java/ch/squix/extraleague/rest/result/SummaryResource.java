@@ -3,10 +3,7 @@ package ch.squix.extraleague.rest.result;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;

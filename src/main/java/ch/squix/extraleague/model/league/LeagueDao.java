@@ -2,6 +2,7 @@ package ch.squix.extraleague.model.league;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -19,14 +20,20 @@ public class LeagueDao {
 		try {
 			NamespaceManager.set("");
 			List<League> leagues = ofy().load().type(League.class).list();
-			League league = new League();
-			league.setName("NCA League");
-			league.setDomain("");
+			League league = getDefaultLeague();
 			leagues.add(league);
 			return leagues;
 		} finally {
 		  NamespaceManager.set(oldNamespace);
 		}
+	}
+
+	private static League getDefaultLeague() {
+		League league = new League();
+		league.setName("Default League");
+		league.setDomain("");
+		league.setTables(Arrays.asList("Table"));
+		return league;
 	}
 	
 	public static void runCronOverNamespaces(String taskUrl) {
@@ -50,7 +57,11 @@ public class LeagueDao {
 		String oldNamespace = NamespaceManager.get();
 		try {
 		    NamespaceManager.set("");
-		    return ofy().load().type(League.class).filter("domain = ", namespace).first().now();
+		    League league = ofy().load().type(League.class).filter("domain = ", namespace).first().now();
+		    if (league == null) {
+		    	league = getDefaultLeague();
+		    }
+		    return league;
 	        } finally {
 	            NamespaceManager.set(oldNamespace);
 	        }

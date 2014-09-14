@@ -17,19 +17,18 @@ public class TablesResource extends ServerResource {
 	@Get(value = "json")
 	public List<TablesDto> execute() throws UnsupportedEncodingException {
 		League currentLeague = LeagueDao.getCurrentLeague();
+		List<String> tables = currentLeague.getTables();
+		if (tables.size() == 0) {
+			tables.add("Table");
+		}
 		List<TablesDto> dtos = new ArrayList<>();
-		for (String table : currentLeague.getTables()) {
+		for (String table : tables) {
 			TablesDto dto = new TablesDto();
 			dto.setName(table);
 			dtos.add(dto);
 		}
+		
 		return dtos;
-//		return new TablesDto[] {
-//				new TablesDto("Park"), 
-//				new TablesDto("Albis"), 
-//				new TablesDto("Bern"), 
-//				new TablesDto("Skopje"), 
-//				new TablesDto("Flurstrasse")};
-	}
+	} 
 
 }

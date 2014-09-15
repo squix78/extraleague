@@ -1,8 +1,11 @@
 
 <h3>NFA Ranking</h3>
 <div>
-	Ranking: <a href="#/ranking">All</a>
-		<span ng-repeat="table in tables">, <a href="#/ranking/tag/{{table.name}}">{{table.name}}</a></span>
+	Ranking: 
+	<div class="btn-group" id="tableInput">
+		<button type="button" class="btn btn-default btn-xs" ng-click="openRankingByTag('')">All</button>
+		<button ng-repeat="table in tables" type="button" class="btn btn-default btn-xs" ng-click="openRankingByTag(table.name)">{{table.name}}</button>
+	</div>
 </div>
 <div class="table-responsive">
 	<table class="table table-striped">

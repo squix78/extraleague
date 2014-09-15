@@ -1,18 +1,18 @@
 package ch.squix.extraleague.rest.ranking;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import com.google.appengine.api.NamespaceManager;
-
 import ch.squix.extraleague.model.mutations.MutationService;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.ranking.RankingService;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
+import com.google.appengine.api.NamespaceManager;
 
 public class UpdateRankingsResource extends ServerResource {
 	

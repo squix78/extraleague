@@ -8,9 +8,7 @@ import java.util.List;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import ch.squix.extraleague.model.mutations.MutationService;
 import ch.squix.extraleague.model.ranking.Ranking;
-import ch.squix.extraleague.model.ranking.RankingService;
 
 public class CleanInDayRankingsResource extends ServerResource {
 	

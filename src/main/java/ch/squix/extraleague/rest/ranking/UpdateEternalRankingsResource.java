@@ -6,9 +6,9 @@ import java.util.logging.Logger;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import com.google.appengine.api.NamespaceManager;
-
 import ch.squix.extraleague.model.ranking.RankingService;
+
+import com.google.appengine.api.NamespaceManager;
 
 public class UpdateEternalRankingsResource extends ServerResource {
 

@@ -1,18 +1,16 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
-import ch.squix.extraleague.model.match.Matches;
-import ch.squix.extraleague.model.ranking.PlayerRanking;
-import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.logging.Logger;
+
+import ch.squix.extraleague.model.match.Matches;
+import ch.squix.extraleague.model.ranking.PlayerRanking;
+import ch.squix.extraleague.model.ranking.badge.BadgeEnum;
 
 
 public class RankingIndexTask implements RankingTask {

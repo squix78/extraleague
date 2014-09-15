@@ -3,7 +3,6 @@ package ch.squix.extraleague.rest.notification;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -11,7 +10,6 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.client.BrowserClient;
-import ch.squix.extraleague.rest.games.GamesResource;
 
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;

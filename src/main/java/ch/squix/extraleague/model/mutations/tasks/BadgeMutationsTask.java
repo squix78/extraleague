@@ -1,11 +1,9 @@
 package ch.squix.extraleague.model.mutations.tasks;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import ch.squix.extraleague.model.mutations.Mutations;
 import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;

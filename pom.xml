@@ -174,6 +174,7 @@
 	</dependencies>
 
 	<build>
+	    <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
 		<pluginManagement>
 			<plugins>
 
@@ -245,65 +246,83 @@
 					</jvmFlags>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<configuration>
-							<target name="building">
-								<echo>
-									<!-- NPM INSTALL -->
-									NPM INSTALL
-								</echo>
-								<exec executable="cmd" dir="${project.basedir}" osfamily="windows"
-									failonerror="true">
-									<arg line="/c npm config set color false" />
-								</exec>
-								<exec executable="npm" dir="${project.basedir}" osfamily="unix"
-									failonerror="true">
-									<arg line="config set color false" />
-								</exec>
-								<exec executable="cmd" dir="${project.basedir}" osfamily="windows"
-									failonerror="true">
-									<arg line="/c npm install" />
-								</exec>
-								<!-- <exec executable="bash" dir="${project.basedir}" osfamily="unix" 
-									failonerror="true"> <arg line="npm install"/> </exec> <exec executable="npm" 
-									dir="${project.basedir}" failonerror="true"> <arg value="install" /> </exec> -->
-								<echo>
-									Bower Install
-								</echo>
-								<exec executable="cmd" dir="${project.basedir}" osfamily="windows"
-									resultproperty="cmdresult">
-									<arg line="/c bower --no-color install" />
-								</exec>
-								<exec executable="bower" dir="${project.basedir}" osfamily="unix"
-									resultproperty="cmdresult">
-									<arg line=" --no-color install" />
-								</exec>
-								<echo>
-									Grunt
-								</echo>
-								<exec executable="cmd" dir="${project.basedir}" osfamily="windows"
-									resultproperty="cmdresult">
-									<arg line="/c grunt --no-color " />
-								</exec>
-								<exec executable="grunt" dir="${project.basedir}" osfamily="unix"
-									resultproperty="cmdresult">
-									<arg line=" --no-color" />
-								</exec>
 
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+		  <id>js</id>
+		  <activation>
+		  	<activeByDefault>true</activeByDefault>
+			<property>
+				<name>js</name>
+			</property>
+		  </activation>
+		  <build>
+		  	<plugins>
+			  	<plugin>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.7</version>
+					<executions>
+						<execution>
+							<phase>generate-sources</phase>
+							<configuration>
+								<target name="building">
+									<echo>
+										<!-- NPM INSTALL -->
+										NPM INSTALL
+									</echo>
+									<exec executable="cmd" dir="${project.basedir}" osfamily="windows"
+										failonerror="true">
+										<arg line="/c npm config set color false" />
+									</exec>
+									<exec executable="npm" dir="${project.basedir}" osfamily="unix"
+										failonerror="true">
+										<arg line="config set color false" />
+									</exec>
+									<exec executable="cmd" dir="${project.basedir}" osfamily="windows"
+										failonerror="true">
+										<arg line="/c npm install" />
+									</exec>
+									<!-- <exec executable="bash" dir="${project.basedir}" osfamily="unix" 
+										failonerror="true"> <arg line="npm install"/> </exec> <exec executable="npm" 
+										dir="${project.basedir}" failonerror="true"> <arg value="install" /> </exec> -->
+									<echo>
+										Bower Install
+									</echo>
+									<exec executable="cmd" dir="${project.basedir}" osfamily="windows"
+										resultproperty="cmdresult">
+										<arg line="/c bower --no-color install" />
+									</exec>
+									<exec executable="bower" dir="${project.basedir}" osfamily="unix"
+										resultproperty="cmdresult">
+										<arg line=" --no-color install" />
+									</exec>
+									<echo>
+										Grunt
+									</echo>
+									<exec executable="cmd" dir="${project.basedir}" osfamily="windows"
+										resultproperty="cmdresult">
+										<arg line="/c grunt --no-color " />
+									</exec>
+									<exec executable="grunt" dir="${project.basedir}" osfamily="unix"
+										resultproperty="cmdresult">
+										<arg line=" --no-color" />
+									</exec>
+	
+								</target>
+							</configuration>
+							<goals>
+								<goal>run</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+		  	</plugins>
+		  
+		  </build>
+		</profile>
+	</profiles>
 
 </project>

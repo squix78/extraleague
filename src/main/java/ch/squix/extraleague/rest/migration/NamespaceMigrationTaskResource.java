@@ -10,12 +10,7 @@ import java.util.logging.Logger;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import ch.squix.extraleague.model.game.Game;
-import ch.squix.extraleague.model.match.Match;
-import ch.squix.extraleague.model.match.player.PlayerUser;
-import ch.squix.extraleague.model.mutations.Mutations;
 import ch.squix.extraleague.model.ranking.Ranking;
-import ch.squix.extraleague.model.statistics.Statistics;
 import ch.squix.extraleague.rest.games.GamesResource;
 
 import com.google.appengine.api.NamespaceManager;

@@ -4,17 +4,15 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import com.google.appengine.api.NamespaceManager;
-
-import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
+
+import com.google.appengine.api.NamespaceManager;
 
 public class RankingResource extends ServerResource {
 	

@@ -1,7 +1,5 @@
 package ch.squix.extraleague.server;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +9,6 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.league.League;
 import ch.squix.extraleague.model.league.LeagueDao;
-
-import com.google.appengine.api.NamespaceManager;
 
 
 

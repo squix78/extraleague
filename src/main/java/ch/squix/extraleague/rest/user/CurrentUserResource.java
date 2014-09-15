@@ -9,7 +9,6 @@ import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.match.player.PlayerUser;
-import ch.squix.extraleague.rest.games.OpenGamesResource;
 import ch.squix.extraleague.rest.playeruser.PlayerUserDto;
 import ch.squix.extraleague.rest.playeruser.PlayerUserDtoMapper;
 

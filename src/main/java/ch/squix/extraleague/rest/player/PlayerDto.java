@@ -1,12 +1,10 @@
 package ch.squix.extraleague.rest.player;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import ch.squix.extraleague.rest.matches.MatchDto;
 import ch.squix.extraleague.rest.ranking.RankingDto;
-import ch.squix.extraleague.rest.statistics.DataTuple;
 
 public class PlayerDto {
 	

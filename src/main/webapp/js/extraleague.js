@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 'ui.bootstrap', 'ui.bootstrap.buttons', 'nvd3ChartDirectives', 'gaeChannelService'])
+angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 'ui.bootstrap', 'ui.bootstrap.buttons', 'ui.bootstrap.alert', 'nvd3ChartDirectives', 'gaeChannelService'])
     .config(function($routeProvider) {
         $routeProvider
         .when('/newGame', {
@@ -229,11 +229,13 @@ function NewGameController($scope, $rootScope, $resource, $routeParams, $locatio
    $scope.isTablesLoading = true;
    $scope.tables = Tables.query({}, function() {
 		  $scope.isTablesLoading = false;
+		  $scope.game.table = $scope.tables[0].name;
    });
    
    $scope.isModesLoading = true;
    $scope.modes = GameModes.query({}, function() {
 	  $scope.isModesLoading = false;
+	  $scope.game.gameMode = $scope.modes[0].name;
    });
    
    $scope.isGameComplete = function() {
@@ -345,6 +347,13 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   $scope.moveMatchIndexBy = function(increment) {
 	  GameService.moveMatchIndexBy(increment);
   }
+  
+  $scope.closeAlert = function() {
+	  GameService.hideAlert();
+  }
+  $scope.saveCurrentMatch = function() {
+	  GameService.saveCurrentMatch();
+  }
 
 }
 
@@ -374,7 +383,7 @@ function SummaryController($scope, $rootScope, $resource, $routeParams, $locatio
   };
 }
 
-function RankingController($scope, $rootScope, $resource, $routeParams, Ranking, Badges, Tables) {
+function RankingController($scope, $rootScope, $resource, $routeParams, $location, Ranking, Badges, Tables) {
   
   $scope.predicate = [ '-eloValue', '-successRate'];
   $scope.isRankingLoading = true;
@@ -391,11 +400,18 @@ function RankingController($scope, $rootScope, $resource, $routeParams, Ranking,
       $scope.badgeList.push(key);
     });
   });
+  $scope.openRankingByTag = function(tag) {
+	  if (tag !== "") {
+		  $location.path("/ranking/tag/" + tag);		  
+	  } else {
+		  $location.path("/ranking");		  
+	  }
+  }
 }
 
-function RankingByTagController($scope, $rootScope, $resource, $routeParams, RankingByTag, Badges, Tables) {
+function RankingByTagController($scope, $rootScope, $resource, $routeParams, $location, RankingByTag, Badges, Tables) {
 	$scope.tag = $routeParams.tag;
-	$scope.predicate = [ '-successRate', '-goalPlusMinus'];
+	$scope.predicate = [ '-eloValue', '-successRate'];
 	$scope.isRankingLoading = true;
 	$rootScope.backlink = false;
 	$scope.rankings = RankingByTag.query({tag: $scope.tag}, function() {
@@ -411,6 +427,13 @@ function RankingByTagController($scope, $rootScope, $resource, $routeParams, Ran
 			$scope.badgeList.push(key);
 		});
 	});
+	  $scope.openRankingByTag = function(tag) {
+		  if (tag !== "") {
+			  $location.path("/ranking/tag/" + tag);		  
+		  } else {
+			  $location.path("/ranking");		  
+		  }
+	  }
 }
 
 function PlayerController($scope, $rootScope, $routeParams, Player, TimeSeries, Badges) {

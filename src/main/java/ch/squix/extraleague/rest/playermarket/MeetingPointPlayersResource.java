@@ -8,17 +8,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
-import com.google.common.base.Joiner;
-
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
-import ch.squix.extraleague.rest.games.OpenGamesResource;
+
+import com.google.common.base.Joiner;
 
 
 

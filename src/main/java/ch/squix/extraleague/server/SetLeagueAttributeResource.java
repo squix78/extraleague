@@ -9,10 +9,10 @@ import java.util.Map;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import com.google.appengine.api.NamespaceManager;
-
 import ch.squix.extraleague.model.league.League;
 import ch.squix.extraleague.model.league.LeagueDao;
+
+import com.google.appengine.api.NamespaceManager;
 
 
 

@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import lombok.Data;
-
 import ch.squix.extraleague.model.match.PlayerCombo;
 import ch.squix.extraleague.rest.statistics.DataTuple;
 

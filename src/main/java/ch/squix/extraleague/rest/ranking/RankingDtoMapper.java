@@ -27,7 +27,7 @@ public class RankingDtoMapper {
 				rankingDto.setBestPartner(playerRanking.getBestPartner());
 				rankingDto.setBestPartnerRate(playerRanking.getBestPartnerRate());
 				rankingDto.setWorstPartner(playerRanking.getWorstPartner());
-				rankingDto.setWorstOpponentRate(playerRanking.getWorstPartnerRate());
+				rankingDto.setWorstPartnerRate(playerRanking.getWorstPartnerRate());
 				rankingDto.setBestOpponent(playerRanking.getBestOpponent());
 				rankingDto.setBestOpponentRate(playerRanking.getBestOpponentRate());
 				rankingDto.setWorstOpponent(playerRanking.getWorstOpponent());

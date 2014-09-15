@@ -3,8 +3,8 @@
 <div>
 	Ranking: 
 	<div class="btn-group" id="tableInput">
-		<button type="button" class="btn btn-default btn-xs" ng-click="openRankingByTag('')">All</button>
-		<button ng-repeat="table in tables" type="button" class="btn btn-default btn-xs" ng-click="openRankingByTag(table.name)">{{table.name}}</button>
+		<button type="button" class="btn btn-default btn-xs" ng-click="openRankingByTag('')" ng-model="tag" btn-radio="'All'">All</button>
+		<button ng-repeat="table in tables" type="button" class="btn btn-default btn-xs" ng-click="openRankingByTag(table.name)" btn-radio="table.name" ng-model="tag">{{table.name}}</button>
 	</div>
 </div>
 <div class="table-responsive">

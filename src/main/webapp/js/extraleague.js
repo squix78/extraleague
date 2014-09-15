@@ -25,12 +25,8 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         	controller : 'StatsController',
         	templateUrl : 'partials/stats.html'
         })
-        .when('/ranking', {
-           controller : 'RankingController',
-           templateUrl : 'partials/ranking.html'
-        })
-        .when('/ranking/tag/:tag', {
-        	controller : 'RankingByTagController',
+        .when('/ranking/:type?/:tag?', {
+        	controller : 'RankingController',
         	templateUrl : 'partials/ranking.html'
         })
         .when('/player/:player', {
@@ -388,8 +384,9 @@ function RankingController($scope, $rootScope, $resource, $routeParams, $locatio
   $scope.predicate = [ '-eloValue', '-successRate'];
   $scope.isRankingLoading = true;
   $rootScope.backlink = false;
-  $scope.tag = "All";
-  $scope.rankings = Ranking.query({}, function() {
+  $scope.tag = $routeParams.tag;
+  $scope.type = $routeParams.type || "All";
+  $scope.rankings = Ranking.query({tag: $scope.tag, type: $scope.type}, function() {
     $scope.isRankingLoading = false;
     
   });
@@ -401,12 +398,11 @@ function RankingController($scope, $rootScope, $resource, $routeParams, $locatio
       $scope.badgeList.push(key);
     });
   });
+  $scope.openRankingByType = function(type) {
+	  $location.path("/ranking/" + type);
+  }
   $scope.openRankingByTag = function(tag) {
-	  if (tag !== "") {
-		  $location.path("/ranking/tag/" + tag);		  
-	  } else {
-		  $location.path("/ranking");		  
-	  }
+	  $location.path("/ranking/tag/" + tag);
   }
 }
 

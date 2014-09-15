@@ -388,6 +388,7 @@ function RankingController($scope, $rootScope, $resource, $routeParams, $locatio
   $scope.predicate = [ '-eloValue', '-successRate'];
   $scope.isRankingLoading = true;
   $rootScope.backlink = false;
+  $scope.tag = "All";
   $scope.rankings = Ranking.query({}, function() {
     $scope.isRankingLoading = false;
     

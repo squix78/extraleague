@@ -154,7 +154,12 @@ angular.module('Games', ['gaeChannelService'])
 		    games.currentMatch.lastUpdate = new Date();
 		    games.currentMatch.$save({gameId: games.currentGame.id}, function(match) {
 		      games.isMatchSaving = false;
+		      games.isErrorDialogVisible = false;
 		      service.checkEndOfMatch();
+		    }, function(error) {
+		    	games.isMatchSaving = false;
+		    	games.isErrorDialogVisible = true;
+		    	games.errorStatus = error.status;
 		    });
 		},
 		checkEndOfMatch: function() {
@@ -198,6 +203,9 @@ angular.module('Games', ['gaeChannelService'])
 					  service.updateCurrentGame();
 				  }
 			  }
+		 },
+		 hideAlert: function() {
+			 games.isErrorDialogVisible = false;
 		 }
 
 	    

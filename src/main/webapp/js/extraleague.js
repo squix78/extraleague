@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 'ui.bootstrap', 'ui.bootstrap.buttons', 'nvd3ChartDirectives', 'gaeChannelService'])
+angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 'ui.bootstrap', 'ui.bootstrap.buttons', 'ui.bootstrap.alert', 'nvd3ChartDirectives', 'gaeChannelService'])
     .config(function($routeProvider) {
         $routeProvider
         .when('/newGame', {
@@ -346,6 +346,13 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   
   $scope.moveMatchIndexBy = function(increment) {
 	  GameService.moveMatchIndexBy(increment);
+  }
+  
+  $scope.closeAlert = function() {
+	  GameService.hideAlert();
+  }
+  $scope.saveCurrentMatch = function() {
+	  GameService.saveCurrentMatch();
   }
 
 }

@@ -1,6 +1,14 @@
 <br />
 <div class="row">
 	<div class="col-xs-12">
+  		<alert type="'danger'" ng-show="openGames.isErrorDialogVisible" close="closeAlert()">
+  			Could not update game on server: {{openGames.errorStatus}} 
+  			<button class="btn btn-default btn-xs" ng-click="saveCurrentMatch()">Retry...</button>
+  		</alert>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title text-center">

@@ -35,7 +35,7 @@ public class RankingResource extends ServerResource {
 			}
 			
 			return RankingDtoMapper.convertToDto(ranking);
-		} else if ("Eternal".equals(rankingType)) {
+		} else if ("Eternal".equals(rankingType)) { 
 			EternalRanking eternalRanking = ofy().load().type(EternalRanking.class).first().now();
 			if (eternalRanking == null) {
 				return new ArrayList<>();

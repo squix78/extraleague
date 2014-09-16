@@ -51,6 +51,14 @@ public class MatchesResource extends ServerResource {
 		if (match == null) {
 			match = new Match();
 		}
+		if (match.getEndDate() != null) {
+			Long differenceInSeconds = (new Date().getTime() - match.getEndDate().getTime()) / 1000l;
+			Long maxAgeInSeconds = 60 * match.getMatchIndex() * 5l;
+			if (differenceInSeconds > maxAgeInSeconds) {
+				log.severe("The game has ended more than " + maxAgeInSeconds + " minutes ago. Manipulation is not allowed anymore");
+				return null;
+			}
+		}
 		match.setGameId(matchDto.getGameId());
 		if (match.getStartDate() == null) {
 			match.setStartDate(matchDto.getStartDate());

@@ -84,7 +84,7 @@ public class GamesResource extends ServerResource {
                 NotificationService.addPushBulletLinkMessageToSendQueue(
                         player.getPushBulletApiKey(),
                         "Extraleage game created",
-                        "http://"+ hostname + "/#/tables/" + game.getTable() + "/games/" + game.getId(),
+                        "http://"+ hostname + "/#/games/" + game.getId(),
                         "The game with " + Joiner.on(", ").join(game.getPlayers()) + " was created.");
             }
             // more notifications possible here (email, ...)

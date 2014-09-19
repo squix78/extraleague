@@ -36,15 +36,11 @@
 		</form>
 	</div>
 </div>
-<div class="row">
+<div class="row" ng-show="game.players.length > 0">
 	<div class="col-md-12">
-		<div class="form-inline" ng-show="game.players.length > 0">
-			<div class="text-center" ng-repeat="player in game.players">
-				<div class="text-center">
-					<div player="player" class="smallPlayer"></div>
-				</div>
-			</div>
-		</div>
+		 <div class="playerRow">
+		  	<div ng-repeat="player in game.players" player="player"></div>
+		 </div>
 	</div>
 </div>
 <BR/>

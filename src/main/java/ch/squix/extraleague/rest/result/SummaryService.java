@@ -81,6 +81,7 @@ public class SummaryService {
 				}
 				
 				MatchSummaryDto matchSummary = new MatchSummaryDto();
+				matchSummary.setMatchIndex(match.getMatchIndex());
 				matchSummary.setTeamA(match.getTeamA());
 				matchSummary.setTeamB(match.getTeamB());
 				matchSummary.setTeamAScore(teamAScore);

@@ -38,16 +38,16 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<div ng-show="game.players.length > 0">
-			<div class="col-xs-2 text-center" ng-repeat="player in game.players">
+		<div class="form-inline" ng-show="game.players.length > 0">
+			<div class="text-center" ng-repeat="player in game.players">
 				<div class="text-center">
-					<div player="player"></div>
-					<div>{{(players[player].eloValue)}} Elo</div>
+					<div player="player" class="smallPlayer"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<BR/>
 <div class="row">
 	<div class="col-md-12">
 		<div class="form-group">

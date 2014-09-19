@@ -51,8 +51,6 @@ public class GamesResource extends ServerResource {
 	@Post(value = "json")
 	public GameDto create(GameDto dto) {
 		
-		
-		//GameMode mode = new FourMatchesToFiveMode();
 		GameMode mode = GameModeFactory.createGameMode(dto.getGameMode());
 		
 		log.info("Received game to save");

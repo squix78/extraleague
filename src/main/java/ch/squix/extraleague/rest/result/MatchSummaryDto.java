@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class MatchSummaryDto {
 
+	private Integer matchIndex;
 	private Integer teamAScore;
 	private Integer teamBScore;
 	private String[] teamA;

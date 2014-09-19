@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="playerScore in summary.playerScores | orderBy:'-score'">
+          <tr ng-repeat="playerScore in summary.playerScores | orderBy:'-earnedEloPoints'">
             <td>{{playerScore.player}}</td>
             <td>{{playerScore.score}}</td>
             <td>{{playerScore.goals}}</td>
@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<div class="row" ng-repeat="match in summary.matches">
+<div class="row" ng-repeat="match in summary.matches | orderBy:'matchIndex'">
   <div class="col-xs-12">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -70,9 +70,9 @@
       </div>
       <table class="table">
         <colgroup>
-          <col/>
           <col style="width:50px"/>
-          <col/>
+          <col style="width:50px"/>
+          <col style="width:50px"/>
         </colgroup>
         <tbody>
           <tr ng-repeat="goal in match.goals">

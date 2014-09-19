@@ -15,7 +15,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         })
         .when('/openGames', {
            controller : 'OpenGamesController',
-           templateUrl : 'partials/currentlyOpenGames.html'
+           templateUrl : 'partials/openGames.html'
         })
          .when('/playedGames', {
            controller : 'PlayedGamesController',

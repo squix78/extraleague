@@ -36,18 +36,14 @@
 		</form>
 	</div>
 </div>
-<div class="row">
+<div class="row" ng-show="game.players.length > 0">
 	<div class="col-md-12">
-		<div ng-show="game.players.length > 0">
-			<div class="col-xs-2 text-center" ng-repeat="player in game.players">
-				<div class="text-center">
-					<div player="player"></div>
-					<div>{{(players[player].eloValue)}} Elo</div>
-				</div>
-			</div>
-		</div>
+		 <div class="playerRow">
+		  	<div ng-repeat="player in game.players" player="player"></div>
+		 </div>
 	</div>
 </div>
+<BR/>
 <div class="row">
 	<div class="col-md-12">
 		<div class="form-group">

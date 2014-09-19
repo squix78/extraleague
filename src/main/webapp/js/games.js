@@ -216,6 +216,17 @@ angular.module('Games', ['gaeChannelService'])
 	   console.log("Received change in open games from server");
 	   service.setGames(message.openGames);
 	});
+	$rootScope.$on("GameFinished", function(event, message) {
+		console.log("Received message that game is finished from server. Checking if affecting current");
+		var finishedGame = message.finishedGame;
+		if (games.currentGameId == finishedGame.id) {
+			console.log("Current game is finished...");
+			games.isGameFinished = true;
+			if(!$rootScope.$$phase) {
+				$rootScope.$apply();
+			}
+		}
+	});
 	$rootScope.$on("UpdateMatch", function(event, message) {
 	    console.log("Received match update from server");
 	    var updatedGame = message.game;

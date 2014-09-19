@@ -15,6 +15,7 @@ import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.notification.GameFinishedMessage;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateMatchMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
@@ -105,6 +106,7 @@ public class MatchesResource extends ServerResource {
 			Queue queue = QueueFactory.getDefaultQueue();
 			queue.add(TaskOptions.Builder.withMethod(Method.GET).url("/rest/updateRankings"));
 			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
+			NotificationService.sendMessage(new GameFinishedMessage(GameDtoMapper.mapToDto(game)));
 			NotificationService.sendSummaryEmail(game, matches);
 			NotificationService.callWebHooksForEndOfGame(game.getId());
 		} 

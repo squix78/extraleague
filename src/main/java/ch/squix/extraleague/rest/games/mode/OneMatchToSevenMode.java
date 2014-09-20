@@ -40,6 +40,7 @@ public class OneMatchToSevenMode implements GameMode {
 		match.setTable(game.getTable());
 		match.getTags().add(game.getTable());
 		match.setMatchIndex(0);
+		match.setPositionSwappingAllowed(true);
 		EloUtil.setEloValuesToMatch(match, currentRanking);
 		matches.add(match);
 

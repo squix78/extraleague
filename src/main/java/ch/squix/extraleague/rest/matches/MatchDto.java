@@ -25,6 +25,7 @@ public class MatchDto {
 	private Date lastUpdate;
 	private Integer maxGoals;
 	private Integer maxMatches;
+	private Boolean positionSwappingAllowed;
 
 
 

@@ -50,6 +50,7 @@ public class ThreeMatchesToFiveMode implements GameMode {
 			match.setTable(game.getTable());
 			match.getTags().add(game.getTable());
 			match.setMatchIndex(matchIndex);
+			match.setPositionSwappingAllowed(false);
 			EloUtil.setEloValuesToMatch(match, currentRanking);
 			matches.add(match);
 		}

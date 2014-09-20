@@ -24,6 +24,7 @@ public class MatchDtoMapper {
 		dto.setWinPointsTeamB(match.getWinPointsTeamB());
 		dto.setMaxGoals(match.getMaxGoals());
 		dto.setMaxMatches(match.getMaxMatches());
+		dto.setPositionSwappingAllowed(match.getPositionSwappingAllowed());
 		return dto;
 	}
 	

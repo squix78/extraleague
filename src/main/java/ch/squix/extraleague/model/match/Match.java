@@ -28,6 +28,7 @@ public class Match {
 	private Double winProbabilityTeamA = 0d;
 	private Integer winPointsTeamA = 0;
 	private Integer winPointsTeamB = 0;
+	private Boolean positionSwappingAllowed = false;
 	
 	private List<String> scorers = new ArrayList<>();
 	

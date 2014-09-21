@@ -39,6 +39,7 @@ import ch.squix.extraleague.rest.player.PlayersRessource;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerResource;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayersResource;
 import ch.squix.extraleague.rest.playeruser.PlayerUserResource;
+import ch.squix.extraleague.rest.preview.GamePreviewResource;
 import ch.squix.extraleague.rest.ranking.CleanInDayRankingsResource;
 import ch.squix.extraleague.rest.ranking.CronCleanInDayRankingsResource;
 import ch.squix.extraleague.rest.ranking.CronUpdateEternalRankingsResource;
@@ -88,6 +89,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/ranking", RankingResource.class);
         router.attach("/rankings/tags/{tag}", RankingByTagResource.class);
         router.attach("/games", GamesResource.class);
+        router.attach("/gamePreview", GamePreviewResource.class);
         router.attach("/openGames", OpenGamesResource.class);
         router.attach("/playedGames", PlayedGamesResource.class);
         router.attach("/games/{gameId}", GameResource.class);

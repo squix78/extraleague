@@ -90,7 +90,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('GameModes', ['$resource', function($resource) {
     	return $resource('/rest/modes');
     }])
-
+    .factory('GamePreview', ['$resource', function($resource) {
+    	return $resource('/rest/gamePreview');
+    }])
     .factory('Summary', ['$resource', function($resource) {
       return $resource('/rest/games/:gameId/summary');
     }])
@@ -218,7 +220,7 @@ function MainController($scope, $rootScope, $resource, $location, $routeParams, 
 
 }
 
-function NewGameController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, Players, Tables, GameModes) {
+function NewGameController($scope, $rootScope, $resource, $routeParams, $location, Games, Game, Players, Tables, GameModes, GamePreview) {
    $scope.isSavingGame = false;
    $scope.game = new Games();
    
@@ -254,6 +256,20 @@ function NewGameController($scope, $rootScope, $resource, $routeParams, $locatio
       }
   
    });
+   $scope.$watch('game', function(newValue, oldValue) {
+	   console.log("Change in game detected");
+       if ($scope.isGameComplete()) {
+     	  $scope.loadPreview();
+       }
+   }, true);
+   
+   $scope.loadPreview = function() {
+	   console.log("Loading preview...");
+	   var preview = new GamePreview($scope.game);
+	   $scope.preview = GamePreview.save({}, $scope.game, function() {
+		  console.log($scope.preview); 
+	   });
+   }
   
   $scope.startGame = function() {
 	  $scope.isGameStarting = true;

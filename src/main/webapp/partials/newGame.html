@@ -40,7 +40,22 @@
 	<div class="col-md-12">
 		 <div class="playerRow">
 		  	<div ng-repeat="player in game.players" player="player"></div>
+		  	<div class="text-small" ng-show="isGameComplete()">
+				<div ng-repeat="match in preview.matches">
+				    <span>{{$index + 1}}</span>
+					<span ng-bind="match.teamA[0]"></span>
+					<span ng-bind="match.teamA[1]"></span> -
+					<span ng-bind="match.teamB[0]"></span>
+					<span ng-bind="match.teamB[1]"></span>
+				</div>
+		  	</div>
 		 </div>
+	</div>
+</div>
+
+<div class="row text-small">
+	<div class="col-md-12">
+
 	</div>
 </div>
 <BR/>

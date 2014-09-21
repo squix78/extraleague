@@ -350,6 +350,15 @@ function GameController($scope, $rootScope, $resource, $routeParams, $location, 
   $scope.saveCurrentMatch = function() {
 	  GameService.saveCurrentMatch();
   }
+  
+  $scope.swapTeam = function(team) {
+	  console.log("Team before swap: " + team);
+	  var temp = team[0];
+	  team[0] = team[1];
+	  team[1] = temp;
+	  console.log("Team after swap: " + team);
+	  $scope.saveCurrentMatch();
+  }
 
 }
 

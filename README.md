@@ -15,10 +15,14 @@ and navigate to
 ```
 http://localhost:8080/
 ```
+To skip the (lenghty) javascript build you can also type
+```
+mvn appengine:devserver -P-js
+```
 ## Live reload
 To have your browser updated after a change of a static resource run
 ```
-livereloadx -l -p 35729 src/main/webapp/ --proxy http://localhost:8080/
+grunt server
 ```
 install the  livereload browser plugin and open your browser at
 ```

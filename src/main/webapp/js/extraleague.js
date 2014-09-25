@@ -41,6 +41,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         	controller : 'MeetingPointController',
         	templateUrl : 'partials/meetingpoint.html'
         })
+        .when('/watch/:table', {
+        	controller : 'WatcherController',
+        	templateUrl : 'partials/watch.html'
+        })
         .when('/about', {
            controller : 'AboutController',
            templateUrl : 'partials/about.html'
@@ -319,12 +323,15 @@ function OpenGamesController($scope, $rootScope, $location, GameService) {
   $scope.continueGame = function(game) {
       $location.path("/games/" + game.id);
   };
+  $scope.watch = function(game) {
+	  $location.path("/watch/" + game.table);
+  }
   $scope.deleteGame = function(game) {
 	  GameService.deleteGame(game);
   };
 
 }
-function GameController($scope, $rootScope, $resource, $routeParams, $location, Game, Match, Players, NotificationService, GameService) {
+function GameController($scope, $rootScope, $resource, $routeParams, $location, Players, NotificationService, GameService) {
   
   $scope.gameId = $routeParams.gameId;
   $scope.table = $routeParams.table;
@@ -630,6 +637,16 @@ function MeetingPointController($scope, $rootScope, $timeout, $location, Meeting
 	       }
 	});
 
+}
+function WatcherController($scope, $routeParams, GameService) {
+	$scope.table = $routeParams.table;
+	
+    $scope.updateGames = function() {
+	  $scope.openGames = GameService.loadOpenGames();
+    };
+  
+    $scope.updateGames();
+	
 }
 function HighlightsController($scope, Mutations) {
 	$scope.isMutationsLoading = true;

@@ -30,6 +30,7 @@
 	  <div>
 	  	  <div>
 		      <button ng-hide="game.endDate" class="btn btn-primary" ng-click="continueGame(game)">Continue ({{game.numberOfCompletedGames + 1}}/4)</button>
+		      <button ng-hide="game.endDate" class="btn btn-primary" ng-click="watch(game)">Watch</button>
 
 			  <button ng-hide="game.endDate || isDeleteButtonVisible" class="btn btn-danger" ng-click="isDeleteButtonVisible = true">Delete</button>
 			  <button ng-show="isDeleteButtonVisible" class="btn btn-danger" ng-click="deleteGame(game)">Really?</button>

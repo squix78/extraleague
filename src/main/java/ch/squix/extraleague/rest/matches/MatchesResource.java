@@ -94,6 +94,7 @@ public class MatchesResource extends ServerResource {
 		Game game = ofy().load().type(Game.class).id(matchDto.getGameId()).now();
 		game.setNumberOfCompletedMatches(numberOfCompletedMatches);
 		game.setGameProgress(sumOfMaxGoals / (game.getMaxGoals() * game.getMaxMatches() * 1.0d));
+		game.setIndexOfLastUpdatedMatch(match.getMatchIndex());
 		// Set the date for the first goal
 		if (sumOfMaxGoals > 0 && game.getFirstGoalDate() == null) {
 			game.setFirstGoalDate(new Date());
@@ -103,17 +104,19 @@ public class MatchesResource extends ServerResource {
 			log.info("Max matches reached. Setting game endDate");
 			game.setEndDate(new Date());
 			game.setIsGameFinished(true);
+		}
+		ofy().save().entity(game).now();
+		if (game.getIsGameFinished()) {
 			Queue queue = QueueFactory.getDefaultQueue();
 			queue.add(TaskOptions.Builder.withMethod(Method.GET).url("/rest/updateRankings"));
 			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
 			NotificationService.sendMessage(new GameFinishedMessage(GameDtoMapper.mapToDto(game)));
 			NotificationService.sendSummaryEmail(game, matches);
 			NotificationService.callWebHooksForEndOfGame(game.getId());
-		} 
+		}
 		GameDto gameDto = GameDtoMapper.mapToDto(game);
 		NotificationService.sendMessage(new UpdateMatchMessage(gameDto, matchDto));
 		
-		ofy().save().entity(game).now();
 		matchDto.setId(match.getId());
 		return matchDto;
 	}

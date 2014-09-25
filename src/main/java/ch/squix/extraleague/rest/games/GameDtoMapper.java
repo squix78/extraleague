@@ -19,6 +19,7 @@ public class GameDtoMapper {
 		dto.setGameProgress(game.getGameProgress());
 		dto.setFirstGoalDate(game.getFirstGoalDate());
 		dto.setIsGameFinished(game.getIsGameFinished());
+		dto.setIndexOfLastUpdatedMatch(game.getIndexOfLastUpdatedMatch());
 		Integer maxMatches = game.getMaxMatches();
 		if (maxMatches == null) {
 			maxMatches = 4;

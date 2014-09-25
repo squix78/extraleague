@@ -24,6 +24,7 @@ public class GameDto {
 	private Long estimatedRemainingMillis;
 	
 	private Integer numberOfCompletedGames;
+	private Integer indexOfLastUpdatedMatch;
 	private Date firstGoalDate;
 	
 	private GameModeEnum gameMode;

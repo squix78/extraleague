@@ -31,6 +31,7 @@ public class Game {
 	private Date firstGoalDate;
 
 	private Integer numberOfCompletedMatches;
+	private Integer indexOfLastUpdatedMatch;
 
 	private Double gameProgress;
 	

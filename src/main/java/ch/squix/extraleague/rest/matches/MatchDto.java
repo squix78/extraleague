@@ -19,6 +19,7 @@ public class MatchDto {
 	private String table;
 	private Integer matchIndex;
 	private List<String> scorers = new ArrayList<>();
+	private List<GoalDto> goals = new ArrayList<>();
 	private Double winProbabilityTeamA = 0d;
 	private Integer winPointsTeamA = 0;
 	private Integer winPointsTeamB = 0;

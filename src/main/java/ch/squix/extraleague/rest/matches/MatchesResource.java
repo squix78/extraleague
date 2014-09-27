@@ -3,6 +3,7 @@ package ch.squix.extraleague.rest.matches;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -14,6 +15,7 @@ import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.game.Game;
+import ch.squix.extraleague.model.match.Goal;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.notification.GameFinishedMessage;
 import ch.squix.extraleague.notification.NotificationService;
@@ -69,6 +71,14 @@ public class MatchesResource extends ServerResource {
 		match.setTeamAScore(matchDto.getTeamAScore());
 		match.setTeamBScore(matchDto.getTeamBScore());
 		match.setScorers(matchDto.getScorers());
+		List<Goal> goals = new ArrayList<>();
+		match.setGoals(goals);
+		for (GoalDto goalDto : matchDto.getGoals()) {
+			Goal goal = new Goal();
+			goal.setScorer(goalDto.getScorer());
+			goal.setTime(goalDto.getTime());
+			goals.add(goal);
+		}
 		if ((match.getTeamAScore() > 0 || match.getTeamBScore() > 0) && match.getStartDate() == null) {
 		    match.setStartDate(new Date());
 		}

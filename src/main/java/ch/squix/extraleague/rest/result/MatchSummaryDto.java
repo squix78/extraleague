@@ -12,6 +12,6 @@ public class MatchSummaryDto {
 	private Integer teamBScore;
 	private String[] teamA;
 	private String[] teamB;
-	private List<GoalDto> goals;
+	private List<MatchSummaryDetailDto> goals;
 
 }

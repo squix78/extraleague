@@ -3,6 +3,7 @@ package ch.squix.extraleague.rest.matches;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.squix.extraleague.model.match.Goal;
 import ch.squix.extraleague.model.match.Match;
 
 public class MatchDtoMapper {
@@ -26,7 +27,13 @@ public class MatchDtoMapper {
 		dto.setMaxMatches(match.getMaxMatches());
 		dto.setPositionSwappingAllowed(match.getPositionSwappingAllowed());
 		dto.setMatchInfo(MatchInfoService.getMatchInfoDto(match));
-		return dto;
+		for (Goal goal : match.getGoals()) {
+			GoalDto goalDto = new GoalDto();
+			goalDto.setScorer(goal.getScorer());
+			goalDto.setTime(goal.getTime());
+			dto.getGoals().add(goalDto);
+		}
+		return dto; 
 	}
 	
 	public static List<MatchDto> mapToDtoList(List<Match> matches) {
@@ -36,6 +43,8 @@ public class MatchDtoMapper {
 		}
 		return dtos;
 	}
+	
+
 
 
 }

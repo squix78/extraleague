@@ -122,6 +122,8 @@ angular.module('Games', ['gaeChannelService'])
 					&& games.currentMatch.teamBScore < maxGoals) {
 
 					games.currentMatch.scorers.push(player);
+					var goal = {scorer: player, time: new Date()};
+					games.currentMatch.goals.push(goal);
 					service.calculateScores(games.currentMatch);
 					service.saveCurrentMatch();
 					//service.checkEndOfMatch();
@@ -131,6 +133,7 @@ angular.module('Games', ['gaeChannelService'])
 		removeLastGoal: function() {
 			if (games.currentMatch.scorers.length > 0) {
 				var removedScorer = games.currentMatch.scorers.pop();
+				games.currentMatch.goals.pop();
 				games.isGameFinished = false;
 				console.log("Removed scorer: " + removedScorer);
 				service.calculateScores(games.currentMatch);
@@ -244,7 +247,7 @@ angular.module('Games', ['gaeChannelService'])
 	    		updatedGame.matches = games.gameList[i].matches;
 	    		games.gameList[i] = updatedGame;
 	    		var matchUpdateCandidate = games.gameList[i].matches[updatedMatch.matchIndex];
-	    		if (matchUpdateCandidate.lastUpdate <= updatedMatch.lastUpdate) {
+	    		if (matchUpdateCandidate.lastUpdate < updatedMatch.lastUpdate) {
 	    			console.log("Match update is applicable.");
 	    			games.gameList[i].matches[updatedMatch.matchIndex] = updatedMatch;
 	    			service.updateCurrentGame();

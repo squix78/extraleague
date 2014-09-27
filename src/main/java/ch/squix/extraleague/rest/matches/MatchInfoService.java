@@ -21,7 +21,7 @@ public class MatchInfoService {
 		for (String player : match.getPlayers()) {
 			goalMap.put(player, Collections.frequency(scorers, player));
 		}
-		infoDto.setGoalMap(goalMap);
+		infoDto.setGoalMap(goalMap); 
 		infoDto.setTeamAScorers(getScorers(match.getStartDate(), Arrays.asList(match.getTeamA()), match.getGoals()));
 		infoDto.setTeamBScorers(getScorers(match.getStartDate(), Arrays.asList(match.getTeamB()), match.getGoals()));
 		

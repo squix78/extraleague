@@ -77,7 +77,7 @@ public class MatchesResource extends ServerResource {
 			match.setEndDate(new Date());
 		}
 		ofy().save().entity(match).now();
-		
+		matchDto = MatchDtoMapper.mapToDto(match);
 		// Update game
 		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", matchDto.getGameId()).list();
 		List<MatchDto> matchDtos = MatchDtoMapper.mapToDtoList(matches);

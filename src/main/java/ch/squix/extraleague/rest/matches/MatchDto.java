@@ -26,7 +26,6 @@ public class MatchDto {
 	private Integer maxGoals;
 	private Integer maxMatches;
 	private Boolean positionSwappingAllowed;
-
-
+	private MatchInfoDto matchInfo;
 
 }

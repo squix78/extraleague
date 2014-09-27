@@ -244,13 +244,13 @@ angular.module('Games', ['gaeChannelService'])
 	    		updatedGame.matches = games.gameList[i].matches;
 	    		games.gameList[i] = updatedGame;
 	    		var matchUpdateCandidate = games.gameList[i].matches[updatedMatch.matchIndex];
-	    		if (matchUpdateCandidate.lastUpdate < updatedMatch.lastUpdate) {
+	    		if (matchUpdateCandidate.lastUpdate <= updatedMatch.lastUpdate) {
 	    			console.log("Match update is applicable.");
 	    			games.gameList[i].matches[updatedMatch.matchIndex] = updatedMatch;
 	    			service.updateCurrentGame();
 	    			service.checkEndOfMatch();
 	    		} else {
-	    			console.log("Match update is outdated. Ignoring it.");
+	    			console.log("Match update is outdated. Ignoring it");
 	    		}
 	    		service.calculateRemainingMillis();
 				if(!$rootScope.$$phase) {

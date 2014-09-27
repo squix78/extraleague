@@ -4,13 +4,13 @@
 </div>
 <div ng-show="openGames.gameList.length > 0">
 	<div ng-repeat="game in openGames.gameList | filter:{table: table} | limitTo: 1">
-	  <div class="label label-info">
-	  		{{game.table}} | {{game.gameMode}}
-	  </div>
 	  <div ng-show="game.matches" ng-repeat="match in game.matches | filter:{matchIndex: game.indexOfLastUpdatedMatch}">
-	 	<div>Match {{match.matchIndex + 1}} of {{game.matches.length}}</div>
 	    <div class="panel panel-default">
 	      <div class="panel-heading">
+		    <div class="label label-info">
+		   		{{match.matchIndex + 1}} of {{game.matches.length}} | {{game.table}} | {{game.gameMode}}
+		    </div>
+		    <div>&nbsp;</div>
 	        <table style="width:100%">
 	          <colgroup>
 	            <col style="width:50px"/>
@@ -23,9 +23,19 @@
 	            <tr>
 	              <td><span player="match.teamA[0]"></span></td>
 	              <td><span player="match.teamA[1]"></span></td>
-	              <td class="score">{{ match.teamAScore }} : {{ match.teamBScore }}</td>
+	              <td class="score">{{ match.teamAScore }}:{{ match.teamBScore }}</td>
 	              <td><span player="match.teamB[0]"></span></td>
 	              <td><span player="match.teamB[1]"></span></td>
+	            </tr>
+	            <tr>
+	              <td colspan="2" align="center">{{match.winProbabilityTeamA * 100 | number:2}}%</td>
+	              <td></td>
+	              <td colspan="2" align="center">{{(1- match.winProbabilityTeamA) * 100 | number:2}}%</td>
+	            </tr>
+	            <tr>
+	              <td colspan="2" align="center">{{match.winPointsTeamA | number:0}} ELO</td>
+	              <td></td>
+	              <td colspan="2" align="center">{{match.winPointsTeamB | number:0}} ELO</td>
 	            </tr>
 	          </tbody>
 	        </table>
@@ -36,11 +46,18 @@
 	          <col style="width:50px"/>
 	          <col style="width:50px"/>
 	        </colgroup>
+	        <thead>
+	        	<tr>
+	        		<th>Player</th>
+	        		<th>Goals</th>
+	        		<th>Share</th>
+	        	<tr>
+	        </thead>
 	        <tbody>
-	          <tr ng-repeat="goal in match.goals">
-	            <td ng-class="{ goal: goal.scorerTeam == 'a' }">{{ goal.scorerTeam == 'a' ? goal.scorer : '' }}</td>
-	            <td class="score">{{ goal.teamAScore }} : {{ goal.teamBScore }}</td>
-	            <td ng-class="{ goal: goal.scorerTeam == 'b' }">{{ goal.scorerTeam == 'b' ? goal.scorer : '' }}</td>
+	          <tr ng-repeat="player in game.players">
+	            <td>{{player}}</td>
+	            <td>{{match.matchInfo.goalMap[player]}}</td>
+	            <td>{{100 * match.matchInfo.goalMap[player] / (match.teamAScore + match.teamBScore) | number:1}}%</td>
 	          </tr>
 	        </tbody>
 	      </table>

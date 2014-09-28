@@ -65,19 +65,20 @@
 		      </table>
 		      </slide>
 		      <slide>
-		      	<div class="row">
-		      		<div class="col-xs-2">
-		      			<div ng-repeat="goal in match.matchInfo.teamAGoals track by $index">
-	              			{{goal.scorer}} ({{goal.minutesSinceMatchStart}}') 
-	              		</div>
-		      		</div>
-		      		<div class="col-xs-8"></div>
-		      		<div class="col-xs-2">
-		      			<div ng-repeat="goal in match.matchInfo.teamBGoals track by $index">
-	              			{{goal.scorer}} ({{goal.minutesSinceMatchStart}}') 
-	              		</div>
-		      		</div>
-		      	</div>
+			      <table class="table">
+			        <colgroup>
+			          <col style="width:50px"/>
+			          <col style="width:50px"/>
+			          <col style="width:50px"/>
+			        </colgroup>
+			        <tbody>
+			          <tr ng-repeat="n in getBiggerArray(match.matchInfo.teamAGoals.length, match.matchInfo.teamBGoals.length) track by $index">
+			            <td>{{ match.matchInfo.teamAGoals[$index].scorer}} ({{ match.matchInfo.teamAGoals[$index].minutesSinceMatchStart}}')</td>
+			            <td class="score"></td>
+			            <td>{{ match.matchInfo.teamBGoals[$index].scorer}} ({{ match.matchInfo.teamAGoals[$index].minutesSinceMatchStart}}')</td>
+			          </tr>
+			        </tbody>
+			      </table>
 		      </slide>
 
 		  </carousel>

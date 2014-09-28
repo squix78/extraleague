@@ -646,6 +646,17 @@ function WatcherController($scope, $routeParams, GameService) {
     };
   
     $scope.updateGames();
+    
+    $scope.getScorers = function(team, goals) {
+    	var goalText = "";
+    	angular.forEach(goals, function(goal, key) {
+    		var scorer = goal.scorer;
+    		if (scorer === team[0] || scorer === team[1]) {
+    			goalText += scorer + "<BR/>";
+    		}
+    	});
+    	return goalText;
+    }
 	
 }
 function HighlightsController($scope, Mutations) {

@@ -60,12 +60,12 @@ public class SummaryService {
 					playerGoals.put(player, goals);
 				}
 	
-				List<GoalDto> goals = new ArrayList<>();
+				List<MatchSummaryDetailDto> goals = new ArrayList<>();
 				List<String> teamAPlayers = Arrays.asList(match.getTeamA());
 				int currentTeamAScore = 0;
 				int currentTeamBScore = 0;
 				for (String player : match.getScorers()) {
-					GoalDto goal = new GoalDto();
+					MatchSummaryDetailDto goal = new MatchSummaryDetailDto();
 					goal.setScorer(player);
 					
 					if (teamAPlayers.contains(player)) {

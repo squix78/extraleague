@@ -2,6 +2,7 @@ package ch.squix.extraleague.notification;
 
 import ch.squix.extraleague.rest.games.GameDto;
 import ch.squix.extraleague.rest.matches.MatchDto;
+import ch.squix.extraleague.rest.matches.MatchInfoDto;
 
 public class UpdateMatchMessage implements NotificationMessage {
 
@@ -29,6 +30,7 @@ public class UpdateMatchMessage implements NotificationMessage {
 	public GameDto getGame() {
 		return game;
 	}
+
 
 
 }

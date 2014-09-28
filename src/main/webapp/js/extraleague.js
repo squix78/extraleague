@@ -657,6 +657,10 @@ function WatcherController($scope, $routeParams, GameService) {
     	});
     	return goalText;
     }
+    
+    $scope.getBiggerArray = function(n, m) {
+    	return new Array(Math.max(n, m));
+    }
 	
 }
 function HighlightsController($scope, Mutations) {

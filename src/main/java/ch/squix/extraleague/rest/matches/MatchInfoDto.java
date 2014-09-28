@@ -11,7 +11,7 @@ import lombok.Data;
 public class MatchInfoDto {
 	
 	private Map<String, Integer> goalMap = new HashMap<>();
-	private List<String> teamAScorers = new ArrayList<>();
-	private List<String> teamBScorers = new ArrayList<>();
+	private List<GoalDto> teamAGoals = new ArrayList<>();
+	private List<GoalDto> teamBGoals = new ArrayList<>();
 
 }

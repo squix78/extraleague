@@ -22,22 +22,26 @@ public class MatchInfoService {
 			goalMap.put(player, Collections.frequency(scorers, player));
 		}
 		infoDto.setGoalMap(goalMap); 
-		infoDto.setTeamAScorers(getScorers(match.getStartDate(), Arrays.asList(match.getTeamA()), match.getGoals()));
-		infoDto.setTeamBScorers(getScorers(match.getStartDate(), Arrays.asList(match.getTeamB()), match.getGoals()));
+		infoDto.setTeamAGoals(getScorers(match.getStartDate(), Arrays.asList(match.getTeamA()), match.getGoals()));
+		infoDto.setTeamBGoals(getScorers(match.getStartDate(), Arrays.asList(match.getTeamB()), match.getGoals()));
 		
 		
 		return infoDto;
 	}
 	
-	private static List<String> getScorers(Date matchStartTime, List<String> team, List<Goal> goals) {
-		List<String> scorers = new ArrayList<>();
+	private static List<GoalDto> getScorers(Date matchStartTime, List<String> team, List<Goal> goals) {
+		List<GoalDto> goalDtos = new ArrayList<>();
 		for (Goal goal : goals) {
 			if (team.contains(goal.getScorer())) {
-				Long goalMinute = (goal.getTime().getTime() - matchStartTime.getTime()) / (1000 * 60);
-				scorers.add(goal.getScorer() + " (" + goalMinute + "')");
+				Long minutesSinceMatchStart = (goal.getTime().getTime() - matchStartTime.getTime()) / (1000 * 60);
+				GoalDto dto = new GoalDto();
+				dto.setScorer(goal.getScorer());
+				dto.setTime(goal.getTime());
+				dto.setMinutesSinceMatchStart(minutesSinceMatchStart);
+				goalDtos.add(dto);
 			}
 		}
-		return scorers;
+		return goalDtos;
 	}
 
 }

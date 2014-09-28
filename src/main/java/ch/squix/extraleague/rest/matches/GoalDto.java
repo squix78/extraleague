@@ -9,5 +9,6 @@ public class GoalDto {
 	
 	private String scorer;
 	private Date time;
+	private Long minutesSinceMatchStart;
 
 }

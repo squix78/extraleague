@@ -37,41 +37,50 @@
 	              <td></td>
 	              <td colspan="2" align="center">{{match.winPointsTeamB | number:0}} ELO</td>
 	            </tr>
-	            <tr>
-	              <td colspan="2" align="center">
-	              	<span ng-repeat="scorer in match.matchInfo.teamAScorers">{{scorer}} </span>
-	              </td>
-	              <td></td>
-	              <td colspan="2" align="center">
-	              	<div ng-repeat="scorer in match.matchInfo.teamBScorers">{{scorer}} </div>
-	              </td>
-	            </tr>
 	          </tbody>
 	        </table>
 	      </div>
-	      <table class="table">
-	        <colgroup>
-	          <col style="width:50px"/>
-	          <col style="width:50px"/>
-	          <col style="width:50px"/>
-	        </colgroup>
-	        <thead>
-	        	<tr>
-	        		<th>Player</th>
-	        		<th>Goals</th>
-	        		<th>Share</th>
-	        	<tr>
-	        </thead>
-	        <tbody>
-	          <tr ng-repeat="player in game.players">
-	            <td>{{player}}</td>
-	            <td>{{match.matchInfo.goalMap[player]}}</td>
-	            <td>{{100 * match.matchInfo.goalMap[player] / (match.teamAScore + match.teamBScore) | number:1}}%</td>
-	          </tr>
-	        </tbody>
-	      </table>
+	      <carousel interval="5000">
+		      <slide>
+		      <table class="table text-left">
+		        <colgroup>
+		          <col style="width:50px"/>
+		          <col style="width:50px"/>
+		          <col style="width:50px"/>
+		        </colgroup>
+		        <thead>
+		        	<tr>
+		        		<th>Player</th>
+		        		<th>Goals</th>
+		        		<th>Share</th>
+		        	<tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="player in game.players">
+		            <td>{{player}}</td>
+		            <td>{{match.matchInfo.goalMap[player]}}</td>
+		            <td>{{100 * match.matchInfo.goalMap[player] / (match.teamAScore + match.teamBScore) | number:1}}%</td>
+		          </tr>
+		        </tbody>
+		      </table>
+		      </slide>
+		      <slide>
+		      	<div class="row">
+		      		<div class="col-xs-2">
+		      			<div ng-repeat="goal in match.matchInfo.teamAGoals track by $index">
+	              			{{goal.scorer}} ({{goal.minutesSinceMatchStart}}') 
+	              		</div>
+		      		</div>
+		      		<div class="col-xs-8"></div>
+		      		<div class="col-xs-2">
+		      			<div ng-repeat="goal in match.matchInfo.teamBGoals track by $index">
+	              			{{goal.scorer}} ({{goal.minutesSinceMatchStart}}') 
+	              		</div>
+		      		</div>
+		      	</div>
+		      </slide>
 
-	 	<div>Last Scorer: {{match.scorers[match.scorers.length - 1]}}</div>
+		  </carousel>
 
 
 		</div>

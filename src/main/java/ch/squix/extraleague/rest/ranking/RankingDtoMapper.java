@@ -51,6 +51,7 @@ public class RankingDtoMapper {
 				rankingDto.setMaxGoalsPerGame(playerRanking.getMaxGoalsPerGame());
 				rankingDto.setAchievementPoints(playerRanking.getAchievementPoints());
 				rankingDto.setBestSlam(playerRanking.getBestSlam());
+				rankingDto.setRankingDelta(playerRanking.getRankingDelta());
 				playerRankingList.add(rankingDto);
 			}
 		}

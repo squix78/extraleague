@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
+import ch.squix.extraleague.model.mutations.MutationService;
 import ch.squix.extraleague.model.ranking.tasks.AchievementPointTask;
 import ch.squix.extraleague.model.ranking.tasks.AverageTimePerMatchTask;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
@@ -35,23 +36,34 @@ import ch.squix.extraleague.model.ranking.tasks.SpecialResultPerGameTask;
 import ch.squix.extraleague.model.ranking.tasks.StrikeTask;
 import ch.squix.extraleague.model.ranking.tasks.TightMatchesTask;
 import ch.squix.extraleague.model.ranking.tasks.TrueSkillRankingTask;
+import ch.squix.extraleague.notification.NotificationService;
+import ch.squix.extraleague.notification.UpdateRankingMessage;
+import ch.squix.extraleague.rest.ranking.RankingDto;
+import ch.squix.extraleague.rest.ranking.RankingDtoMapper;
 
 public class RankingService {
 
     private static final Logger log = Logger.getLogger(RankingService.class.getName());
 
-    public static Ranking calculateRankings() { 
+    public static void calculateRankings() { 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -30);
         List<Match> matchesList = ofy().load()
                 .type(Match.class)
                 .filter("startDate > ", calendar.getTime())
                 .list();
-        Ranking ranking = calculateRankingFromMatches(matchesList);
+        
+        Ranking newRanking = calculateRankingFromMatches(matchesList);
+        Ranking oldRanking = ofy().load().type(Ranking.class).order("-createdDate").limit(1).first().now();
 
+        if (oldRanking != null && newRanking != null) {
+                MutationService.calculateMutations(oldRanking, newRanking);
+        }
+        
+        List<RankingDto> rankingDtos = RankingDtoMapper.convertToDto(newRanking);
+        NotificationService.sendMessage(new UpdateRankingMessage(rankingDtos));
 
-        ofy().save().entities(ranking).now();
-        return ranking;
+        ofy().save().entities(newRanking).now();
 
     }
     

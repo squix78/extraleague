@@ -46,6 +46,7 @@ public class RankingDto {
     private Set<String> neverPlayedWith;
     private Integer eloValue;
     private Integer eloRanking;
+    private Integer rankingDelta;
     
     private Double trueSkillRating;
     private Integer trueSkillRanking;

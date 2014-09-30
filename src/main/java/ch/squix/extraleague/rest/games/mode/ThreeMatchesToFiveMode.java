@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.googlecode.objectify.Key;
+
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.ranking.Ranking;
@@ -41,7 +43,6 @@ public class ThreeMatchesToFiveMode implements GameMode {
 		for (int matchIndex = 0; matchIndex < MAX_MATCHES; matchIndex++) {
 			Integer [] mutation = mutations[matchIndex];
 			Match match = new Match();
-			match.setGameId(game.getId());
 			match.setTeamA(new String[] {players.get(mutation[0]), players.get(mutation[1])});
 			match.setTeamB(new String[] {players.get(mutation[2]), players.get(mutation[3])});
 			match.setMaxGoals(MAX_GOALS);

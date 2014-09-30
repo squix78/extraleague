@@ -41,6 +41,7 @@ public class FourMatchesToFiveTest {
 	@Test
 	public void shouldCreateCorrectOrderOfMatches() {
 		Game game = new Game();
+		game.setId(1L);
 		game.getPlayers().add("a");
 		game.getPlayers().add("b");
 		game.getPlayers().add("c");

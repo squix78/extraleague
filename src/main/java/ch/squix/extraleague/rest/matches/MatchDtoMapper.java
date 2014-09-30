@@ -3,6 +3,8 @@ package ch.squix.extraleague.rest.matches;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.googlecode.objectify.Key;
+
 import ch.squix.extraleague.model.match.Goal;
 import ch.squix.extraleague.model.match.Match;
 
@@ -10,7 +12,8 @@ public class MatchDtoMapper {
 
 	public static MatchDto mapToDto(Match match) {
 		MatchDto dto = new MatchDto();
-		dto.setId(match.getId());
+		String websafeKey = Key.create(match.getGameKey(), Match.class, match.getId()).getString();
+		dto.setKey(websafeKey);
 		dto.setGameId(match.getGameId());
 		dto.setTeamA(match.getTeamA());
 		dto.setTeamB(match.getTeamB());

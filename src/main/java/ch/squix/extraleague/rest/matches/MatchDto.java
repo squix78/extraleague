@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class MatchDto {
-	private Long id; 
+	private String key;
 	private Long gameId;
 	private String [] teamA = {};
 	private String [] teamB = {};

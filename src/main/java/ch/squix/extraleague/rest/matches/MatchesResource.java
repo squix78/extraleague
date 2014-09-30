@@ -1,7 +1,5 @@
 package ch.squix.extraleague.rest.matches;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +11,12 @@ import java.util.logging.Logger;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
+
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import com.googlecode.objectify.Key;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Goal;
@@ -26,10 +30,7 @@ import ch.squix.extraleague.rest.games.GameDtoMapper;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGameService;
 
-import com.google.appengine.api.taskqueue.Queue;
-import com.google.appengine.api.taskqueue.QueueFactory;
-import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 
 
@@ -40,7 +41,8 @@ public class MatchesResource extends ServerResource {
 	@Get(value = "json")
 	public List<MatchDto> execute() throws UnsupportedEncodingException {
 		String gameId = (String) this.getRequestAttributes().get("gameId");
-		List<MatchDto> matches = MatchDtoMapper.mapToDtoList(ofy().load().type(Match.class).filter("gameId = ", Long.valueOf(gameId)).list());
+		Key<Game> gameKey = Key.create(Game.class, Long.valueOf(gameId));
+		List<MatchDto> matches = MatchDtoMapper.mapToDtoList(ofy().load().type(Match.class).ancestor(gameKey).list());
 		sortMatches(matches);
 
 		log.info("Listing table for " + gameId + ". Found " + matches.size() + " matches for this game");

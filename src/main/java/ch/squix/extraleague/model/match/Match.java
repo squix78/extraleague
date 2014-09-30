@@ -6,11 +6,14 @@ import java.util.List;
 
 import lombok.Data;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
-import com.googlecode.objectify.annotation.Embed;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Parent;
+
+import ch.squix.extraleague.model.game.Game;
 
 @Entity
 @Cache
@@ -19,6 +22,9 @@ public class Match {
 
 	@Id 
 	private Long id;
+	
+	@Parent
+	private Key<Game> gameKey;
 	
 	@Index
 	private Long gameId;

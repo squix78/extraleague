@@ -1,17 +1,19 @@
 package ch.squix.extraleague.rest.games.mode;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import com.googlecode.objectify.Key;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.ranking.elo.EloUtil;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class FourMatchesToFiveMode implements GameMode {
 	
@@ -38,10 +40,12 @@ public class FourMatchesToFiveMode implements GameMode {
 				players = sortPlayersByRanking(players, currentRanking);
 		}
 		List<Match> matches = new ArrayList<>();
+		Key<Game> gameKey = Key.create(Game.class, game.getId());
 		for (int matchIndex = 0; matchIndex < 4; matchIndex++) {
 			Integer [] mutation = mutations[matchIndex];
 			Match match = new Match();
 			match.setGameId(game.getId());
+			match.setGameKey(gameKey);
 			match.setTeamA(new String[] {players.get(mutation[0]), players.get(mutation[1])});
 			match.setTeamB(new String[] {players.get(mutation[2]), players.get(mutation[3])});
 			match.setMaxGoals(MAX_GOALS);

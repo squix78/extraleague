@@ -59,6 +59,9 @@ public class PlayerRanking implements Serializable {
 
     private Integer eloValue;
     private Integer eloRanking;
+    
+    private Integer rankingDelta;
+    private Integer eloDelta;
 
     private Double trueSkillMean;
     private Double trueSkillSigma;

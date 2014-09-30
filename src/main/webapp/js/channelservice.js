@@ -3,7 +3,7 @@ angular.module('gaeChannelService', ['ngResource'])
      return $resource('/rest/notificationToken');
  }])
 
- .factory('NotificationService', ['$rootScope', 'NotificationToken', function($rootScope, NotificationToken){
+ .factory('NotificationService', ['$rootScope', '$timeout', 'NotificationToken', function($rootScope, $timeout, NotificationToken){
 	
 	var service = {
 			
@@ -32,7 +32,9 @@ angular.module('gaeChannelService', ['ngResource'])
 		} 
 	}
 	service.initializeService();
-
+	$timeout(function() {
+			service.initializeService();
+	}, 1000 * 60 * 10); // reconnect the channel every 10 minutes
     return {
     }
  }]);

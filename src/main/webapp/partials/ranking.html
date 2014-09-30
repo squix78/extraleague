@@ -13,6 +13,7 @@
 		<thead>
           <tr>
             <th><a href="" ng-click="predicate = 'ranking'; reverse=!reverse">#</a></th>
+            <th><a href="" ng-click="predicate = 'rankingDelta'; reverse=!reverse">D</a></th>
             <th><a href="" ng-click="predicate = 'player'; reverse=!reverse">Who</a></th>
             <th><a href="" ng-click="predicate = 'eloValue'; reverse=!reverse">elo</a></th>
             <th><a href="" ng-click="predicate = ['successRate', 'goalPlusMinus']; reverse=!reverse">%</a></th>
@@ -28,6 +29,7 @@
         <tbody>
           <tr ng-repeat="ranking in rankings | orderBy:predicate:reverse">
             <td>{{$index + 1}} </td>
+            <td>{{ranking.rankingDelta}} </td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
             <td>{{ranking.eloValue}}</td>
             <td ng-class="{won: ranking.successRate > 0.5, lost: ranking.successRate < 0.5}">{{ranking.successRate * 100 | number:1}}</td>

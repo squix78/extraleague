@@ -411,7 +411,7 @@ function SummaryController($scope, $rootScope, $resource, $routeParams, $locatio
   };
 }
 
-function RankingController($scope, $rootScope, $resource, $routeParams, $location, Ranking, Badges, Tables) {
+function RankingController($scope, $rootScope, $resource, $routeParams, $location, Ranking, Badges, Tables, NotificationService) {
   
   $scope.predicate = [ '-eloValue', '-successRate'];
   $scope.isRankingLoading = true;
@@ -436,6 +436,14 @@ function RankingController($scope, $rootScope, $resource, $routeParams, $locatio
   $scope.openRankingByTag = function(tag) {
 	  $location.path("/ranking/tag/" + tag);
   }
+  
+  $rootScope.$on("UpdateRankings", function(event, message) {
+	    console.log("Received ranking update from server");
+	    $scope.rankings = message.rankings;
+        if(!$scope.$$phase) {
+	       $scope.$apply();
+	    }
+  });
 }
 
 function RankingByTagController($scope, $rootScope, $resource, $routeParams, $location, RankingByTag, Badges, Tables) {

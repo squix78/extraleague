@@ -51,9 +51,11 @@ public class MatchesResource extends ServerResource {
 	
 	@Post(value = "json")
 	public MatchDto update(MatchDto matchDto) {
-		log.info("Received game to save");
-		Match match = ofy().load().type(Match.class).id(matchDto.getId()).now();
+		log.info("Received game to update with id: " + matchDto.getKey());
+		Key<Match> key = Key.create(matchDto.getKey());
+		Match match = ofy().load().key(key).now();
 		if (match == null) {
+		        log.severe("No match found. Creating new one.");
 			match = new Match();
 		}
 		if (match.getEndDate() != null) {
@@ -84,6 +86,7 @@ public class MatchesResource extends ServerResource {
 		if ((match.getTeamAScore() > 0 || match.getTeamBScore() > 0) && match.getStartDate() == null) {
 		    match.setStartDate(new Date());
 		}
+		System.out.println(match.getTeamAScore() + ", " + match.getMaxGoals() + ", " + match.getTeamBScore() + ", " + match.getMaxGoals());
 		if (match.getTeamAScore() >= match.getMaxGoals() || match.getTeamBScore() >= match.getMaxGoals()) {
 			log.info("Game is finished");
 			match.setEndDate(new Date());
@@ -129,7 +132,6 @@ public class MatchesResource extends ServerResource {
 		GameDto gameDto = GameDtoMapper.mapToDto(game);
 		NotificationService.sendMessage(new UpdateMatchMessage(gameDto, matchDto));
 		
-		matchDto.setId(match.getId());
 		return matchDto;
 	}
 

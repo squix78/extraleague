@@ -29,6 +29,7 @@ public class GamePreviewResource extends ServerResource {
 		game.setNumberOfCompletedMatches(0);
 		game.setIsGameFinished(false);
 		game.setGameMode(gameDto.getGameMode());
+		game.setId(0L);
 		mode.initializeGame(game); 
 		
 		GamePreviewDto previewDto = new GamePreviewDto();

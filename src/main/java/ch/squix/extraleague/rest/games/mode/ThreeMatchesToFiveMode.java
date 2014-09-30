@@ -40,12 +40,9 @@ public class ThreeMatchesToFiveMode implements GameMode {
 		List<String> players = game.getPlayers();
 		Collections.shuffle(players); 
 		List<Match> matches = new ArrayList<>();
-	              Key<Game> gameKey = Key.create(Game.class, game.getId());
 		for (int matchIndex = 0; matchIndex < MAX_MATCHES; matchIndex++) {
 			Integer [] mutation = mutations[matchIndex];
 			Match match = new Match();
-			match.setGameKey(gameKey);
-			match.setGameId(game.getId());
 			match.setTeamA(new String[] {players.get(mutation[0]), players.get(mutation[1])});
 			match.setTeamB(new String[] {players.get(mutation[2]), players.get(mutation[3])});
 			match.setMaxGoals(MAX_GOALS);

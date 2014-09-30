@@ -1,7 +1,5 @@
 package ch.squix.extraleague.rest.games;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +9,12 @@ import java.util.logging.Logger;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
+
+import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.Environment;
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
+import com.googlecode.objectify.Key;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
@@ -23,10 +27,7 @@ import ch.squix.extraleague.rest.games.mode.GameMode;
 import ch.squix.extraleague.rest.games.mode.GameModeFactory;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
 
-import com.google.apphosting.api.ApiProxy;
-import com.google.apphosting.api.ApiProxy.Environment;
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class GamesResource extends ServerResource {
 
@@ -63,13 +64,17 @@ public class GamesResource extends ServerResource {
         game.setGameMode(dto.getGameMode());
         mode.initializeGame(game);
         game.setIndexOfLastUpdatedMatch(0);
-        ofy().save().entity(game).now();
+        Key<Game> gameKey = ofy().save().entity(game).now();
 
         dto.setId(game.getId());
 
 
         // Prepare Matches
         List<Match> matches = mode.createMatches(game);
+        for (Match match : matches) {
+            match.setGameKey(gameKey);
+            match.setGameId(game.getId());
+        }
         ofy().save().entities(matches).now();
         NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
         List<PlayerUser> playersOfGame = ofy().load()

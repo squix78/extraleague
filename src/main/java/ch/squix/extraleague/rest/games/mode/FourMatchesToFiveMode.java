@@ -40,12 +40,11 @@ public class FourMatchesToFiveMode implements GameMode {
 				players = sortPlayersByRanking(players, currentRanking);
 		}
 		List<Match> matches = new ArrayList<>();
-		Key<Game> gameKey = Key.create(Game.class, game.getId());
+		System.out.println("GameID: " + game.getId());
+
 		for (int matchIndex = 0; matchIndex < 4; matchIndex++) {
 			Integer [] mutation = mutations[matchIndex];
 			Match match = new Match();
-			match.setGameId(game.getId());
-			match.setGameKey(gameKey);
 			match.setTeamA(new String[] {players.get(mutation[0]), players.get(mutation[1])});
 			match.setTeamB(new String[] {players.get(mutation[2]), players.get(mutation[3])});
 			match.setMaxGoals(MAX_GOALS);

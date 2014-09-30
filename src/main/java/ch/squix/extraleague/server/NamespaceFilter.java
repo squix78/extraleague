@@ -91,12 +91,10 @@ public class NamespaceFilter implements Filter {
 		String namespace = NamespaceManager.get();
 		HttpServletRequest req = (HttpServletRequest) request;
 		if (namespace == null || "".equals(namespace)) {
-			log.info("Namespace: " + namespace);
 			String serverName = request.getServerName();
 			namespace = getSubdomain(serverName);
-			log.info("Subdomain name: " + namespace);
 			if (isTestEnvironment(serverName)) {
-				log.info("Test environment, setting to ncaleague namespace");
+				//log.info("Test environment, setting to ncaleague namespace");
 				namespace = "ncaleague";
 			} else {
 				if (!isLeagueRegistered(namespace)) {

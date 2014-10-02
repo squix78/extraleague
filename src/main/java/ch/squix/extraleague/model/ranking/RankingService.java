@@ -60,7 +60,7 @@ public class RankingService {
                 MutationService.calculateMutations(oldRanking, newRanking);
         }
         
-        List<RankingDto> rankingDtos = RankingDtoMapper.convertToDto(newRanking);
+        //List<RankingDto> rankingDtos = RankingDtoMapper.convertToDto(newRanking);
         //NotificationService.sendMessage(new UpdateRankingMessage(rankingDtos));
 
         ofy().save().entities(newRanking).now();

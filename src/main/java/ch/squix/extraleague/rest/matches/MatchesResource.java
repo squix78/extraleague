@@ -66,6 +66,10 @@ public class MatchesResource extends ServerResource {
 				return null;
 			}
 		}
+		if (match.getVersion() >= matchDto.getVersion()) {
+			log.severe("Tried to update outdated version. Ignored this call");
+			return null;
+		}
 		match.setGameId(matchDto.getGameId());
 		if (match.getStartDate() == null) {
 			match.setStartDate(matchDto.getStartDate());
@@ -74,6 +78,7 @@ public class MatchesResource extends ServerResource {
 		match.setTeamB(matchDto.getTeamB());
 		match.setTeamAScore(matchDto.getTeamAScore());
 		match.setTeamBScore(matchDto.getTeamBScore());
+		match.setVersion(matchDto.getVersion());
 		match.setScorers(matchDto.getScorers());
 		List<Goal> goals = new ArrayList<>();
 		match.setGoals(goals);

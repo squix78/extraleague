@@ -13,5 +13,6 @@ public class MatchInfoDto {
 	private Map<String, Integer> goalMap = new HashMap<>();
 	private List<GoalDto> teamAGoals = new ArrayList<>();
 	private List<GoalDto> teamBGoals = new ArrayList<>();
+	private List<String> events = new ArrayList<>();
 
 }

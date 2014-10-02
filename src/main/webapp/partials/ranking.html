@@ -29,7 +29,7 @@
         <tbody>
           <tr ng-repeat="ranking in rankings | orderBy:predicate:reverse">
             <td>{{$index + 1}} </td>
-            <td>{{ranking.rankingDelta}} </td>
+            <td ng-class="{won: ranking.rankingDelta > 0, lost: ranking.rankingDelta < 0}"><span ng-show="ranking.rankingDelta > 0">+</span>{{ranking.rankingDelta == 0 ? '-' : ranking.rankingDelta}} </td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
             <td>{{ranking.eloValue}}</td>
             <td ng-class="{won: ranking.successRate > 0.5, lost: ranking.successRate < 0.5}">{{ranking.successRate * 100 | number:1}}</td>

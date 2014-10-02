@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-     <tr ng-repeat="mutation in mutations | orderBy:'-createdDate'">
+     <tr ng-repeat="mutation in mutations | orderBy:'-createdDate' | limitTo: 15">
        <td><div player="mutation.player"></div></td>
        <td>
 	       <div>

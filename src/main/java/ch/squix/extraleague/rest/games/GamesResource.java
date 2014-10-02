@@ -72,8 +72,9 @@ public class GamesResource extends ServerResource {
         // Prepare Matches
         List<Match> matches = mode.createMatches(game);
         for (Match match : matches) {
-            match.setGameKey(gameKey);
+            match.setGameKey(gameKey); 
             match.setGameId(game.getId());
+            match.setVersion(0);
         }
         ofy().save().entities(matches).now();
         NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));

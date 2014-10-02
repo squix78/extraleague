@@ -24,11 +24,52 @@ public class MatchInfoService {
 		infoDto.setGoalMap(goalMap); 
 		infoDto.setTeamAGoals(getScorers(match.getStartDate(), Arrays.asList(match.getTeamA()), match.getGoals()));
 		infoDto.setTeamBGoals(getScorers(match.getStartDate(), Arrays.asList(match.getTeamB()), match.getGoals()));
-		
+		infoDto.setEvents(getEvents(match.getStartDate(), Arrays.asList(match.getTeamA()), Arrays.asList(match.getTeamB()), match.getGoals()));
 		
 		return infoDto;
 	}
 	
+	private static List<String> getEvents(Date startDate, List<String> teamA, List<String> teamB, List<Goal> goals) {
+		List<String> events = new ArrayList<>();
+		String lastScorer = "";
+		Integer goalsInARow = 1;
+		for (Goal goal : goals) {
+			if (lastScorer.equals(goal.getScorer())) {
+				goalsInARow++;
+			} else {
+				lastScorer = goal.getScorer();
+				goalsInARow = 1;
+			}
+			String team = "team B ";
+			String position = "";
+			if (teamA.contains(goal.getScorer())) {
+				team = "A";
+				if (teamA.indexOf(goal.getScorer()) == 0) {
+					position = "offense";
+				} else {
+					position = "defense";
+				}
+			} else {
+				team = "B";
+				if (teamA.indexOf(goal.getScorer()) == 0) {
+					position = "defsense";
+				} else {
+					position = "offense";
+				}
+			}
+			String message = goal.getScorer() + " of team " + team + " just landed a goal from the " + position + ". "; 
+			if (goalsInARow == 2) {
+				message = goal.getScorer() + " hit twice in a row!";
+			} else if (goalsInARow == 3) {
+				message = goal.getScorer() + " is on a spree! 3 Goals in a row!";
+			} else if (goalsInARow == 4) {
+				message = "This is legendary! 4 in a row!";
+			}
+			events.add(message);
+		}
+		return events;
+	}
+
 	private static List<GoalDto> getScorers(Date matchStartTime, List<String> team, List<Goal> goals) {
 		List<GoalDto> goalDtos = new ArrayList<>();
 		for (Goal goal : goals) {

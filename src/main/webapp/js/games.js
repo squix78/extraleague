@@ -154,7 +154,7 @@ angular.module('Games', ['gaeChannelService'])
 		},
 		saveCurrentMatch: function() {
 		    games.isMatchSaving = true;
-		    games.currentMatch.lastUpdate = new Date();
+		    games.currentMatch.version += 1;
 		    games.currentMatch.$save({gameId: games.currentGame.id}, function(match) {
 		      games.isMatchSaving = false;
 		      games.isErrorDialogVisible = false;
@@ -247,14 +247,14 @@ angular.module('Games', ['gaeChannelService'])
 	    		updatedGame.matches = games.gameList[i].matches;
 	    		games.gameList[i] = updatedGame;
 	    		var matchUpdateCandidate = games.gameList[i].matches[updatedMatch.matchIndex];
-	    		if (matchUpdateCandidate.lastUpdate <= updatedMatch.lastUpdate) {
+	    		if (matchUpdateCandidate.version < updatedMatch.version) {
 	    			console.log("Match update is applicable.");
 	    			games.gameList[i].matches[updatedMatch.matchIndex] = updatedMatch;
 	    			service.updateCurrentGame();
 	    			service.checkEndOfMatch();
 	    		} else {
-	    			console.log("Match update is outdated. Ignoring it. localTimeStamp: " 
-	    					+ matchUpdateCandidate.lastUpdate + ", received: " + updatedMatch.lastUpdate);
+	    			console.log("Match update is outdated. Ignoring it. Version: " 
+	    					+ matchUpdateCandidate.version + ", received: " + updatedMatch.version);
 	    		}
 	    		service.calculateRemainingMillis();
 				if(!$rootScope.$$phase) {

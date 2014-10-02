@@ -45,6 +45,7 @@ public class FourMatchesToFiveMode implements GameMode {
 		for (int matchIndex = 0; matchIndex < 4; matchIndex++) {
 			Integer [] mutation = mutations[matchIndex];
 			Match match = new Match();
+			
 			match.setTeamA(new String[] {players.get(mutation[0]), players.get(mutation[1])});
 			match.setTeamB(new String[] {players.get(mutation[2]), players.get(mutation[3])});
 			match.setMaxGoals(MAX_GOALS);

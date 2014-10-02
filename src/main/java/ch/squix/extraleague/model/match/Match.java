@@ -57,6 +57,8 @@ public class Match {
 	
 	private Integer maxGoals;
 	private Integer maxMatches;
+	
+	private Integer version;
 
 
 }

@@ -29,6 +29,7 @@ public class MatchDtoMapper {
 		dto.setMaxGoals(match.getMaxGoals());
 		dto.setMaxMatches(match.getMaxMatches());
 		dto.setPositionSwappingAllowed(match.getPositionSwappingAllowed());
+		dto.setVersion(match.getVersion());
 		dto.setMatchInfo(MatchInfoService.getMatchInfoDto(match));
 		for (Goal goal : match.getGoals()) {
 			GoalDto goalDto = new GoalDto();

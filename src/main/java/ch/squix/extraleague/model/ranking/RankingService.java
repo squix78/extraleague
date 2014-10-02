@@ -61,7 +61,7 @@ public class RankingService {
         }
         
         List<RankingDto> rankingDtos = RankingDtoMapper.convertToDto(newRanking);
-        NotificationService.sendMessage(new UpdateRankingMessage(rankingDtos));
+        //NotificationService.sendMessage(new UpdateRankingMessage(rankingDtos));
 
         ofy().save().entities(newRanking).now();
 

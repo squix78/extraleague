@@ -11,10 +11,10 @@ import java.util.Set;
 
 import ch.squix.extraleague.model.mutations.tasks.BadgeMutationsTask;
 import ch.squix.extraleague.model.mutations.tasks.CoronationTask;
-import ch.squix.extraleague.model.mutations.tasks.DeltaRankingTask;
 import ch.squix.extraleague.model.mutations.tasks.MutationTask;
 import ch.squix.extraleague.model.mutations.tasks.TopTenTask;
 import ch.squix.extraleague.model.ranking.Ranking;
+import ch.squix.extraleague.model.ranking.tasks.DeltaRankingTask;
 
 public class MutationService {
 	
@@ -28,7 +28,6 @@ public class MutationService {
 		mutationTasks.add(new BadgeMutationsTask());
 		mutationTasks.add(new CoronationTask());
 		mutationTasks.add(new TopTenTask());
-		mutationTasks.add(new DeltaRankingTask());
 		
 		Map<String, PlayerMutation> mutationMap = new HashMap<>();
 		for (MutationTask task : mutationTasks) {

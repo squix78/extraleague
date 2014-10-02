@@ -29,10 +29,11 @@ public class MatchInfoService {
 		return infoDto;
 	}
 	
-	private static List<String> getEvents(Date startDate, List<String> teamA, List<String> teamB, List<Goal> goals) {
+	private static List<String> getEvents(Date matchStartDate, List<String> teamA, List<String> teamB, List<Goal> goals) {
 		List<String> events = new ArrayList<>();
 		String lastScorer = "";
 		Integer goalsInARow = 1;
+
 		for (Goal goal : goals) {
 			if (lastScorer.equals(goal.getScorer())) {
 				goalsInARow++;
@@ -40,7 +41,7 @@ public class MatchInfoService {
 				lastScorer = goal.getScorer();
 				goalsInARow = 1;
 			}
-			String team = "team B ";
+			String team = "B";
 			String position = "";
 			if (teamA.contains(goal.getScorer())) {
 				team = "A";
@@ -57,7 +58,8 @@ public class MatchInfoService {
 					position = "offense";
 				}
 			}
-			String message = goal.getScorer() + " of team " + team + " just landed a goal from the " + position + ". "; 
+			String goalTime = (goal.getTime().getTime() - matchStartDate.getTime()) / (1000 * 60) + "': ";
+			String message = goal.getScorer() + " scored a goal from the " + position + ". "; 
 			if (goalsInARow == 2) {
 				message = goal.getScorer() + " hit twice in a row!";
 			} else if (goalsInARow == 3) {
@@ -65,8 +67,9 @@ public class MatchInfoService {
 			} else if (goalsInARow == 4) {
 				message = "This is legendary! 4 in a row!";
 			}
-			events.add(message);
+			events.add(goalTime + message);
 		}
+		Collections.reverse(events);
 		return events;
 	}
 

@@ -17,6 +17,7 @@ import ch.squix.extraleague.model.ranking.tasks.AchievementPointTask;
 import ch.squix.extraleague.model.ranking.tasks.AverageTimePerMatchTask;
 import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
 import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
+import ch.squix.extraleague.model.ranking.tasks.DeltaRankingTask;
 import ch.squix.extraleague.model.ranking.tasks.EloRankingTask;
 import ch.squix.extraleague.model.ranking.tasks.FirstPlayerFilterTask;
 import ch.squix.extraleague.model.ranking.tasks.GoalsPerGameTask;
@@ -54,14 +55,13 @@ public class RankingService {
                 .list();
         
         Ranking newRanking = calculateRankingFromMatches(matchesList);
-        Ranking oldRanking = ofy().load().type(Ranking.class).order("-createdDate").limit(1).first().now();
+        Ranking previousRanking = ofy().load().type(Ranking.class).order("-createdDate").limit(1).first().now();
 
-        if (oldRanking != null && newRanking != null) {
-                MutationService.calculateMutations(oldRanking, newRanking);
+        if (previousRanking != null && newRanking != null) {
+                MutationService.calculateMutations(previousRanking, newRanking);
         }
         
-        //List<RankingDto> rankingDtos = RankingDtoMapper.convertToDto(newRanking);
-        //NotificationService.sendMessage(new UpdateRankingMessage(rankingDtos));
+        NotificationService.sendMessage(new UpdateRankingMessage());
 
         ofy().save().entities(newRanking).now();
 
@@ -119,6 +119,7 @@ public class RankingService {
         rankingTasks.add(new SkillBadgesTask());
         rankingTasks.add(new PartnerCountTask());
         rankingTasks.add(new AchievementPointTask());
+        rankingTasks.add(new DeltaRankingTask());
 
         for (RankingTask task : rankingTasks) {
             task.rankMatches(playerRankingMap, matches);

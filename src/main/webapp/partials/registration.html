@@ -1,0 +1,21 @@
+<h3>User Registration</h3>
+<div class="row">
+	<form name="playerForm">
+		<div class="col-md-2 form-group">
+			<label for="player">Player</label>
+			<input required type="text" class="form-control" id="player"
+				ng-model="player.player" placeholder="Short name">
+		</div>
+
+		<div class="col-md-2 form-group">
+			<button ng-disabled="!playerForm.$valid || isPlayerRegistering" type="submit"
+				class="btn btn-primary" ng-click="addPlayer()">Register</button>
+			<div ng-show="isPlayerRegistering">
+				<img src="images/ajax-loader.gif" /> Registering...
+			</div>
+		</div>
+	</form>
+</div>
+<webcam on-streaming="onSuccess(video)" placeholder="'images/webcam-xs.gif'"></webcam>
+<canvas id="snapshot"></canvas>
+<button class="btn btn-primary" ng-click="takeSnapshot()">Take Snapshot</button>

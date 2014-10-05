@@ -29,7 +29,8 @@ module.exports = function(grunt) {
             dist: {
 
                 src: [
-                    'src/main/webapp/js/*.js'  // This specific file
+                    'src/main/webapp/js/*.js',
+                    'src/main/webapp/js/controllers/*.js'// This specific file
                 ],
                 dest: 'src/main/webapp/dist/app.js'
             }
@@ -62,7 +63,7 @@ module.exports = function(grunt) {
               }
             },
             scripts: {
-                files: ['src/main/webapp/js/*.js'],
+                files: ['src/main/webapp/js/*.js', 'src/main/webapp/js/controllers/*.js'],
                 tasks: ['concat'],
                 options: {
                     spawn: false,

@@ -16,4 +16,6 @@
 		</div>
 	</form>
 </div>
-<webcam placeholder="'images/webcam-xs.gif'"></webcam>
+<webcam on-streaming="onSuccess(video)" placeholder="'images/webcam-xs.gif'"></webcam>
+<canvas id="snapshot"></canvas>
+<button class="btn btn-primary" ng-click="takeSnapshot()">Take Snapshot</button>

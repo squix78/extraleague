@@ -191,8 +191,8 @@ public class NotificationService {
         	            }
         	            // more notifications possible here (email, ...) 
         	        }
-        	        remainingTotalMillis += game.getEstimatedRemainingMillis();
 		    }
+        	    remainingTotalMillis += game.getEstimatedRemainingMillis();
 		}
 	}
 

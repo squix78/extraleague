@@ -129,10 +129,12 @@ public class MatchesResource extends ServerResource {
 		if (game.getIsGameFinished()) {
 			Queue queue = QueueFactory.getDefaultQueue();
 			queue.add(TaskOptions.Builder.withMethod(Method.GET).url("/rest/updateRankings"));
-			NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
+			List<GameDto> openGames = OpenGameService.getOpenGames();
+			NotificationService.sendMessage(new UpdateOpenGamesMessage(openGames));
 			NotificationService.sendMessage(new GameFinishedMessage(GameDtoMapper.mapToDto(game)));
 			NotificationService.sendSummaryEmail(game, matches);
 			NotificationService.callWebHooksForEndOfGame(game.getId());
+			NotificationService.notifyOpenGamesPlayers(openGames);
 		}
 		GameDto gameDto = GameDtoMapper.mapToDto(game);
 		NotificationService.sendMessage(new UpdateMatchMessage(gameDto, matchDto));

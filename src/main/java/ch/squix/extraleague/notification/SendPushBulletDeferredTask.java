@@ -40,7 +40,7 @@ public class SendPushBulletDeferredTask implements DeferredTask {
         try {
             StringBuilder httpBody = new StringBuilder();
             httpBody.append("type=link&");
-            httpBody.append("title="+URLEncoder.encode("Game starts now.", "UTF-8")+"&");
+            httpBody.append("title="+URLEncoder.encode(title, "UTF-8")+"&");
             httpBody.append("url="+URLEncoder.encode(url, "UTF-8")+"&");
             if (!Strings.isNullOrEmpty(body)) {
                 httpBody.append("body="+URLEncoder.encode(body, "UTF-8"));

@@ -71,7 +71,8 @@ public class SendPushBulletDeferredTask implements DeferredTask {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
-
+            connection.setReadTimeout(30000);
+            connection.setConnectTimeout(30000);
             connection.setRequestProperty("Authorization",
             		"Basic "+ Base64.encodeBase64String((apiKey).getBytes()));
 

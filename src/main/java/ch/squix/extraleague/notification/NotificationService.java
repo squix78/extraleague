@@ -16,6 +16,7 @@ import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
+import ch.squix.extraleague.rest.games.GameDto;
 import ch.squix.extraleague.rest.notification.NotificationTokenResource;
 import ch.squix.extraleague.rest.result.PlayerScoreDto;
 import ch.squix.extraleague.rest.result.SummaryDto;
@@ -28,6 +29,8 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.Environment;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 
@@ -160,5 +163,35 @@ public class NotificationService {
 		QueueFactory.getDefaultQueue().add(
 				TaskOptions.Builder.withMethod(Method.POST).url("/rest/notifications/endOfGame/" + gameId));
     }
+
+	public static void notifyOpenGamesPlayers(List<GameDto> openGames) {
+		Long remainingTotalMillis = 0L;
+		for (GameDto game : openGames) {
+			List<PlayerUser> playersOfGame = ofy().load()
+					.type(PlayerUser.class)
+					.filter("player in", game.getPlayers())
+					.list();
+	
+	        Environment env = ApiProxy.getCurrentEnvironment();
+	        String hostname = (String) env.getAttributes().get(
+	                "com.google.appengine.runtime.default_version_hostname");
+	        
+	        String timeLiteral = " now!";
+	        if (remainingTotalMillis != 0L) {
+	        	timeLiteral = "in aproximately " + (remainingTotalMillis/ (1000 * 60)) + " minutes.";
+	        }
+	
+	        for (PlayerUser player : playersOfGame) {
+	            if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
+	                NotificationService.addPushBulletLinkMessageToSendQueue(
+	                        player.getPushBulletApiKey(), "Your game starts " + timeLiteral, "http://"
+	                                + hostname + "/#/games/" + game.getId(), "The game with "
+	                                + Joiner.on(", ").join(game.getPlayers()) + " was created.");
+	            }
+	            // more notifications possible here (email, ...) 
+	        }
+	        remainingTotalMillis += game.getEstimatedRemainingMillis();
+		}
+	}
 
 }

@@ -77,25 +77,10 @@ public class GamesResource extends ServerResource {
             match.setVersion(0);
         }
         ofy().save().entities(matches).now();
-        NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));
-        List<PlayerUser> playersOfGame = ofy().load()
-                .type(PlayerUser.class)
-                .filter("player in", game.getPlayers())
-                .list();
+        List<GameDto> openGames = OpenGameService.getOpenGames();
+		NotificationService.sendMessage(new UpdateOpenGamesMessage(openGames));
+        NotificationService.notifyOpenGamesPlayers(openGames);
 
-        Environment env = ApiProxy.getCurrentEnvironment();
-        String hostname = (String) env.getAttributes().get(
-                "com.google.appengine.runtime.default_version_hostname");
-
-        for (PlayerUser player : playersOfGame) {
-            if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
-                NotificationService.addPushBulletLinkMessageToSendQueue(
-                        player.getPushBulletApiKey(), "Extraleage game created", "http://"
-                                + hostname + "/#/games/" + game.getId(), "The game with "
-                                + Joiner.on(", ").join(game.getPlayers()) + " was created.");
-            }
-            // more notifications possible here (email, ...) 
-        }
         removePlayersFromMeetingPoint(game.getPlayers());
         return dto;
     }

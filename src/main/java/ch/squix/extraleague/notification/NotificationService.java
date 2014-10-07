@@ -167,30 +167,32 @@ public class NotificationService {
 	public static void notifyOpenGamesPlayers(List<GameDto> openGames) {
 		Long remainingTotalMillis = 0L;
 		for (GameDto game : openGames) {
+		    if (game.getFirstGoalDate() == null) {
 			List<PlayerUser> playersOfGame = ofy().load()
 					.type(PlayerUser.class)
 					.filter("player in", game.getPlayers())
 					.list();
-	
-	        Environment env = ApiProxy.getCurrentEnvironment();
-	        String hostname = (String) env.getAttributes().get(
-	                "com.google.appengine.runtime.default_version_hostname");
-	        
-	        String timeLiteral = " now!";
-	        if (remainingTotalMillis != 0L) {
-	        	timeLiteral = "in aproximately " + (remainingTotalMillis/ (1000 * 60)) + " minutes.";
-	        }
-	
-	        for (PlayerUser player : playersOfGame) {
-	            if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
-	                NotificationService.addPushBulletLinkMessageToSendQueue(
-	                        player.getPushBulletApiKey(), "Your game starts " + timeLiteral, "http://"
-	                                + hostname + "/#/games/" + game.getId(), "The game with "
-	                                + Joiner.on(", ").join(game.getPlayers()) + " was created.");
-	            }
-	            // more notifications possible here (email, ...) 
-	        }
-	        remainingTotalMillis += game.getEstimatedRemainingMillis();
+        	
+        	        Environment env = ApiProxy.getCurrentEnvironment();
+        	        String hostname = (String) env.getAttributes().get(
+        	                "com.google.appengine.runtime.default_version_hostname");
+        	        
+        	        String timeLiteral = " now!";
+        	        if (remainingTotalMillis != 0L) {
+        	        	timeLiteral = "in aproximately " + (remainingTotalMillis/ (1000 * 60)) + " minutes.";
+        	        }
+        	
+        	        for (PlayerUser player : playersOfGame) {
+        	            if (!Strings.isNullOrEmpty(player.getPushBulletApiKey())) {
+        	                NotificationService.addPushBulletLinkMessageToSendQueue(
+        	                        player.getPushBulletApiKey(), "Your game starts " + timeLiteral, "http://"
+        	                                + hostname + "/#/games/" + game.getId(), "The game with "
+        	                                + Joiner.on(", ").join(game.getPlayers()) + " was created.");
+        	            }
+        	            // more notifications possible here (email, ...) 
+        	        }
+        	        remainingTotalMillis += game.getEstimatedRemainingMillis();
+		    }
 		}
 	}
 

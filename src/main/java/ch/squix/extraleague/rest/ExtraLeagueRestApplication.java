@@ -4,6 +4,7 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
+import ch.squix.extraleague.model.challenger.ChallengerTeam;
 import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.league.League;
@@ -17,6 +18,7 @@ import ch.squix.extraleague.model.statistics.Statistics;
 import ch.squix.extraleague.rest.admin.users.PlayerUserAdminResource;
 import ch.squix.extraleague.rest.admin.users.PlayerUsersAdminResource;
 import ch.squix.extraleague.rest.badges.BadgesResource;
+import ch.squix.extraleague.rest.challenger.ChallengerTeamsResource;
 import ch.squix.extraleague.rest.games.GameResource;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGamesResource;
@@ -75,6 +77,7 @@ public class ExtraLeagueRestApplication extends Application {
 		ObjectifyService.register(PlayerUser.class);
 		ObjectifyService.register(MeetingPointPlayer.class);
 		ObjectifyService.register(League.class);
+		ObjectifyService.register(ChallengerTeam.class);
 	}
 	
 	@Override
@@ -95,6 +98,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/games/{gameId}", GameResource.class);
         router.attach("/games/{gameId}/matches", MatchesResource.class);
         router.attach("/games/{gameId}/summary", SummaryResource.class);
+        router.attach("/challengers/{table}", ChallengerTeamsResource.class);
         router.attach("/players", PlayersRessource.class);
         router.attach("/players/{player}", PlayerRessource.class);
         router.attach("/timeseries/{player}", TimeSeriesResource.class);

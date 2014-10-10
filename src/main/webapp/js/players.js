@@ -28,6 +28,24 @@ angular.module('PlayerMappings', [])
 	 	
 	}
 }])
+.directive('playerImg', ['PlayerService', function(PlayerService) {
+    return {
+    	template: '<div class="playerImage"><img class="player img img-rounded" ng-src="{{playerImgUrl}}"/></div>',
+    	scope: {
+    		player: "=",
+    		team: "="
+    	},
+        link: function(scope, elem, attrs) {
+        	scope.$watchCollection('[player, PlayerService.playerMap]', function(newValue, oldValues){
+        		if (newValue) {
+        			PlayerService.getPlayerPicture(scope.player).then(function(result) {
+        				scope.playerImgUrl = result;
+        			});
+        		}
+        	});
+        }
+    };
+}])
 .directive('player', ['PlayerService', function(PlayerService) {
     return {
     	template: '<div class="playerImage"><img class="player img img-rounded {{teamColor}}" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',

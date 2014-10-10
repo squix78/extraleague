@@ -36,13 +36,14 @@ angular.module('PlayerMappings', [])
     		team: "="
     	},
         link: function(scope, elem, attrs) {
-        	scope.$watchCollection('[player, PlayerService.playerMap]', function(newValue, oldValues){
-        		if (newValue) {
-        			PlayerService.getPlayerPicture(scope.player).then(function(result) {
-        				scope.playerImgUrl = result;
-        			});
-        		}
+        	scope.$watch('playerImg', function(newValue, oldValue) {
+    				if (angular.isDefined(newValue)) {
+    					scope.playerImgUrl = "/playerImage?url=" + playerImg;
+    				} else {
+    					scope.playerImgUrl = "images/person2.png";
+    				}
         	});
+
         }
     };
 }])

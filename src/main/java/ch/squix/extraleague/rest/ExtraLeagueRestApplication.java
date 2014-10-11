@@ -18,6 +18,7 @@ import ch.squix.extraleague.model.statistics.Statistics;
 import ch.squix.extraleague.rest.admin.users.PlayerUserAdminResource;
 import ch.squix.extraleague.rest.admin.users.PlayerUsersAdminResource;
 import ch.squix.extraleague.rest.badges.BadgesResource;
+import ch.squix.extraleague.rest.blobs.BlobUrlResource;
 import ch.squix.extraleague.rest.challenger.ChallengerTeamsResource;
 import ch.squix.extraleague.rest.games.GameResource;
 import ch.squix.extraleague.rest.games.GamesResource;
@@ -111,6 +112,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/mutations", MutationsResource.class);
         router.attach("/league", LeagueResource.class);
         router.attach("/league/style", LeagueStyleResource.class);
+        router.attach("/blobs", BlobUrlResource.class);
         
         
         // jobs

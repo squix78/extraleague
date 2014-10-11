@@ -143,6 +143,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('League', ['$resource', function($resource) {
     	return $resource('/rest/league');
     }])
+    .factory('Blobs', ['$resource', function($resource) {
+      return $resource('/rest/blobs');
+    }])
     .directive('badges', function() {
       return {
         restrict: 'A',
@@ -206,6 +209,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
       	}
 	  };
   	});
+
 
 
 

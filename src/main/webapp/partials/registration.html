@@ -18,11 +18,20 @@
 		</div>
 		
 		<div class="col-md-12 form-group">
-			<div class="pull-left" player-img="player.imageUrl"></div>
+			<div ng-show="!showCam" class="pull-left" player-img="player.imageUrl"></div>
+			<ng-camera
+			  ng-show="showCam"
+			  type="photo"
+			  enabled="showCam"
+			  width="120"
+			  height="90"
+			  ng-model="media"
+			  capture="callback(media)"
+			  capture-message="Go!"></ng-camera>
 		</div>
 		
 		<div class="col-md-12 form-group">
-			<button class="btn btn-primary" ng-click="addPlayer()"> <i class="fa fa-camera"></i> Take Picture</button>
+			<button ng-show="!showCam" class="btn btn-primary" ng-click="enableCam()"> <i class="fa fa-camera"></i> Take Picture</button>
 		</div>
 
 		<div class="col-md-12 form-group">
@@ -33,6 +42,6 @@
 			</div>
 		</div>
 	</form>
-	<input type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput">
+{{ player | json }}
 </div>
 

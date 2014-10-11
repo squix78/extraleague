@@ -32,13 +32,13 @@ angular.module('PlayerMappings', [])
     return {
     	template: '<div class="playerImage"><img class="player img img-rounded" ng-src="{{playerImgUrl}}"/></div>',
     	scope: {
-    		player: "=",
-    		team: "="
+    		playerImg: "="
     	},
         link: function(scope, elem, attrs) {
         	scope.$watch('playerImg', function(newValue, oldValue) {
     				if (angular.isDefined(newValue)) {
-    					scope.playerImgUrl = "/playerImage?url=" + playerImg;
+    					//scope.playerImgUrl = "/playerImage?url=" + newValue;
+    					scope.playerImgUrl = "images/person2.png";
     				} else {
     					scope.playerImgUrl = "images/person2.png";
     				}

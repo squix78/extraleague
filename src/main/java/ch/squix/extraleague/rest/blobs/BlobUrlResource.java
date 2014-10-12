@@ -20,7 +20,7 @@ public class BlobUrlResource extends ServerResource {
 		BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 		String url = blobstoreService.createUploadUrl("/upload");
 		// for test env
-		//url = url.replaceAll(":8080", ":35729");
+		url = url.replaceAll(":8080", ":35729");
 		BlobUrlDto dto = new BlobUrlDto();
 		dto.setUrl(url);
 		return dto;

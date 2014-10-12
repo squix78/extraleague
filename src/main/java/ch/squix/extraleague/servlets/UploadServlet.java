@@ -1,5 +1,6 @@
 package ch.squix.extraleague.servlets;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -8,8 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ch.squix.extraleague.rest.games.OpenGamesResource;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
@@ -22,9 +21,13 @@ public class UploadServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException {
-
-        //Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
-        Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
+    	Enumeration headers = req.getHeaderNames();
+    	while (headers.hasMoreElements()) {
+    		String key = (String) headers.nextElement();
+    		System.out.println(key + "=" + req.getHeader(key));
+    	}
+        Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
+        //Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
         log.info("Size of map: " + blobs.size());
 //        for (Map.Entry<String, List<BlobKey>> entry : blobs.entrySet()) {
 //        	log.info(entry.getKey() + ":");
@@ -35,7 +38,8 @@ public class UploadServlet extends HttpServlet {
         if (blobs.size() == 0) {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
-        	BlobKey blobKey = blobs.get("file");
+        	BlobKey blobKey = blobs.get("file").get(0);
+        	log.info("Key=" + blobKey.getKeyString());
             res.getWriter().print("/serve?blob-key=" + blobKey.getKeyString());
         }
     }

@@ -8,13 +8,9 @@ angular.module('PlayerMappings', [])
 .factory('PlayerService', ['PlayerUsers', function(PlayerUsers) {
 	var playerResultMap = {};
 	var playerMap = [];
-	var playerUsers = PlayerUsers.query({}, {get: {cache: true, method: 'GET' } });
-	return {
+	var playerUsers = undefined;
+	var service = {
 		getPlayerPicture: function(shortname) {
-			return playerUsers.$promise.then(function(result) {
-				angular.forEach(playerUsers, function(value, key) {
-					playerMap[value.player] = value;
-				});				
 				var playerUser = playerMap[shortname];
 				if (angular.isDefined(playerUser) && shortname.length > 1) {
 					console.log("Getting image address for " + playerUser.player);
@@ -22,11 +18,50 @@ angular.module('PlayerMappings', [])
 				} else {
 					return "images/person2.png";
 				}
+		},
+		loadPlayers: function() {
+			playerUsers = PlayerUsers.query({}, {get: {cache: true, method: 'GET' } });
+			return playerUsers.$promise.then(function(result) {
+				angular.forEach(playerUsers, function(value, key) {
+					playerMap[value.player] = value;
+				});		
 			});
+		},
+		savePlayer: function(player) {
+			var result = player.$save({});
+			result.then(function() {
+				service.loadPlayers();
+			}, function() {
+				console.log("Saving failed");
+			});
+			return result;
+		},
+		isPlayerDefined: function(player) {
+			return angular.isDefined(playerMap[player]);
 		}
 	    
 	 	
 	}
+	service.loadPlayers();
+	return service;
+}])
+.directive('playerexists', ['PlayerService', function(PlayerService) {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function(viewValue) {
+        if (PlayerService.isPlayerDefined(viewValue)) {
+          // it is valid
+          ctrl.$setValidity('playerexists', false);
+          return viewValue;
+        } else {
+          // it is invalid, return undefined (no model update)
+          ctrl.$setValidity('playerexists', true);
+          return viewValue;
+        }
+      });
+    }
+  };
 }])
 .directive('playerImg', ['PlayerService', function(PlayerService) {
     return {

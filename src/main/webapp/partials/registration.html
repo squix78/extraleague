@@ -1,16 +1,19 @@
 <h3>User Registration</h3>
 <div class="row">
-	<form name="playerForm">
+	<form novalidate name="playerForm">
 		<div class="col-md-12 form-group">
 			<label for="player">Player</label>
-			<input required type="text" class="form-control" id="player"
-				ng-model="player.player" placeholder="Short name">
+			<input required type="text" class="form-control" id="player" name="player"
+				ng-model="player.player" playerexists placeholder="Short name (max 6 characters)" maxlength="6">
+			<div ng-show="playerForm.player.$error.required && playerForm.player.$dirty">Please enter player name</div>
+			<div ng-show="playerForm.player.$error.playerexists">This player is already registered. Please choose another</div>
 		</div>
 		
 		<div class="col-md-12 form-group">
 			<label for="email">Email (optional for notification)</label>
-			<input required type="email" class="form-control" id="email"
-				ng-model="player.email" placeholder="Email for notification after game">
+			<input type="email" class="form-control" id="email" name="email"
+				ng-model="player.email" placeholder="Email for receiving game summary">
+			<div ng-show="playerForm.email.$error.email">Please enter a valid email address</div>
 		</div>
 		
 		<div class="col-md-12 form-group">
@@ -28,6 +31,8 @@
 			  ng-model="media"
 			  capture="callback(media)"
 			  capture-message="Go!"></ng-camera>
+			  <input ng-show="false" required type="text" class="form-control" id="imageUrl"
+				ng-model="player.imageUrl">
 		</div>
 		
 		<div class="col-md-12 form-group">
@@ -36,12 +41,21 @@
 
 		<div class="col-md-12 form-group">
 			<button ng-disabled="!playerForm.$valid || isPlayerRegistering" type="submit"
-				class="btn btn-primary" ng-click="addPlayer()">Register</button>
+				class="btn btn-primary" ng-click="register()">Register</button>
 			<div ng-show="isPlayerRegistering">
 				<img src="images/ajax-loader.gif" /> Registering...
 			</div>
 		</div>
 	</form>
-	{{player |json }}
+
+	{{ playerForm.email.$error | json }}
+	
+	  <ul>
+        <li ng-repeat="(key, errors) in playerForm.$error track by $index"> <strong>{{ key }}</strong> errors
+          <ul>
+            <li ng-repeat="e in errors">{{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+          </ul>
+        </li>
+      </ul>
 </div>
 

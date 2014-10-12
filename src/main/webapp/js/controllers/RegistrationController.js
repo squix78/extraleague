@@ -1,9 +1,20 @@
 angular.module('Extraleague').controller('RegistrationController', 
-function($scope, $http, Blobs) {
+function($scope, $http, Blobs, PlayerService, PlayerUsers) {
 	$scope.blobUrl = Blobs.get({});
-	$scope.player = {};
+	$scope.player = new PlayerUsers();
 	$scope.enableCam = function() {
 		$scope.showCam = true;
+	};
+	
+	$scope.register = function() {
+		$scope.isPlayerRegistering = true;
+		$scope.tmpPlayer = PlayerService.savePlayer($scope.player);
+		$scope.tmpPlayer.then(function(result) {
+			$scope.isPlayerRegistering = false;
+			$scope.player = new PlayerUsers();
+		}, function(error) {
+			console.log("Error saving player: " + error)
+		});
 	};
 	
 	$scope.dataURItoBlob = function (dataURI) {
@@ -56,19 +67,6 @@ function($scope, $http, Blobs) {
 	        		console.log("Post failed");
 	        		
 	        	});
-//        	    $http({
-//        	        url: $scope.blobUrl.url,
-//        	        method: "POST",
-//        	        data: formData,
-//        	        headers: { 'Content-Type': undefined }
-//        	    })
-//        	    .then(function(response) {
-//        	    		console.log("Post worked");
-//        	        }, 
-//        	        function(response) { // optional
-//        	        	console.log("Post failed");
-//        	        }
-//        	    );
         	  
         		$scope.showCam = false;
 

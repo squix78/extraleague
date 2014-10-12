@@ -37,8 +37,8 @@ angular.module('PlayerMappings', [])
         link: function(scope, elem, attrs) {
         	scope.$watch('playerImg', function(newValue, oldValue) {
     				if (angular.isDefined(newValue)) {
-    					//scope.playerImgUrl = "/playerImage?url=" + newValue;
-    					scope.playerImgUrl = "images/person2.png";
+    					scope.playerImgUrl = "/playerImage?url=" + newValue;
+    					//scope.playerImgUrl = newValue;
     				} else {
     					scope.playerImgUrl = "images/person2.png";
     				}

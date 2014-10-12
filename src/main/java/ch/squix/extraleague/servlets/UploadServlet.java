@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.Environment;
 
 public class UploadServlet extends HttpServlet {
     private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -38,9 +40,13 @@ public class UploadServlet extends HttpServlet {
         if (blobs.size() == 0) {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
+        	Environment env = ApiProxy.getCurrentEnvironment();
+	        String hostname = (String) env.getAttributes().get(
+	                "com.google.appengine.runtime.default_version_hostname");
+	        
         	BlobKey blobKey = blobs.get("file").get(0);
         	log.info("Key=" + blobKey.getKeyString());
-            res.getWriter().print("/serve?blob-key=" + blobKey.getKeyString());
+            res.getWriter().print("http://" + hostname + "/serve?blob-key=" + blobKey.getKeyString());
         }
     }
 }

@@ -63,6 +63,24 @@ angular.module('PlayerMappings', [])
     }
   };
 }])
+.directive('playerexistsnot', ['PlayerService', function(PlayerService) {
+	return {
+		require: 'ngModel',
+		link: function(scope, elm, attrs, ctrl) {
+			ctrl.$parsers.unshift(function(viewValue) {
+				if (PlayerService.isPlayerDefined(viewValue)) {
+					// it is valid
+					ctrl.$setValidity('playerexistsnot', true);
+					return viewValue;
+				} else {
+					// it is invalid, return undefined (no model update)
+					ctrl.$setValidity('playerexistsnot', false);
+					return viewValue;
+				}
+			});
+		}
+	};
+}])
 .directive('playerImg', ['PlayerService', function(PlayerService) {
     return {
     	template: '<div class="playerImage"><img class="player img img-rounded" ng-src="{{playerImgUrl}}"/></div>',

@@ -8,13 +8,9 @@ angular.module('PlayerMappings', [])
 .factory('PlayerService', ['PlayerUsers', function(PlayerUsers) {
 	var playerResultMap = {};
 	var playerMap = [];
-	var playerUsers = PlayerUsers.query({}, {get: {cache: true, method: 'GET' } });
-	return {
+	var playerUsers = undefined;
+	var service = {
 		getPlayerPicture: function(shortname) {
-			return playerUsers.$promise.then(function(result) {
-				angular.forEach(playerUsers, function(value, key) {
-					playerMap[value.player] = value;
-				});				
 				var playerUser = playerMap[shortname];
 				if (angular.isDefined(playerUser) && shortname.length > 1) {
 					console.log("Getting image address for " + playerUser.player);
@@ -22,11 +18,87 @@ angular.module('PlayerMappings', [])
 				} else {
 					return "images/person2.png";
 				}
+		},
+		loadPlayers: function() {
+			playerUsers = PlayerUsers.query({}, {get: {cache: true, method: 'GET' } });
+			return playerUsers.$promise.then(function(result) {
+				angular.forEach(playerUsers, function(value, key) {
+					playerMap[value.player] = value;
+				});		
 			});
+		},
+		savePlayer: function(player) {
+			var result = player.$save({});
+			result.then(function() {
+				service.loadPlayers();
+			}, function() {
+				console.log("Saving failed");
+			});
+			return result;
+		},
+		isPlayerDefined: function(player) {
+			return angular.isDefined(playerMap[player]);
 		}
 	    
 	 	
 	}
+	service.loadPlayers();
+	return service;
+}])
+.directive('playerexists', ['PlayerService', function(PlayerService) {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function(viewValue) {
+        if (PlayerService.isPlayerDefined(viewValue)) {
+          // it is valid
+          ctrl.$setValidity('playerexists', false);
+          return viewValue;
+        } else {
+          // it is invalid, return undefined (no model update)
+          ctrl.$setValidity('playerexists', true);
+          return viewValue;
+        }
+      });
+    }
+  };
+}])
+.directive('playerexistsnot', ['PlayerService', function(PlayerService) {
+	return {
+		require: 'ngModel',
+		link: function(scope, elm, attrs, ctrl) {
+			ctrl.$parsers.unshift(function(viewValue) {
+				if (PlayerService.isPlayerDefined(viewValue)) {
+					// it is valid
+					ctrl.$setValidity('playerexistsnot', true);
+					return viewValue;
+				} else {
+					// it is invalid, return undefined (no model update)
+					ctrl.$setValidity('playerexistsnot', false);
+					return viewValue;
+				}
+			});
+		}
+	};
+}])
+.directive('playerImg', ['PlayerService', function(PlayerService) {
+    return {
+    	template: '<div class="playerImage"><img class="player img img-rounded" ng-src="{{playerImgUrl}}"/></div>',
+    	scope: {
+    		playerImg: "="
+    	},
+        link: function(scope, elem, attrs) {
+        	scope.$watch('playerImg', function(newValue, oldValue) {
+    				if (angular.isDefined(newValue)) {
+    					scope.playerImgUrl = "/playerImage?url=" + newValue;
+    					//scope.playerImgUrl = newValue;
+    				} else {
+    					scope.playerImgUrl = "images/person2.png";
+    				}
+        	});
+
+        }
+    };
 }])
 .directive('player', ['PlayerService', function(PlayerService) {
     return {

@@ -1,34 +1,46 @@
 <h2>Meeting Point</h2>
-<div class="row">
-	<form name="playerForm">
-		<div class="col-md-2 form-group">
-			<label for="player">Player</label>
-			<input required type="text" class="form-control" id="player"
-				ng-model="player.player" placeholder="Short sign">
-		</div>
-		<div class="col-md-2 form-group">
-			<label for="tableInput">Table</label>
-			<select id="tableInput" required class="form-control" ng-model="player.table"
-				ng-options="table.name as table.name for table in tables">
-				<option value="">-- choose table --</option>
-			</select>
-		</div>
-		<div class="col-md-2 form-group">
-			<label for="availableInput">Available until</label>
-			<select id="availableInput" required class="form-control" ng-model="availableNextMin"
-				ng-options="available.timeDiff as available.label for available in availableTimes">
-				<option value="">-- Game starts within --</option>
-			</select>
-		</div>
-		<div class="col-md-2 form-group">
-			<button ng-disabled="!playerForm.$valid" type="submit"
-				class="btn btn-primary" ng-click="addPlayer()">Add Player</button>
-			<div ng-show="isAddingPlayer">
-				<img src="images/ajax-loader.gif" /> Adding player...
+
+<form name="playerForm" novalidate>
+	<div class="row">
+			<div class="col-md-12 form-group">
+	
+				<label for="player">Player</label>
+				<input required playerexistsnot type="text" class="form-control" id="player"
+					ng-model="player.player" placeholder="Short sign">
+				<div ng-show="playerForm.$error.playerexistsnot">
+					This player is unknown. Please <a href="/#/registration">Register</a>
+				</div>
 			</div>
-		</div>
-	</form>
-</div>
+	</div>
+	<div class="row">
+			<div class="col-md-12 form-group">
+				<label for="tableInput">Table</label>
+				<select id="tableInput" required class="form-control" ng-model="player.table"
+					ng-options="table.name as table.name for table in tables">
+					<option value="">-- choose table --</option>
+				</select>
+			</div>
+	</div>
+	<div class="row">
+			<div class="col-md-12 form-group">
+				<label for="availableInput">Available until</label>
+				<select id="availableInput" required class="form-control" ng-model="availableNextMin"
+					ng-options="available.timeDiff as available.label for available in availableTimes">
+					<option value="">-- Game starts within --</option>
+				</select>
+			</div>
+	</div>
+	<div class="row">
+			<div class="col-md-12 form-group">
+				<button ng-disabled="!playerForm.$valid" type="submit"
+					class="btn btn-primary" ng-click="addPlayer()">Add Player</button>
+				<div ng-show="isAddingPlayer">
+					<img src="images/ajax-loader.gif" /> Adding player...
+				</div>
+			</div>
+	</div>
+	</div>
+</form>
 
 
 <div class="row">

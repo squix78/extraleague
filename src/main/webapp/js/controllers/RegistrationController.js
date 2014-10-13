@@ -1,46 +1,84 @@
 angular.module('Extraleague').controller('RegistrationController', 
-function($scope) {
-	$scope.patOpts = {x: 0, y: 0, w: 25, h: 25};
+function($scope, $http, Blobs, PlayerService, PlayerUsers) {
+	$scope.blobUrl = Blobs.get({});
+	$scope.player = new PlayerUsers();
+	$scope.isRegistrationOK = false;
+	$scope.isRegistrationFailed = false;
+	$scope.enableCam = function() {
+		$scope.showCam = true;
+	};
 	
-    $scope.onSuccess = function (videoElem) {
-        // The video element contains the captured camera data
-        _video = videoElem;
-        $scope.$apply(function() {
-            $scope.patOpts.w = _video.width;
-            $scope.patOpts.h = _video.height;
-            $scope.showDemos = true;
-        });
-    };
-    
-    $scope.takeSnapshot = function makeSnapshot() {
-        if (_video) {
-            var patCanvas = document.querySelector('#snapshot');
-            if (!patCanvas) return;
+	$scope.register = function() {
+		$scope.isRegistrationFailed = false;
+		$scope.isRegistrationOK = false;
+		$scope.isPlayerRegistering = true;
+		$scope.tmpPlayer = PlayerService.savePlayer($scope.player);
+		$scope.tmpPlayer.then(function(result) {
+			$scope.isPlayerRegistering = false;
+			$scope.player = new PlayerUsers();
+			$scope.isRegistrationOK = true;
+		}, function(error) {
+			console.log("Error saving player: " + error)
+			$scope.isRegistrationFailed = true;
+		});
+	};
+	
+	$scope.dataURItoBlob = function (dataURI) {
+		  // convert base64 to raw binary data held in a string
+		  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+		  var byteString = atob(dataURI.split(',')[1]);
+		  console.log("Byte String: " + byteString);
+		  // separate out the mime component
+		  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
 
-            patCanvas.width = _video.width;
-            patCanvas.height = _video.height;
-            var ctxPat = patCanvas.getContext('2d');
+		  // write the bytes of the string to an ArrayBuffer
+		  var ab = new ArrayBuffer(byteString.length);
+		  var ia = new Uint8Array(ab);
+		  for (var i = 0; i < byteString.length; i++) {
+		      ia[i] = byteString.charCodeAt(i);
+		  }
 
-            var idata = getVideoData($scope.patOpts.x, $scope.patOpts.y, $scope.patOpts.w, $scope.patOpts.h);
-            ctxPat.putImageData(idata, 0, 0);
+		  // write the ArrayBuffer to a blob, and you're done
+		    try {
+		        return new Blob([ab], {type: mimeString});
+		    } catch (e) {
+		        // The BlobBuilder API has been deprecated in favour of Blob, but older
+		        // browsers don't know about the Blob constructor
+		        // IE10 also supports BlobBuilder, but since the `Blob` constructor
+		        //  also works, there's no need to add `MSBlobBuilder`.
+		        var BlobBuilder = window.WebKitBlobBuilder || window.MozBlobBuilder;
+		        var bb = new BlobBuilder();
+		        bb.append(ab);
+		        return bb.getBlob(mimeString);
+		    }
+	}
+	
+	$scope.$watch('media', function(media) {
+        if (angular.isDefined(media)) {
+        	$scope.blobUrl = Blobs.get({}, function() {
+        		var blob = $scope.dataURItoBlob(media);
+        		
+        		var formData = new FormData();
+        	    formData.append('file', blob);
+        	    console.log("about to post to " + $scope.blobUrl.url);
+        	    $http.post($scope.blobUrl.url, formData, {
+        	        transformRequest: angular.identity,
+        	        headers: { 'Content-Type': undefined }
+        	    })
+        	    .success(function (response, status, c) {
+        	    	console.log("Post worked");
+            		$scope.player.imageUrl = response;
+        	    })
+	        	.error(function (a, b, c) {
+	        		console.log("Post failed");
+	        		
+	        	});
+        	  
+        		$scope.showCam = false;
 
-            sendSnapshotToServer(patCanvas.toDataURL());
-
-            patData = idata;
+        		
+        	});
         }
-    };
-    
-    var getVideoData = function getVideoData(x, y, w, h) {
-        var hiddenCanvas = document.createElement('canvas');
-        hiddenCanvas.width = _video.width;
-        hiddenCanvas.height = _video.height;
-        var ctx = hiddenCanvas.getContext('2d');
-        ctx.drawImage(_video, 0, 0, _video.width, _video.height);
-        return ctx.getImageData(x, y, w, h);
-    };
-    
-    var sendSnapshotToServer = function sendSnapshotToServer(imgBase64) {
-        $scope.snapshotData = imgBase64;
-    };
+    });
 	
 });

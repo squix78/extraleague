@@ -1,5 +1,6 @@
 angular.module('Extraleague').controller('MeetingPointController', 
-function ($scope, $rootScope, $timeout, $location, MeetingPointPlayers, MeetingPointPlayer, Tables, GameModes, Games, NotificationService) {
+function ($scope, $rootScope, $timeout, $location, MeetingPointPlayers, 
+		MeetingPointPlayer, Tables, GameModes, Games, NotificationService, PlayerService) {
 	
 	$scope.game = new Games();
 	$scope.loadPlayers = function() {

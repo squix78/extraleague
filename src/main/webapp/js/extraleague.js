@@ -1,6 +1,6 @@
 angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 
                                'ui.bootstrap', 'ui.bootstrap.buttons', 'ui.bootstrap.alert', 
-                               'nvd3ChartDirectives', 'webcam', 'gaeChannelService', 
+                               'nvd3ChartDirectives', 'omr.directives', 'gaeChannelService', 
                                'angulartics', 'angulartics.google.analytics'])
     .config(function($routeProvider) {
         $routeProvider
@@ -143,6 +143,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('League', ['$resource', function($resource) {
     	return $resource('/rest/league');
     }])
+    .factory('Blobs', ['$resource', function($resource) {
+      return $resource('/rest/blobs');
+    }])
     .directive('badges', function() {
       return {
         restrict: 'A',
@@ -206,6 +209,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
       	}
 	  };
   	});
+
 
 
 

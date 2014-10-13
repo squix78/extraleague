@@ -1,7 +1,15 @@
 <h3>User Registration</h3>
 <div class="row">
 	<form novalidate name="playerForm">
-		<div class="col-md-12 form-group">
+	    <div class="col-md-12">
+	    	<div ng-show="isRegistrationOK" class="alert alert-success" role="alert">
+	    		Registration was successful!
+	    	</div>
+	    	<div ng-show="isRegistrationFailed" class="alert alert-danger" role="alert">
+	    		There was a problem with the registration. Please try again...
+	    	</div>
+	    </div>
+		<div class="col-md-12 form-group" ng-class="{'has-error': 'playerForm.player.$error'}">
 			<label for="player">Player</label>
 			<input required type="text" class="form-control" id="player" name="player"
 				ng-model="player.player" playerexists placeholder="Short name (max 6 characters)" maxlength="6">
@@ -48,14 +56,5 @@
 		</div>
 	</form>
 
-	{{ playerForm.email.$error | json }}
-	
-	  <ul>
-        <li ng-repeat="(key, errors) in playerForm.$error track by $index"> <strong>{{ key }}</strong> errors
-          <ul>
-            <li ng-repeat="e in errors">{{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
-          </ul>
-        </li>
-      </ul>
 </div>
 

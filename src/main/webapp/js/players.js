@@ -21,7 +21,7 @@ angular.module('PlayerMappings', [])
 		},
 		loadPlayers: function() {
 			playerUsers = PlayerUsers.query({}, {get: {cache: true, method: 'GET' } });
-			return playerUsers.$promise.then(function(result) {
+			playerUsers.$promise.then(function(result) {
 				angular.forEach(playerUsers, function(value, key) {
 					playerMap[value.player] = value;
 				});		
@@ -62,6 +62,27 @@ angular.module('PlayerMappings', [])
       });
     }
   };
+}])
+.directive('playersexistnot', ['PlayerService', function(PlayerService) {
+	return {
+		require: 'ngModel',
+		link: function(scope, elm, attrs, ctrl) {
+			ctrl.$parsers.unshift(function(viewValue) {
+				var players = viewValue.toLowerCase().replace(/,/g,'').split(' ');
+				angular.forEach(players, function(player){
+					if (PlayerService.isPlayerDefined(player)) {
+						// it is valid
+						ctrl.$setValidity('playersexistnot', true);
+						return viewValue;
+					} else {
+						// it is invalid, return undefined (no model update)
+						ctrl.$setValidity('playersexistnot', false);
+						return viewValue;
+					}
+				});
+			});
+		}
+	};
 }])
 .directive('playerexistsnot', ['PlayerService', function(PlayerService) {
 	return {
@@ -110,9 +131,9 @@ angular.module('PlayerMappings', [])
         link: function(scope, elem, attrs) {
         	scope.$watchCollection('[player, PlayerService.playerMap]', function(newValue, oldValues){
         		if (newValue) {
-        			PlayerService.getPlayerPicture(scope.player).then(function(result) {
-        				scope.playerImgUrl = result;
-        			});
+        			result = PlayerService.getPlayerPicture(scope.player);
+        			scope.playerImgUrl = result;
+        			
         			if (scope.team) {
         				scope.teamColor = scope.team + "TeamBorder";
         			}

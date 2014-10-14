@@ -5,11 +5,15 @@
 			<div class="col-md-12 form-group">
 	
 				<label for="player">Player</label>
-				<input required playerexistsnot type="text" class="form-control" id="player"
+				<input required split-players  no-array players-expected="1" type="text" class="form-control" id="player"
 					ng-model="player.player" placeholder="Short sign">
-				<div ng-show="playerForm.$error.playerexistsnot">
+				<div ng-show="playerForm.$error.playerunknown">
 					This player is unknown. Please <a href="/#/registration">Register</a>
 				</div>
+				<div ng-show="playerForm.$error.playersexpected">
+					Please enter only one player
+				</div>
+
 			</div>
 	</div>
 	<div class="row">
@@ -38,7 +42,6 @@
 					<img src="images/ajax-loader.gif" /> Adding player...
 				</div>
 			</div>
-	</div>
 	</div>
 </form>
 

@@ -48,6 +48,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         	controller : 'WatcherController',
         	templateUrl : 'partials/watch.html'
         })
+        .when('/challenge/:table', {
+        	controller : 'ChallengeController',
+        	templateUrl : 'partials/challengers.html'
+        })
         .when('/about', {
            controller : 'AboutController',
            templateUrl : 'partials/about.html'
@@ -142,6 +146,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     }])
     .factory('League', ['$resource', function($resource) {
     	return $resource('/rest/league');
+    }])
+    .factory('ChallengerTeam', ['$resource', function($resource) {
+    	return $resource('/rest/challengers/:table/:id');
     }])
     .factory('Blobs', ['$resource', function($resource) {
       return $resource('/rest/blobs');

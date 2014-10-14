@@ -28,12 +28,11 @@
 			<div class="col-md-7 form-group">
 				<label for="player">Players</label>
 				<input type="text" class="form-control" id="player" name="player"
-					ng-model="player"
+					ng-model="game.players" split-players
 					placeholder="Shortsign of 4 players separated by space, e.g. dei cw cm yw">
-				<span ng-show="playerForm.$error.playersexistnot">This player is unknown. Please <a href="/#/registration">Register</a></span>
+				<span ng-show="playerForm.$error.playerunknown">This player is unknown. Please <a href="/#/registration">Register</a></span>
 
 			</div>
-
     </form>
 </div>
 <div class="row" ng-show="game.players.length > 0">
@@ -72,6 +71,6 @@
 </div>
 <div class="row">
 
-	<div class="col-md-12" ng-include="'partials/currentlyOpenGames.html'"
+	<div class="col-md-12" ng-include="'partials/openGames.html'"
 		ng-controller="OpenGamesController"></div>
 </div>

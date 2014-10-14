@@ -37,7 +37,7 @@ public class GameResource extends ServerResource {
 	public void deleteGame() {
 		String gameIdText = (String) this.getRequestAttributes().get("gameId");
 		Long gameId = Long.valueOf(gameIdText);
-		ofy().delete().type(Game.class).id(gameId);
+		ofy().delete().type(Game.class).id(gameId).now();
 		List<Match> matches = ofy().load().type(Match.class).filter("gameId = ", gameId).list();
 		ofy().delete().entities(matches).now();
 		NotificationService.sendMessage(new UpdateOpenGamesMessage(OpenGameService.getOpenGames()));

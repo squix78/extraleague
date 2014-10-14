@@ -27,14 +27,6 @@ function($scope, $rootScope, $resource, $routeParams, $location, Games, Game, Pl
      $rootScope.backlink = '/tables';
    });
 
-   $scope.$watch('player', function(newValue, oldValue) {
-      if (angular.isDefined(newValue)) {
-          var players = newValue.toLowerCase().replace(/,/g,'').split(' ');
-          console.log(newValue +", " + $scope.game.players);
-          $scope.game.players = players;
-      }
-  
-   });
    $scope.$watch('game', function(newValue, oldValue) {
 	   console.log("Change in game detected");
        if ($scope.isGameComplete()) {

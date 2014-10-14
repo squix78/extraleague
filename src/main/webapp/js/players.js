@@ -37,7 +37,9 @@ angular.module('PlayerMappings', [])
 			return result;
 		},
 		isPlayerDefined: function(player) {
-			return angular.isDefined(playerMap[player]);
+			if (angular.isDefined(player)) {
+				return angular.isDefined(playerMap[player.toLowerCase()]);
+			}
 		}
 	    
 	 	
@@ -141,4 +143,39 @@ angular.module('PlayerMappings', [])
         	});
         }
     };
-}]);
+}])
+.directive('splitPlayers', function(PlayerService) {
+  return { restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+
+      if(ngModel) { // Don't do anything unless we have a model
+
+        ngModel.$parsers.push(function (value) {
+	          if (angular.isDefined(value)) {
+	        	  
+		          var players = value.toLowerCase().replace(/,/g,'').split(' ');
+		          var isValid = true;
+		          angular.forEach(players, function(player) {
+		        	  if (!PlayerService.isPlayerDefined(player)) {
+		        		  isValid = false;
+		        	  }
+		          });
+		          ngModel.$setValidity('playerunknown', isValid);
+		          var isCorrectNumber = angular.isDefined(attrs.playersExpected) && attrs.playersExpected == players.length;
+		          ngModel.$setValidity('playersexpected', isCorrectNumber);
+		          if (angular.isDefined(attrs.noArray)) {
+		        	  return players[0];
+		          }
+		          return players;
+	          }
+        });
+        
+        ngModel.$formatters.push(function (value) {
+            return value;
+        });
+
+      }
+    }
+  };
+});;

@@ -100,6 +100,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/games/{gameId}/matches", MatchesResource.class);
         router.attach("/games/{gameId}/summary", SummaryResource.class);
         router.attach("/challengers/{table}", ChallengerTeamsResource.class);
+        router.attach("/challengers/{table}/{id}", ChallengerTeamsResource.class);
         router.attach("/players", PlayersRessource.class);
         router.attach("/players/{player}", PlayerRessource.class);
         router.attach("/timeseries/{player}", TimeSeriesResource.class);

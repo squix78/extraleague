@@ -11,7 +11,9 @@ public class ChallengerTeamDto {
 	
 	private Date createdDate;
 	
-	private String [] players;
+	private String [] challengers;
+	
+	private String [] winners;
 
 	private String table;
 

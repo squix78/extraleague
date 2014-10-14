@@ -1,0 +1,34 @@
+<h3>Challengers ({{table}})</h3>
+<form name="playerForm" novalidate>
+	<div class="row">
+			<div class="col-md-12 form-group">
+				<label for="player">Challengers</label>
+				<input required type="text" class="form-control" id="player"
+					split-players players-expected="2" ng-model="challengerTeam.players" placeholder="Short name of two challengers">
+				<div ng-show="playerForm.$error.playerunknown">
+					This player is unknown. Please <a href="/#/registration">Register</a>
+				</div>	
+				<div ng-show="playerForm.$error.playersexpected">
+					Please enter two players
+				</div>			
+			</div>
+	</div>
+	<div class="row">
+			<div class="col-md-12 form-group">
+				<button ng-disabled="!playerForm.$valid" type="submit"
+					class="btn btn-primary" ng-click="addChallengers()">Challenge Winners</button>
+					<div ng-show="isAddingChallengers">
+						<img src="images/ajax-loader.gif" /> Adding player...
+					</div>
+			</div>
+	</div>
+</form>
+
+<div ng-repeat="challenger in challengers | orderBy:'createdDate'" class="alert alert-success">
+	  <div class="playerRow">
+		  	<div ng-repeat="player in challenger.players" player="player"></div>
+		  	{{ challenger.createdDate | date:'dd. MMM. yyyy HH:mm:ss'}}
+	  </div>
+	  <button ng-hide="isDeleteButtonVisible" class="btn btn-danger btn-sm" ng-click="isDeleteButtonVisible = true">Remove</button>
+	  <button ng-show="isDeleteButtonVisible" class="btn btn-danger btn-sm" ng-click="deleteChallenger(challenger)">Really?</button>
+</div>

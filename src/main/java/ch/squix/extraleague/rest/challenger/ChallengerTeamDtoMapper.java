@@ -19,7 +19,8 @@ public class ChallengerTeamDtoMapper {
 		ChallengerTeamDto dto = new ChallengerTeamDto();
 		dto.setId(team.getId());
 		dto.setCreatedDate(team.getCreatedDate());
-		dto.setPlayers(team.getPlayers());
+		dto.setChallengers(team.getChallengers());
+		dto.setWinners(team.getWinners());
 		dto.setTable(team.getTable());
 		return dto;
 	}

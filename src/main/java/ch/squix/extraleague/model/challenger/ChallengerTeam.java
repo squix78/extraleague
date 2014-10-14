@@ -20,7 +20,9 @@ public class ChallengerTeam {
 	@Index
 	private Date createdDate;
 	
-	private String [] players;
+	private String [] challengers;
+	
+	private String [] winners;
 	
 	@Index
 	private String table;

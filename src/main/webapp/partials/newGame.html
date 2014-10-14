@@ -27,9 +27,11 @@
 
 			<div class="col-md-7 form-group">
 				<label for="player">Players</label>
-				<input type="text" class="form-control" id="player"
+				<input type="text" class="form-control" id="player" name="player"
 					ng-model="player"
 					placeholder="Shortsign of 4 players separated by space, e.g. dei cw cm yw">
+				<span ng-show="playerForm.$error.playersexistnot">This player is unknown. Please <a href="/#/registration">Register</a></span>
+
 			</div>
 
     </form>

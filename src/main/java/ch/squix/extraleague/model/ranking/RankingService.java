@@ -114,7 +114,7 @@ public class RankingService {
         rankingTasks.add(new ProjectLeaderTask());
 
         // From here only work on playerRankingMap
-        rankingTasks.add(new FirstPlayerFilterTask());
+        //rankingTasks.add(new FirstPlayerFilterTask());
         rankingTasks.add(new RankingIndexTask());
         rankingTasks.add(new SkillBadgesTask());
         rankingTasks.add(new PartnerCountTask());

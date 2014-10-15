@@ -1,6 +1,8 @@
 angular.module('Extraleague').controller('PlayerController', 
 function PlayerController($scope, $rootScope, $routeParams, Player, TimeSeries, Badges) {
+
 	  $scope.player = $routeParams.player;
+
 	  $scope.isPlayerLoading = true;
 
 	  $scope.$on('$viewContentLoaded', function() {

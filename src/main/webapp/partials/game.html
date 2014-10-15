@@ -46,8 +46,8 @@
 					<div class="col-xs-5">
 						<button ng-disabled="openGames.isMatchSaving"
 							class="btn btn-lg btn-primary btn-block text-small"
-							ng-click="addPlayerScore(openGames.currentMatch.teamA[0])">
-							<span player="openGames.currentMatch.teamA[0]" />
+							ng-click="addPlayerScore(openGames.currentMatch.teamA[1])">
+							<span player="openGames.currentMatch.teamA[1]" />
 						</button>
 					</div>
 					<div class="col-xs-2 blueTeam text-small text-vcenter text-center">
@@ -60,26 +60,14 @@
 					</div>
 					<div class="col-xs-5">
 						<button ng-disabled="openGames.isMatchSaving"
-							class="btn btn-lg btn-primary btn-block text-small"
-							ng-click="addPlayerScore(openGames.currentMatch.teamA[1])">
-							<span player="openGames.currentMatch.teamA[1]" />
+							class="btn btn-lg btn-danger btn-block text-small"
+							ng-click="addPlayerScore(openGames.currentMatch.teamB[0])">
+							<span player="openGames.currentMatch.teamB[0]" />
 						</button>
 					</div>
 				</div>
 				<BR />
 				<div class="row text-center text-vcenter">
-					<div class="col-xs-4 redTeam text-small">
-						<div>
-							Red: {{(1 - openGames.currentMatch.winProbabilityTeamA) * 100 |
-							number:2}}% <BR />
-						</div>
-						<div>{{openGames.currentMatch.winPointsTeamB}} win points</div>
-					</div>
-					<div class="col-xs-4  text-center text-large">
-						<span class="redTeam">
-							{{openGames.currentMatch.teamBScore}} </span> : <span class="blueTeam">
-							{{openGames.currentMatch.teamAScore}} </span>
-					</div>
 					<div class="col-xs-4 blueTeam text-small">
 						<div>
 							Blue: {{(openGames.currentMatch.winProbabilityTeamA) * 100 |
@@ -87,16 +75,29 @@
 						</div>
 						<div>{{openGames.currentMatch.winPointsTeamA}} win points</div>
 					</div>
+					<div class="col-xs-4  text-center text-large">
+						<span class="blueTeam">
+							{{openGames.currentMatch.teamAScore}} </span> : <span class="redTeam">
+							{{openGames.currentMatch.teamBScore}} </span>
+					</div>
+					<div class="col-xs-4 redTeam text-small">
+						<div>
+							Red: {{(1 - openGames.currentMatch.winProbabilityTeamA) * 100 |
+							number:2}}% <BR />
+						</div>
+						<div>{{openGames.currentMatch.winPointsTeamB}} win points</div>
+					</div>
 				</div>
 				</BR>
 				<div class="row text-center">
 					<div class="col-xs-5">
 						<button ng-disabled="openGames.isMatchSaving"
-							class="btn btn-lg btn-danger btn-block text-small"
-							ng-click="addPlayerScore(openGames.currentMatch.teamB[1])">
-							<span player="openGames.currentMatch.teamB[1]" />
+							class="btn btn-lg btn-primary btn-block text-small"
+							ng-click="addPlayerScore(openGames.currentMatch.teamA[0])">
+							<span player="openGames.currentMatch.teamA[0]" />
 						</button>
 					</div>
+
 					<div class="col-xs-2">
 						<button ng-show="openGames.currentMatch.positionSwappingAllowed" ng-disabled="openGames.isMatchSaving"
 							class="btn btn-lg btn-default btn-block text-small"
@@ -107,8 +108,8 @@
 					<div class="col-xs-5">
 						<button ng-disabled="openGames.isMatchSaving"
 							class="btn btn-lg btn-danger btn-block text-small"
-							ng-click="addPlayerScore(openGames.currentMatch.teamB[0])">
-							<span player="openGames.currentMatch.teamB[0]" />
+							ng-click="addPlayerScore(openGames.currentMatch.teamB[1])">
+							<span player="openGames.currentMatch.teamB[1]" />
 						</button>
 					</div>
 				</div>

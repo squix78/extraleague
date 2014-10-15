@@ -59,7 +59,10 @@ public class RankingDtoMapper {
 	}
 
 	public static List<RankingDto> convertToDto(EternalRanking ranking) {
-		return getRankingDtos(ranking.getPlayerRankings());
+		if (ranking != null) {
+			return getRankingDtos(ranking.getPlayerRankings());
+		}
+		return new ArrayList<RankingDto>();
 	}
 
 	public static List<RankingDto> convertToDto(Ranking ranking) {

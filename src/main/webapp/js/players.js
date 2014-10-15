@@ -11,6 +11,7 @@ angular.module('PlayerMappings', [])
 	var playerUsers = undefined;
 	var service = {
 		getPlayerPicture: function(shortname) {
+			return playerUsers.$promise.then(function(result) {
 				var playerUser = playerMap[shortname];
 				if (angular.isDefined(playerUser) && shortname.length > 1) {
 					console.log("Getting image address for " + playerUser.player);
@@ -18,6 +19,7 @@ angular.module('PlayerMappings', [])
 				} else {
 					return "images/person2.png";
 				}
+			});
 		},
 		loadPlayers: function() {
 			playerUsers = PlayerUsers.query({}, {get: {cache: true, method: 'GET' } });
@@ -133,8 +135,9 @@ angular.module('PlayerMappings', [])
         link: function(scope, elem, attrs) {
         	scope.$watchCollection('[player, PlayerService.playerMap]', function(newValue, oldValues){
         		if (newValue) {
-        			result = PlayerService.getPlayerPicture(scope.player);
-        			scope.playerImgUrl = result;
+        			PlayerService.getPlayerPicture(scope.player).then(function(result) {
+        				scope.playerImgUrl = result;
+        			});		
         			
         			if (scope.team) {
         				scope.teamColor = scope.team + "TeamBorder";

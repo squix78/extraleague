@@ -28,11 +28,13 @@
 			<div class="col-md-7 form-group">
 				<label for="player">Players</label>
 				<input type="text" class="form-control" id="player" name="player"
-					ng-model="game.players" split-players
+					ng-model="game.players" split-players players-expected="4"
 					placeholder="Shortsign of 4 players separated by space, e.g. dei cw cm yw">
 				<span ng-show="playerForm.$error.playerunknown">This player is unknown. Please <a href="/#/registration">Register</a></span>
+				<span ng-show="playerForm.$error.playersexpected">Enter 4 players</a></span>
 
 			</div>
+
     </form>
 </div>
 <div class="row" ng-show="game.players.length > 0">
@@ -51,7 +53,6 @@
 		 </div>
 	</div>
 </div>
-
 <div class="row text-small">
 	<div class="col-md-12">
 
@@ -61,7 +62,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="form-group">
-			<button ng-disabled="!isGameComplete() || isGameStarting" type="submit"
+			<button ng-disabled="!isGameComplete() || isGameStarting || !playerForm.$valid" type="submit"
 				class="btn btn-primary" ng-click="startGame()">Start Game</button>
 			<div ng-show="isGameStarting">
 				<img src="images/ajax-loader.gif" /> Please wait. Starting game...

@@ -8,7 +8,10 @@ import java.util.logging.Logger;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
+import ch.squix.extraleague.model.league.League;
+import ch.squix.extraleague.model.league.LeagueDao;
 import ch.squix.extraleague.rest.games.GamesResource;
+import ch.squix.extraleague.rest.games.mode.GameMode;
 import ch.squix.extraleague.rest.games.mode.GameModeEnum;
 
 
@@ -19,13 +22,17 @@ public class GameModeResource extends ServerResource {
 	
 	@Get(value = "json")
 	public List<GameModeDto> execute() throws UnsupportedEncodingException {
+		League currentLeague = LeagueDao.getCurrentLeague();
+		List<GameModeEnum> filteredGameModes = currentLeague.getFilteredGameModes();
 		List<GameModeDto> dtos = new ArrayList<>();
 		for(GameModeEnum mode : GameModeEnum.values()) {
 			GameModeDto dto = new GameModeDto();
 			dto.setName(mode.name());
 			dto.setLabel(mode.getLabel());
 			dto.setDescription(mode.getDescription());
-			dtos.add(dto);
+			if (filteredGameModes != null && !filteredGameModes.contains(mode)) {
+				dtos.add(dto);
+			}
 		}
 		return dtos;
 	}

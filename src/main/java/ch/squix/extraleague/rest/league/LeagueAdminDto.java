@@ -23,5 +23,7 @@ public class LeagueAdminDto {
 	private List<String> tables = new ArrayList<>();
 	
 	private String principalLeageAdminUserId;
+	
+	private String filteredGameModes;
 
 }

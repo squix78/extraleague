@@ -53,12 +53,12 @@ public class GamesResource extends ServerResource {
     public GameDto create(GameDto dto) {
 
         GameMode mode = GameModeFactory.createGameMode(dto.getGameMode());
-
+        dto.setStartDate(new Date());
         log.info("Received game to save");
         Game game = new Game();
         game.setPlayers(dto.getPlayers());
         game.setTable(dto.getTable());
-        game.setStartDate(new Date());
+        game.setStartDate(dto.getStartDate());
         game.setNumberOfCompletedMatches(0);
         game.setIsGameFinished(false);
         game.setGameMode(dto.getGameMode());

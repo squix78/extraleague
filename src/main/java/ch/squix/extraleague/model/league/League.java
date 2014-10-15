@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
+import ch.squix.extraleague.rest.games.mode.GameMode;
+import ch.squix.extraleague.rest.games.mode.GameModeEnum;
 
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.EmbedMap;
@@ -42,6 +44,6 @@ public class League {
 	
 	private List<String> leagueAdminUserIds = new ArrayList<>();
 	
-	
+	private List<GameModeEnum> filteredGameModes = new ArrayList<>();
 
 }

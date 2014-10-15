@@ -3,7 +3,7 @@
   Currently there are no open games...
 </div>
 <div ng-show="openGames.gameList.length > 0">
-	<div class="alert" ng-class="{'alert-success': $index == 0, 'alert-info': $index > 0}" ng-repeat="game in openGames.gameList">
+	<div class="alert" ng-class="{'alert-success': $index == 0, 'alert-info': $index > 0}" ng-repeat="game in openGames.gameList | orderBy:'startDate'">
 	  <div class="pull-right text-center" ng-show="game.estimatedRemainingMillis">
 		 <div class="caption">
 			 <div><small>ETA</small></div>

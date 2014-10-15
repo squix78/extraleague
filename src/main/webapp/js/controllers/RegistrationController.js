@@ -7,6 +7,9 @@ function($scope, $http, Blobs, PlayerService, PlayerUsers) {
 	$scope.enableCam = function() {
 		$scope.showCam = true;
 	};
+	$scope.enableUpload = function() {
+		$scope.showUpload = true;
+	};
 	
 	$scope.register = function() {
 		$scope.isRegistrationFailed = false;
@@ -53,32 +56,50 @@ function($scope, $http, Blobs, PlayerService, PlayerUsers) {
 		    }
 	}
 	
+	$scope.$watch('fileForUpload', function(media) {
+		if (angular.isDefined(media)) {
+			console.log("File ready for upload");
+			var formData = new FormData();
+		    formData.append('file', $scope.fileForUpload);
+		    console.log("about to post to " + $scope.blobUrl.url);
+		    $scope.blobUrl = Blobs.get({}, function() {
+		    	$scope.uploadFile($scope.blobUrl.url, formData);
+		    });
+		}
+	});
 	$scope.$watch('media', function(media) {
         if (angular.isDefined(media)) {
         	$scope.blobUrl = Blobs.get({}, function() {
         		var blob = $scope.dataURItoBlob(media);
-        		
         		var formData = new FormData();
         	    formData.append('file', blob);
         	    console.log("about to post to " + $scope.blobUrl.url);
-        	    $http.post($scope.blobUrl.url, formData, {
-        	        transformRequest: angular.identity,
-        	        headers: { 'Content-Type': undefined }
-        	    })
-        	    .success(function (response, status, c) {
-        	    	console.log("Post worked");
-            		$scope.player.imageUrl = response;
-        	    })
-	        	.error(function (a, b, c) {
-	        		console.log("Post failed");
-	        		
-	        	});
-        	  
-        		$scope.showCam = false;
+        	    $scope.isCaptureLoading = true;
+        	    $scope.uploadFile($scope.blobUrl.url, formData);
 
-        		
         	});
         }
     });
+	
+	$scope.uploadFile = function(url, formData) {
+	    $scope.isCaptureLoading = true;
+	    $http.post($scope.blobUrl.url, formData, {
+	        transformRequest: angular.identity,
+	        headers: { 'Content-Type': undefined }
+	    })
+	    .success(function (response, status, c) {
+	    	console.log("Post worked");
+    		$scope.player.imageUrl = response;
+    		$scope.isCaptureLoading = false;
+    		$scope.showUpload = false;
+    		$scope.showCam = false;
+	    })
+    	.error(function (a, b, c) {
+    		console.log("Post failed");
+    		$scope.isCaptureLoading = false;
+    		$scope.showUpload = false;
+    		$scope.showCam = false;
+    	});
+	};
 	
 });

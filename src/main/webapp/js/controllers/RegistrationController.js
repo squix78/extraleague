@@ -80,6 +80,10 @@ function($scope, $http, Blobs, PlayerService, PlayerUsers) {
         	});
         }
     });
+	$scope.hasGetUserMedia = function() {
+		  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+		            navigator.mozGetUserMedia || navigator.msGetUserMedia);
+	}
 	
 	$scope.uploadFile = function(url, formData) {
 	    $scope.isCaptureLoading = true;

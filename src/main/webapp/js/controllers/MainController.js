@@ -1,5 +1,5 @@
 angular.module('Extraleague').controller('MainController', 
-function($scope, $rootScope, $resource, $location, $routeParams, League, CurrentUser) {
+function($scope, $rootScope, $resource, $location, $routeParams, League, CurrentUser, NotificationService) {
   
   $rootScope.backlink = false;
   

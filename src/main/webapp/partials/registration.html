@@ -53,9 +53,9 @@
 	  </div>
 	  <div class="row">		
 		<div class="col-xs-12 form-group">
-			<button ng-show="!showCam && !showUpload" class="btn btn-primary" ng-click="enableCam()"> <i class="fa fa-camera"></i> Take Picture</button>
-			<span ng-show="!showCam && !showUpload" class="btn btn-default btn-file">
-				<i class="fa fa-camera"></i> Upload (Mobile) <input file-model="fileForUpload" type="file" accept="image/*;capture=camera" capture="camera">
+			<button ng-show="!showCam && !showUpload && hasGetUserMedia()" class="btn btn-primary" ng-click="enableCam()"> <i class="fa fa-camera"></i> Take Picture</button>
+			<span ng-show="!showCam && !showUpload && !hasGetUserMedia()" class="btn btn-default btn-file">
+				<i class="fa fa-camera"></i> Upload <input file-model="fileForUpload" type="file" accept="image/*;capture=camera" capture="camera">
 			</span>
 		</div>
 	  </div>

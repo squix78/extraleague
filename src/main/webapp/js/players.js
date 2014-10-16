@@ -5,7 +5,7 @@ angular.module('PlayerMappings', [])
 .factory('PlayerUsers', ['$resource', function($resource) {
 	return $resource('/rest/playerUsers');
 }])
-.factory('PlayerService', ['PlayerUsers', function(PlayerUsers) {
+.factory('PlayerService', ['$rootScope', 'PlayerUsers', function($rootScope, PlayerUsers) {
 	var playerResultMap = {};
 	var playerMap = [];
 	var playerUsers = undefined;
@@ -47,6 +47,10 @@ angular.module('PlayerMappings', [])
 	 	
 	}
 	service.loadPlayers();
+	$rootScope.$on("NewPlayerRegistered", function(event, message) {
+		console.log("New player registered: " + message.player);
+		service.loadPlayers();
+	});
 	return service;
 }])
 .directive('playerexists', ['PlayerService', function(PlayerService) {
@@ -54,6 +58,7 @@ angular.module('PlayerMappings', [])
     require: 'ngModel',
     link: function(scope, elm, attrs, ctrl) {
       ctrl.$parsers.unshift(function(viewValue) {
+    	viewValue = viewValue.toLowerCase();
         if (PlayerService.isPlayerDefined(viewValue)) {
           // it is valid
           ctrl.$setValidity('playerexists', false);
@@ -84,24 +89,6 @@ angular.module('PlayerMappings', [])
 						return viewValue;
 					}
 				});
-			});
-		}
-	};
-}])
-.directive('playerexistsnot', ['PlayerService', function(PlayerService) {
-	return {
-		require: 'ngModel',
-		link: function(scope, elm, attrs, ctrl) {
-			ctrl.$parsers.unshift(function(viewValue) {
-				if (PlayerService.isPlayerDefined(viewValue)) {
-					// it is valid
-					ctrl.$setValidity('playerexistsnot', true);
-					return viewValue;
-				} else {
-					// it is invalid, return undefined (no model update)
-					ctrl.$setValidity('playerexistsnot', false);
-					return viewValue;
-				}
 			});
 		}
 	};

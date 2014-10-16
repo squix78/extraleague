@@ -29,8 +29,8 @@ public class MatchInfoService {
 		return infoDto;
 	}
 	
-	private static List<String> getEvents(Date matchStartDate, List<String> teamA, List<String> teamB, List<Goal> goals) {
-		List<String> events = new ArrayList<>();
+	private static List<EventDto> getEvents(Date matchStartDate, List<String> teamA, List<String> teamB, List<Goal> goals) {
+		List<EventDto> events = new ArrayList<>();
 		String lastScorer = "";
 		Integer goalsInARow = 1;
 
@@ -58,16 +58,27 @@ public class MatchInfoService {
 					position = "offense";
 				}
 			}
-			String goalTime = (goal.getTime().getTime() - matchStartDate.getTime()) / (1000 * 60) + "': ";
-			String message = goal.getScorer() + " scored a goal from the " + position + ". "; 
+			String goalTime = String.valueOf((goal.getTime().getTime() - matchStartDate.getTime()) / (1000 * 60));
+			String message = goal.getScorer() + " scored!"; 
 			if (goalsInARow == 2) {
 				message = goal.getScorer() + " hit twice in a row!";
 			} else if (goalsInARow == 3) {
 				message = goal.getScorer() + " is on a spree! 3 Goals in a row!";
 			} else if (goalsInARow == 4) {
 				message = "This is legendary! 4 in a row!";
+			} else if (goalsInARow == 5) {
+				message = "Unbelievable: 5!";
+			} else if (goalsInARow == 6) {
+				message = "Unstoppable: 6!";
+			} else if (goalsInARow == 7) {
+				message = "Unbelievable";
 			}
-			events.add(goalTime + message);
+			EventDto dto = new EventDto();
+			dto.setPlayer(goal.getScorer());
+			dto.setGoalTime(goalTime);
+			dto.setMessage(message);
+			dto.setGoalsInARow(goalsInARow);
+			events.add(dto);
 		}
 		Collections.reverse(events);
 		return events;

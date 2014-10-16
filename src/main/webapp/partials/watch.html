@@ -44,11 +44,24 @@
 		      <slide>
 			      <table class="table">
 			        <colgroup>
+			          <col style="width:32px"/>
+			          <col style="width:32px"/>
 			          <col style="width:100%"/>
 			        </colgroup>
 			        <tbody>
 			          <tr ng-repeat="event in match.matchInfo.events track by $index | limitTo:5">
-			            <td>{{event}}</td>
+			            <td><span class="smallPlayer" player="event.player"></span></td>
+			            <td>{{event.goalTime}}'</td>
+			            <td class="text-left">
+			            	<div>
+			            		{{event.message}}
+			            	</div>
+			            	<span ng-repeat="a in range(event.goalsInARow) track by $index">
+			            		<i class="fa fa-futbol-o"></i>
+			            	</span>
+			            
+			            </td>
+
 			          </tr>
 			        </tbody>
 			      </table>
@@ -76,22 +89,7 @@
 		        </tbody>
 		      </table>
 		      </slide>
-		      <slide>
-			      <table class="table">
-			        <colgroup>
-			          <col style="width:50px"/>
-			          <col style="width:50px"/>
-			          <col style="width:50px"/>
-			        </colgroup>
-			        <tbody>
-			          <tr ng-repeat="n in getBiggerArray(match.matchInfo.teamAGoals.length, match.matchInfo.teamBGoals.length) track by $index">
-			            <td>{{ match.matchInfo.teamAGoals[$index].scorer}} ({{ match.matchInfo.teamAGoals[$index].minutesSinceMatchStart}}')</td>
-			            <td class="score"></td>
-			            <td>{{ match.matchInfo.teamBGoals[$index].scorer}} ({{ match.matchInfo.teamAGoals[$index].minutesSinceMatchStart}}')</td>
-			          </tr>
-			        </tbody>
-			      </table>
-		      </slide>
+
 
 
 		  </carousel>

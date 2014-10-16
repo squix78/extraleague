@@ -22,5 +22,9 @@ function($scope, $routeParams, GameService) {
     $scope.getBiggerArray = function(n, m) {
     	return new Array(Math.max(n, m));
     }
+    
+    $scope.range = function(n) {
+        return new Array(n);
+    };
 	
 });

@@ -5,7 +5,7 @@ angular.module('PlayerMappings', [])
 .factory('PlayerUsers', ['$resource', function($resource) {
 	return $resource('/rest/playerUsers');
 }])
-.factory('PlayerService', ['PlayerUsers', function(PlayerUsers) {
+.factory('PlayerService', ['$rootScope', 'PlayerUsers', function($rootScope, PlayerUsers) {
 	var playerResultMap = {};
 	var playerMap = [];
 	var playerUsers = undefined;
@@ -47,6 +47,10 @@ angular.module('PlayerMappings', [])
 	 	
 	}
 	service.loadPlayers();
+	$rootScope.$on("NewPlayerRegistered", function(event, message) {
+		console.log("New player registered: " + message.player);
+		service.loadPlayers();
+	});
 	return service;
 }])
 .directive('playerexists', ['PlayerService', function(PlayerService) {

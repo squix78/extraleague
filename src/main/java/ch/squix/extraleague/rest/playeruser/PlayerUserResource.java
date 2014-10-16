@@ -13,6 +13,8 @@ import org.restlet.resource.ServerResource;
 import com.googlecode.objectify.Key;
 
 import ch.squix.extraleague.model.match.player.PlayerUser;
+import ch.squix.extraleague.notification.NewPlayerRegisteredMessage;
+import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.rest.games.OpenGamesResource;
 
 
@@ -33,11 +35,13 @@ public class PlayerUserResource extends ServerResource {
 		if (player != null) {
 			getResponse().setStatus(Status.CLIENT_ERROR_CONFLICT, "Player already exists!");
 		}
+		log.info("Creating new player: " + dto.getPlayer());
 		player = new PlayerUser();
 		player.setPlayer(dto.getPlayer());
 		player.setEmail(dto.getEmail());
 		player.setImageUrl(dto.getImageUrl());
 		ofy().save().entity(player).now();
+		NotificationService.sendMessage(new NewPlayerRegisteredMessage(dto));
 		return dto;
 		
 	}

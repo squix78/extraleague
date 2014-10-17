@@ -50,10 +50,16 @@
 			        </colgroup>
 			        <tbody>
 			          <tr ng-repeat="event in match.matchInfo.events track by $index | limitTo:5">
-			            <td><span class="smallPlayer" player="event.player"></span></td>
-			            <td>{{event.goalTime}}'</td>
+			            <td class="btn" ng-class="{'btn-primary': event.team == 'A', 'btn-danger': event.team == 'B'}">
+			            	<span  class="smallPlayer" player="event.player"></span>
+			            </td>
+			            <td>
+			            	{{event.score}}<BR/>
+			            	{{event.goalTime}}'
+			            </td>
 			            <td class="text-left">
 			            	<div>
+
 			            		{{event.message}}
 			            	</div>
 			            	<span ng-repeat="a in range(event.goalsInARow) track by $index">
@@ -67,29 +73,123 @@
 			      </table>
 		      </slide>
 		      <slide>
-		      <table class="table text-left">
-		        <colgroup>
-		          <col style="width:50px"/>
-		          <col style="width:50px"/>
-		          <col style="width:50px"/>
-		        </colgroup>
-		        <thead>
-		        	<tr>
-		        		<th>Player</th>
-		        		<th>Goals</th>
-		        		<th>Share</th>
-		        	<tr>
-		        </thead>
-		        <tbody>
-		          <tr ng-repeat="player in game.players">
-		            <td>{{player}}</td>
-		            <td>{{match.matchInfo.goalMap[player]}}</td>
-		            <td>{{100 * match.matchInfo.goalMap[player] / (match.teamAScore + match.teamBScore) | number:1}}%</td>
-		          </tr>
-		        </tbody>
-		      </table>
+			      <table class="table text-left">
+			        <colgroup>
+			          <col style="width:50px"/>
+			          <col style="width:50px"/>
+			          <col style="width:50px"/>
+			        </colgroup>
+			        <thead>
+			        	<tr>
+			        		<th>Player</th>
+			        		<th>Goals</th>
+			        		<th>Share</th>
+			        	<tr>
+			        </thead>
+			        <tbody>
+			          <tr ng-repeat="player in game.players">
+			            <td>{{player}}</td>
+			            <td>{{match.matchInfo.goalMap[player]}}</td>
+			            <td>{{100 * match.matchInfo.goalMap[player] / (match.teamAScore + match.teamBScore) | number:1}}%</td>
+			          </tr>
+			        </tbody>
+			      </table>
 		      </slide>
-
+			  <slide ng-repeat="player in game.players">
+			  	<div ng-controller="PlayerController">
+				   <table class="table table-striped text-left">
+				      <thead>
+				      </thead>
+				      <tbody>
+				        <tr>
+				          <td>Player</td>
+				          <td colspan="3">
+				            <div class="pull-left" player="player"></div>
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Rank</td>
+				          <td>
+				          	{{playerResult.statistics.eloRanking}}
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Elo Points</td>
+				          <td>
+				          	{{playerResult.statistics.eloValue}}
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Badges:</td>
+				          <td colspan="3">
+				            	<div badges ng-model="playerResult.statistics.badges" badge-map="badgeMap"></div>
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Success:</td>
+				          <td>
+				          	{{playerResult.statistics.successRate * 100 | number:2}}%
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Shape:</td>
+				          <td>
+				          	{{playerResult.statistics.currentShapeRate * 100 | number:2}}%
+				          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.currentShapeRate * 100 | number:2}}%)</span>
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Goals:</td>
+				          <td>
+				          	<span ng-show="playerResult.statistics.goalPlusMinus >= 0">+</span>{{playerResult.statistics.goalPlusMinus | number:2}}
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Goals per Match:</td>
+				          <td>
+				          	{{playerResult.statistics.averageGoalsPerMatch | number:2}}
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Most goals per game:</td>
+				          <td>
+				          	{{playerResult.statistics.maxGoalsPerGame | number:0}}
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Most victories in a row:</td>
+				          <td>
+				          	{{playerResult.statistics.bestSlam}}
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Offensive:</td>
+				          <td>
+				          	 {{100 * playerResult.statistics.offensivePositionRate | number:2}}%
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Defensive:</td>
+				          <td>
+				          	 {{100 * playerResult.statistics.defensivePositionRate | number:2}}%
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Rate of 5:4 won matches:</td>
+				          <td>
+				          	{{100 * playerResult.statistics.tightlyWonRate | number:2}}%
+				          </td>
+				        </tr>
+				        <tr>
+				          <td>Rate of 4:5 lost matches:</td>
+				          <td>
+				          	{{100 * playerResult.statistics.tightlyLostRate | number:2}}%
+				          </td>
+				        </tr>
+				      </tbody>
+				    </table>
+			  	</div>
+			  </slide>
 
 
 		  </carousel>

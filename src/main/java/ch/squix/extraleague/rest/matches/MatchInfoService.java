@@ -33,7 +33,8 @@ public class MatchInfoService {
 		List<EventDto> events = new ArrayList<>();
 		String lastScorer = "";
 		Integer goalsInARow = 1;
-
+		Integer teamAScore = 0;
+		Integer teamBScore = 0;
 		for (Goal goal : goals) {
 			if (lastScorer.equals(goal.getScorer())) {
 				goalsInARow++;
@@ -44,6 +45,7 @@ public class MatchInfoService {
 			String team = "B";
 			String position = "";
 			if (teamA.contains(goal.getScorer())) {
+				teamAScore++;
 				team = "A";
 				if (teamA.indexOf(goal.getScorer()) == 0) {
 					position = "offense";
@@ -51,6 +53,7 @@ public class MatchInfoService {
 					position = "defense";
 				}
 			} else {
+				teamBScore++;
 				team = "B";
 				if (teamA.indexOf(goal.getScorer()) == 0) {
 					position = "defsense";
@@ -78,6 +81,8 @@ public class MatchInfoService {
 			dto.setGoalTime(goalTime);
 			dto.setMessage(message);
 			dto.setGoalsInARow(goalsInARow);
+			dto.setScore(teamAScore + ":" + teamBScore);
+			dto.setTeam(team);
 			events.add(dto);
 		}
 		Collections.reverse(events);

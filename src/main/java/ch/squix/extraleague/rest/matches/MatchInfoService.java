@@ -44,9 +44,11 @@ public class MatchInfoService {
 			}
 			String team = "B";
 			String position = "";
+			String oppositeKeeper = "";
 			if (teamA.contains(goal.getScorer())) {
 				teamAScore++;
 				team = "A";
+				oppositeKeeper = teamB.get(1);
 				if (teamA.indexOf(goal.getScorer()) == 0) {
 					position = "offense";
 				} else {
@@ -55,6 +57,7 @@ public class MatchInfoService {
 			} else {
 				teamBScore++;
 				team = "B";
+				oppositeKeeper = teamA.get(1);
 				if (teamA.indexOf(goal.getScorer()) == 0) {
 					position = "defsense";
 				} else {
@@ -68,11 +71,11 @@ public class MatchInfoService {
 			} else if (goalsInARow == 3) {
 				message = goal.getScorer() + " is on a spree! 3 Goals in a row!";
 			} else if (goalsInARow == 4) {
-				message = "This is legendary! 4 in a row!";
+				message = "This is legendary! 4 in a row! Is " + oppositeKeeper + " sleeping in the goal?";
 			} else if (goalsInARow == 5) {
-				message = "Unbelievable: 5!";
+				message = "Unbelievable: 5! " + oppositeKeeper + " is apparently injured!";
 			} else if (goalsInARow == 6) {
-				message = "Unstoppable: 6!";
+				message = "Unstoppable: 6! This is a humiliation!";
 			} else if (goalsInARow == 7) {
 				message = "Unbelievable";
 			}

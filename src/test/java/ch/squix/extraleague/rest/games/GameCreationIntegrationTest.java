@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.restlet.Request;
 import org.restlet.data.Method;
 
+import ch.squix.extraleague.model.challenger.ChallengerTeam;
+import ch.squix.extraleague.model.challenger.WinnerTeam;
 import ch.squix.extraleague.model.client.BrowserClient;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
@@ -36,6 +38,8 @@ public class GameCreationIntegrationTest {
             ObjectifyService.register(Ranking.class);
             ObjectifyService.register(MeetingPointPlayer.class);
             ObjectifyService.register(PlayerUser.class);
+            ObjectifyService.register(ChallengerTeam.class);
+            ObjectifyService.register(WinnerTeam.class);
             
 	    helper.setUp();
 	}

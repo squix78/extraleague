@@ -23,4 +23,7 @@ function SummaryController($scope, $rootScope, $resource, $routeParams, $locatio
   $scope.editScores = function () {
 	  $location.path("/games/" + $scope.gameId);  
   };
+  $scope.showChallengers = function() {
+	  $location.path("/challenge/" + $scope.summary.table);
+  }
 });

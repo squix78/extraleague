@@ -13,7 +13,10 @@ function($scope, $rootScope, $location, GameService) {
   };
   $scope.watch = function(game) {
 	  $location.path("/watch/" + game.table);
-  }
+  };
+  $scope.challenge = function(game) {
+	  $location.path("/challenge/" + game.table);
+  };
   $scope.deleteGame = function(game) {
 	  GameService.deleteGame(game);
   };

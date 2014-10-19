@@ -16,17 +16,18 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.googlecode.objectify.Key;
 
+import ch.squix.extraleague.model.challenger.ChallengerTeam;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.notification.NotificationService;
+import ch.squix.extraleague.notification.UpdateChallengersMessage;
 import ch.squix.extraleague.notification.UpdateMeetingPointMessage;
 import ch.squix.extraleague.notification.UpdateOpenGamesMessage;
 import ch.squix.extraleague.rest.games.mode.GameMode;
 import ch.squix.extraleague.rest.games.mode.GameModeFactory;
 import ch.squix.extraleague.rest.playermarket.MeetingPointPlayerMapper;
-
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class GamesResource extends ServerResource {
@@ -82,10 +83,32 @@ public class GamesResource extends ServerResource {
         NotificationService.notifyOpenGamesPlayers(openGames);
 
         removePlayersFromMeetingPoint(game.getPlayers());
+        removeTeamsFromChallengeList(game.getPlayers());
         return dto;
     }
 
-    private void removePlayersFromMeetingPoint(List<String> players) {
+    private void removeTeamsFromChallengeList(List<String> players) {
+        List<ChallengerTeam> challengers = ofy().load()
+                .type(ChallengerTeam.class)
+                .list();
+        
+        List<ChallengerTeam> challengersToRemove = new ArrayList<>();
+        for (ChallengerTeam team : challengers) {
+        	for (String player : players) {
+        		if (team.getChallengers().contains(player)) {
+        			challengersToRemove.add(team);
+        			break;
+        		}
+        	}
+        }
+        ofy().delete().entities(challengersToRemove).now();
+        if (challengersToRemove.size() > 0) {
+            NotificationService.sendMessage(new UpdateChallengersMessage(challengersToRemove.get(0).getTable()));
+        }
+        
+	}
+
+	private void removePlayersFromMeetingPoint(List<String> players) {
         List<MeetingPointPlayer> meetingPointPlayers = ofy().load()
                 .type(MeetingPointPlayer.class)
                 .list();

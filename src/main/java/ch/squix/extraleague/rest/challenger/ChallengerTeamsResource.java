@@ -13,6 +13,8 @@ import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.challenger.ChallengerTeam;
+import ch.squix.extraleague.notification.NotificationService;
+import ch.squix.extraleague.notification.UpdateChallengersMessage;
 
 import com.google.appengine.repackaged.com.google.common.base.Strings;
 import com.google.common.base.Joiner;
@@ -36,10 +38,10 @@ public class ChallengerTeamsResource extends ServerResource {
 		ChallengerTeam team = new ChallengerTeam();
 		team.setCreatedDate(new Date());
 		team.setChallengers(dto.getChallengers());
-		team.setWinners(dto.getWinners());
 		team.setTable(dto.getTable());
 		Key<ChallengerTeam> teamKey = ofy().save().entity(team).now();
 		dto.setId(teamKey.getId());
+		NotificationService.sendMessage(new UpdateChallengersMessage(dto.getTable()));
 		return dto;
 	}
 	
@@ -47,6 +49,7 @@ public class ChallengerTeamsResource extends ServerResource {
 	public void deleteTeam() {
 		String idText = (String) this.getRequestAttributes().get("id");
 		ofy().delete().type(ChallengerTeam.class).id(Long.valueOf(idText)).now();
+		//NotificationService.sendMessage(new UpdateChallengersMessage(dto.getTable()));
 	}
 
 

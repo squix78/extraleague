@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
+import ch.squix.extraleague.rest.games.mode.GameModeEnum;
 
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -14,7 +15,7 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 @Cache
 @Data
-public class ChallengerTeam {
+public class WinnerTeam {
 	
 	@Id
 	private Long id;
@@ -22,10 +23,11 @@ public class ChallengerTeam {
 	@Index
 	private Date createdDate;
 	
-	private List<String> challengers = new ArrayList<>();
+	private List<String> winners = new ArrayList<>();
 	
 	@Index
 	private String table;
 	
+	private GameModeEnum gameMode;
 
 }

@@ -11,5 +11,7 @@ public class SummaryDto {
 	private List<PlayerScoreDto> playerScores = new ArrayList<>();
 	private List<MatchSummaryDto> matches = new ArrayList<>();
 	private Long gameDurationSeconds;
+	private List<String> winners = new ArrayList<>();
+	private String table;
 
 }

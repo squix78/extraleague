@@ -160,6 +160,24 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('Blobs', ['$resource', function($resource) {
       return $resource('/rest/blobs');
     }])
+    .factory('$exceptionHandler', ['$log', '$window', function ($log, $window) {
+	  return function (exception, cause) {
+		$log.error.apply($log, arguments);
+		try{
+			var error = {};
+			error.message = exception.toString();
+			error.url = $window.location.href;
+			error.cause = cause;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open("POST","/rest/error",true);
+			xmlhttp.setRequestHeader("Content-type", "application/json");
+			xmlhttp.send(JSON.stringify(error));
+        } catch (loggingError){
+            $log.warn("Error server-side logging failed");
+            $log.log(loggingError);
+        }
+	  };
+	}])
     .directive('badges', function() {
       return {
         restrict: 'A',

@@ -22,6 +22,7 @@ import ch.squix.extraleague.rest.badges.BadgesResource;
 import ch.squix.extraleague.rest.blobs.BlobUrlResource;
 import ch.squix.extraleague.rest.challenger.ChallengerTeamsResource;
 import ch.squix.extraleague.rest.challenger.WinnerTeamResource;
+import ch.squix.extraleague.rest.error.ClientErrorResource;
 import ch.squix.extraleague.rest.games.GameResource;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGamesResource;
@@ -118,6 +119,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/league", LeagueResource.class);
         router.attach("/league/style", LeagueStyleResource.class);
         router.attach("/blobs", BlobUrlResource.class);
+        router.attach("/error", ClientErrorResource.class);
         
         
         // jobs

@@ -8,5 +8,6 @@ public class ClientErrorDto {
 	private String url;
 	private String cause;
 	private String message;
+	private String userAgent;
 
 }

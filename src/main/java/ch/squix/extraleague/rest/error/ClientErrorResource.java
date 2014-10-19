@@ -14,7 +14,11 @@ public class ClientErrorResource extends ServerResource {
 	
 	@Post(value = "json")
 	public static void logClientError(ClientErrorDto dto) {
-		log.log(Level.SEVERE, "Url: " + dto.getUrl() + "Message: " + dto.getMessage() + ", cause: " + dto.getCause());
+		log.log(Level.SEVERE, 
+				"Url: " + dto.getUrl() 
+				+ "Message: " + dto.getMessage() 
+				+ ", cause: " + dto.getCause() 
+				+ ", userAgent: " + dto.getUserAgent());
 	}
 
 }

@@ -168,6 +168,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 			error.message = exception.toString();
 			error.url = $window.location.href;
 			error.cause = cause;
+			error.userAgent = $window.navigator.userAgent;
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open("POST","/rest/error",true);
 			xmlhttp.setRequestHeader("Content-type", "application/json");

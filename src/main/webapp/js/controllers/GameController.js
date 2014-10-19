@@ -42,13 +42,16 @@ function($scope, $rootScope, $resource, $routeParams, $location, Players, Notifi
 	  GameService.saveCurrentMatch();
   }
   
-  $scope.swapTeam = function(team) {
+  $scope.swapTeamPositions = function(team) {
 	  console.log("Team before swap: " + team);
 	  var temp = team[0];
 	  team[0] = team[1];
 	  team[1] = temp;
 	  console.log("Team after swap: " + team);
 	  $scope.saveCurrentMatch();
+  }
+  $scope.swapTeamColors = function() {
+	  GameService.swapTeamColors();
   }
 
 });

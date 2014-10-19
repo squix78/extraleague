@@ -1,5 +1,5 @@
 angular.module('Extraleague').controller('ChallengeController', 
-function($scope, $routeParams, ChallengerTeam) {
+function($rootScope, $scope, $routeParams, $location, ChallengerTeam, WinnerTeam, Game) {
 	$scope.table = $routeParams.table;
 	$scope.challengerTeam = new ChallengerTeam();
 	$scope.challengerTeam.table = $scope.table;
@@ -10,6 +10,14 @@ function($scope, $routeParams, ChallengerTeam) {
 		});	
 	};
 	$scope.loadChallengers();
+	
+	$scope.loadWinners = function() {
+		$scope.isWinnersLoading = true;
+		$scope.winnerTeam = WinnerTeam.get({table: $scope.table}, function() {
+			$scope.isWinnersLoading = false;
+		});			
+	};
+	$scope.loadWinners();
 	
 	$scope.addChallengers = function() {
 		$scope.isAddingChallengers = true;
@@ -28,5 +36,25 @@ function($scope, $routeParams, ChallengerTeam) {
 			$scope.loadChallengers();
 		});
 	};
+	
+	$scope.startChallenge = function(challenger) {
+		  $scope.game = new Game();
+		  $scope.game.table = $scope.winnerTeam.table;
+		  $scope.game.gameMode = $scope.winnerTeam.gameMode;
+		  $scope.game.players = $scope.winnerTeam.winners.concat(challenger.challengers);
+		  $scope.isGameStarting = true;
+		  $scope.game.$save(function(savedGame) {
+			  $scope.isGameStarting = false;
+			  $location.path("/games/" + savedGame.id);
+		  });
+	};
+	$rootScope.$on("UpdateChallengers", function(event, message) {
+		   console.log("Received change challenger list");
+		   $scope.loadChallengers();
+	});
+	$rootScope.$on("UpdateWinners", function(event, message) {
+		console.log("Received change for winners");
+		$scope.loadWinners();
+	});
 	
 });

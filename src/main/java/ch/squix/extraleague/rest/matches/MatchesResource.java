@@ -29,7 +29,7 @@ import ch.squix.extraleague.rest.games.GameDto;
 import ch.squix.extraleague.rest.games.GameDtoMapper;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGameService;
-
+import ch.squix.extraleague.rest.result.SummaryService;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 
@@ -135,6 +135,7 @@ public class MatchesResource extends ServerResource {
 			NotificationService.sendSummaryEmail(game, matches);
 			NotificationService.callWebHooksForEndOfGame(game.getId());
 			NotificationService.notifyOpenGamesPlayers(openGames);
+			SummaryService.updateTableWinners(game, matches);
 		}
 		GameDto gameDto = GameDtoMapper.mapToDto(game);
 		NotificationService.sendMessage(new UpdateMatchMessage(gameDto, matchDto));

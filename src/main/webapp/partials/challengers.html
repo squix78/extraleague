@@ -23,12 +23,33 @@
 			</div>
 	</div>
 </form>
-
-<div ng-repeat="challenger in challengers | orderBy:'createdDate'" class="alert alert-success">
-	  <div class="playerRow">
-		  	<div ng-repeat="player in challenger.players" player="player"></div>
-		  	{{ challenger.createdDate | date:'dd. MMM. yyyy HH:mm:ss'}}
-	  </div>
-	  <button ng-hide="isDeleteButtonVisible" class="btn btn-danger btn-sm" ng-click="isDeleteButtonVisible = true">Remove</button>
-	  <button ng-show="isDeleteButtonVisible" class="btn btn-danger btn-sm" ng-click="deleteChallenger(challenger)">Really?</button>
+<div ng-show="winnerTeam.winners">
+	<h3>Last Winners</h3>
+	<div class="alert alert-success">
+		  <div class="label label-info">
+		  		{{winnerTeam.table}} 
+		  		| {{winnerTeam.createdDate | date:'dd. MMM. yyyy HH:mm:ss'}}
+		  		| {{winnerTeam.gameMode}}
+		  		
+		  </div>
+	
+		  <div class="playerRow">
+			  	<div ng-repeat="player in winnerTeam.winners" player="player"></div>
+		  </div>
+	</div>
+</div>
+<div ng-show="challengers.length > 0">
+	<h3>Challengers</h3>
+	<div ng-repeat="challenger in challengers | orderBy:'createdDate'" class="alert alert-success">
+		  <div class="label label-info">
+		  		{{challenger.table}} | {{challenger.createdDate | date:'dd. MMM. yyyy HH:mm:ss'}}
+		  </div>
+	
+		  <div class="playerRow">
+			  	<div ng-repeat="player in challenger.challengers" player="player"></div>
+		  </div>
+		  <button class="btn btn-primary btn-sm" ng-click="startChallenge(challenger)">Start Challenge</button>
+		  <button ng-hide="isDeleteButtonVisible" class="btn btn-danger btn-sm" ng-click="isDeleteButtonVisible = true">Remove Team</button>
+		  <button ng-show="isDeleteButtonVisible" class="btn btn-danger btn-sm" ng-click="deleteChallenger(challenger)">Really?</button>
+	</div>
 </div>

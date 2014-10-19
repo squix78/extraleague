@@ -165,6 +165,12 @@ angular.module('Games', ['gaeChannelService'])
 		    	games.errorStatus = error.status;
 		    });
 		},
+		swapTeamColors: function() {
+			var tempTeamB = games.currentMatch.teamA;
+			games.currentMatch.teamA = games.currentMatch.teamB;
+			games.currentMatch.teamB = tempTeamB;
+			service.saveCurrentMatch();
+		},
 		checkEndOfMatch: function() {
 		    if (angular.isDefined(games.currentMatch)) {
 		      var maxGoals = games.currentMatch.maxGoals;

@@ -20,7 +20,6 @@ public class ChallengerTeamDtoMapper {
 		dto.setId(team.getId());
 		dto.setCreatedDate(team.getCreatedDate());
 		dto.setChallengers(team.getChallengers());
-		dto.setWinners(team.getWinners());
 		dto.setTable(team.getTable());
 		return dto;
 	}

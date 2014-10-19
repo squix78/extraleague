@@ -1,18 +1,45 @@
 package ch.squix.extraleague.rest.result;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
+import com.google.common.base.Joiner;
+
+import ch.squix.extraleague.model.challenger.WinnerTeam;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.notification.NotificationService;
+import ch.squix.extraleague.notification.UpdateWinnersMessage;
+import ch.squix.extraleague.rest.ranking.UpdateRankingsResource;
 
 public class SummaryService {
 	
+	private static final Logger log = Logger.getLogger(SummaryService.class.getName());
+	
+	public static void updateTableWinners(Game game, List<Match> matches) {
+		SummaryDto dto = getSummaryDto(game, matches);
+		WinnerTeam winnerTeam = ofy().load().type(WinnerTeam.class).filter("table = ", game.getTable()).first().now();
+		if (winnerTeam == null) {
+			log.info("We didn't have a winner team for table " + game.getTable() + " yet. Creating...");
+			winnerTeam = new WinnerTeam();
+			winnerTeam.setTable(game.getTable());
+		}
+		winnerTeam.setCreatedDate(new Date());
+		winnerTeam.setGameMode(game.getGameMode());
+		winnerTeam.setWinners(dto.getWinners());
+		log.info("Setting winner team to: " + Joiner.on(", ").join(dto.getWinners()));
+		ofy().save().entity(winnerTeam).now();
+		NotificationService.sendMessage(new UpdateWinnersMessage(game.getTable()));
+	}
 
 	public static SummaryDto getSummaryDto(Game game, List<Match> matches) {
 		SummaryDto dto = new SummaryDto();
@@ -96,13 +123,31 @@ public class SummaryService {
 					playerGoals.get(player), 
 					playerEloPoints.get(player)));
 		}
+		Collections.sort(dto.getPlayerScores(), new PlayerScoreComparator());
+		if (dto.getPlayerScores().size() > 2) {
+			List<String> winners = new ArrayList<>();
+			winners.add(dto.getPlayerScores().get(0).getPlayer());
+			winners.add(dto.getPlayerScores().get(1).getPlayer());
+			dto.setWinners(winners);
+		}
+		
 		Date startDate = game.getStartDate();
 		Date endDate = game.getEndDate();
 		if (startDate != null && endDate != null) {
 			Long durationInSeconds = (endDate.getTime() - startDate.getTime()) / 1000;
 			dto.setGameDurationSeconds(durationInSeconds);
 		}
+		dto.setTable(game.getTable());
 		return dto;
+	}
+	
+	public static class PlayerScoreComparator implements Comparator<PlayerScoreDto> {
+
+		@Override
+		public int compare(PlayerScoreDto score1, PlayerScoreDto score2) {
+			return score2.getEarnedEloPoints().compareTo(score1.getEarnedEloPoints());
+		}
+		
 	}
 
 }

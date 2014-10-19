@@ -154,6 +154,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('ChallengerTeam', ['$resource', function($resource) {
     	return $resource('/rest/challengers/:table/:id');
     }])
+    .factory('WinnerTeam', ['$resource', function($resource) {
+    	return $resource('/rest/winners/:table');
+    }])
     .factory('Blobs', ['$resource', function($resource) {
       return $resource('/rest/blobs');
     }])

@@ -38,6 +38,11 @@
     This game took {{summary.gameDurationSeconds}} seconds.
   </div>
 </div>
+<div class="row" ng-hide="!summary.gameDurationSeconds">
+  <div class="col-xs-12">
+	<button class="btn btn-primary" ng-click="showChallengers()">See Challengers</button>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-xs-12">

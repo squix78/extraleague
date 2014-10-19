@@ -16,7 +16,7 @@ public class ClientErrorResource extends ServerResource {
 	public static void logClientError(ClientErrorDto dto) {
 		log.log(Level.SEVERE, 
 				"Url: " + dto.getUrl() 
-				+ "Message: " + dto.getMessage() 
+				+ ", message: " + dto.getMessage() 
 				+ ", cause: " + dto.getCause() 
 				+ ", userAgent: " + dto.getUserAgent());
 	}

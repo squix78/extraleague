@@ -56,7 +56,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="btn btn-default btn-nav" ng-if="backlink" ng-click="backAction()"><span class="glyphicon glyphicon-arrow-left"></span></button>
+       
           <a ng-show="!league.logoUrl" class="navbar-brand" href="#" ng-bind="league.name"></a>
           <a ng-show="league.logoUrl" class="navbar-brand" href="#"><img ng-src="{{league.logoUrl}}"/></a>
           <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" >

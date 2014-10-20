@@ -46,7 +46,9 @@
         </tbody>
 	</table>
 </div>
-
+<div ng-show="rankings.length == 0">
+	Start playing now to be ranked!
+</div>
 <div ng-show="isRankingLoading">
 	<img src="images/ajax-loader.gif"/> Loading rankings...
 </div>
@@ -103,6 +105,7 @@
 		</tr>
 	</tbody>
 </table>
+
 <h4>Badges</h4>
 <table class="table table-striped">
    <thead>

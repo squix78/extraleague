@@ -96,8 +96,10 @@
 			  <slide ng-repeat="player in game.players">
 			  	<div ng-controller="PlayerController">
 				   <table class="table table-striped text-left">
-				      <thead>
-				      </thead>
+				   	  <colgroup>
+				          <col style="width:200px"/>
+				          <col/>
+			          </colgroup>
 				      <tbody>
 				        <tr>
 				          <td>Player</td>
@@ -106,13 +108,13 @@
 				          </td>
 				        </tr>
 				        <tr>
-				          <td>Rank</td>
+				          <td>Rank:</td>
 				          <td>
 				          	{{playerResult.statistics.eloRanking}}
 				          </td>
 				        </tr>
 				        <tr>
-				          <td>Elo Points</td>
+				          <td>Elo Points:</td>
 				          <td>
 				          	{{playerResult.statistics.eloValue}}
 				          </td>
@@ -126,13 +128,15 @@
 				        <tr>
 				          <td>Success:</td>
 				          <td>
-				          	{{playerResult.statistics.successRate * 100 | number:2}}%
+				          	{{playerResult.statistics.successRate * 100 | number:2}}
+				          	<span ng-show="playerResult.statistics">%</span>
 				          </td>
 				        </tr>
 				        <tr>
 				          <td>Shape:</td>
 				          <td>
-				          	{{playerResult.statistics.currentShapeRate * 100 | number:2}}%
+				          	{{playerResult.statistics.currentShapeRate * 100 | number:2}}
+				          	<span ng-show="playerResult.statistics">%</span>
 				          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.currentShapeRate * 100 | number:2}}%)</span>
 				          </td>
 				        </tr>
@@ -163,25 +167,29 @@
 				        <tr>
 				          <td>Offensive:</td>
 				          <td>
-				          	 {{100 * playerResult.statistics.offensivePositionRate | number:2}}%
+				          	 {{100 * playerResult.statistics.offensivePositionRate | number:2}}
+				          	 <span ng-show="playerResult.statistics">%</span>
 				          </td>
 				        </tr>
 				        <tr>
 				          <td>Defensive:</td>
 				          <td>
-				          	 {{100 * playerResult.statistics.defensivePositionRate | number:2}}%
+				          	 {{100 * playerResult.statistics.defensivePositionRate | number:2}}
+				          	 <span ng-show="playerResult.statistics">%</span>
 				          </td>
 				        </tr>
 				        <tr>
 				          <td>Rate of 5:4 won matches:</td>
 				          <td>
-				          	{{100 * playerResult.statistics.tightlyWonRate | number:2}}%
+				          	{{100 * playerResult.statistics.tightlyWonRate | number:2}}
+				          	<span ng-show="playerResult.statistics">%</span>
 				          </td>
 				        </tr>
 				        <tr>
 				          <td>Rate of 4:5 lost matches:</td>
 				          <td>
-				          	{{100 * playerResult.statistics.tightlyLostRate | number:2}}%
+				          	{{100 * playerResult.statistics.tightlyLostRate | number:2}}
+				          	<span ng-show="playerResult.statistics">%</span>
 				          </td>
 				        </tr>
 				      </tbody>

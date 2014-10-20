@@ -1,8 +1,6 @@
-<h3>Current Game on {{table}} </h3>
-<div ng-show="openGames.gameList.length == 0 && !isGamesLoading">
-  Currently there are no open games...
-</div>
+
 <div ng-show="openGames.gameList.length > 0">
+	<h3>Current Game on {{table}} </h3>
 	<div ng-repeat="game in openGames.gameList | filter:{table: table} | limitTo: 1">
 	  <div ng-show="game.matches" ng-repeat="match in game.matches | filter:{matchIndex: game.indexOfLastUpdatedMatch}">
 	    <div class="panel panel-default">
@@ -200,6 +198,12 @@
 
 	</div>
 </div>
+<div ng-show="openGames.gameList.length == 0">
+	<h3>Qualify for the finals against the world champion!</h3>
+	<div ng-controller="RankingController" ng-include="'partials/ranking.html'"></div>
+</div>
+
+
 <div ng-show="isGamesLoading">
 	<img src="images/ajax-loader.gif"/> Loading previous games
 </div>

@@ -88,7 +88,7 @@
 			          <tr ng-repeat="player in game.players">
 			            <td>{{player}}</td>
 			            <td>{{match.matchInfo.goalMap[player]}}</td>
-			            <td>{{100 * match.matchInfo.goalMap[player] / (match.teamAScore + match.teamBScore) | number:1}}%</td>
+			            <td>{{match.matchInfo.shareMap[player] * 100 | number:1}}%</td>
 			          </tr>
 			        </tbody>
 			      </table>

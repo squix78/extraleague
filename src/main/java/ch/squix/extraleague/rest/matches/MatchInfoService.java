@@ -17,11 +17,25 @@ public class MatchInfoService {
 		MatchInfoDto infoDto = new MatchInfoDto();
 		
 		Map<String, Integer> goalMap = new HashMap<>();
+		Map<String, Double> shareMap = new HashMap<>();
 		List<String> scorers = match.getScorers();
 		for (String player : match.getPlayers()) {
 			goalMap.put(player, Collections.frequency(scorers, player));
 		}
 		infoDto.setGoalMap(goalMap); 
+		Integer totalGoals = scorers.size();
+		for (String player : match.getPlayers()) {
+			Integer playerGoals = goalMap.get(player);
+			if (playerGoals == null) {
+				playerGoals = 0;
+			}
+			Double playerShare = 0d;
+			if (totalGoals != 0) {
+				playerShare = 1.0 * playerGoals / totalGoals;
+			}
+			shareMap.put(player, playerShare);
+		}
+		infoDto.setShareMap(shareMap);
 		infoDto.setTeamAGoals(getScorers(match.getStartDate(), Arrays.asList(match.getTeamA()), match.getGoals()));
 		infoDto.setTeamBGoals(getScorers(match.getStartDate(), Arrays.asList(match.getTeamB()), match.getGoals()));
 		infoDto.setEvents(getEvents(match.getStartDate(), Arrays.asList(match.getTeamA()), Arrays.asList(match.getTeamB()), match.getGoals()));

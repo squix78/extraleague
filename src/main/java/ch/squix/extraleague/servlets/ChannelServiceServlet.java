@@ -33,7 +33,7 @@ public class ChannelServiceServlet extends HttpServlet {
 		ChannelPresence presence = channelService.parsePresence(req);
 		log.info("Client disconnected: " + presence.clientId());
 		if (!presence.isConnected()) {
-		    List<Key<BrowserClient>> keys = ofy().load().type(BrowserClient.class).filter("clientId = ", presence.clientId()).keys().list();
+		    List<Key<BrowserClient>> keys = ofy().load().type(BrowserClient.class).filter("clientId", presence.clientId()).keys().list();
 		    log.info("Deleting " + keys.size() + " browser clients");
 		    ofy().delete().keys(keys).now();
 		}

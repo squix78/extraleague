@@ -13,10 +13,11 @@
 	  <div class="row">
 		<div class="col-md-12 form-group" ng-class="{'has-error': 'playerForm.player.$error'}">
 			<label for="player">Player</label>
-			<input required type="text" class="form-control" id="player" name="player"
+			<input required ng-pattern="/^[a-zA-Z]{2,6}$/" type="text" class="form-control" id="player" name="player"
 				ng-model="player.player" playerexists placeholder="Short name (max 6 characters)" maxlength="6">
 			<div ng-show="playerForm.player.$error.required && playerForm.player.$dirty">Please enter player name</div>
 			<div ng-show="playerForm.player.$error.playerexists">This player is already registered. Please choose another</div>
+			<div ng-show="playerForm.player.$error.pattern">Please enter letters a-z without space or Umlaut</div>
 		</div>
 	  </div>
 	  <div class="row">		

@@ -15,11 +15,6 @@
 		<service>xmpp_error</service>
 	</inbound-services>
 	
-	
-	<inbound-services>
-	  <service>channel_presence</service>
-	</inbound-services>
-	
 	<admin-console>
 	  <page name="Appstats" url="/appstats" />
 	</admin-console>

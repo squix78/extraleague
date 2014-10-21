@@ -19,6 +19,7 @@ public class BrowserClient {
 	@Id
 	private Long id;
 
+	@Index
 	private String token;
 	
 	@Index

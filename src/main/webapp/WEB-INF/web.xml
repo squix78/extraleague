@@ -82,6 +82,12 @@
          ch.squix.extraleague.servlets.PlayerImageServlet
       </servlet-class>
    </servlet>
+   <servlet>
+      <servlet-name>ChannelServiceServlet</servlet-name>
+      <servlet-class>
+         ch.squix.extraleague.servlets.ChannelServiceServlet
+      </servlet-class>
+   </servlet>
    
 	<servlet>
 	  <servlet-name>appstats</servlet-name>
@@ -127,6 +133,10 @@
 	  </auth-constraint>
 	</security-constraint>
 
+   <servlet-mapping>
+      <servlet-name>ChannelServiceServlet</servlet-name>
+      <url-pattern>/_ah/channel/disconnected/</url-pattern>
+   </servlet-mapping>
    <servlet-mapping>
       <servlet-name>RestletServlet</servlet-name>
       <url-pattern>/rest/*</url-pattern>

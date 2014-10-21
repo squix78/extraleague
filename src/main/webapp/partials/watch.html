@@ -48,7 +48,7 @@
 			        </colgroup>
 			        <tbody>
 			          <tr ng-repeat="event in match.matchInfo.events track by $index | limitTo:5">
-			            <td class="btn" ng-class="{'btn-primary': event.team == 'A', 'btn-danger': event.team == 'B'}">
+			            <td ng-class="{'btn-primary': event.team == 'A', 'btn-danger': event.team == 'B'}">
 			            	<span  class="smallPlayer" player="event.player"></span>
 			            </td>
 			            <td>

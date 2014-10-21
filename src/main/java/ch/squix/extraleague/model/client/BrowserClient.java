@@ -23,6 +23,9 @@ public class BrowserClient {
 	private String token;
 	
 	@Index
+	private Long clientId;
+	
+	@Index
 	private Date createdDate;
 	
 	@OnSave

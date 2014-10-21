@@ -45,7 +45,7 @@ public class PlayerRessource extends ServerResource {
 		for (Match match : matches) {
 			MatchDto dto = MatchDtoMapper.mapToDto(match);
 			matchDtos.add(dto);
-			if (dto.getStartDate().compareTo(today.getTime()) > 0) {
+			if (dto.getStartDate() != null && dto.getStartDate().compareTo(today.getTime()) > 0) {
 				hadMatchToday = true;
 			}
 		}

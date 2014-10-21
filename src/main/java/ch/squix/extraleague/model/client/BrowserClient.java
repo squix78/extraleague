@@ -23,7 +23,7 @@ public class BrowserClient {
 	private String token;
 	
 	@Index
-	private Long clientId;
+	private String clientId;
 	
 	@Index
 	private Date createdDate;

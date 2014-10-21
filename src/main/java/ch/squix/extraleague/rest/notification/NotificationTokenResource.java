@@ -24,8 +24,8 @@ public class NotificationTokenResource extends ServerResource {
 	public NotificationTokenDto execute() throws UnsupportedEncodingException {
 		ChannelService channelService = ChannelServiceFactory.getChannelService();
 		Random random = new Random();
-		Long clientId = random.nextLong();
-		String token = channelService.createChannel(String.valueOf(clientId));
+		String clientId = String.valueOf(random.nextLong());
+		String token = channelService.createChannel(clientId);
 		BrowserClient client = new BrowserClient();
 		client.setClientId(clientId);
 		client.setToken(token);

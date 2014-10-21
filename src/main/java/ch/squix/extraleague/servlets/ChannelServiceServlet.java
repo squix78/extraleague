@@ -1,6 +1,9 @@
 package ch.squix.extraleague.servlets;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -13,6 +16,7 @@ import ch.squix.extraleague.model.client.BrowserClient;
 import com.google.appengine.api.channel.ChannelPresence;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 public class ChannelServiceServlet extends HttpServlet {
@@ -27,9 +31,11 @@ public class ChannelServiceServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ChannelService channelService = ChannelServiceFactory.getChannelService();
 		ChannelPresence presence = channelService.parsePresence(req);
+		log.info("Client disconnected: " + presence.clientId());
 		if (!presence.isConnected()) {
-			log.info("Client disconnected: " + presence.clientId());
-			//ofy().load().entity(BrowserClient.class).filter("", "");
+		    List<Key<BrowserClient>> keys = ofy().load().type(BrowserClient.class).filter("clientId = ", presence.clientId()).keys().list();
+		    log.info("Deleting " + keys.size() + " browser clients");
+		    ofy().delete().keys(keys).now();
 		}
 	}
 

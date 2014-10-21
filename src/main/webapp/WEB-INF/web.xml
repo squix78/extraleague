@@ -136,6 +136,7 @@
    <servlet-mapping>
       <servlet-name>ChannelServiceServlet</servlet-name>
       <url-pattern>/_ah/channel/disconnected/</url-pattern>
+      <url-pattern>/_ah/channel/connected/</url-pattern>
    </servlet-mapping>
    <servlet-mapping>
       <servlet-name>RestletServlet</servlet-name>

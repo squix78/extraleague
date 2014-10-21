@@ -87,6 +87,8 @@ function($scope, $http, Blobs, PlayerService, PlayerUsers) {
 	
 	$scope.uploadFile = function(url, formData) {
 	    $scope.isCaptureLoading = true;
+	    $scope.showUpload = false;
+	    $scope.showCam = false;
 	    $http.post($scope.blobUrl.url, formData, {
 	        transformRequest: angular.identity,
 	        headers: { 'Content-Type': undefined }
@@ -95,14 +97,10 @@ function($scope, $http, Blobs, PlayerService, PlayerUsers) {
 	    	console.log("Post worked");
     		$scope.player.imageUrl = response;
     		$scope.isCaptureLoading = false;
-    		$scope.showUpload = false;
-    		$scope.showCam = false;
 	    })
     	.error(function (a, b, c) {
     		console.log("Post failed");
     		$scope.isCaptureLoading = false;
-    		$scope.showUpload = false;
-    		$scope.showCam = false;
     	});
 	};
 	

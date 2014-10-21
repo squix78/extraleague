@@ -104,7 +104,7 @@ public class RankingService {
         rankingTasks.add(new AverageTimePerMatchTask());
         rankingTasks.add(new ManualBadgeTask());
         rankingTasks.add(new CurrentShapeTask());
-        rankingTasks.add(new IncestuousTask());
+        //rankingTasks.add(new IncestuousTask());
         rankingTasks.add(new TightMatchesTask());
         rankingTasks.add(new PlayerGoalsTask());
         rankingTasks.add(new EloRankingTask());

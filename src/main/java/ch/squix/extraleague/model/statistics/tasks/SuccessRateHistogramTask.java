@@ -22,6 +22,9 @@ public class SuccessRateHistogramTask implements StatisticTask {
 		for (PlayerRanking ranking : rankings.getPlayerRankings()) {
 			int bin = (int) Math.floor(ranking.getSuccessRate() / binRange);
 			Integer binCount = histogram.get(bin);
+			if (binCount == null) {
+				binCount = 0;
+			}
 			histogram.put(bin, binCount + 1);
 		}
 		statistics.setSuccessRateHistogram(histogram);

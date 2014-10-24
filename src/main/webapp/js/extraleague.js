@@ -1,7 +1,7 @@
 angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 
                                'ui.bootstrap', 'ui.bootstrap.buttons', 'ui.bootstrap.alert', 
                                'nvd3ChartDirectives', 'omr.directives', 'gaeChannelService', 
-                               'angulartics', 'angulartics.google.analytics'])
+                               'angulartics', 'angulartics.google.analytics', 'squix.services.logging'])
     .config(function($routeProvider) {
         $routeProvider
         .when('/newGame', {
@@ -157,11 +157,12 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('WinnerTeam', ['$resource', function($resource) {
     	return $resource('/rest/winners/:table');
     }])
-    .factory('$exceptionHandler', ['$log', '$window', function ($log, $window) {
+    .factory('$exceptionHandler', ['$log', '$window', 'traceService', function ($log, $window, traceService) {
 	  return function (exception, cause) {
 		$log.error.apply($log, arguments);
 		try{
 			var error = {};
+			error.stackTrace = traceService.print({e: exception});
 			error.message = exception.toString();
 			error.url = $window.location.href;
 			error.cause = cause;
@@ -215,21 +216,6 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 	          });                
 	    }
 	  };  
-	}])
-	.directive('fileModel', ['$parse', function ($parse) {
-	    return {
-	        restrict: 'A',
-	        link: function(scope, element, attrs) {
-	            var model = $parse(attrs.fileModel);
-	            var modelSetter = model.assign;
-	            
-	            element.bind('change', function(){
-	                scope.$apply(function(){
-	                    modelSetter(scope, element[0].files[0]);
-	                });
-	            });
-	        }
-	    };
 	}])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {

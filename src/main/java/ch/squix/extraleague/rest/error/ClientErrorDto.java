@@ -9,5 +9,6 @@ public class ClientErrorDto {
 	private String cause;
 	private String message;
 	private String userAgent;
+	private String [] stackTrace;
 
 }

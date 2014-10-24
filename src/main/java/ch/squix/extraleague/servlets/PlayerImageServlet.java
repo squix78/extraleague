@@ -19,6 +19,7 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesService.OutputEncoding;
+import com.google.appengine.api.images.CompositeTransform;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.OutputSettings;
 import com.google.appengine.api.images.Transform;
@@ -61,7 +62,10 @@ public class PlayerImageServlet extends HttpServlet {
 
 			Image oldImage = ImagesServiceFactory.makeImage(picture);
 			Transform resize = ImagesServiceFactory.makeResize(48, 58, 0.5, 0);
-			Image newImage = imagesService.applyTransform(resize, oldImage, OutputEncoding.PNG);
+			Transform feelingLucky = ImagesServiceFactory.makeImFeelingLucky();
+			CompositeTransform composite = ImagesServiceFactory.makeCompositeTransform();
+			composite = composite.concatenate(resize).concatenate(feelingLucky);
+			Image newImage = imagesService.applyTransform(composite, oldImage, OutputEncoding.PNG);
 			picture = newImage.getImageData();
 
 			resp.getOutputStream().write(picture);

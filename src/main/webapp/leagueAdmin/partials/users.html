@@ -25,7 +25,7 @@
          	{{playerUser.email}}
          </td>
          <td>
-         	<div class="playerImage"><img class="player img img-rounded" src="{{playerUser.imageUrl}}"/></div>
+         	<div class="smallPlayer" player-img="playerUser.imageUrl"></div>
 		 </td>
          <td>
          	<button ng-hide="isDeleteConfirmed" type="submit" class="btn btn-danger btn-xs" ng-click="isDeleteConfirmed = true">Delete</button>

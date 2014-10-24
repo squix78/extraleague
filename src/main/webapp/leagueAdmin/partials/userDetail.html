@@ -13,7 +13,7 @@
   </div>
   <div class="form-group">
     <label for="imageUrlInput">Image URL</label>
-    <input type="text" required class="form-control" id="imageUrlInput" ng-model="playerUser.imageUrl">
+    <div player-capture image-url="playerUser.imageUrl"></div>
   </div>
   <div class="checkbox">
     <label>
@@ -21,9 +21,7 @@
     </label>
   </div>
   <button ng-disabled="!userForm.$valid" type="submit" class="btn btn-primary" ng-click="saveUser()">Save</button>
-  <pre>
-	{{ userForm.$valid | json }}
-</pre>
+
 </form>
 
 
@@ -31,6 +29,3 @@
 <span ng-show="isPlayerLoading"><img src="../images/ajax-loader.gif" /> Loading user...</span>
 <span ng-show="isPlayerSaving"><img src="../images/ajax-loader.gif" /> Saving user...</span>
 
-<pre>
-	{{playerUser | json }}
-</pre>

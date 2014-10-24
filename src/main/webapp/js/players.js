@@ -96,6 +96,21 @@ angular.module('PlayerMappings', [])
 		}
 	};
 }])
+.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}])
 .directive('playerCapture', ['$http', 'PlayerService', 'Blobs', function($http, PlayerService, Blobs) {
     return {
     	templateUrl: '/js/templates/capture.html',
@@ -153,7 +168,7 @@ angular.module('PlayerMappings', [])
             		    	scope.uploadFile(scope.blobUrl.url, formData);
             		    });
             		}
-            	});
+            	}, true);
             	scope.$watch('media', function(media) {
                     if (angular.isDefined(media)) {
                     	scope.blobUrl = Blobs.get({}, function() {

@@ -157,9 +157,6 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('WinnerTeam', ['$resource', function($resource) {
     	return $resource('/rest/winners/:table');
     }])
-    .factory('Blobs', ['$resource', function($resource) {
-      return $resource('/rest/blobs');
-    }])
     .factory('$exceptionHandler', ['$log', '$window', function ($log, $window) {
 	  return function (exception, cause) {
 		$log.error.apply($log, arguments);

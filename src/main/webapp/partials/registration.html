@@ -30,36 +30,17 @@
 	  </div>
 	  <div class="row">		
 		<div class="col-md-12 form-group">
-			<label>Player Identification</label>
+			<label>Player Identification (mandatory)</label>
 		</div>
 	  </div>
 	  <div class="row">		
 		<div class="col-xs-12 form-group">
-			<div ng-show="!showCam && !isCaptureLoading && !showUpload" class="pull-left" player-img="player.imageUrl"></div>
-
-
-			<img ng-show="isCaptureLoading" src="images/ajax-loader.gif" />
-			<ng-camera class="img img-rounded"
-			  ng-show="showCam"
-			  type="photo"
-			  enabled="showCam"
-			  width="160"
-			  height="120"
-			  ng-model="media"
-			  capture="callback(media)"
-			  capture-message="Go!"></ng-camera>
-			  <input ng-show="false" required type="text" class="form-control" id="imageUrl"
-				ng-model="player.imageUrl">
+			<div player-capture image-url="player.imageUrl"></div>
+			<input ng-show="false" required type="text" class="form-control"
+				id="imageUrl" ng-model="player.imageUrl">
 		</div>
 	  </div>
-	  <div class="row">		
-		<div class="col-xs-12 form-group">
-			<button ng-show="!showCam && !showUpload && hasGetUserMedia()" class="btn btn-primary" ng-click="enableCam()"> <i class="fa fa-camera"></i> Take Picture</button>
-			<span ng-show="!showCam && !showUpload && !hasGetUserMedia()" class="btn btn-default btn-file">
-				<i class="fa fa-camera"></i> Upload <input file-model="fileForUpload" type="file" accept="image/*;capture=camera" capture="camera">
-			</span>
-		</div>
-	  </div>
+
 	  <div class="row">
 		<div class="col-md-12 form-group">
 			<button ng-disabled="!playerForm.$valid || isPlayerRegistering" type="submit"

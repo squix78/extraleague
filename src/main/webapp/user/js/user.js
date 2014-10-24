@@ -1,4 +1,4 @@
-angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'ui.bootstrap'])
+angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'ui.bootstrap', 'omr.directives'])
     .config(function($routeProvider) {
         $routeProvider.when('/currentUser', {
            controller : 'UserController',

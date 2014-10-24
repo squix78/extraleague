@@ -2,7 +2,7 @@
 
 
 
- <form name="userForm">
+ <form name="userForm" novalidate>
   <div class="form-group">
     <label for="playerInput">Player</label>
     <input ng-disabled="playerUser.playerClaimed" type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
@@ -20,8 +20,8 @@
     <input ng-disabled="true" type="email" class="form-control" id="emailInput" placeholder="Email" ng-model="playerUser.appUserEmail">
   </div>
   <div class="form-group">
-    <label for="imageUrlInput">Image URL</label>
-    <input type="text" class="form-control" id="imageUrlInput" ng-model="playerUser.imageUrl">
+    <label for="imageUrlInput">Player Image</label>
+    <div player-capture image-url="playerUser.imageUrl"></div>
   </div>
   <div class="checkbox">
     <label>
@@ -36,7 +36,6 @@
   <button ng-disabled="!userForm.$valid || isPlayerSaving" type="submit" class="btn btn-primary" ng-click="savePlayer()">Save</button>
 
 </form>
-
 
 
 <span ng-show="isPlayerLoading"><img src="../images/ajax-loader.gif" /> Loading user...</span>

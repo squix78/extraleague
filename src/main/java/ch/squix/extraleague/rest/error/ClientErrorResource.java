@@ -3,6 +3,8 @@ package ch.squix.extraleague.rest.error;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.restlet.engine.header.Header;
+import org.restlet.engine.header.HeaderConstants;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 import org.restlet.util.Series;
@@ -30,8 +32,12 @@ public class ClientErrorResource extends ServerResource {
 	}
 	
 	private  String getRequestHeader(String headerName) {
-		Series headers = (Series) this.getRequest().getAttributes().get("org.restlet.http.headers");
-		return headers.getFirstValue("Location");
+		Series<Header> series = (Series<Header>)getRequestAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+	    Header header = series.getFirst(headerName);
+	    if (header != null) {
+	    	return header.getValue();
+	    }
+		return null;
 	}
 
 }

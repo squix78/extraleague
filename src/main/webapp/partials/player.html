@@ -158,7 +158,7 @@
           </td>
         </tr>
         <tr>
-          <td>Offensive:</td>
+          <td>Offensive Victories:</td>
           <td>
           	 {{100 * playerResult.statistics.offensivePositionRate | number:2}}%
           </td>
@@ -170,15 +170,15 @@
           </td>
         </tr>
         <tr>
-          <td>Defensive:</td>
+          <td>Offensive Goals:</td>
           <td>
-          	 {{100 * playerResult.statistics.defensivePositionRate | number:2}}%
+          	 {{100 * playerResult.statistics.offensiveGoalsRate | number:2}}%
           </td>
           <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.defensivePositionRate * 100 | number:2}}%)</span>
+          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.offensiveGoalsRate * 100 | number:2}}%)</span>
           </td>
           <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.defensivePositionRate * 100 | number:2}}%)</span>
+          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.offensiveGoalsRate * 100 | number:2}}%)</span>
           </td>
         </tr>
         <tr>

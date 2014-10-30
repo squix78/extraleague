@@ -37,6 +37,7 @@ public class RankingDto {
 
     private Double offensivePositionRate;
     private Double defensivePositionRate;
+    private Double offensiveGoalsRate;
 
     private Double tightlyLostRate;
     private Double tightlyWonRate;

@@ -19,6 +19,10 @@ public class ClientErrorResource extends ServerResource {
 	
 	@Post(value = "json")
 	public void logClientError(ClientErrorDto dto) {
+		String stackTrace = "-";
+		if (dto.getStackTrace() != null) {
+			stackTrace = Joiner.on("\n   ").join(dto.getStackTrace());
+		}
 		log.log(Level.SEVERE, 
 				"Url: " + dto.getUrl() 
 				+ "\n   message: " + dto.getMessage() 
@@ -28,7 +32,7 @@ public class ClientErrorResource extends ServerResource {
 				+ "\n   Region: " + getRequestHeader("X-AppEngine-Region")
 				+ "\n   City: " + getRequestHeader("X-AppEngine-City")
 				+ "\n   Location: " + getRequestHeader("X-AppEngine-CityLatLong")
-				+ "\n   stackTrace: " + Joiner.on("\n   ").join(dto.getStackTrace()));
+				+ "\n   stackTrace: " + stackTrace);
 	}
 	
 	private  String getRequestHeader(String headerName) {

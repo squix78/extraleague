@@ -217,6 +217,39 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 	    }
 	  };  
 	}])
+	.directive('ranking', [ function() {
+		return {
+	    	templateUrl: '/js/templates/rankingValue.html',
+			scope: {
+				name: "=",
+				ranking: "=",
+				precision: "=?",
+				percentage: "=?"
+			},
+			compile: function(element, attrs){
+			       if (!attrs.precision) { attrs.precision = 0; }
+			       if (!attrs.percentage) { 
+			    	   attrs.percentage = false;
+			       } 
+
+			},
+			controller: function($scope) {
+			       if ($scope.percentage) {
+			    	   $scope.factor = 100;
+			    	   if (!angular.isDefined($scope.precision)) {
+			    		   $scope.precision = 2;
+			    	   }
+			       } else {
+			    	   $scope.factor = 1;
+			    	   if (!angular.isDefined($scope.precision)) {
+			    		   $scope.precision = 0;
+			    	   }
+			       }
+			},
+			link: function(scope, elem, attrs) {
+			}
+		};
+	}])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {
 	    restrict: 'A',

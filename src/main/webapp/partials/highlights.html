@@ -15,24 +15,38 @@ here:
 
 <h3>Highlights</h3>
 <div class="row">
-	<div class="col-xs-2">
+	<div class="col-xs-2 col-md-1">
 		Players
 	</div>
-	<div class="col-xs-10">
-		Event
+	<div class="col-xs-10 col-md-11">
+		Description
 	</div>
 </div>
 <hr/>
 <div ng-repeat="mutation in mutations | orderBy:'-createdDate' | limitTo: 15">
 	<div class="row">
-		<div class="col-xs-2">
-			<div ng-class="{'playerFlex': mutation.players.length > 1}">
-	       		<div ng-repeat="player in mutation.players">
-	       			<div player="player"></div>
-	       		</div>	
+		<div class="col-xs-2 col-md-1">
+			<div ng-show="mutation.players.length === 1">
+	       		<div player="mutation.players[0]"></div>	
+			</div>
+			<div ng-show="mutation.players.length === 4" class="row">
+				<div class="col-xs-4">
+					<div class="xsPlayer" player="mutation.players[0]"></div>
+				</div>
+				<div class="col-xs-4">
+					<div class="xsPlayer" player="mutation.players[1]"></div>
+				</div>
+			</div>
+			<div ng-show="mutation.players.length === 4" class="row">
+				<div class="col-xs-4">
+					<div class="xsPlayer" player="mutation.players[2]"></div>
+				</div>
+				<div class="col-xs-4">
+					<div class="xsPlayer" player="mutation.players[3]"></div>
+				</div>
 			</div>
 		</div>
-		<div class="col-xs-10">
+		<div class="col-xs-10 col-md-11">
 			    <small>
 		       		{{mutation.createdDate | date:'dd-MM-yyyy'}}
 		       		{{mutation.createdDate | date:'shortTime'}}

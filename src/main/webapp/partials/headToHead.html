@@ -1,11 +1,11 @@
 <h3></h3>
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-xs-6">
 		<input type="text" class="form-control" id="playerA" name="playerA"
 					ng-model="players.playerA" 
 					placeholder="Shortname Player A">
 	</div>
-	<div class="col-md-6">
+	<div class="col-xs-6">
 		<input type="text" class="form-control" id="playerA" name="playerA"
 					ng-model="players.playerB"
 					placeholder="Shortname Player B">		
@@ -13,14 +13,20 @@
 </div>
 <BR/>
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-xs-6">
 		<div player="players.playerA"></div>
+	</div>
+	<div class="col-xs-6">
+		<div player="players.playerB"></div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
 		<div ng-show="isPlayerALoading">
   			<img src="images/ajax-loader.gif" /> 
 		</div>
 	</div>
 	<div class="col-md-6">
-		<div player="players.playerB"></div>
 		<div ng-show="isPlayerBLoading">
   			<img src="images/ajax-loader.gif" /> 
 		</div>		
@@ -42,22 +48,26 @@
 <div compare="successRate" 
      label="Success Rate"
 	 player-a-ranking="players.playerARanking" 
-	 player-b-ranking="players.playerBRanking"></div>
+	 player-b-ranking="players.playerBRanking"
+	 percentage="true"></div>
 	 
 <div compare="currentShapeRate" 
      label="Shape"
 	 player-a-ranking="players.playerARanking" 
-	 player-b-ranking="players.playerBRanking"></div>
+	 player-b-ranking="players.playerBRanking"
+	 percentage="true"></div>
 	 
 <div compare="goalPlusMinus" 
      label="Goals +/-"
 	 player-a-ranking="players.playerARanking" 
-	 player-b-ranking="players.playerBRanking"></div>
+	 player-b-ranking="players.playerBRanking"
+	 precision="2"></div>
 	 
 <div compare="averageGoalsPerMatch" 
      label="Goals per match"
 	 player-a-ranking="players.playerARanking" 
-	 player-b-ranking="players.playerBRanking"></div>
+	 player-b-ranking="players.playerBRanking"
+	 precision="2"></div>
 	 
 <div compare="maxGoalsPerGame" 
      label="Max Goals Per Game"
@@ -72,12 +82,14 @@
 <div compare="tightlyWonRate" 
      label="Tightly won matches"
 	 player-a-ranking="players.playerARanking" 
-	 player-b-ranking="players.playerBRanking"></div>
+	 player-b-ranking="players.playerBRanking"
+	 percentage="true"></div>
 	 
 <div compare="tightlyLostRate" 
      label="Tightly lost matches"
 	 player-a-ranking="players.playerARanking" 
-	 player-b-ranking="players.playerBRanking"></div>
+	 player-b-ranking="players.playerBRanking"
+	 percentage="true"></div>
 
 
 

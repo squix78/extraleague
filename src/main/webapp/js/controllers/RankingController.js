@@ -1,4 +1,6 @@
-angular.module('Extraleague').controller('RankingController', 
+angular.module('Extraleague')
+
+.controller('RankingController', 
 function($scope, $rootScope, $resource, $routeParams, $location, Ranking, Badges, Tables, NotificationService) {
   
   $scope.predicate = [ '-eloValue', '-successRate'];

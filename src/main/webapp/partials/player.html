@@ -6,220 +6,154 @@
       <thead>
       	<tr>
       		<th></th>
-      		<th>Last 30d</th>
-      		<th>t-1</th>
-      		<th>Eternal</th>
+      		<th>
+	      		<div class="row">
+					<div class="col-xs-1">
+						<span class="pull-right">
+							Now
+						</span>
+					</div>
+					<div class="col-xs-1">
+						<span class="pull-right">
+							Y'Day
+						</span>
+					</div>
+					<div class="col-xs-1">
+						<span class="pull-right">
+							&infin;
+						</span>
+					</div>
+				</div>
+      		</th>
       	</tr>
       </thead>
       <tbody>
         <tr>
           <td>Player</td>
-          <td colspan="3">
+          <td>
             <div class="pull-left" player="player"></div>
           </td>
-        </tr>
+         </tr>
         <tr>
           <td>Ranking</td>
           <td>
-          	{{playerResult.statistics.eloRanking}}
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.eloRanking}})</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.eloRanking}})</span>
+          	<div ranking="playerResult" name="'eloRanking'"></div>
           </td>
         </tr>
         <tr>
           <td>Elo</td>
           <td>
-          	{{playerResult.statistics.eloValue}}
+          	<div ranking="playerResult" name="'eloValue'"></div>	
           </td>
           <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.eloValue}})</span>
           </td>
           <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.eloValue}})</span>
           </td>
         </tr>
         <tr>
           <td>%-Ranking:</td>
           <td>
-          	{{playerResult.statistics.ranking}}
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.ranking}})</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.ranking}})</span>
+          	<div ranking="playerResult" name="'ranking'"></div>
           </td>
         </tr>
         <tr>
           <td>TrueSkill Rating</td>
           <td>
-          	{{playerResult.statistics.trueSkillRating | number:2}}
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.trueSkillRating | number:2}})</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.trueSkillRating | number:2}})</span>
+          	<div ranking="playerResult" name="'trueSkillRating'" precision="2"></div>
           </td>
         </tr>
         <tr>
           <td>TrueSkill Ranking</td>
           <td>
-          	{{playerResult.statistics.trueSkillRanking}}
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.trueSkillRanking}})</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.trueSkillRanking}})</span>
+            <div ranking="playerResult" name="'trueSkillRanking'"></div>
           </td>
         </tr>
         <tr>
           <td>Badges:</td>
-          <td colspan="3">
+          <td>
             	<div badges ng-model="playerResult.statistics.badges" badge-map="badgeMap"></div>
           </td>
         </tr>
         <tr>
           <td>Success:</td>
           <td>
-          	{{playerResult.statistics.successRate * 100 | number:2}}%
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.successRate * 100 | number:2}}%)</span>	
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.successRate * 100 | number:2}}%)</span>	
+            <div ranking="playerResult" name="'successRate'" percentage="'true'"></div>
           </td>
         </tr>
         <tr>
           <td>Shape:</td>
           <td>
-          	{{playerResult.statistics.currentShapeRate * 100 | number:2}}%
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.currentShapeRate * 100 | number:2}}%)</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.currentShapeRate * 100 | number:2}}%)</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.currentShapeRate * 100 | number:2}}%)</span>
+            <div ranking="playerResult" name="'currentShapeRate'" percentage="'true'"></div>
           </td>
         </tr>
         <tr>
           <td>Goals:</td>
           <td>
-          	<span ng-show="playerResult.statistics.goalPlusMinus >= 0">+</span>{{playerResult.statistics.goalPlusMinus | number:2}}
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.goalPlusMinus | number:2}})</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.goalPlusMinus | number:2}})</span>
+            <div ranking="playerResult" name="'goalPlusMinus'" precision="2"></div>
           </td>
         </tr>
         <tr>
           <td>Goals per Match:</td>
           <td>
-          	{{playerResult.statistics.averageGoalsPerMatch | number:2}}
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.averageGoalsPerMatch | number:2}})</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.averageGoalsPerMatch | number:2}})</span>
+            <div ranking="playerResult" name="'averageGoalsPerMatch'" precision="2"></div>
           </td>
         </tr>
         <tr>
           <td>Most goals per game:</td>
           <td>
-          	{{playerResult.statistics.maxGoalsPerGame | number:0}}
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.maxGoalsPerGame | number}})</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.maxGoalsPerGame | number}})</span>
+            <div ranking="playerResult" name="'maxGoalsPerGame'" precision="0"></div>
           </td>
         </tr>
         <tr>
           <td>Most victories in a row:</td>
           <td>
-          	{{playerResult.statistics.bestSlam}}
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.bestSlam}})</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.bestSlam}})</span>
+            <div ranking="playerResult" name="'bestSlam'" precision="0"></div>
           </td>
         </tr>
         <tr>
           <td>Offensive Victories:</td>
           <td>
-          	 {{100 * playerResult.statistics.offensivePositionRate | number:2}}%
+            <div ranking="playerResult" name="'offensivePositionRate'" percentage="true"></div>
           </td>
           <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.offensivePositionRate * 100 | number:2}}%)</span>
           </td>
           <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.offensivePositionRate * 100 | number:2}}%)</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Defensive:</td>
+          <td>
+            <div ranking="playerResult" name="'defensivePositionRate'" percentage="true"></div>
           </td>
         </tr>
         <tr>
           <td>Offensive Goals:</td>
           <td>
-          	 {{100 * playerResult.statistics.offensiveGoalsRate | number:2}}%
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.offensiveGoalsRate * 100 | number:2}}%)</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.offensiveGoalsRate * 100 | number:2}}%)</span>
+            <div ranking="playerResult" name="'offensiveGoalsRate'" percentage="true"></div>
+            <div ranking="playerResult" name="'offensiveGoalsRate'" percentage="true"></div>
           </td>
         </tr>
         <tr>
           <td>Rate of 5:4 won matches:</td>
           <td>
-          	{{100 * playerResult.statistics.tightlyWonRate | number:2}}%
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.tightlyWonRate * 100 | number:2}}%)</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.tightlyWonRate * 100 | number:2}}%)</span>
+            <div ranking="playerResult" name="'tightlyWonRate'" percentage="true"></div>
           </td>
         </tr>
         <tr>
           <td>Rate of 4:5 lost matches:</td>
           <td>
-          	{{100 * playerResult.statistics.tightlyLostRate | number:2}}%
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.tightlyLostRate * 100 | number:2}}%)</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.tightlyLostRate * 100 | number:2}}%)</span>
+            <div ranking="playerResult" name="'tightlyLostRate'" percentage="true"></div>
           </td>
         </tr>
         <tr>
-          <td>Average Match length:</td>
+          <td>Average Match length [s]:</td>
           <td>
-          	{{playerResult.statistics.averageSecondsPerMatch | number}}s
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.dayEndStatistics"> ({{playerResult.dayEndStatistics.averageSecondsPerMatch}}s)</span>
-          </td>
-          <td>
-          	<span class="discreet" ng-show="playerResult.eternalStatistics"> ({{playerResult.eternalStatistics.averageSecondsPerMatch}}s)</span>
+            <div ranking="playerResult" name="'averageSecondsPerMatch'"></div>
           </td>
         </tr>
         <tr>
           <td>Optimal partner:</td>
-          <td colspan="3"><a href="#/player/{{playerResult.statistics.bestPartner}}">{{playerResult.statistics.bestPartner}}</a> (won {{playerResult.statistics.bestPartnerRate * 100 |
+          <td><a href="#/player/{{playerResult.statistics.bestPartner}}">{{playerResult.statistics.bestPartner}}</a> (won {{playerResult.statistics.bestPartnerRate * 100 |
             number:2}}%) 
            <button  class="btn btn-default btn-xs" ng-click="showPartners = !showPartners">
            	  <span ng-class="{'glyphicon-chevron-down': !showPartners, 'glyphicon-chevron-up': showPartners}" class="glyphicon"></span>
@@ -231,13 +165,13 @@
         </tr>
         <tr>
           <td>Worst partner:</td>
-          <td colspan="3"><a href="#/player/{{playerResult.statistics.worstPartner}}">{{playerResult.statistics.worstPartner}}</a> (won {{playerResult.statistics.worstPartnerRate * 100 |
+          <td><a href="#/player/{{playerResult.statistics.worstPartner}}">{{playerResult.statistics.worstPartner}}</a> (won {{playerResult.statistics.worstPartnerRate * 100 |
             number:2}}%)
           </td>
         </tr>
         <tr>
           <td>Best opponent:</td>
-          <td colspan="3"><a href="#/player/{{playerResult.statistics.bestOpponent}}">{{playerResult.statistics.bestOpponent}}</a> (won {{playerResult.statistics.bestOpponentRate * 100 |
+          <td><a href="#/player/{{playerResult.statistics.bestOpponent}}">{{playerResult.statistics.bestOpponent}}</a> (won {{playerResult.statistics.bestOpponentRate * 100 |
             number:2}}%)
            <button  class="btn btn-default btn-xs" ng-click="showOpponents = !showOpponents">
            	 <span ng-class="{'glyphicon-chevron-down': !showOpponents, 'glyphicon-chevron-up': showOpponents}" class="glyphicon"></span>
@@ -249,18 +183,18 @@
         </tr>
         <tr>
           <td>Worst opponent:</td>
-          <td colspan="3"><a href="#/player/{{playerResult.statistics.worstOpponent}}">{{playerResult.statistics.worstOpponent}}</a> (won {{playerResult.statistics.worstOpponentRate * 100 |
+          <td><a href="#/player/{{playerResult.statistics.worstOpponent}}">{{playerResult.statistics.worstOpponent}}</a> (won {{playerResult.statistics.worstOpponentRate * 100 |
             number:2}}%)</td>
         </tr>
         <tr>
           <td>Played with:</td>
-          <td colspan="3">
+          <td>
           	{{playerResult.statistics.playedWith.join(', ')}} ({{playerResult.statistics.playedWith.length}})
           </td>
         </tr>
         <tr>
           <td>Never played with:</td>
-          <td colspan="3">
+          <td>
             {{playerResult.statistics.neverPlayedWith.join(', ')}} ({{playerResult.statistics.neverPlayedWith.length}})
           </td>
         </tr>

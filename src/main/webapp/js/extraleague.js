@@ -36,6 +36,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'PlayerController',
            templateUrl : 'partials/player.html'
         })
+        .when('/headToHead', {
+        	controller : 'HeadToHeadController',
+        	templateUrl : 'partials/headToHead.html'
+        })
         .when('/highlights', {
         	controller : 'HighlightsController',
         	templateUrl : 'partials/highlights.html'

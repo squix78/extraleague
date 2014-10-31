@@ -17,6 +17,7 @@ import com.google.common.base.Joiner;
 import ch.squix.extraleague.model.challenger.WinnerTeam;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateWinnersMessage;
 import ch.squix.extraleague.rest.ranking.UpdateRankingsResource;
@@ -52,7 +53,7 @@ public class SummaryService {
 			playerGoals.put(player, 0);
 			playerEloPoints.put(player, 0);
 		}
-		
+		dto.setPlayers(game.getPlayers());
 		for (Match match : matches) {
 			Integer teamAScore = match.getTeamAScore();
 			Integer teamBScore = match.getTeamBScore();
@@ -129,6 +130,13 @@ public class SummaryService {
 			winners.add(dto.getPlayerScores().get(0).getPlayer());
 			winners.add(dto.getPlayerScores().get(1).getPlayer());
 			dto.setWinners(winners);
+			
+		}
+		if (dto.getPlayerScores().size() == 4) {
+			List<String> loosers = new ArrayList<>();
+			loosers.add(dto.getPlayerScores().get(2).getPlayer());
+			loosers.add(dto.getPlayerScores().get(3).getPlayer());
+			dto.setLoosers(loosers);
 		}
 		
 		Date startDate = game.getStartDate();
@@ -147,6 +155,18 @@ public class SummaryService {
 		public int compare(PlayerScoreDto score1, PlayerScoreDto score2) {
 			return score2.getEarnedEloPoints().compareTo(score1.getEarnedEloPoints());
 		}
+		
+	}
+
+	public static void addSummaryMutation(Game game, List<Match> matches) {
+		SummaryDto summaryDto = SummaryService.getSummaryDto(game, matches);
+		
+		PlayerMutation mutation = new PlayerMutation(summaryDto.getPlayers());
+		mutation.getDescriptions().add("Game finished. Elo points earned/ lost: ");
+		for (PlayerScoreDto dto : summaryDto.getPlayerScores()) {
+			mutation.getDescriptions().add(dto.getPlayer() + ": " + dto.getEarnedEloPoints());
+		}
+		ofy().save().entity(mutation).now();
 		
 	}
 

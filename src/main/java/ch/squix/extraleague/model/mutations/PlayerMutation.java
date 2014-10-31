@@ -2,36 +2,62 @@ package ch.squix.extraleague.model.mutations;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
+import ch.squix.extraleague.model.game.Game;
+import ch.squix.extraleague.rest.games.mode.GameModeEnum;
 
 import com.google.common.base.Joiner;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
+@Entity
+@Cache
 @Data
-public class PlayerMutation implements Serializable {
-
-	private static final long serialVersionUID = -4347563309408143937L;
+public class PlayerMutation {
 	
-	private String player;
+	@Id
+	private Long id;
+	
+	private List<String> players = new ArrayList<>();
 
 	private List<String> descriptions = new ArrayList<>();
+	
+	@Index
 	private Date createdDate;
 	
 	public PlayerMutation() {
-		
+		this.createdDate = new Date();		
 	}
 	
-	public PlayerMutation(String player) {
-		this.player = player;
+	public PlayerMutation(String... players) {
+		this.players = Arrays.asList(players);
+		this.createdDate = new Date();
+	}
+	
+	public PlayerMutation(List<String> players) {
+		this.players = players;
 		this.createdDate = new Date();
 	}
 
 	@Override
 	public String toString() {
 		Joiner joiner = Joiner.on("/").skipNulls();
-		return player + "/" + joiner.join(descriptions);
+		return joiner.join(players) + "/" + joiner.join(descriptions);
+	}
+	
+	public String getPlayersKey() {
+		Joiner joiner = Joiner.on(",").skipNulls();
+		List<String> sortedPlayers = new ArrayList<>(players);
+		Collections.sort(players);
+		return joiner.join(sortedPlayers);
+		
 	}
 
 

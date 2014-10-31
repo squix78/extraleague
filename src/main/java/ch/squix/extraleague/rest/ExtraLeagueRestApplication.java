@@ -11,7 +11,7 @@ import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.league.League;
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.player.PlayerUser;
-import ch.squix.extraleague.model.mutations.Mutations;
+import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.model.playermarket.MeetingPointPlayer;
 import ch.squix.extraleague.model.ranking.EternalRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
@@ -77,7 +77,7 @@ public class ExtraLeagueRestApplication extends Application {
 		ObjectifyService.register(EternalRanking.class);
 		ObjectifyService.register(BrowserClient.class);
 		ObjectifyService.register(Statistics.class);
-		ObjectifyService.register(Mutations.class);
+		ObjectifyService.register(PlayerMutation.class);
 		ObjectifyService.register(PlayerUser.class);
 		ObjectifyService.register(MeetingPointPlayer.class);
 		ObjectifyService.register(League.class);

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PlayerMutationDto {
 
-	private String player;
+	private List<String> players;
 	private String value;
 	private List<String> descriptions = new ArrayList<>();
 	private Date createdDate;
@@ -25,11 +25,11 @@ public class PlayerMutationDto {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public void setPlayer(String player) {
-		this.player = player;
+	public void setPlayers(List<String> players) {
+		this.players = players;
 	}
-	public String getPlayer() {
-		return player;
+	public List<String> getPlayers() {
+		return players;
 	}
 	public List<String> getDescriptions() {
 		return descriptions;

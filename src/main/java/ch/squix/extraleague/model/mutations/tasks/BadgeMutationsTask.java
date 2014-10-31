@@ -13,8 +13,8 @@ import com.google.common.base.Joiner;
 public class BadgeMutationsTask implements MutationTask {
 
 	@Override
-	public void calculate(Map<String, PlayerMutation> mutationMap, Ranking oldRanking, Ranking newRanking) {
-
+	public List<PlayerMutation> calculate(Ranking oldRanking, Ranking newRanking) {
+		List<PlayerMutation> mutations = new ArrayList<>();
 		Joiner joiner = Joiner.on(" ").skipNulls();
 		for (PlayerRanking newPlayerRanking : newRanking.getPlayerRankings()) {
 			PlayerRanking oldPlayerRanking = oldRanking.getPlayerRanking(newPlayerRanking.getPlayer());
@@ -28,16 +28,18 @@ public class BadgeMutationsTask implements MutationTask {
 			}
 			if (newBadges.size() > 0) {
 				String newBadgeText = joiner.join(newBadges);
-				PlayerMutation playerMutation = MutationUtil.getOrCreatePlayerMutation(mutationMap, newPlayerRanking.getPlayer());
+				PlayerMutation playerMutation = new PlayerMutation(newPlayerRanking.getPlayer());
 				playerMutation.getDescriptions().add("Badges earned: " + newBadgeText);
+				mutations.add(playerMutation);
 			}
 			if (lostBadges.size() > 0) {
 				String lostBadgeText = joiner.join(lostBadges);
-				PlayerMutation playerMutation = MutationUtil.getOrCreatePlayerMutation(mutationMap, newPlayerRanking.getPlayer());
+				PlayerMutation playerMutation = new PlayerMutation(newPlayerRanking.getPlayer());
 				playerMutation.getDescriptions().add("Badges lost: " + lostBadgeText);
+				mutations.add(playerMutation);
 			}
 		}
-		
+		return mutations;
 
 		
 	}

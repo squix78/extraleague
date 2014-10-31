@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
-import ch.squix.extraleague.model.mutations.Mutations;
+import ch.squix.extraleague.model.mutations.PlayerMutation;
 
 
 
@@ -20,7 +20,7 @@ public class MutationsResource extends ServerResource {
 	
 	@Get(value = "json")
 	public List<PlayerMutationDto> execute() throws UnsupportedEncodingException {
-		Mutations mutations = ofy().load().type(Mutations.class).first().now();
+		List<PlayerMutation> mutations = ofy().load().type(PlayerMutation.class).order("createdDate").list();
 		if (mutations == null) {
 			log.info("No mutations found");
 			return new ArrayList<>();

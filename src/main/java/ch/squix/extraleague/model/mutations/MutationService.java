@@ -3,56 +3,49 @@ package ch.squix.extraleague.model.mutations;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import ch.squix.extraleague.model.mutations.tasks.BadgeMutationsTask;
 import ch.squix.extraleague.model.mutations.tasks.CoronationTask;
 import ch.squix.extraleague.model.mutations.tasks.MutationTask;
 import ch.squix.extraleague.model.mutations.tasks.TopTenTask;
 import ch.squix.extraleague.model.ranking.Ranking;
-import ch.squix.extraleague.model.ranking.tasks.DeltaRankingTask;
 
 public class MutationService {
 	
-	public static Mutations calculateMutations(Ranking oldRanking, Ranking newRanking) {
-		Mutations mutations = ofy().load().type(Mutations.class).first().now();
-		if (mutations == null) {
-			mutations = new Mutations();
-		}
+	public static void calculateMutations(Ranking oldRanking, Ranking newRanking) {
+
 		List<MutationTask> mutationTasks = new ArrayList<>();
 		//mutationTasks.add(new PromotedRelegatedPlayersTask());
 		mutationTasks.add(new BadgeMutationsTask());
 		mutationTasks.add(new CoronationTask());
 		mutationTasks.add(new TopTenTask());
 		
-		Map<String, PlayerMutation> mutationMap = new HashMap<>();
+		List<PlayerMutation> mutations = new ArrayList<>();
 		for (MutationTask task : mutationTasks) {
-			task.calculate(mutationMap, oldRanking, newRanking);
+			mutations.addAll(task.calculate(oldRanking, newRanking));
 		}
-		Set<String> existingKeys = new HashSet<>();
-		List<PlayerMutation> newPlayerMutations = new ArrayList<>();
-		List<PlayerMutation> allMutations = new ArrayList<>();
-		allMutations.addAll(mutations.getPlayerMutations());
-		allMutations.addAll(mutationMap.values());
-		
-		for (PlayerMutation playerMutation : allMutations) {
-			String key = playerMutation.toString();
-			if (!existingKeys.contains(key)) {
-				existingKeys.add(key);
-				newPlayerMutations.add(playerMutation);
+		Collection<PlayerMutation> mergedMutations = mergePlayerMutations(mutations);
+
+		ofy().save().entities(mergedMutations).now();
+
+	}
+
+	private static Collection<PlayerMutation> mergePlayerMutations(List<PlayerMutation> mutations) {
+		Map<String, PlayerMutation> playerMutationMap = new HashMap<>();
+		for (PlayerMutation mutation: mutations) {
+			PlayerMutation existingMutation = playerMutationMap.get(mutation.getPlayersKey());
+			if (existingMutation == null) {
+				playerMutationMap.put(mutation.getPlayersKey(), mutation);
+			} else {
+				existingMutation.getDescriptions().addAll(mutation.getDescriptions());
 			}
 		}
-		// Limit the persisted mutations
-		while (newPlayerMutations.size() > 100) {
-			newPlayerMutations.remove(0);
-		}
-		mutations.setPlayerMutations(newPlayerMutations);
-		ofy().save().entities(mutations).now();
-		return mutations;
+		return playerMutationMap.values();
 	}
+
 
 }

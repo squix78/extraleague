@@ -33,7 +33,7 @@
 	</div>
 </div>
 
-
+<div class="well">
 <div compare="eloRanking" 
      label="Ranking"
 	 player-a-ranking="players.playerARanking" 
@@ -57,12 +57,6 @@
 	 player-b-ranking="players.playerBRanking"
 	 percentage="true"></div>
 	 
-<div compare="goalPlusMinus" 
-     label="Goals +/-"
-	 player-a-ranking="players.playerARanking" 
-	 player-b-ranking="players.playerBRanking"
-	 precision="2"></div>
-	 
 <div compare="averageGoalsPerMatch" 
      label="Goals per match"
 	 player-a-ranking="players.playerARanking" 
@@ -79,6 +73,24 @@
 	 player-a-ranking="players.playerARanking" 
 	 player-b-ranking="players.playerBRanking"></div>
 	 
+<div compare="offensivePositionRate" 
+     label="Rate of victories in offensive position"
+	 player-a-ranking="players.playerARanking" 
+	 player-b-ranking="players.playerBRanking"
+	 percentage="true"></div>
+	 
+<div compare="defensivePositionRate" 
+     label="Rate of victories in defensive position"
+	 player-a-ranking="players.playerARanking" 
+	 player-b-ranking="players.playerBRanking"
+	 percentage="true"></div>
+	 
+<div compare="offensiveGoalsRate" 
+     label="Offensive Goals"
+	 player-a-ranking="players.playerARanking" 
+	 player-b-ranking="players.playerBRanking"
+	 percentage="true"></div>
+	 
 <div compare="tightlyWonRate" 
      label="Tightly won matches"
 	 player-a-ranking="players.playerARanking" 
@@ -90,6 +102,12 @@
 	 player-a-ranking="players.playerARanking" 
 	 player-b-ranking="players.playerBRanking"
 	 percentage="true"></div>
+	 
+<div compare="averageSecondsPerMatch" 
+     label="Average match length [s]"
+	 player-a-ranking="players.playerARanking" 
+	 player-b-ranking="players.playerBRanking"></div>
+</div>
 
 
 

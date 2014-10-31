@@ -1,24 +1,26 @@
-<div class="row">
-	<div class="col-md-4 text-right">
-
+<div class="">
+	<div class="row">
+		<div class="col-md-4 text-right">
+	
+		</div>
+		<div class="col-md-4 text-center">
+			{{label}}
+		</div>
+		<div class="col-md-4 text-left">
+			
+		</div>
 	</div>
-	<div class="col-md-4 text-center">
-		{{label}}
-	</div>
-	<div class="col-md-4 text-left">
-		
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<div class="progress">
-		  <div class="progress-bar" ng-class="{'progress-bar-success': shareA > shareB, 'progress-bar-danger': shareA < shareB, 'progress-bar-info': shareA == shareB}" 
-		  	style="width: {{shareA}}%">
-		    {{displayValueA}}
-		  </div>
-		  <div class="progress-bar" ng-class="{'progress-bar-success': shareA < shareB, 'progress-bar-danger': shareA > shareB, 'progress-bar-warning': shareA == shareB}" style="width: {{shareB}}%">
-		    {{displayValueB}}
-		  </div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="progress">
+			  <div class="progress-bar" ng-class="{'progress-bar-success': shareA > shareB, 'progress-bar-danger': shareA < shareB, 'progress-bar-info': shareA == shareB}" 
+			  	style="width: {{shareA}}%">
+			    {{displayValueA}}
+			  </div>
+			  <div class="progress-bar" ng-class="{'progress-bar-success': shareA < shareB, 'progress-bar-danger': shareA > shareB, 'progress-bar-warning': shareA == shareB}" style="width: {{shareB}}%">
+			    {{displayValueB}}
+			  </div>
+			</div>
 		</div>
 	</div>
 </div>

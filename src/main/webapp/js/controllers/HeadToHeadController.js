@@ -1,5 +1,5 @@
 angular.module('Extraleague')
-.directive('compare', [ function() {
+.directive('compare', [function() {
 	return {
     	templateUrl: '/js/templates/compare.html',
 		scope: {
@@ -7,26 +7,39 @@ angular.module('Extraleague')
 			playerBRanking: "=",
 			compare: "@",
 			label: "@",
-			inverse: "="
+			inverse: "=",
+			percentage: "=",
+			precision: "=?"
 		},
 		compile: function(element, attrs){
-
+			if (!attrs.precision) {
+				attrs.precision = 0;
+			}
 
 		},
-		controller: function($scope) {
+		controller: function($scope, $filter) {
 			$scope.$watchCollection('[playerARanking.statistics, playerBRanking.statistics]', function(newValue, oldValues){
-				if (angular.isDefined($scope.playerARanking) && angular.isDefined($scope.playerBRanking)) {
-					$scope.valueA = $scope.playerARanking.statistics[$scope.compare];
-					$scope.valueB = $scope.playerBRanking.statistics[$scope.compare];
-					var calcValueA = $scope.valueA;
-					var calcValueB = $scope.valueB;
+				if (angular.isDefined($scope.playerARanking) 
+						&& angular.isDefined($scope.playerBRanking)
+						&& angular.isDefined($scope.playerARanking.statistics) 
+						&& angular.isDefined($scope.playerBRanking.statistics)) {
+					var valueA = $scope.playerARanking.statistics[$scope.compare];
+					var valueB = $scope.playerBRanking.statistics[$scope.compare];
+					var calcValueA = valueA;
+					var calcValueB = valueB;
 					if ($scope.inverse) {
-						calcValueA = $scope.valueB;
-						calcValueB = $scope.valueA;
+						calcValueA = valueB;
+						calcValueB = valueA;
 					}
-					$scope.shareA = 100 * calcValueA / ($scope.valueA + $scope.valueB);
-					$scope.shareB = 100 * calcValueB / ($scope.valueA + $scope.valueB);
-					console.log($scope.shareA + ":" + $scope.shareB);
+					$scope.displayValueA = $filter('number')(valueA, $scope.precision);
+					$scope.displayValueB = $filter('number')(valueB, $scope.precision);;
+					if ($scope.percentage === true) {
+						$scope.displayValueA = ($filter('number')(100 * valueA, 2)) + "%";
+						$scope.displayValueB = ($filter('number')(100 * valueB, 2)) + "%";						
+					}
+					$scope.shareA = 100 * calcValueA / (valueA + valueB);
+					$scope.shareB = 100 * calcValueB / (valueA + valueB);
+
 				}
 			});
 
@@ -42,7 +55,7 @@ function PlayerController($scope, $rootScope, $routeParams, Player, Badges, Play
 		  if (newValue && PlayerService.isPlayerDefined(newValue)) {
 			  console.log("Loading data player A");
 			  $scope.isPlayerALoading = true;
-			  $scope.players.playerARanking = Player.get({player: $scope.players.playerA}, function() {
+			  $scope.players.playerARanking = Player.get({player: $scope.players.playerA.toLowerCase()}, function() {
 			    $scope.isPlayerALoading = false;
 			  });
 		  }
@@ -52,7 +65,7 @@ function PlayerController($scope, $rootScope, $routeParams, Player, Badges, Play
 		  if (newValue && PlayerService.isPlayerDefined(newValue)) {
 			  console.log("Loading data player A");
 			  $scope.isPlayerBLoading = true;
-			  $scope.players.playerBRanking = Player.get({player: $scope.players.playerB}, function() {
+			  $scope.players.playerBRanking = Player.get({player: $scope.players.playerB.toLowerCase()}, function() {
 				  $scope.isPlayerBLoading = false;
 			  });
 		  }

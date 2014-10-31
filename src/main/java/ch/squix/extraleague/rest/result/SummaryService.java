@@ -163,9 +163,11 @@ public class SummaryService {
 		
 		PlayerMutation mutation = new PlayerMutation(summaryDto.getPlayers());
 		mutation.getDescriptions().add("Game finished. Elo points earned/ lost: ");
+		List<String> scoreDescriptions = new ArrayList<>();
 		for (PlayerScoreDto dto : summaryDto.getPlayerScores()) {
-			mutation.getDescriptions().add(dto.getPlayer() + ": " + dto.getEarnedEloPoints());
+			scoreDescriptions.add(dto.getPlayer() + ": " + dto.getEarnedEloPoints());
 		}
+		mutation.getDescriptions().add(Joiner.on(", ").join(scoreDescriptions));
 		ofy().save().entity(mutation).now();
 		
 	}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dispatch-entries>
+  <dispatch>
+      <!-- Default module serves simple hostname request. -->
+      <url>www.extraleague.ch/</url>
+      <module>www</module>
+  </dispatch>
+  <dispatch>
+      <!-- Send all mobile traffic to the mobile frontend. -->
+      <url>*.extraleague.ch</url>
+      <module>default</module>
+  </dispatch>
+</dispatch-entries>

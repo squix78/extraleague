@@ -226,6 +226,23 @@
 										<ignore></ignore>
 									</action>
 								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-jar-plugin
+										</artifactId>
+										<versionRange>[0.0,)</versionRange>
+										<goals>
+											<goal>install</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
@@ -271,6 +288,39 @@
 						<jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
 					</jvmFlags>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>make-a-jar</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-install-plugin</artifactId>
+			   <executions>
+			       <execution>
+			           <id>install-jar</id>
+			           <phase>install</phase>
+			           <goals>
+			               <goal>install-file</goal>
+			           </goals>
+			           <configuration>
+			               <packaging>jar</packaging>
+			               <artifactId>${project.artifactId}</artifactId>
+			               <groupId>${project.groupId}</groupId>
+			               <version>${project.version}</version>
+			               <file>${project.build.directory}/${project.build.finalName}.jar</file>
+			           </configuration>
+			       </execution>
+			   </executions>
 			</plugin>
 
 		</plugins>

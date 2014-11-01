@@ -38,7 +38,7 @@ angular.module('Extraleague')
 						calcValueB = valueA + $scope.offset;
 					}
 					$scope.displayValueA = $filter('number')(valueA, $scope.precision);
-					$scope.displayValueB = $filter('number')(valueB, $scope.precision);;
+					$scope.displayValueB = $filter('number')(valueB, $scope.precision);
 					if ($scope.percentage === true) {
 						$scope.displayValueA = ($filter('number')(100 * valueA, 2)) + "%";
 						$scope.displayValueB = ($filter('number')(100 * valueB, 2)) + "%";						

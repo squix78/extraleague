@@ -63,6 +63,13 @@
 	 player-b-ranking="players.playerBRanking"
 	 precision="2"></div>
 	 
+<div compare="goalPlusMinus" 
+     label="Goal Balance"
+	 player-a-ranking="players.playerARanking" 
+	 player-b-ranking="players.playerBRanking"
+	 precision="2"
+	 offset="7"></div>
+	 
 <div compare="maxGoalsPerGame" 
      label="Max Goals Per Game"
 	 player-a-ranking="players.playerARanking" 
@@ -101,12 +108,14 @@
      label="Tightly lost matches"
 	 player-a-ranking="players.playerARanking" 
 	 player-b-ranking="players.playerBRanking"
-	 percentage="true"></div>
+	 percentage="true"
+	 inverse="true"></div>
 	 
 <div compare="averageSecondsPerMatch" 
      label="Average match length [s]"
 	 player-a-ranking="players.playerARanking" 
-	 player-b-ranking="players.playerBRanking"></div>
+	 player-b-ranking="players.playerBRanking"
+	 inverse="true"></div>
 </div>
 
 

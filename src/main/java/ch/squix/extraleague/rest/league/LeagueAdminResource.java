@@ -65,7 +65,7 @@ public class LeagueAdminResource extends ServerResource {
 	    String [] filteredGameModes = dto.getFilteredGameModes().split(",");
 	    List<GameModeEnum> modes = new ArrayList<>();
 	    for (String filteredGameMode : filteredGameModes) {
-	    	GameModeEnum mode = GameModeEnum.valueOf(filteredGameMode);
+	    	GameModeEnum mode = GameModeEnum.getEnum(filteredGameMode);
 	    	if (mode != null) {
 	    		modes.add(mode);
 	    	}

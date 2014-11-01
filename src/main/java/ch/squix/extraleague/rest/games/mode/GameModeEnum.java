@@ -1,5 +1,8 @@
 package ch.squix.extraleague.rest.games.mode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum GameModeEnum {
 	
 	FourMatchesToFive("4 matches to 5", "Four matches are played in fix order according ELO ranking"),
@@ -8,6 +11,14 @@ public enum GameModeEnum {
 	
 	private String label;
 	private String description;
+	
+	private static Map<String, GameModeEnum> values = new HashMap<>();
+	
+	static {
+		for (GameModeEnum mode : values()) {
+			values.put(mode.name(), mode);
+		}
+	}
 
 	GameModeEnum(String label, String description) {
 		this.label = label;
@@ -20,6 +31,10 @@ public enum GameModeEnum {
 	
 	public String getDescription() {
 		return description;
+	}
+	
+	public static GameModeEnum getEnum(String name) {
+		return values.get(name);
 	}
 	
 	

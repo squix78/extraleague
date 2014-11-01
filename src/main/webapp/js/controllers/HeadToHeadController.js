@@ -9,12 +9,11 @@ angular.module('Extraleague')
 			label: "@",
 			inverse: "=",
 			percentage: "=",
-			precision: "=?"
+			precision: "=?",
+			offset: "=?"
 		},
 		compile: function(element, attrs){
-			if (!attrs.precision) {
-				attrs.precision = 0;
-			}
+
 
 		},
 		controller: function($scope, $filter) {
@@ -23,13 +22,20 @@ angular.module('Extraleague')
 						&& angular.isDefined($scope.playerBRanking)
 						&& angular.isDefined($scope.playerARanking.statistics) 
 						&& angular.isDefined($scope.playerBRanking.statistics)) {
+					if (!angular.isDefined($scope.precision)) {
+						$scope.precision = 0;
+					}
+					if (!angular.isDefined($scope.offset)) {
+						$scope.offset = 0;
+					}
+					
 					var valueA = $scope.playerARanking.statistics[$scope.compare];
 					var valueB = $scope.playerBRanking.statistics[$scope.compare];
-					var calcValueA = valueA;
-					var calcValueB = valueB;
+					var calcValueA = valueA + $scope.offset;
+					var calcValueB = valueB + $scope.offset;
 					if ($scope.inverse) {
-						calcValueA = valueB;
-						calcValueB = valueA;
+						calcValueA = valueB + $scope.offset;
+						calcValueB = valueA + $scope.offset;
 					}
 					$scope.displayValueA = $filter('number')(valueA, $scope.precision);
 					$scope.displayValueB = $filter('number')(valueB, $scope.precision);;
@@ -37,8 +43,8 @@ angular.module('Extraleague')
 						$scope.displayValueA = ($filter('number')(100 * valueA, 2)) + "%";
 						$scope.displayValueB = ($filter('number')(100 * valueB, 2)) + "%";						
 					}
-					$scope.shareA = 100 * calcValueA / (valueA + valueB);
-					$scope.shareB = 100 * calcValueB / (valueA + valueB);
+					$scope.shareA = 100 * calcValueA / (calcValueA + calcValueB);
+					$scope.shareB = 100 * calcValueB / (calcValueA + calcValueB);
 
 				}
 			});

@@ -14,10 +14,10 @@
 		<div class="col-md-12">
 			<div class="progress">
 			  <div class="progress-bar" ng-class="{'progress-bar-success': shareA > shareB, 'progress-bar-danger': shareA < shareB, 'progress-bar-info': shareA == shareB}" 
-			  	style="width: {{shareA}}%">
+			  	style="width: 50%">
 			    {{displayValueA}}
 			  </div>
-			  <div class="progress-bar" ng-class="{'progress-bar-success': shareA < shareB, 'progress-bar-danger': shareA > shareB, 'progress-bar-warning': shareA == shareB}" style="width: {{shareB}}%">
+			  <div class="progress-bar" ng-class="{'progress-bar-success': shareA < shareB, 'progress-bar-danger': shareA > shareB, 'progress-bar-warning': shareA == shareB}" style="width: 50%">
 			    {{displayValueB}}
 			  </div>
 			</div>

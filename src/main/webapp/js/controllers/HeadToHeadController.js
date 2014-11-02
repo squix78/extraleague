@@ -45,7 +45,10 @@ angular.module('Extraleague')
 					}
 					$scope.shareA = 100 * calcValueA / (calcValueA + calcValueB);
 					$scope.shareB = 100 * calcValueB / (calcValueA + calcValueB);
+					$scope.barValue = 50;
 
+				} else {
+					$scope.barValue = 0;
 				}
 			});
 

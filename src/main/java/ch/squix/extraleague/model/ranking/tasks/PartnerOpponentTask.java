@@ -100,6 +100,7 @@ public class PartnerOpponentTask implements RankingTask {
             if (playerMatch.getPosition() == Position.Defensive) {
             	Integer goalsReceived = Collections.frequency(playerMatch.getScorers(), opponentName);
             	opponent.setGoalsReceived(opponent.getGoalsReceived() + goalsReceived);
+            	opponent.setPlayedAsKeeper(opponent.getPlayedAsKeeper() + 1);
             }
         }
     }

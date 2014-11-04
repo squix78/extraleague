@@ -187,6 +187,18 @@
             number:2}}%)</td>
         </tr>
         <tr>
+          <td>Keeper Goal Rate</td>
+          <td> 
+           <button  class="btn btn-default btn-xs" ng-click="keeperGoalRateList = !keeperGoalRateList">
+           	 <span ng-class="{'glyphicon-chevron-down': !keeperGoalRateList, 'glyphicon-chevron-up': keeperGoalRateList}" class="glyphicon"></span>
+           </button>
+           <div ng-show="keeperGoalRateList" ng-repeat="playerCombo in playerResult.statistics.opponents | orderBy:'-keeperGoalRate'">
+             {{playerCombo.combo}} ({{playerCombo.keeperGoalRate | number:2}})
+           </div>             
+          </td>
+        </tr>
+
+        <tr>
           <td>Played with:</td>
           <td>
           	{{playerResult.statistics.playedWith.join(', ')}} ({{playerResult.statistics.playedWith.length}})

@@ -18,6 +18,7 @@ public class PlayerMatchResult {
 	private Integer playerGoals = null;
 	private Boolean hasPlayerGoals = false;
 	private List<String> inBetweenScores = new ArrayList<>();
+	private List<String> scorers = new ArrayList<>();
 
 	
 	public String getMatchResultAsPlayersView() {

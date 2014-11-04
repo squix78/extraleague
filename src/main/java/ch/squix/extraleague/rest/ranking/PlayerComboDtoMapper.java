@@ -23,6 +23,8 @@ public class PlayerComboDtoMapper {
 		dto.setCombo(combo.getCombo());
 		dto.setGamesWon(combo.getGamesWon());
 		dto.setGamesLost(combo.getGamesLost());
+		dto.setGoalsReceived(combo.getGoalsReceived());
+		dto.setGoalsMade(combo.getGoalsMade());
 		return dto;
 	}
 

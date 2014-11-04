@@ -35,6 +35,7 @@ public class MatchUtil {
             }
             result.setPosition(teamPositions[index]);
             results.put(player, result);
+            result.setScorers(match.getScorers());
             index++;
         }
         index = 0;

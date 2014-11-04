@@ -12,6 +12,7 @@ import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.match.PlayerCombo;
 import ch.squix.extraleague.model.match.PlayerMatchResult;
+import ch.squix.extraleague.model.match.Position;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 
 
@@ -95,6 +96,10 @@ public class PartnerOpponentTask implements RankingTask {
             	opponent.increaseGamesWon();
             } else {
             	opponent.increaseGamesLost();
+            }
+            if (playerMatch.getPosition() == Position.Defensive) {
+            	Integer goalsReceived = Collections.frequency(playerMatch.getScorers(), opponentName);
+            	opponent.setGoalsReceived(opponent.getGoalsReceived() + goalsReceived);
             }
         }
     }

@@ -21,6 +21,9 @@ public class PlayerComboDto {
 	}
 	
 	public Double getKeeperGoalRate() {
+		if (goalsReceived == null || gamesWon == null || gamesLost == null) {
+			return 0d;
+		}
 		return 1.0 * goalsReceived / (gamesWon + gamesLost);
 	}
 

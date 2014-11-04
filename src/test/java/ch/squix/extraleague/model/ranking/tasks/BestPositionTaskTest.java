@@ -1,6 +1,7 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +21,19 @@ public class BestPositionTaskTest {
 	@Test
 	public void shouldRenderCorrectPartnerResults() {
 		List<Match> matchList = new ArrayList<>();
-		// Positions 0 and 2 are offense, 1 and 3 are defense
-		matchList.add(TestDataUtil.createMatch(5, 4, "dei", "cw", "rfi", "rsp"));
-		matchList.add(TestDataUtil.createMatch(4, 5, "cw", "rfi", "rsp", "dei"));
-		matchList.add(TestDataUtil.createMatch(4, 5, "rfi", "dei", "rsp", "cw"));
-		matchList.add(TestDataUtil.createMatch(5, 4, "dei", "rsp", "cw", "rfi"));
+
+		List<String> scorers = Arrays.asList("dei", "cw", "dei", "cw", "rfi", "rfi", "rfi", "rsp", "dei"); // 5:4
+		matchList.add(TestDataUtil.createMatch(scorers, "dei", "cw", "rfi", "rsp")); // dei->offense, wins
+		
+		scorers = Arrays.asList("cw", "dei", "cw", "dei", "rsp", "rsp", "rfi", "rfi", "rsp"); // 4:5
+		matchList.add(TestDataUtil.createMatch(scorers, "cw", "dei", "rsp", "rfi")); // dei-> defense, looses
+		
+		scorers = Arrays.asList("rfi", "rfi", "rsp", "rsp", "dei", "dei", "dei", "dei", "dei"); // 4:5
+		matchList.add(TestDataUtil.createMatch(scorers, "rfi", "rsp", "dei", "cw")); // dei -> offense, wins
+		
+		scorers = Arrays.asList("rfi", "rsp", "rsp", "rfi", "cw", "cw", "dei", "dei", "dei"); // 4:5
+		matchList.add(TestDataUtil.createMatch(scorers, "rfi", "rsp", "cw", "dei")); // dei -> defense, wins
+		
 		Matches matches = new Matches();
 		matches.setMatches(matchList);
 		 
@@ -32,8 +41,8 @@ public class BestPositionTaskTest {
 		Map<String, PlayerRanking> playerRankingMap = TestDataUtil.createPlayerRankingMap("dei", "cw", "rfi", "rsp");
 		task.rankMatches(playerRankingMap, matches);
 		PlayerRanking playerDei = playerRankingMap.get("dei");
-		Assert.assertEquals(100, Math.round(100 * playerDei.getOffensivePositionRate()));
-		Assert.assertEquals(50, Math.round(100 * playerDei.getDefensivePositionRate()));
+		Assert.assertEquals("Expected different offensive rate", 100, Math.round(100 * playerDei.getOffensivePositionRate()));
+		Assert.assertEquals("Expected different defensive rate", 50, Math.round(100 * playerDei.getDefensivePositionRate()));
 	}
 
 	

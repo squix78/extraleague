@@ -34,8 +34,8 @@ public class MatchUtil {
             	result.setInBetweenScores(getInBetweenScores(player, match));
             }
             result.setPosition(teamPositions[index]);
-            results.put(player, result);
             result.setScorers(match.getScorers());
+            results.put(player, result);
             index++;
         }
         index = 0;
@@ -53,6 +53,7 @@ public class MatchUtil {
             }
             result.setPosition(teamPositions[index]);
             result.setWon(!hasTeamAWon);
+            result.setScorers(match.getScorers());
             results.put(player, result);
             index++;
         }
@@ -84,7 +85,7 @@ public class MatchUtil {
     	if (match.getMaxGoals() != null) {
     		definedMaxGoals = match.getMaxGoals();
     	}
-    	return definedMaxGoals == maxScore;
+    	return definedMaxGoals.equals(maxScore);
     }
 
 	public static boolean hasTeamAWon(Match match) {

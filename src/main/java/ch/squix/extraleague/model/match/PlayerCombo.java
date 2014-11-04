@@ -15,6 +15,7 @@ public class PlayerCombo implements Serializable {
 	private Integer gamesLost = 0;
 	private Integer goalsReceived = 0;
 	private Integer goalsMade = 0;
+	private Integer playedAsKeeper = 0;
 
 	
 	public void increaseGamesWon() {
@@ -34,7 +35,7 @@ public class PlayerCombo implements Serializable {
 	}
 	
 	public Double getKeeperGoalRate() {
-		return 1.0 * goalsReceived / getTotalGames();
+		return 1.0 * goalsReceived / playedAsKeeper;
 	}
 
 }

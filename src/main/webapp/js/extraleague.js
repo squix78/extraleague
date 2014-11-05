@@ -185,12 +185,24 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
       return {
         restrict: 'A',
         require: '^ngModel',
-        templateUrl: 'templates/badges.html',
+        templateUrl: 'js/templates/badges.html',
           scope: {
               ngModel: '=',
               badgeMap: '='
           }
       };
+    })
+    .directive('delta', function() {
+    	return {
+    		restrict: 'A',
+    		require: '^ngModel',
+    		templateUrl: 'js/templates/delta.html',
+    		scope: {
+    			value: '=ngModel',
+    		},
+    		link: function(scope, element, attrs, ngModel) {
+    		}
+    	};
     })
     .directive('highlightBadges', ['Badges', function(Badges) {
 	  return {    

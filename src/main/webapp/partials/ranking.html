@@ -17,10 +17,10 @@
 		<thead>
           <tr>
             <th><a href="" ng-click="predicate = 'ranking'; reverse=!reverse">#</a></th>
-            <th><a href="" ng-click="predicate = 'rankingDelta'; reverse=!reverse"></a></th>
+            <th><a href="" ng-click="predicate = 'rankingDelta'; reverse=!reverse">&Delta;</a></th>
             <th><a href="" ng-click="predicate = 'player'; reverse=!reverse">Who</a></th>
             <th><a href="" ng-click="predicate = 'eloValue'; reverse=!reverse">elo</a></th>
-            <th><a href="" ng-click="predicate = 'eloDelta'; reverse=!reverse"></a></th>
+            <th><a href="" ng-click="predicate = 'eloDelta'; reverse=!reverse">&Delta;</a></th>
             <th><a href="" ng-click="predicate = ['successRate', 'goalPlusMinus']; reverse=!reverse">%</a></th>
             <th><a href="" ng-click="predicate = 'currentShapeRate'; reverse=!reverse">Sh %</a></th>
             <th><a href="" ng-click="predicate = 'goalPlusMinus'; reverse=!reverse">Goals</a></th>
@@ -32,10 +32,10 @@
         <tbody>
           <tr ng-repeat="ranking in rankings | orderBy:predicate:reverse">
             <td>{{$index + 1}} </td>
-            <td ng-class="{won: ranking.rankingDelta > 0, lost: ranking.rankingDelta < 0}"><span ng-show="ranking.rankingDelta > 0">+</span>{{ranking.rankingDelta == 0 ? '-' : ranking.rankingDelta}} </td>
+            <td><div delta ng-model="ranking.rankingDelta"></div></td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
             <td>{{ranking.eloValue}}</td>
-            <td ng-class="{won: ranking.eloDelta > 0, lost: ranking.eloDelta < 0}"><span ng-show="ranking.eloDelta > 0">+</span>{{ranking.eloDelta == 0 ? '-' : ranking.eloDelta}} </td>
+            <td><div delta ng-model="ranking.eloDelta"></div></td>
             <td ng-class="{won: ranking.successRate > 0.5, lost: ranking.successRate < 0.5}">{{ranking.successRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.currentShapeRate > ranking.successRate, lost: ranking.currentShapeRate < ranking.successRate}">{{ranking.currentShapeRate * 100 | number:1}}</td>
             <td ng-class="{won: ranking.goalPlusMinus > 0, lost: ranking.goalPlusMinus < 0}"><span ng-show="ranking.goalPlusMinus >= 0">+</span>{{ranking.goalPlusMinus| number:2}}</td>

@@ -25,10 +25,14 @@ public class DeltaRankingTask implements RankingTask {
 			for (PlayerRanking newPlayerRanking : playerRankingMap.values()) {
 				PlayerRanking oldPlayerRanking = dayStartRanking.getPlayerRanking(newPlayerRanking.getPlayer());
 				Integer newRank = newPlayerRanking.getEloRanking();
+				Integer newElo = newPlayerRanking.getEloValue();
 				if (oldPlayerRanking != null) {
 					Integer oldRank = oldPlayerRanking.getEloRanking();
 					newPlayerRanking.setRankingDelta(oldRank - newRank);
+					Integer oldElo = oldPlayerRanking.getEloValue();
+					newPlayerRanking.setEloDelta(oldElo - newElo);
 				}
+
 			}
 		}
 	}

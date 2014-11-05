@@ -53,6 +53,7 @@ public class RankingDtoMapper {
 				rankingDto.setAchievementPoints(playerRanking.getAchievementPoints());
 				rankingDto.setBestSlam(playerRanking.getBestSlam());
 				rankingDto.setRankingDelta(playerRanking.getRankingDelta());
+				rankingDto.setEloDelta(playerRanking.getEloDelta());
 				playerRankingList.add(rankingDto);
 			}
 		}

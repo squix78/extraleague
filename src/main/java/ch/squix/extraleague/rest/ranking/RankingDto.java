@@ -48,6 +48,7 @@ public class RankingDto {
     private Integer eloValue;
     private Integer eloRanking;
     private Integer rankingDelta;
+    private Integer eloDelta;
     
     private Double trueSkillRating;
     private Integer trueSkillRanking;

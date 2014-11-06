@@ -5,7 +5,9 @@
  <form name="userForm" novalidate>
   <div class="form-group">
     <label for="playerInput">Player</label>
-    <input ng-disabled="playerUser.playerClaimed" type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
+    <input ng-disabled="playerUser.playerClaimed" playerexists type="text" required ng-minlength="2" ng-maxlength="4" class="form-control" name="player" id="playerInput" placeholder="Player Shortname" ng-model="playerUser.player">
+    <div ng-show="userForm.player.$error.playerexists">This player is already registered. Please choose another</div>
+    {{userForm.playerInput}}
   </div>
   <div class="form-group">
     <label for="emailInput">Notification Email</label>

@@ -4,6 +4,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.logging.Logger;
 
+import org.restlet.data.Status;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -30,7 +31,7 @@ public class CurrentUserResource extends ServerResource {
 		if (userService.isUserLoggedIn()) {
 				
 			String userId = currentUser.getUserId();
-			PlayerUser player = ofy().load().type(PlayerUser.class).filter("appUserId = ", userId).first().now();
+			PlayerUser player = ofy().load().type(PlayerUser.class).filter("appUserId", userId).first().now();
 			if (player != null) {
 				dto = PlayerUserDtoMapper.mapToDto(player);
 			} 
@@ -53,6 +54,7 @@ public class CurrentUserResource extends ServerResource {
 				&& dto.getAppUserEmail().equals(currentUser.getEmail())) {
 			return PlayerUserDtoMapper.savePlayerUser(dto, currentUser);
 		}
+		getResponse().setStatus(Status.CLIENT_ERROR_CONFLICT);
 		return null;
 	}
 

@@ -66,15 +66,13 @@ public class PlayerUserDtoMapper {
 		// Cases:
 		// 1. Save existing user: no user loaded with currentUser.id
 		// 2. Claiming new user: nobody else claimed this player
-		PlayerUser playerUser = ofy().load().type(PlayerUser.class).filter("appUserId = ", currentUser.getUserId()).first().now();
+		PlayerUser playerUser = ofy().load().type(PlayerUser.class).filter("appUserId", currentUser.getUserId()).first().now();
 		if (playerUser == null) {
-			playerUser = ofy().load().type(PlayerUser.class).filter("player == ", playerUserDto.getPlayer()).first().now();
-			if (playerUser != null) {
-				log.info("User already claimed!");
-				return null;
+			playerUser = ofy().load().type(PlayerUser.class).filter("player", playerUserDto.getPlayer()).first().now();
+			if (playerUser == null) {
+				playerUser = new PlayerUser();
+				playerUser.setPlayer(playerUserDto.getPlayer());
 			}
-			playerUser = new PlayerUser();
-			playerUser.setPlayer(playerUserDto.getPlayer());
 		}
 		playerUser.setAppUserId(currentUser.getUserId());
 		playerUser.setAppUserEmail(currentUser.getEmail());

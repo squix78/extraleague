@@ -228,17 +228,17 @@ angular.module('PlayerMappings', [])
 		}
 	};
 }])
-.directive('player', ['PlayerService', function(PlayerService) {
+
+.directive('playerpic', ['PlayerService', function(PlayerService) {
     return {
-    	template: '<div class="playerImage"><img class="player img img-rounded {{teamColor}}" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
+    	template: '<span class="playerImage"><img class="player img img-rounded" ng-src="{{playerImgUrl}}"/></span>',
     	scope: {
-    		player: "=",
-    		team: "="
+    		playerpic: "="
     	},
         link: function(scope, elem, attrs) {
         	scope.$watchCollection('[player, PlayerService.playerMap]', function(newValue, oldValues){
         		if (newValue) {
-        			PlayerService.getPlayerPicture(scope.player).then(function(result) {
+        			PlayerService.getPlayerPicture(scope.playerpic).then(function(result) {
         				scope.playerImgUrl = result;
         			});		
         			
@@ -249,6 +249,28 @@ angular.module('PlayerMappings', [])
         	});
         }
     };
+}])
+.directive('player', ['PlayerService', function(PlayerService) {
+	return {
+		template: '<div class="playerImage"><img class="player img img-rounded {{teamColor}}" ng-src="{{playerImgUrl}}"/><div class="caption">{{player}}</div></div>',
+		scope: {
+			player: "=",
+			team: "="
+		},
+		link: function(scope, elem, attrs) {
+			scope.$watchCollection('[player, PlayerService.playerMap]', function(newValue, oldValues){
+				if (newValue) {
+					PlayerService.getPlayerPicture(scope.player).then(function(result) {
+						scope.playerImgUrl = result;
+					});		
+					
+					if (scope.team) {
+						scope.teamColor = scope.team + "TeamBorder";
+					}
+				}
+			});
+		}
+	};
 }])
 .directive('splitPlayers', function(PlayerService) {
   return { 

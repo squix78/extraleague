@@ -14,15 +14,27 @@ here:
 </div>
 
 <h3>Highlights</h3>
-<div class="row">
-	<div class="col-xs-2 col-md-1">
-		Players
+
+	<div class="panel panel-default" ng-repeat="mutation in mutations | orderBy:'-createdDate' | limitTo: 15">
+
+
+	  <div class="panel-heading">
+			<span class="xsPlayer" ng-repeat="player in mutation.players" player-img="player"> &nbsp;</span>
+			<span ng-show="mutation.players.length === 1">{{mutation.players[0]}}</span>
+	  	    <div class="pull-right">
+		  	    {{mutation.createdDate | date:'dd-MM-yyyy'}}
+		       	{{mutation.createdDate | date:'shortTime'}}
+	  	    </div>
+
+
+	  </div>
+	   <div class="panel-body">
+	       	<div ng-repeat="description in mutation.descriptions">
+		    	<div highlight-badges ng-model="description"></div>
+	       	</div>
+	   </div>
 	</div>
-	<div class="col-xs-10 col-md-11">
-		Description
-	</div>
-</div>
-<hr/>
+
 <div ng-repeat="mutation in mutations | orderBy:'-createdDate' | limitTo: 15">
 	<div class="well">
 	<div class="row">

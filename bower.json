@@ -17,8 +17,10 @@
     "tests"
   ],
   "dependencies": {
-    "angular-touch": "~1.2.14",
-    "angular-route": "~1.2.14",
-    "angular-resource": "~1.2.14"
+    "angular-touch": "1.2.26",
+    "angular-route": "1.2.26",
+    "angular-resource": "1.2.26",
+    "bootstrap": "3.3.0",
+    "angular": "1.2.26"
   }
 }

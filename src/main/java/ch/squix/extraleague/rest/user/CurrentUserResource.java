@@ -40,7 +40,7 @@ public class CurrentUserResource extends ServerResource {
 			dto.setFederatedIdentity(currentUser.getFederatedIdentity());
 		}  
 		dto.setLoggedIn(userService.isUserLoggedIn());
-		dto.setLoginUrl(userService.createLoginURL("/user/"));
+		dto.setLoginUrl(userService.createLoginURL("/#/account/"));
 		dto.setLogoutUrl(userService.createLogoutURL("/"));
 		return dto;
 	}

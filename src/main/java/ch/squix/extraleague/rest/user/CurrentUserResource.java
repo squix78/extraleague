@@ -39,6 +39,7 @@ public class CurrentUserResource extends ServerResource {
 			dto.setNickname(currentUser.getNickname());
 			dto.setFederatedIdentity(currentUser.getFederatedIdentity());
 		}  
+		dto.setAdmin(userService.isUserLoggedIn() && userService.isUserAdmin());
 		dto.setLoggedIn(userService.isUserLoggedIn());
 		dto.setLoginUrl(userService.createLoginURL("/#/account/"));
 		dto.setLogoutUrl(userService.createLogoutURL("/"));

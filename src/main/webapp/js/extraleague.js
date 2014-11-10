@@ -64,6 +64,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
         	controller : 'GetExtraleagueController',
         	templateUrl : 'partials/getExtraleague.html'
         })
+        .when('/account', {
+           controller : 'UserController',
+           templateUrl : 'partials/userDetail.html'
+        })
         .when('/registration', {
         	controller : 'RegistrationController',
         	templateUrl : 'partials/registration.html'

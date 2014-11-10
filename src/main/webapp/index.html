@@ -87,7 +87,7 @@
             <li ng-show="!isCurrentUserLoading && currentUser.loggedIn" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.nickname}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/user/">Account</a></li>
+                <li data-match-route="/account"><a ng-click="navigateTo('account')">Account</a></li>
                 <li><a href="{{currentUser.logoutUrl}}">Logout</a></li>
               </ul>
             </li>

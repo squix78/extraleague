@@ -12,5 +12,6 @@ public class PersonalStatsDto {
     // Personal Data
     private Map<Date, Long> matchesPlayedPerDay = new HashMap<>();
     private Map<Date, Long> secondsPlayedPerDay = new HashMap<>();
+    private Map<Date, Long> eloPerDay = new HashMap<>();
 
 }

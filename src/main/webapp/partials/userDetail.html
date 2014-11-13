@@ -40,38 +40,7 @@
 </form>
 <span ng-show="isPlayerLoading"><img src="../images/ajax-loader.gif" /> Loading user...</span>
 <span ng-show="isPlayerSaving"><img src="../images/ajax-loader.gif" /> Saving user...</span>
-<BR/>
-<BR/>
-<span ng-show="isLoadingPlayerStats"><img src="../images/ajax-loader.gif" /> Loading playerStats...</span>
-<div ng-show="playerStats">
- <h3>Player Stats</h3>
- <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-      	<tr>
-      		<th>Date</th>
-      		<th>Matches</th>
-      		<th>Minutes</th>
-      	</tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="(key, value) in playerStats.matchesPlayedPerDay">
-          <td>{{key | date:'EEE, d.MMM.y'}}</td>
-          <td>
-			{{playerStats.matchesPlayedPerDay[key]}}
-          </td>
-          <td>
-			{{playerStats.secondsPlayedPerDay[key] / 60 | number:0}}
-          </td>
-        </tr>
 
-
-      </tbody>
-        
-     </table>
-  </div>
-
-</div>
 
 
 

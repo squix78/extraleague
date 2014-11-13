@@ -47,7 +47,6 @@ public class PlayerRanking implements Serializable {
 
     private Long averageSecondsPerMatch;
     
-    private Long secondsPlayedToday;
 
     private Double currentShapeRate;
 
@@ -71,6 +70,13 @@ public class PlayerRanking implements Serializable {
     private Integer trueSkillRanking;
 
     private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
+    
+    // Personal Data
+    private Long matchesPlayedYesterday;
+    private Long matchesPlayedToday;
+    private Long secondsPlayedYesterday;
+    private Long secondsPlayedToday;
+
 
     private Integer maxGoalsPerGame = 0;
 

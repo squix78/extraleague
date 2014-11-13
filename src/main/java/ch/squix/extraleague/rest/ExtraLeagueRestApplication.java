@@ -50,6 +50,7 @@ import ch.squix.extraleague.rest.ranking.CleanInDayRankingsResource;
 import ch.squix.extraleague.rest.ranking.CronCleanInDayRankingsResource;
 import ch.squix.extraleague.rest.ranking.CronUpdateEternalRankingsResource;
 import ch.squix.extraleague.rest.ranking.CronUpdateRankingsResource;
+import ch.squix.extraleague.rest.ranking.PersonalStatsResource;
 import ch.squix.extraleague.rest.ranking.RankingByTagResource;
 import ch.squix.extraleague.rest.ranking.RankingResource;
 import ch.squix.extraleague.rest.ranking.UpdateEternalRankingsResource;
@@ -108,6 +109,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/winners/{table}", WinnerTeamResource.class);
         router.attach("/players", PlayersRessource.class);
         router.attach("/players/{player}", PlayerRessource.class);
+        router.attach("/playerStats/{player}", PersonalStatsResource.class);
         router.attach("/timeseries/{player}", TimeSeriesResource.class);
         router.attach("/meetingPointPlayers", MeetingPointPlayersResource.class);
         router.attach("/meetingPointPlayers/{playerId}", MeetingPointPlayerResource.class);

@@ -38,7 +38,42 @@
   <button ng-disabled="!userForm.$valid || isPlayerSaving" type="submit" class="btn btn-primary" ng-click="savePlayer()">Save</button>
 
 </form>
-
+<BR/>
+<BR/>
+<div ng-show="playerStats">
+	<div class="row">
+		<div class="col-md-4">
+			Matches played Yesterday:
+		</div>
+		<div class="col-md-8">
+			{{playerStats.matchesPlayedYesterday}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			Matches played Today:
+		</div>
+		<div class="col-md-8">
+			{{playerStats.matchesPlayedToday}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			Seconds played Yesterday:
+		</div>
+		<div class="col-md-8">
+			{{playerStats.secondsPlayedYesterday}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			Seconds played Today:
+		</div>
+		<div class="col-md-8">
+			{{playerStats.secondsPlayedToday}}
+		</div>
+	</div>
+</div>
 
 <span ng-show="isPlayerLoading"><img src="../images/ajax-loader.gif" /> Loading user...</span>
 <span ng-show="isPlayerSaving"><img src="../images/ajax-loader.gif" /> Saving user...</span>

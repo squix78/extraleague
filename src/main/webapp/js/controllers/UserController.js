@@ -1,5 +1,5 @@
 angular.module('Extraleague').controller('UserController', 
-function UserController($scope, $rootScope, $resource, $location, $routeParams, CurrentUser) {
+function UserController($scope, $rootScope, $resource, $location, $routeParams, CurrentUser, PlayerStats) {
 	$scope.isPlayerLoading = false;
 	$scope.isPlayerSaving = false;
 	$scope.loadPlayer = function() {
@@ -10,6 +10,11 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 			if (!angular.isDefined($scope.playerUser.player)) {
 				console.log("found no user");
 				$location.path("/claimUser");
+			} else {
+				$scope.isPlayerStatsLoading = true;
+				$scope.playerStats = PlayerStats.get({player: $scope.playerUser.player}, function() {
+					$scope.isPlayerStatsLoading = false;
+				});
 			}
 		});
 	};
@@ -21,6 +26,7 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 			
 		});
 	}
+
 
 	
 });

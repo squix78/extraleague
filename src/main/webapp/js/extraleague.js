@@ -160,6 +160,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('CurrentUser', ['$resource', function($resource) {
     	return $resource('/rest/currentUser');
     }])
+    .factory('PlayerStats', ['$resource', function($resource) {
+    	return $resource('/rest/playerStats/:player');
+    }])
     .factory('League', ['$resource', function($resource) {
     	return $resource('/rest/league');
     }])

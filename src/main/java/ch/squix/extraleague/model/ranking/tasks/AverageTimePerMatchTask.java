@@ -3,6 +3,7 @@ package ch.squix.extraleague.model.ranking.tasks;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Map;
 
 import ch.squix.extraleague.model.match.Match;
@@ -17,6 +18,7 @@ public class AverageTimePerMatchTask implements RankingTask {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 		Date todayStart = calendar.getTime();
 		calendar.add(Calendar.DAY_OF_YEAR, -1);
 		Date yesterdayStart = calendar.getTime();
@@ -24,10 +26,8 @@ public class AverageTimePerMatchTask implements RankingTask {
 			PlayerRanking ranking = playerRankingMap.get(player);
 			long totalMatchTime = 0;
 			long numberOfMatches = 0;
-			long matchesYesterday = 0;
-			long matchesToday = 0;
-			long secondsPlayedYesterday = 0;
-			long secondsPlayedToday = 0;
+			Map<Date, Long> matchesPlayedPerDay = new HashMap<Date, Long>();
+			Map<Date, Long> secondsPlayedPerDay = new HashMap<Date, Long>();
 			for (Match match : matches.getMatchesByPlayer(player)) {
 				Date startDate = match.getStartDate();
 				Date endDate = match.getEndDate();
@@ -35,23 +35,37 @@ public class AverageTimePerMatchTask implements RankingTask {
 					long matchLength = endDate.getTime() - startDate.getTime();
 					totalMatchTime += matchLength;
 					numberOfMatches++;
-					if (startDate.compareTo(yesterdayStart) > 0 && startDate.compareTo(todayStart) < 0) {
-						matchesYesterday++;
-						secondsPlayedYesterday += matchLength / 1000L;
+					Date day = getDayStart(startDate);
+					Long matchesPlayed = matchesPlayedPerDay.get(day);
+					if (matchesPlayed == null) {
+						matchesPlayed = 0L;
 					}
-					if (startDate.compareTo(todayStart) > 0) {
-						matchesToday++;
-						secondsPlayedToday += matchLength / 1000L;
+					matchesPlayed++;
+					matchesPlayedPerDay.put(day, matchesPlayed);
+					Long secondsPlayed = secondsPlayedPerDay.get(day);
+					if (secondsPlayed == null) {
+						secondsPlayed = 0L;
 					}
+					secondsPlayed += matchLength / 1000;
+					secondsPlayedPerDay.put(day, secondsPlayed);
+					
+					
 				}
 			}
 			ranking.setAverageSecondsPerMatch(totalMatchTime / (1000 * numberOfMatches));
-			ranking.setMatchesPlayedYesterday(matchesYesterday);
-			ranking.setMatchesPlayedToday(matchesToday);
-			ranking.setSecondsPlayedYesterday(secondsPlayedYesterday);
-			ranking.setSecondsPlayedToday(secondsPlayedToday);
-
+			ranking.setMatchesPlayedPerDay(matchesPlayedPerDay);
+			ranking.setSecondsPlayedPerDay(secondsPlayedPerDay);
 		}
+	}
+	
+	private static Date getDayStart(Date date) {
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
 	}
 
 }

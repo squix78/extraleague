@@ -12,12 +12,17 @@ import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.player.PlayerUser;
 import ch.squix.extraleague.model.ranking.EternalRanking;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.model.ranking.RankingService;
+import ch.squix.extraleague.rest.playeruser.PlayerUserDto;
 
 import com.google.appengine.api.NamespaceManager;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.common.base.Strings;
 
 public class PersonalStatsResource extends ServerResource {
@@ -27,13 +32,22 @@ public class PersonalStatsResource extends ServerResource {
 	
 	@Get(value = "json")
 	public PersonalStatsDto execute() throws UnsupportedEncodingException {
-		String player = (String) this.getRequestAttributes().get("player");
+		UserService userService = UserServiceFactory.getUserService();
+		User currentUser = userService.getCurrentUser();
 
-		Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
-		if (ranking != null) {
-			PlayerRanking playerRanking = ranking.getPlayerRanking(player);
-			if (playerRanking != null) {
-				return PersonalStatsDtoMapper.mapToDto(playerRanking);
+		if (userService.isUserLoggedIn()) {
+				
+			String userId = currentUser.getUserId();
+			PlayerUser player = ofy().load().type(PlayerUser.class).filter("appUserId", userId).first().now();
+
+			if (player != null) {
+				Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
+				if (ranking != null) {
+					PlayerRanking playerRanking = ranking.getPlayerRanking(player.getPlayer());
+					if (playerRanking != null) {
+						return PersonalStatsDtoMapper.mapToDto(playerRanking);
+					}
+				}
 			}
 		}
 		return null;

@@ -8,6 +8,7 @@ public class PersonalStatsDtoMapper {
 		PersonalStatsDto dto = new PersonalStatsDto();
 		dto.setMatchesPlayedPerDay(ranking.getMatchesPlayedPerDay());
 		dto.setSecondsPlayedPerDay(ranking.getSecondsPlayedPerDay());
+		dto.setEloPerDay(ranking.getEloPerDay());
 		return dto;
 	}
 

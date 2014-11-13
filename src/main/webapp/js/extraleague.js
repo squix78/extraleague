@@ -68,6 +68,10 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
            controller : 'UserController',
            templateUrl : 'partials/userDetail.html'
         })
+        .when('/playerStats', {
+        	controller : 'PlayerStatsController',
+        	templateUrl : 'partials/playerStats.html'
+        })
         .when('/admin', {
         	controller : 'LeagueAdminController',
         	templateUrl : 'partials/league.html'
@@ -161,7 +165,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     	return $resource('/rest/currentUser');
     }])
     .factory('PlayerStats', ['$resource', function($resource) {
-    	return $resource('/rest/playerStats/:player');
+    	return $resource('/rest/currentPlayerStats');
     }])
     .factory('League', ['$resource', function($resource) {
     	return $resource('/rest/league');

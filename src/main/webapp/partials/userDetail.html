@@ -44,6 +44,7 @@
 <BR/>
 <span ng-show="isLoadingPlayerStats"><img src="../images/ajax-loader.gif" /> Loading playerStats...</span>
 <div ng-show="playerStats">
+ <h3>Player Stats</h3>
  <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -69,13 +70,13 @@
         <tr>
           <td>Minutes played Yesterday:</td>
           <td>
-			{{playerStats.matchesPlayedYesterday / 60 | number:0}}
+			{{playerStats.secondsPlayedYesterday / 60 | number:0}}
           </td>
         </tr>
         <tr>
           <td>Minutes played Today:</td>
           <td>
-			{{playerStats.matchesPlayedToday / 60 | number:0}}
+			{{playerStats.secondsPlayedToday / 60 | number:0}}
           </td>
         </tr>
 

@@ -2,8 +2,11 @@ package ch.squix.extraleague.model.ranking;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -72,11 +75,8 @@ public class PlayerRanking implements Serializable {
     private List<DataTuple<Integer, Double>> scoreHistogram = new ArrayList<>();
     
     // Personal Data
-    private Long matchesPlayedYesterday;
-    private Long matchesPlayedToday;
-    private Long secondsPlayedYesterday;
-    private Long secondsPlayedToday;
-
+    private Map<Date, Long> matchesPlayedPerDay = new HashMap<>();
+    private Map<Date, Long> secondsPlayedPerDay = new HashMap<>();
 
     private Integer maxGoalsPerGame = 0;
 

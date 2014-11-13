@@ -49,36 +49,22 @@
     <table class="table table-striped">
       <thead>
       	<tr>
-      		<th></th>
-      		<th>
-      		</th>
+      		<th>Date</th>
+      		<th>Matches</th>
+      		<th>Minutes</th>
       	</tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Matches played Yesterday:</td>
+        <tr ng-repeat="(key, value) in playerStats.matchesPlayedPerDay">
+          <td>{{key | date:'EEE, d.MMM.y'}}</td>
           <td>
-			{{playerStats.matchesPlayedYesterday}}
+			{{playerStats.matchesPlayedPerDay[key]}}
+          </td>
+          <td>
+			{{playerStats.secondsPlayedPerDay[key] / 60 | number:0}}
           </td>
         </tr>
-        <tr>
-          <td>Matches played Today:</td>
-          <td>
-			{{playerStats.matchesPlayedToday}}
-          </td>
-        </tr>
-        <tr>
-          <td>Minutes played Yesterday:</td>
-          <td>
-			{{playerStats.secondsPlayedYesterday / 60 | number:0}}
-          </td>
-        </tr>
-        <tr>
-          <td>Minutes played Today:</td>
-          <td>
-			{{playerStats.secondsPlayedToday / 60 | number:0}}
-          </td>
-        </tr>
+
 
       </tbody>
         

@@ -17,6 +17,7 @@ public enum BadgeEnum {
 	BruceWillis(8, 5, BadgeType.Silver, "fa-mail-reply", null, "Came back and won the game after 0:4"),
 	ChuckNorris(8, 10, BadgeType.Gold, "fa-mail-reply-all", null, "Came back and won the game after 0:4, twice in a game! Only Chuck can do it!"),
 	PL(8, -5, BadgeType.Shamelet, "fa-phone", null, "Project Leader: Won a match without scoring a goal while being in offensive position"),
+	TC(8, 5, BadgeType.Bronze, "fa-futbol-o", null, "Technical Coordinator: Won a match by scoring all the goals from defensive position"),
 	x5Slam(8, 5, BadgeType.Bronze, "", null, "won 5-9 games in a row"), 
 	x10Slam(9, 10, BadgeType.Silver, "", null, "won 10-14 games in a row"), 
 	x15Slam(10, 15, BadgeType.Gold, "", null, "won 15-19 games in a row"), 

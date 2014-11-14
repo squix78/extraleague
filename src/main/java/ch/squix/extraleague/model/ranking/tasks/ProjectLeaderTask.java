@@ -23,6 +23,13 @@ public class ProjectLeaderTask implements RankingTask {
     				PlayerRanking playerRanking = playerRankingMap.get(matchResult.getPlayer());
     				playerRanking.getBadges().add(BadgeEnum.PL.name());
     			}
+    			if (matchResult.isWon() 
+    					&& matchResult.getPlayerGoals() != null 
+    					&& matchResult.getPlayerGoals() == match.getMaxGoals() 
+    					&& matchResult.getPosition() == Position.Defensive) {
+    				PlayerRanking playerRanking = playerRankingMap.get(matchResult.getPlayer());
+    				playerRanking.getBadges().add(BadgeEnum.TC.name());
+    			}
     		}
     			
     	}

@@ -6,7 +6,7 @@ import java.util.Map;
 public enum BadgeEnum {
 	
 	// Find more icon classes on http://fortawesome.github.io/Font-Awesome/icons/
-	Emperor(1, 0, BadgeType.Honorary, "fa-sun-o", null, "King by the end of last week"), 
+	Emperor(1, 0, BadgeType.Honorary, "fa-sun-o", null, "Best player by the end of last week"), 
 	King(1, 15, BadgeType.Ranking, "fa-trophy", null, "1st"), 
 	Queen(2, 10, BadgeType.Ranking, "fa-female", null, "2nd"), 
 	Pawn(3, -5, BadgeType.Shamelet, "fa-ambulance", null, "Last"),

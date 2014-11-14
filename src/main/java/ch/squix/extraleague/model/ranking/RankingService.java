@@ -19,6 +19,7 @@ import ch.squix.extraleague.model.ranking.tasks.BestPositionTask;
 import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
 import ch.squix.extraleague.model.ranking.tasks.DeltaRankingTask;
 import ch.squix.extraleague.model.ranking.tasks.EloRankingTask;
+import ch.squix.extraleague.model.ranking.tasks.EmperorTask;
 import ch.squix.extraleague.model.ranking.tasks.FirstPlayerFilterTask;
 import ch.squix.extraleague.model.ranking.tasks.GoalsPerGameTask;
 import ch.squix.extraleague.model.ranking.tasks.GoalsPerPositionTask;
@@ -114,6 +115,7 @@ public class RankingService {
         rankingTasks.add(new ScoreHistogramTask());
         rankingTasks.add(new GoalsPerGameTask());
         rankingTasks.add(new ProjectLeaderTask());
+        rankingTasks.add(new EmperorTask());
         
 
         // From here only work on playerRankingMap

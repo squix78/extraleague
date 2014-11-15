@@ -61,7 +61,7 @@ import ch.squix.extraleague.rest.statistics.StatisticsResource;
 import ch.squix.extraleague.rest.statistics.UpdateStatisticsResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
 import ch.squix.extraleague.rest.timeseries.TimeSeriesResource;
-import ch.squix.extraleague.rest.user.ClaimUserResource;
+import ch.squix.extraleague.rest.user.ValidatePlayerResource;
 import ch.squix.extraleague.rest.user.CurrentUserResource;
 import ch.squix.extraleague.rest.user.LoginLogoutResource;
 import ch.squix.extraleague.server.AddLeagueResource;
@@ -122,6 +122,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/league/style", LeagueStyleResource.class);
         router.attach("/blobs", BlobUrlResource.class);
         router.attach("/error", ClientErrorResource.class);
+        router.attach("/validate/player", ValidatePlayerResource.class);
         
         
         // jobs
@@ -149,7 +150,6 @@ public class ExtraLeagueRestApplication extends Application {
         
         router.attach("/notifications/endOfGame/{gameId}", WebhookEndOfGameNotificationResource.class);
         router.attach("/currentUser", CurrentUserResource.class);
-        router.attach("/user/claim/{player}", ClaimUserResource.class);
         router.attach("/authUrl", LoginLogoutResource.class);
         router.attach("/playerUsers", PlayerUserResource.class);
         

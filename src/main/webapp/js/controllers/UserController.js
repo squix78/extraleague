@@ -16,9 +16,17 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 	$scope.loadPlayer();
 	$scope.savePlayer = function() {
 		$scope.isPlayerSaving = true;
+		$scope.savePlayerOK = false;
+		$scope.savePlayerFailed = false;
 		$scope.playerUser.$save({}, function() {
 			$scope.isPlayerSaving = false;
+			$scope.savePlayerOK = true;
+			$scope.savePlayerFailed = false;
 			
+		}, function() {
+			$scope.isPlayerSaving = false;
+			$scope.savePlayerOK = false;
+			$scope.savePlayerFailed = true;
 		});
 	}
 

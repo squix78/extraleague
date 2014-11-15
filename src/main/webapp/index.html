@@ -85,7 +85,7 @@
             <li ng-show="isCurrentUserLoading"> <a href="#"><img src="images/ajax-loader.gif" /></a></li>
             <li ng-show="!isCurrentUserLoading && !currentUser.loggedIn"><a href="{{currentUser.loginUrl}}">Login</a></li>
             <li ng-show="!isCurrentUserLoading && currentUser.loggedIn" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.nickname}} <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-cloak>{{currentUser.nickname}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li data-match-route="/account"><a ng-click="navigateTo('account')">Account</a></li>
                 <li data-match-route="/playerStats"><a ng-click="navigateTo('playerStats')">Statistics</a></li>

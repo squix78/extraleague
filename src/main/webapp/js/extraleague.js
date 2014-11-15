@@ -1,7 +1,7 @@
 angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 
                                'ui.bootstrap', 'ui.bootstrap.buttons', 'ui.bootstrap.alert', 
                                'nvd3ChartDirectives', 'omr.directives', 'gaeChannelService', 
-                               'angulartics', 'angulartics.google.analytics', 'squix.services.logging'])
+                               'angulartics', 'angulartics.google.analytics', 'squix.services.logging', 'remoteValidation'])
     .config(function($routeProvider) {
         $routeProvider
         .when('/newGame', {

@@ -13,6 +13,7 @@ import ch.squix.extraleague.rest.games.OpenGamesResource;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.common.base.Strings;
 
 
 
@@ -22,21 +23,15 @@ public class ValidatePlayerResource extends ServerResource {
 	
 	@Post(value = "json")
 	public ValidatePlayerDto validate(ValidatePlayerDto dto) {
-		
-		UserService userService = UserServiceFactory.getUserService();
-		User currentUser = userService.getCurrentUser();
-		String userId = currentUser.getUserId();
+
 		PlayerUser playerToClaim = ofy().load().type(PlayerUser.class).filter("player = ", dto.getValue()).first().now();
-		PlayerUser userClaiming = ofy().load().type(PlayerUser.class).filter("appUserId = ", userId).first().now();
-		if (playerToClaim != null && playerToClaim.getAppUserId() != null && !playerToClaim.getAppUserId().equals(userId)) {
-			dto.setIsValid(false);
-		}
-		if (userClaiming != null) {
-			dto.setIsValid(false);
-		}
-		if (playerToClaim == null || (playerToClaim != null && playerToClaim.getAppUserId() == null) || playerToClaim.getAppUserId() == null) {
+		if (playerToClaim == null 
+				|| ((playerToClaim != null && Strings.isNullOrEmpty(playerToClaim.getAppUserId())))) {
+			dto.setIsValid(true);
+		} else {
 			dto.setIsValid(true);
 		}
+
 		return dto;
 	}
 

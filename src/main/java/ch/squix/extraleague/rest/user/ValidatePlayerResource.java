@@ -34,7 +34,7 @@ public class ValidatePlayerResource extends ServerResource {
 		if (userClaiming != null) {
 			dto.setIsValid(false);
 		}
-		if (playerToClaim == null || playerToClaim.getAppUserId() == null) {
+		if (playerToClaim == null || (playerToClaim != null && playerToClaim.getAppUserId() == null) || playerToClaim.getAppUserId() == null) {
 			dto.setIsValid(true);
 		}
 		return dto;

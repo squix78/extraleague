@@ -20,10 +20,8 @@ import ch.squix.extraleague.model.ranking.tasks.CurrentShapeTask;
 import ch.squix.extraleague.model.ranking.tasks.DeltaRankingTask;
 import ch.squix.extraleague.model.ranking.tasks.EloRankingTask;
 import ch.squix.extraleague.model.ranking.tasks.EmperorTask;
-import ch.squix.extraleague.model.ranking.tasks.FirstPlayerFilterTask;
 import ch.squix.extraleague.model.ranking.tasks.GoalsPerGameTask;
 import ch.squix.extraleague.model.ranking.tasks.GoalsPerPositionTask;
-import ch.squix.extraleague.model.ranking.tasks.IncestuousTask;
 import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerCountTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
@@ -41,8 +39,6 @@ import ch.squix.extraleague.model.ranking.tasks.TightMatchesTask;
 import ch.squix.extraleague.model.ranking.tasks.TrueSkillRankingTask;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateRankingMessage;
-import ch.squix.extraleague.rest.ranking.RankingDto;
-import ch.squix.extraleague.rest.ranking.RankingDtoMapper;
 
 public class RankingService {
 
@@ -79,6 +75,7 @@ public class RankingService {
         	eternalRanking = new EternalRanking();
         }
         eternalRanking.setPlayerRankings(ranking.getPlayerRankings());
+        eternalRanking.setCreatedDate(new Date());
         ofy().save().entities(eternalRanking).now();	
     }
 

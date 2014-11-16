@@ -1,6 +1,7 @@
 package ch.squix.extraleague.rest.ranking;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ch.squix.extraleague.model.ranking.EternalRanking;
@@ -9,7 +10,7 @@ import ch.squix.extraleague.model.ranking.Ranking;
 
 public class RankingDtoMapper {
 
-	private static List<RankingDto> getRankingDtos(List<PlayerRanking> playerRankings) {
+	private static RankingsDto getRankingDtos(List<PlayerRanking> playerRankings, Date createdDate) {
 		List<RankingDto> playerRankingList = new ArrayList<>();
 		if (playerRankings != null) {
 			for (PlayerRanking playerRanking : playerRankings) {
@@ -57,26 +58,26 @@ public class RankingDtoMapper {
 				playerRankingList.add(rankingDto);
 			}
 		}
-		return playerRankingList;
+		return new RankingsDto(playerRankingList, createdDate);
 	}
 
-	public static List<RankingDto> convertToDto(EternalRanking ranking) {
+	public static RankingsDto convertToDto(EternalRanking ranking) {
 		if (ranking != null) {
-			return getRankingDtos(ranking.getPlayerRankings());
+			return getRankingDtos(ranking.getPlayerRankings(), ranking.getCreatedDate());
 		}
-		return new ArrayList<RankingDto>();
+		return new RankingsDto();
 	}
 
-	public static List<RankingDto> convertToDto(Ranking ranking) {
+	public static RankingsDto convertToDto(Ranking ranking) {
 		if (ranking == null || ranking.getPlayerRankings() == null) {
-			return new ArrayList<>();
+			return new RankingsDto();
 		}
-		return getRankingDtos(ranking.getPlayerRankings());
+		return getRankingDtos(ranking.getPlayerRankings(), ranking.getCreatedDate());
 	}
 
 	public static RankingDto getPlayerRanking(String player, Ranking ranking) {
-		List<RankingDto> rankings = convertToDto(ranking);
-		for (RankingDto dto : rankings) {
+		RankingsDto rankings = convertToDto(ranking);
+		for (RankingDto dto : rankings.getRankings()) {
 			if (dto.getPlayer().equals(player)) {
 				return dto;
 			}
@@ -85,8 +86,8 @@ public class RankingDtoMapper {
 	}
 	
 	public static RankingDto getPlayerRanking(String player, EternalRanking ranking) {
-		List<RankingDto> rankings = convertToDto(ranking);
-		for (RankingDto dto : rankings) {
+		RankingsDto rankings = convertToDto(ranking);
+		for (RankingDto dto : rankings.getRankings()) {
 			if (dto.getPlayer().equals(player)) {
 				return dto;
 			}

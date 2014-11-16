@@ -30,7 +30,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="ranking in rankings | orderBy:predicate:reverse">
+          <tr ng-repeat="ranking in rankings.rankings | orderBy:predicate:reverse">
             <td>{{$index + 1}} </td>
             <td><div delta ng-model="ranking.rankingDelta"></div></td>
             <td><a href="#/player/{{ranking.player}}">{{ranking.player}} </a></td>
@@ -48,7 +48,10 @@
         </tbody>
 	</table>
 </div>
-<div ng-show="rankings.length == 0 && !isRankingLoading">
+<div ng-show="rankings.createdDate">
+	Created: {{rankings.createdDate | date:'medium' }}
+</div>
+<div ng-show="rankings.rankings.length == 0 && !isRankingLoading">
 	Start playing now to be ranked!
 </div>
 <div ng-show="isRankingLoading">

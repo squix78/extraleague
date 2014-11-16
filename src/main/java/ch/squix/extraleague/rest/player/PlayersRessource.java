@@ -4,7 +4,6 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.restlet.resource.Get;
@@ -13,6 +12,7 @@ import org.restlet.resource.ServerResource;
 import ch.squix.extraleague.model.ranking.Ranking;
 import ch.squix.extraleague.rest.ranking.RankingDto;
 import ch.squix.extraleague.rest.ranking.RankingDtoMapper;
+import ch.squix.extraleague.rest.ranking.RankingsDto;
 
 
 
@@ -24,9 +24,9 @@ public class PlayersRessource extends ServerResource {
 		if (ranking != null) {
 			ranking = new Ranking();
 		}
-		List<RankingDto> rankings = RankingDtoMapper.convertToDto(ranking);
+		RankingsDto rankings = RankingDtoMapper.convertToDto(ranking);
 		Map<String, RankingDto> rankingMap = new HashMap<String, RankingDto>();
-		for (RankingDto dto : rankings) {
+		for (RankingDto dto : rankings.getRankings()) {
 			rankingMap.put(dto.getPlayer(), dto);
 		}
 		return rankingMap;

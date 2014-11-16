@@ -14,4 +14,5 @@ function($scope, $rootScope, $routeParams, Statistics) {
 	});
 	
 	$scope.hourHistogram = [{ "key": 0 , "value": 0.25}, { "key": 1 , "value": 0.75} ];
+
 });

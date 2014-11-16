@@ -6,6 +6,8 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.LocalDate;
+
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
@@ -14,20 +16,14 @@ public class AverageTimePerMatchTask implements RankingTask {
 
 	@Override
 	public void rankMatches(Map<String, PlayerRanking> playerRankingMap, Matches matches) {
-		Calendar calendar = GregorianCalendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		Date todayStart = calendar.getTime();
-		calendar.add(Calendar.DAY_OF_YEAR, -1);
-		Date yesterdayStart = calendar.getTime();
+
 		for (String player : matches.getPlayers()) {
 			PlayerRanking ranking = playerRankingMap.get(player);
 			long totalMatchTime = 0;
 			long numberOfMatches = 0;
-			Map<Date, Long> matchesPlayedPerDay = new HashMap<Date, Long>();
-			Map<Date, Long> secondsPlayedPerDay = new HashMap<Date, Long>();
+			Map<Date, Long> matchesPlayedPerDay = createInitializedMap();
+			Map<Date, Long> secondsPlayedPerDay = createInitializedMap();
+
 			for (Match match : matches.getMatchesByPlayer(player)) {
 				Date startDate = match.getStartDate();
 				Date endDate = match.getEndDate();
@@ -35,7 +31,7 @@ public class AverageTimePerMatchTask implements RankingTask {
 					long matchLength = endDate.getTime() - startDate.getTime();
 					totalMatchTime += matchLength;
 					numberOfMatches++;
-					Date day = getDayStart(startDate);
+					Date day = LocalDate.fromDateFields(startDate).toDate();
 					Long matchesPlayed = matchesPlayedPerDay.get(day);
 					if (matchesPlayed == null) {
 						matchesPlayed = 0L;
@@ -58,14 +54,16 @@ public class AverageTimePerMatchTask implements RankingTask {
 		}
 	}
 	
-	private static Date getDayStart(Date date) {
-		Calendar calendar = GregorianCalendar.getInstance();
-		calendar.setTime(date);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		return calendar.getTime();
+	private Map<Date, Long> createInitializedMap() {
+		LocalDate date = new LocalDate();
+		date = date.minusDays(30);
+		Map<Date, Long> map = new HashMap<>();
+		for (int i = 0; i < 31; i++) {
+			map.put(date.toDate(), 0L);
+			date = date.plusDays(1);
+		}
+		return map;
+		
 	}
 
 }

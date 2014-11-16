@@ -9,7 +9,7 @@ function($scope, $rootScope, $resource, $routeParams, $location, Ranking, Badges
   $scope.tag = $routeParams.tag;
   $scope.type = $routeParams.type || "All";
   $scope.updateRankings = function() {
-	  $scope.rankings = Ranking.query({tag: $scope.tag, type: $scope.type}, function() {
+	  $scope.rankings = Ranking.get({tag: $scope.tag, type: $scope.type}, function() {
 	    $scope.isRankingLoading = false;
 	    
 	  });

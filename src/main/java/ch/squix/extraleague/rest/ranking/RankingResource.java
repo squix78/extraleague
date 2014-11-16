@@ -25,20 +25,20 @@ public class RankingResource extends ServerResource {
 
 	
 	@Get(value = "json")
-	public List<RankingDto> execute() throws UnsupportedEncodingException {
+	public RankingsDto execute() throws UnsupportedEncodingException {
 		String rankingType = getQuery().getValues("type");
 		if (Strings.isNullOrEmpty(rankingType) || "All".equals(rankingType)) {
 			log.info("Requesting ranking for namespace: " + NamespaceManager.get());
 			Ranking ranking = ofy().load().type(Ranking.class).order("-createdDate").first().now();
 			if (ranking == null) {
-				return new ArrayList<>();
+				return new RankingsDto();
 			}
 			
 			return RankingDtoMapper.convertToDto(ranking);
 		} else if ("Eternal".equals(rankingType)) {
 			EternalRanking eternalRanking = ofy().load().type(EternalRanking.class).first().now();
 			if (eternalRanking == null) {
-				return new ArrayList<>();
+				return new RankingsDto();
 			}
 			return RankingDtoMapper.convertToDto(eternalRanking);
 		} else if ("tag".equals(rankingType)) {
@@ -48,11 +48,11 @@ public class RankingResource extends ServerResource {
 			List<Match> matches = ofy().load().type(Match.class).filter("tags =", tag).filter("startDate > ", calendar.getTime()).list();
 			Ranking ranking = RankingService.calculateRankingFromMatches(matches);
 			if (ranking == null) { 
-				return new ArrayList<>();
+				return new RankingsDto();
 			}
 			return RankingDtoMapper.convertToDto(ranking);
 		}
-		return new ArrayList<>(); 
+		return new RankingsDto(); 
 	}
 
 

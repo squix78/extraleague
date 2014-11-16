@@ -3,9 +3,10 @@
 <div ng-show="playerStats">
  <h3>Player Stats</h3>
  <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table">
       <thead>
       	<tr>
+      		<th>WD</th>
       		<th>Date</th>
       		<th>Matches</th>
       		<th>Minutes</th>
@@ -13,8 +14,9 @@
       	</tr>
       </thead>
       <tbody>
-        <tr ng-repeat="(key, value) in playerStats.matchesPlayedPerDay">
-          <td>{{key | date:'dd.MM.yyyy (EEE)'}}</td>
+        <tr ng-class="{success: isWeekend(key)}" ng-repeat="(key, value) in playerStats.matchesPlayedPerDay">
+          <td>{{key | date:'EEE'}}</td>
+          <td>{{key | date:'dd.MM.yyyy'}}</td>
           <td>
 			{{playerStats.matchesPlayedPerDay[key]}}
           </td>
@@ -22,7 +24,7 @@
 			{{playerStats.secondsPlayedPerDay[key] / 60 | number:0}}
           </td>
           <td>
-			{{playerStats.eloPerDay[key]}}
+			{{playerStats.eloPerDay[key] | number:0}}
           </td>
         </tr>
 

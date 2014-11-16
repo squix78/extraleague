@@ -6,7 +6,13 @@ function UserController($scope, $rootScope, $resource, $location, $routeParams, 
 			$scope.isPlayerStatsLoading = false;
 		});
 
-
+		$scope.isWeekend = function(value) {
+			var date = new Date(value);
+			if (date.getDay() == 0 || date.getDay() == 6) {
+				return true;
+			}
+			return false;
+		}
 
 	
 });

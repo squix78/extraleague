@@ -6,6 +6,8 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.LocalDate;
+
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.match.MatchUtil;
 import ch.squix.extraleague.model.match.Matches;
@@ -33,7 +35,7 @@ public class EloRankingTask implements RankingTask {
 			Integer deltaTeamA = EloUtil.calculateDelta(scoreTeamA, expectedScore);
 			Integer deltaTeamB = EloUtil.calculateDelta(scoreTeamB, 1 - expectedScore);
 			if (match.getStartDate() != null) {
-				Date day = getDayStart(match.getStartDate());
+				Date day = LocalDate.fromDateFields(match.getStartDate()).toDate();
 				applyDelta(playerRankingMap, playerEloPerDay, day, match.getTeamA()[0], deltaTeamA);
 				applyDelta(playerRankingMap, playerEloPerDay, day, match.getTeamA()[1], deltaTeamA);
 				applyDelta(playerRankingMap, playerEloPerDay, day, match.getTeamB()[0], deltaTeamB);
@@ -60,14 +62,6 @@ public class EloRankingTask implements RankingTask {
 		playerRanking.setEloPerDay(eloPerDay);
 	}
 	
-	private static Date getDayStart(Date date) {
-		Calendar calendar = GregorianCalendar.getInstance();
-		calendar.setTime(date);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		return calendar.getTime();
-	}
+
 
 }

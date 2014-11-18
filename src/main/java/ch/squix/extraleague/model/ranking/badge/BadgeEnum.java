@@ -35,7 +35,13 @@ public enum BadgeEnum {
 	LoneWolf(11, -5, BadgeType.Shamelet, "fa-user", null, "played with fewest players"),
 	PurpleHeart(11, 3, BadgeType.Honorary, "fa-heart", null, "Contributed code or issues to Extraleague"), 
 	SilverStar(12, 5, BadgeType.Honorary, "fa-asterisk", null, "Contributed extraordinary amounts of ideas, code or blood to Extraleague"),
-	Incestuous(13, -5, BadgeType.Shamelet, "fa-stethoscope", null, "Played last 2 rounds with the same people");
+	Incestuous(13, -5, BadgeType.Shamelet, "fa-stethoscope", null, "Played last 2 rounds with the same people"),
+	Rookie(20, 0, BadgeType.Honorary, "fa-tag", null, "Canon Foder"),
+	Private(20, 0, BadgeType.Honorary, "fa-angle-up", null, "Proofed"),
+	Corporal(21, 0, BadgeType.Honorary, "fa-angle-double-up", null, "Seasoned"),
+	Seargant(22, 0, BadgeType.Honorary, "fa-chevron-up", null, "Experienced"),
+	FirstLeutenant(23, 0, BadgeType.Honorary, "fa-minus", null, "Leader"),
+	Captain(24, 0, BadgeType.Honorary, "fa-pause", null, "Field Proofed Leader");
 	
 	private BadgeType type;
 	private String faClass;

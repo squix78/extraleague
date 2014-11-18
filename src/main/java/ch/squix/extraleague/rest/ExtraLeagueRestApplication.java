@@ -30,6 +30,7 @@ import ch.squix.extraleague.rest.games.PlayedGamesResource;
 import ch.squix.extraleague.rest.league.LeagueAdminResource;
 import ch.squix.extraleague.rest.league.LeagueResource;
 import ch.squix.extraleague.rest.league.LeagueStyleResource;
+import ch.squix.extraleague.rest.matches.MatchExportResource;
 import ch.squix.extraleague.rest.matches.MatchesResource;
 import ch.squix.extraleague.rest.migration.NamespaceMigrationResource;
 import ch.squix.extraleague.rest.migration.NamespaceMigrationTaskResource;
@@ -142,6 +143,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/admin/migration/namespace", NamespaceMigrationResource.class);
         router.attach("/admin/migration/namespace/task", NamespaceMigrationTaskResource.class);
         router.attach("/admin/league/setWebhook", SetLeagueAttributeResource.class);
+        router.attach("/admin/export/matches", MatchExportResource.class);
         
         // league admin
         router.attach("/leagueAdmin/playerUsers", PlayerUsersAdminResource.class);

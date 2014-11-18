@@ -14,7 +14,7 @@ public class ExperienceTask implements RankingTask {
     	for (PlayerRanking ranking : playerRankingMap.values()) {
     		Integer totalGames = ranking.getTotalGames();
     		if (totalGames != null) {
-    			BadgeEnum badge = null;
+    			BadgeEnum badge = BadgeEnum.Rookie;
     			if (totalGames < 10) {
     				badge = BadgeEnum.Rookie;
     			} else if (totalGames < 20) {
@@ -25,7 +25,7 @@ public class ExperienceTask implements RankingTask {
     				badge = BadgeEnum.Seargant;
     			} else if (totalGames < 160) {
     				badge = BadgeEnum.FirstLeutenant;
-    			} else if (totalGames >= 320) {
+    			} else {
     				badge = BadgeEnum.Captain;
     			}
     			ranking.getBadges().add(badge.name());

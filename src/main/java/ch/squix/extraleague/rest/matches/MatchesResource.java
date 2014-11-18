@@ -137,7 +137,7 @@ public class MatchesResource extends ServerResource {
 			NotificationService.notifyOpenGamesPlayers(openGames);
 			SummaryService.updateTableWinners(game, matches);
 			SummaryService.addSummaryMutation(game, matches);
-		}
+		} 
 		GameDto gameDto = GameDtoMapper.mapToDto(game);
 		NotificationService.sendMessage(new UpdateMatchMessage(gameDto, matchDto));
 		

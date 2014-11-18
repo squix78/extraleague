@@ -87,10 +87,10 @@
             <li ng-show="!isCurrentUserLoading && currentUser.loggedIn" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-cloak>{{currentUser.nickname}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li data-match-route="/account"><a ng-click="navigateTo('account')">Account</a></li>
-                <li data-match-route="/playerStats"><a ng-click="navigateTo('playerStats')">Statistics</a></li>
-                <li ng-show="currentUser.admin" data-match-route="/admin"><a ng-click="navigateTo('admin')">League Admin</a></li>
-                <li><a href="{{currentUser.logoutUrl}}">Logout</a></li>
+                <li data-match-route="/account"><a ng-click="navigateTo('account')"><i class="fa fa-sliders"></i> Account</a></li>
+                <li data-match-route="/playerStats"><a ng-click="navigateTo('playerStats')"><i class="fa fa-bar-chart"></i> Statistics</a></li>
+                <li ng-show="currentUser.admin" data-match-route="/admin"><a ng-click="navigateTo('admin')"><i class="fa fa-list"></i> League Admin</a></li>
+                <li><a href="{{currentUser.logoutUrl}}"><i class="fa fa-power-off"></i> Logout</a></li>
               </ul>
             </li>
           </ul>

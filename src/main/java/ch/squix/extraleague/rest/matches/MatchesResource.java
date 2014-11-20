@@ -1,5 +1,7 @@
 package ch.squix.extraleague.rest.matches;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,15 +14,10 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
-import com.google.appengine.api.taskqueue.Queue;
-import com.google.appengine.api.taskqueue.QueueFactory;
-import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.appengine.api.taskqueue.TaskOptions.Method;
-import com.googlecode.objectify.Key;
-
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Goal;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.MatchEvent;
 import ch.squix.extraleague.notification.GameFinishedMessage;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateMatchMessage;
@@ -30,7 +27,12 @@ import ch.squix.extraleague.rest.games.GameDtoMapper;
 import ch.squix.extraleague.rest.games.GamesResource;
 import ch.squix.extraleague.rest.games.OpenGameService;
 import ch.squix.extraleague.rest.result.SummaryService;
-import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import com.googlecode.objectify.Key;
 
 
 
@@ -87,6 +89,15 @@ public class MatchesResource extends ServerResource {
 			goal.setScorer(goalDto.getScorer());
 			goal.setTime(goalDto.getTime());
 			goals.add(goal);
+		}
+		List<MatchEvent> events = new ArrayList<>();
+		match.setEvents(events);
+		for (MatchEventDto eventDto : matchDto.getEvents()) {
+			MatchEvent event = new MatchEvent();
+			event.setPlayer(eventDto.getPlayer());
+			event.setTime(eventDto.getTime());
+			event.setEvent(eventDto.getEvent());
+			events.add(event);
 		}
 		if ((match.getTeamAScore() > 0 || match.getTeamBScore() > 0) && match.getStartDate() == null) {
 		    match.setStartDate(new Date());

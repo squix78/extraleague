@@ -3,10 +3,11 @@ package ch.squix.extraleague.rest.matches;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.googlecode.objectify.Key;
-
 import ch.squix.extraleague.model.match.Goal;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.MatchEvent;
+
+import com.googlecode.objectify.Key;
 
 public class MatchDtoMapper {
 
@@ -36,6 +37,13 @@ public class MatchDtoMapper {
 			goalDto.setScorer(goal.getScorer());
 			goalDto.setTime(goal.getTime());
 			dto.getGoals().add(goalDto);
+		}
+		for (MatchEvent event : match.getEvents()) {
+			MatchEventDto eventDto = new MatchEventDto();
+			eventDto.setEvent(event.getEvent());
+			eventDto.setTime(event.getTime());
+			eventDto.setPlayer(event.getPlayer());
+			dto.getEvents().add(eventDto);
 		}
 		return dto; 
 	}

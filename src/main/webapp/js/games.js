@@ -215,6 +215,19 @@ angular.module('Games', ['gaeChannelService'])
 		 },
 		 hideAlert: function() {
 			 games.isErrorDialogVisible = false;
+		 },
+		 getCurrentPlayers: function() {
+			 if (angular.isDefined(games.currentMatch)) {
+				 return games.currentMatch.teamA.concat(games.currentMatch.teamB);
+			 }
+			 return [];
+		 },
+		 addEvent: function(event) {
+			 if (angular.isDefined(games.currentMatch)) {
+				 games.currentMatch.events.push(event);
+				 console.log(games.currentMatch.events);
+				 service.saveCurrentMatch();
+			 }
 		 }
 
 	    

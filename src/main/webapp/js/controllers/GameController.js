@@ -1,5 +1,5 @@
 angular.module('Extraleague').controller('GameController', 
-function($scope, $rootScope, $resource, $routeParams, $location, Players, NotificationService, GameService) {
+function($scope, $rootScope, $resource, $routeParams, $location, $modal, Players, NotificationService, GameService) {
   
   $scope.gameId = $routeParams.gameId;
   $scope.table = $routeParams.table;
@@ -49,9 +49,29 @@ function($scope, $rootScope, $resource, $routeParams, $location, Players, Notifi
 	  team[1] = temp;
 	  console.log("Team after swap: " + team);
 	  $scope.saveCurrentMatch();
-  }
+  };
   $scope.swapTeamColors = function() {
 	  GameService.swapTeamColors();
-  }
+  };
+  
+  $scope.openSpecialEvent = function (size) {
 
-});
+	    var modalInstance = $modal.open({
+	      templateUrl: 'js/templates/eventModal.html',
+	      controller: 'EventModalController',
+	      resolve: {
+	        players: function () {
+	          return GameService.getCurrentPlayers();
+	        }
+	      }
+	    });
+
+	    modalInstance.result.then(function (event) {
+	      console.log(event);
+	      GameService.addEvent(event);
+	    }, function () {
+	      //$log.info('Modal dismissed at: ' + new Date());
+	    });
+  }
+  
+});  

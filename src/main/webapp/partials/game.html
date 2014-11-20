@@ -132,11 +132,28 @@
 
 			</div>
 			<div class="panel-footer">
-				<button ng-disabled="openGames.isMatchSaving"
-					class="btn btn-lg btn-default btn-block text-small"
-					ng-click="decreaseScore()">
-					<i class="fa fa-undo"></i> Undo
-				</button>
+				<div class="row">
+					<div class="col-xs-6">
+						<button ng-disabled="openGames.isMatchSaving"
+							class="btn btn-lg btn-default btn-block text-small"
+							ng-click="decreaseScore()">
+							<i class="fa fa-undo"></i> Undo
+						</button>
+					</div>
+					<div class="col-xs-6">
+						<button ng-disabled="openGames.isMatchSaving"
+							class="btn btn-lg btn-default btn-block text-small"
+							ng-click="openSpecialEvent()">
+							<i class="fa fa-plus-circle"></i> Special Event
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="openGames.currentMatch.events">
+			<h3>Events:</h3>
+			<div ng-repeat="event in openGames.currentMatch.events">
+				{{event.player}}: {{event.event}}
 			</div>
 		</div>
 	</div>

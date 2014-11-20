@@ -41,6 +41,8 @@ public class Match {
 
 	private List<Goal> goals = new ArrayList<>();
 	
+	private List<MatchEvent> events = new ArrayList<>();
+	
 	@Index
 	private List<String> tags = new ArrayList<>();
 	

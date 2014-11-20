@@ -1,5 +1,5 @@
 angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappings', 'Charts', 'Games', 
-                               'ui.bootstrap', 'ui.bootstrap.buttons', 'ui.bootstrap.alert', 
+                               'ui.bootstrap', 'ui.bootstrap.buttons', 'ui.bootstrap.alert', 'ui.bootstrap.modal', 
                                'nvd3ChartDirectives', 'omr.directives', 'gaeChannelService', 
                                'angulartics', 'angulartics.google.analytics', 'squix.services.logging', 'remoteValidation'])
     .config(function($routeProvider) {

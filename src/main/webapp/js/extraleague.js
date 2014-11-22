@@ -158,6 +158,9 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     .factory('Badges', ['$resource', function($resource) {
         return $resource('/rest/badges', {}, {get: {cache: true, method: 'GET' } } );
     }])
+    .factory('SpecialEvents', ['$resource', function($resource) {
+    	return $resource('/rest/specialEvents', {}, {get: {cache: true, method: 'GET' } } );
+    }])
     .factory('Mutations', ['$resource', function($resource) {
     	return $resource('/rest/mutations');
     }])

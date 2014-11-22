@@ -1,6 +1,9 @@
 angular.module('Extraleague').controller('EventModalController', 
-function($scope, $modalInstance, players) {
+function($scope, $modalInstance, players, SpecialEvents) {
 
+	  $scope.specialEvents = SpecialEvents.get({}, function() {
+		  
+	  });
 	  $scope.players = players;
 	  $scope.event = {
 		 player: $scope.players[0]

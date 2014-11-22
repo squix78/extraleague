@@ -23,48 +23,28 @@
 			Event:
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			Trick Shots:
+	<div ng-repeat="eventGroup in specialEvents.eventGroups">
+		<div class="row">
+			<div class="col-xs-12">
+				{{eventGroup.name}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="btn-group">
+	        		<label ng-repeat="specialEvent in specialEvents.groupEventMap[eventGroup.name]" class="btn {{eventGroup.buttonClass}}" ng-model="event.event" btn-radio="'{{specialEvent.name}}'"><i class="{{specialEvent.iconClass}}"></i> {{specialEvent.name}}</label>
+	        		
+	    		</div>
+			</div>	
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="btn-group">
-        		<label class="btn btn-primary" ng-model="event.event" btn-radio="'ShotOfTheDay'"><i class="fa fa-graduation-cap"></i> Shot of the Day</label>
-        		<label class="btn btn-primary" ng-model="event.event" btn-radio="'TrickShotAir'"><i class="fa fa-paper-plane"></i> TrickShotAir</label>
-    		</div>
-		</div>	
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			Selfies:
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="btn-group">
-        		<label class="btn btn-danger" ng-model="event.event" btn-radio="'DirectSelfie'"><i class="fa fa-dot-circle-o"></i> Direct Selfie</label>
-        		<label class="btn btn-danger" ng-model="event.event" btn-radio="'FullLengthSelfie'"><i class="fa fa-reply"></i> Full Length Selfie</label>
-        		<label class="btn btn-danger" ng-model="event.event" btn-radio="'SelfieAir'"><i class="fa fa-paper-plane"></i> SelfieAir</label>
-    		</div>
-		</div>	
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			Indecent behavior:
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="btn-group">
-        		<label class="btn btn-danger" ng-model="event.event" btn-radio="'Skirty'"><i class="fa fa-reply"></i> Skirty</label>
-    		</div>
-		</div>	
-	</div>
+
 
  </div>
  <div class="modal-footer">
+ 	 <div class="pull-left">
+ 	 	{{specialEvents.eventMap[event.event].description}}
+ 	 </div>
      <button ng-disabled="!event.player || !event.event" class="btn btn-primary" ng-click="add()">Add</button>
      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>

@@ -57,14 +57,15 @@ import ch.squix.extraleague.rest.ranking.RankingResource;
 import ch.squix.extraleague.rest.ranking.UpdateEternalRankingsResource;
 import ch.squix.extraleague.rest.ranking.UpdateRankingsResource;
 import ch.squix.extraleague.rest.result.SummaryResource;
+import ch.squix.extraleague.rest.specialevents.SpecialEventResource;
 import ch.squix.extraleague.rest.statistics.CronUpdateStatisticsResource;
 import ch.squix.extraleague.rest.statistics.StatisticsResource;
 import ch.squix.extraleague.rest.statistics.UpdateStatisticsResource;
 import ch.squix.extraleague.rest.tables.TablesResource;
 import ch.squix.extraleague.rest.timeseries.TimeSeriesResource;
-import ch.squix.extraleague.rest.user.ValidatePlayerResource;
 import ch.squix.extraleague.rest.user.CurrentUserResource;
 import ch.squix.extraleague.rest.user.LoginLogoutResource;
+import ch.squix.extraleague.rest.user.ValidatePlayerResource;
 import ch.squix.extraleague.server.AddLeagueResource;
 import ch.squix.extraleague.server.SetLeagueAttributeResource;
 
@@ -117,6 +118,7 @@ public class ExtraLeagueRestApplication extends Application {
         router.attach("/statistics", StatisticsResource.class);
         router.attach("/notificationToken", NotificationTokenResource.class);
         router.attach("/badges", BadgesResource.class);
+        router.attach("/specialEvents", SpecialEventResource.class);
         router.attach("/playerNetwork", PlayerNetworkResource.class);
         router.attach("/mutations", MutationsResource.class);
         router.attach("/league", LeagueResource.class);

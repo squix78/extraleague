@@ -87,6 +87,18 @@
 	</div>
 </div>
 <div class="row">
+	<div class="col-md-12 form-group">
+
+			<div>
+		    	<label>Currently Running Games</label>
+		    </div>
+		    <div>
+				<label>{{openGames.gameList.length}}</label>
+		    </div>
+
+	</div>
+</div>
+<div class="row">
 	<div class="col-md-12">
 		<button ng-disabled="!isGameComplete()"
 			class="btn btn-primary" ng-click="startGame()">Start Game</button>

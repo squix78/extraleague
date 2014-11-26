@@ -1,6 +1,6 @@
 angular.module('Extraleague').controller('MeetingPointController', 
 function ($scope, $rootScope, $timeout, $location, MeetingPointPlayers, 
-		MeetingPointPlayer, Tables, GameModes, Games, NotificationService, PlayerService) {
+		MeetingPointPlayer, Tables, GameModes, Games, NotificationService, PlayerService, GameService) {
 	
 	$scope.game = new Games();
 	$scope.loadPlayers = function() {
@@ -18,6 +18,13 @@ function ($scope, $rootScope, $timeout, $location, MeetingPointPlayers,
     $scope.modes = GameModes.query({}, function() {
  	  $scope.isModesLoading = false;
     });
+    
+    $scope.updateGames = function() {
+  	  $scope.openGames = GameService.loadOpenGames();
+    };
+    
+    $scope.updateGames();
+    
     $scope.availableTimes = [
        {label: 'next 15min', timeDiff: '15'},
        {label: 'next 30min', timeDiff: '30'},

@@ -19,7 +19,7 @@ public class MatchExportResource extends ServerResource {
 	
 	private static final Logger log = Logger.getLogger(GamesResource.class.getName());
 	
-	@Get(value = "text/csv")
+	@Get(value = "json")
 	public List<MatchDto> execute() throws UnsupportedEncodingException {
 
 		List<Match> matches = ofy().load().type(Match.class).list();

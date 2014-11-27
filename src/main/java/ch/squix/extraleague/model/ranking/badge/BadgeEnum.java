@@ -39,8 +39,8 @@ public enum BadgeEnum {
 	Rookie(20, 0, BadgeType.Honorary, "fa-tag", null, "Canon Foder"),
 	Private(20, 0, BadgeType.Honorary, "fa-angle-up", null, "Proofed"),
 	Corporal(21, 0, BadgeType.Honorary, "fa-angle-double-up", null, "Seasoned"),
-	Seargant(22, 0, BadgeType.Honorary, "fa-chevron-up", null, "Experienced"),
-	FirstLeutenant(23, 0, BadgeType.Honorary, "fa-minus", null, "Leader"),
+	Sergeant(22, 0, BadgeType.Honorary, "fa-chevron-up", null, "Experienced"),
+	FirstLieutenant(23, 0, BadgeType.Honorary, "fa-minus", null, "Leader"),
 	Captain(24, 0, BadgeType.Honorary, "fa-pause", null, "Field Proofed Leader");
 	
 	private BadgeType type;

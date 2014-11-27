@@ -222,7 +222,7 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
     		}
     	};
     })
-    .directive('highlightBadges', ['Badges', function(Badges) {
+    .directive('highlightBadges', ['Badges', 'SpecialEvents', function(Badges, SpecialEvents) {
 	  return {    
 	    restrict: 'A',    
 	    require: 'ngModel',
@@ -247,7 +247,25 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 			        	});
 		        	}
 	        	});
-	          });                
+
+				var specialEvents = SpecialEvents.get({}, function() {
+					
+					if (angular.isDefined(value) && typeof value === 'string') {
+						angular.forEach(specialEvents.eventMap, function(specialEvent, name) {
+							angular.forEach(value.match(specialEvent.name), function(word) {
+								if (angular.isDefined(specialEvent)) {
+									value = value.replace(word, 
+											'<span class="btn btn-xs ' 
+											+ specialEvent.buttonClass + '" title="' 
+											+ specialEvent.description + '"> <i class=" ' 
+											+ specialEvent.iconClass + '"></i> ' + word + '</span>');
+								}
+							});
+							element.html(value); 
+						});
+					}
+				});
+			}); 
 	    }
 	  };  
 	}])

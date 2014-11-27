@@ -1,6 +1,16 @@
 package ch.squix.extraleague.rest.result;
 
-public class PlayerScoreDto {
+import java.io.Serializable;
+
+import com.googlecode.objectify.annotation.Embed;
+
+@Embed
+public class PlayerScoreDto implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private String player;
 	private Integer score = 0;

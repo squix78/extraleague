@@ -26,7 +26,7 @@ public class SpecialEventResource extends ServerResource {
 		Map<String, SpecialEventDto> eventMap = new HashMap<>();
 		for (SpecialEvent event : SpecialEvent.values()) {
 			List<SpecialEventDto> eventDtos = map.get(event.getEventGroup().name());
-			SpecialEventDto eventDto = new SpecialEventDto(event.name(), event.getEventGroup().name(), event.getDescription(), event.getIconClass());
+			SpecialEventDto eventDto = new SpecialEventDto(event.name(), event.getEventGroup().name(), event.getEventGroup().getButtonClass(), event.getDescription(), event.getIconClass());
 			eventDtos.add(eventDto);
 			eventMap.put(event.name(), eventDto);
 		}

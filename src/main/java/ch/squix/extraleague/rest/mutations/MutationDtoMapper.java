@@ -20,6 +20,7 @@ public class MutationDtoMapper {
 		dto.setPlayers(mutation.getPlayers());
 		dto.getDescriptions().addAll(mutation.getDescriptions());
 		dto.setCreatedDate(mutation.getCreatedDate());
+		dto.setPlayerScores(mutation.getPlayerScores());
 		return dto;
 	}
 

@@ -8,19 +8,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
-
-import com.google.common.base.Joiner;
 
 import ch.squix.extraleague.model.challenger.WinnerTeam;
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
+import ch.squix.extraleague.model.match.MatchEvent;
 import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.notification.NotificationService;
 import ch.squix.extraleague.notification.UpdateWinnersMessage;
-import ch.squix.extraleague.rest.ranking.UpdateRankingsResource;
+
+import com.google.common.base.Joiner;
 
 public class SummaryService {
 	
@@ -162,12 +164,16 @@ public class SummaryService {
 		SummaryDto summaryDto = SummaryService.getSummaryDto(game, matches);
 		
 		PlayerMutation mutation = new PlayerMutation(summaryDto.getPlayers());
-		mutation.getDescriptions().add("Game finished. Elo points earned/ lost: ");
-		List<String> scoreDescriptions = new ArrayList<>();
-		for (PlayerScoreDto dto : summaryDto.getPlayerScores()) {
-			scoreDescriptions.add(dto.getPlayer() + ": " + dto.getEarnedEloPoints());
+		mutation.setPlayerScores(summaryDto.getPlayerScores());
+		Set<String> specialEvents = new HashSet<>();
+		for (Match match : matches) {
+			for (MatchEvent event : match.getEvents()) {
+				specialEvents.add(event.getEvent() + " by " + event.getPlayer());
+			}
 		}
-		mutation.getDescriptions().add(Joiner.on(", ").join(scoreDescriptions));
+		if (specialEvents.size() > 0) {
+			mutation.getDescriptions().add("Special events: " + Joiner.on(", ").join(specialEvents));
+		}
 		ofy().save().entity(mutation).now();
 		
 	}

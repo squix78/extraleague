@@ -1,21 +1,22 @@
 package ch.squix.extraleague.model.mutations;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import lombok.Data;
-import ch.squix.extraleague.model.game.Game;
-import ch.squix.extraleague.rest.games.mode.GameModeEnum;
+import ch.squix.extraleague.rest.result.PlayerScoreDto;
 
 import com.google.common.base.Joiner;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Serialize;
 
 @Entity
 @Cache
@@ -28,6 +29,8 @@ public class PlayerMutation {
 	private List<String> players = new ArrayList<>();
 
 	private List<String> descriptions = new ArrayList<>();
+
+	private List<PlayerScoreDto> playerScores = new ArrayList<>();
 	
 	@Index
 	private Date createdDate;

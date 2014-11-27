@@ -46,6 +46,24 @@ here:
 
 	  </div>
 	   <div class="panel-body">
+	   		 <table class="table table-striped table-condensed" ng-show="mutation.playerScores.length > 0">
+		        <thead>
+		          <tr>
+		            <th>Player</th>
+		            <th>Wins</th>
+		            <th>Goals</th>
+		            <th>Elo</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="playerScore in mutation.playerScores | orderBy:'-earnedEloPoints'">
+		            <td>{{playerScore.player}}</td>
+		            <td>{{playerScore.score}}</td>
+		            <td>{{playerScore.goals}}</td>
+		            <td>{{playerScore.earnedEloPoints}}</td>
+		          </tr>
+		        </tbody>
+		    </table>
 	       	<div ng-repeat="description in mutation.descriptions">
 		    	<div highlight-badges ng-model="description"></div>
 	       	</div>

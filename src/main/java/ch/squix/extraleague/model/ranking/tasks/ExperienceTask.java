@@ -22,9 +22,9 @@ public class ExperienceTask implements RankingTask {
     			} else if (totalGames < 80) {
     				badge = BadgeEnum.Corporal;
     			} else if (totalGames < 160) {
-    				badge = BadgeEnum.Seargant;
+    				badge = BadgeEnum.Sergeant;
     			} else if (totalGames < 320) {
-    				badge = BadgeEnum.FirstLeutenant;
+    				badge = BadgeEnum.FirstLieutenant;
     			} else if (totalGames >= 320){
     				badge = BadgeEnum.Captain;
     			}

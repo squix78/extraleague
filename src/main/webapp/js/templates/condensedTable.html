@@ -1,0 +1,18 @@
+<button  class="btn btn-default btn-xs pull-left" ng-click="showTable = !showTable">
+	<span  ng-class="{'glyphicon-chevron-down': !showTable, 'glyphicon-chevron-up': showTable}" class="glyphicon"></span>
+</button>	
+
+<div class="table-responsive">
+	<table class="tinyTable">
+
+		<tbody>
+			<tr  ng-if="showTable || $index==0" ng-repeat="item in list | orderBy:playervalue:true" >
+				<td ng-if="showTable">{{$index + 1}}.</td>
+				<td>{{item[playername]}}</td>
+				<td>{{formatValue(item[playervalue])}}</td>
+				<td>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

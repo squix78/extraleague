@@ -198,7 +198,7 @@
           
           </td>
           <td>
-	           <div ng-repeat="playerCombo in playerResult.statistics.opponents | limitTo:keeperGoalRateList ? 999: 1 | orderBy:'-keeperGoalRate'">
+	           <div ng-repeat="playerCombo in playerResult.statistics.opponents | orderBy:'-keeperGoalRate' | limitTo:keeperGoalRateList ? 999: 1 ">
 	               {{$index + 1}}. {{playerCombo.combo}} ({{playerCombo.keeperGoalRate | number:2}})
 	           </div>             
 

@@ -302,6 +302,35 @@ angular.module('Extraleague', ['ngResource', 'ngRoute', 'ngTouch', 'PlayerMappin
 			}
 		};
 	}])
+	.directive('condensedTable', [ function() {
+		return {
+			templateUrl: '/js/templates/condensedTable.html',
+			scope: {
+				list: "=",
+				playername: "=",
+				playervalue: "=",
+				percentage: "=?"
+			},
+			compile: function(element, attrs){
+			       if (!attrs.percentage) { 
+			    	   attrs.percentage = false;
+			       } 
+				
+			},
+			controller: function($scope, $filter) {
+				$scope.formatValue = function(value) {
+					if ($scope.percentage) {
+						return $filter('number')(100 * value, 2) + "%";
+					} else {
+						return $filter('number')(value, 2);
+					}
+				}
+
+			},
+			link: function(scope, elem, attrs) {
+			}
+		};
+	}])
 	.directive('extraleagueNavbar', function ($location) {
 	  return {
 	    restrict: 'A',

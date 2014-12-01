@@ -78,7 +78,7 @@
               </ul>
             </li>
             <li ng-show="isCurrentUserLoading"> <a href="#"><img src="images/ajax-loader.gif" /></a></li>
-            <li ng-show="!isCurrentUserLoading && !currentUser.loggedIn"><a href="{{currentUser.loginUrl}}">Login</a></li>
+            <li ng-show="!isCurrentUserLoading && !currentUser.loggedIn"><a href="{{currentUser.loginUrl}}" target="_self">Login</a></li>
             <li ng-show="!isCurrentUserLoading && currentUser.loggedIn" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.nickname}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

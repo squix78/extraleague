@@ -2,7 +2,9 @@ package ch.squix.extraleague.rest.specialevents;
 
 public enum EventGroup {
 	
-	Selfie("btn-danger"), TrickShot("btn-primary"), Dirty("btn-danger");
+	Selfie("btn-danger"), 
+	Snapshot("btn-danger"),
+	TrickShot("btn-primary"), Dirty("btn-danger");
 	
 	private String buttonClass;
 

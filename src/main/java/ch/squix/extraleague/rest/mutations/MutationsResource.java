@@ -20,7 +20,7 @@ public class MutationsResource extends ServerResource {
 	
 	@Get(value = "json")
 	public List<PlayerMutationDto> execute() throws UnsupportedEncodingException {
-		List<PlayerMutation> mutations = ofy().load().type(PlayerMutation.class).order("-createdDate").limit(30).list();
+		List<PlayerMutation> mutations = ofy().load().type(PlayerMutation.class).order("-createdDate").limit(15).list();
 		if (mutations == null) {
 			log.info("No mutations found");
 			return new ArrayList<>();

@@ -153,7 +153,7 @@
 		<div ng-show="openGames.currentMatch.events">
 			<h3>Events:</h3>
 			<div ng-repeat="event in openGames.currentMatch.events">
-				{{event.player}}: {{event.event}}
+				{{event.player}}: <span highlight-badges ng-model="event.event"></span>
 			</div>
 		</div>
 	</div>

@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import lombok.Data;
 import ch.squix.extraleague.rest.result.PlayerScoreDto;
@@ -16,7 +14,6 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Serialize;
 
 @Entity
 @Cache

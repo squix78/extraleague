@@ -1,5 +1,9 @@
 angular.module('Extraleague').controller('GameController', 
-function($scope, $rootScope, $resource, $routeParams, $location, $modal, Players, NotificationService, GameService) {
+function($scope, $rootScope, $resource, $routeParams, $location, $modal, Players, NotificationService, GameService, Mutations) {
+  $scope.isMutationsLoading = true;
+  $scope.mutations = Mutations.query({}, function() {
+	$scope.isMutationsLoading = false;
+  });
   
   $scope.gameId = $routeParams.gameId;
   $scope.table = $routeParams.table;

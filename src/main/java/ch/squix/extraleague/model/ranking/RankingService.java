@@ -27,6 +27,7 @@ import ch.squix.extraleague.model.ranking.tasks.ManualBadgeTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerCountTask;
 import ch.squix.extraleague.model.ranking.tasks.PartnerOpponentTask;
 import ch.squix.extraleague.model.ranking.tasks.PlayerGoalsTask;
+import ch.squix.extraleague.model.ranking.tasks.PlayerOfTheDayTask;
 import ch.squix.extraleague.model.ranking.tasks.ProjectLeaderTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingIndexTask;
 import ch.squix.extraleague.model.ranking.tasks.RankingTask;
@@ -123,6 +124,7 @@ public class RankingService {
         rankingTasks.add(new EmperorTask());
         rankingTasks.add(new AchievementPointTask());
         rankingTasks.add(new DeltaRankingTask());
+        rankingTasks.add(new PlayerOfTheDayTask());
 
         for (RankingTask task : rankingTasks) {
             task.rankMatches(playerRankingMap, matches);

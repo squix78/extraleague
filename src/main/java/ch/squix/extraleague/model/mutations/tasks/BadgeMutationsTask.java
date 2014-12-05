@@ -30,6 +30,7 @@ public class BadgeMutationsTask implements MutationTask {
 				lostBadges.removeAll(newPlayerRanking.getBadges());
 			}
 			if (newBadges.size() > 0) {
+				mutatedPlayers.add(newPlayerRanking.getPlayer());
 				BadgeMutation badgeMutation = new BadgeMutation();
 				badgeMutation.setPlayer(newPlayerRanking.getPlayer());
 				badgeMutation.getBadges().addAll(newBadges);

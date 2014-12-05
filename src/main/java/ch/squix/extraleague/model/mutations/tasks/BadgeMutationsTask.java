@@ -1,22 +1,25 @@
 package ch.squix.extraleague.model.mutations.tasks;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
+import ch.squix.extraleague.model.mutations.BadgeMutation;
 import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
-
-import com.google.common.base.Joiner;
 
 public class BadgeMutationsTask implements MutationTask {
 
 	@Override
 	public List<PlayerMutation> calculate(Ranking oldRanking, Ranking newRanking) {
 		List<PlayerMutation> mutations = new ArrayList<>();
-		Joiner joiner = Joiner.on(" ").skipNulls();
+		PlayerMutation mutation = new PlayerMutation();
+		Set<String> mutatedPlayers = new HashSet<>();
 		for (PlayerRanking newPlayerRanking : newRanking.getPlayerRankings()) {
+
+			
 			PlayerRanking oldPlayerRanking = oldRanking.getPlayerRanking(newPlayerRanking.getPlayer());
 			List<String> newBadges = new ArrayList<>();
 			List<String> lostBadges = new ArrayList<>();
@@ -27,17 +30,22 @@ public class BadgeMutationsTask implements MutationTask {
 				lostBadges.removeAll(newPlayerRanking.getBadges());
 			}
 			if (newBadges.size() > 0) {
-				String newBadgeText = joiner.join(newBadges);
-				PlayerMutation playerMutation = new PlayerMutation(newPlayerRanking.getPlayer());
-				playerMutation.getDescriptions().add("Badges earned: " + newBadgeText);
-				mutations.add(playerMutation);
+				BadgeMutation badgeMutation = new BadgeMutation();
+				badgeMutation.setPlayer(newPlayerRanking.getPlayer());
+				badgeMutation.getBadges().addAll(newBadges);
+				mutation.getWonBadges().add(badgeMutation);
 			}
 			if (lostBadges.size() > 0) {
-				String lostBadgeText = joiner.join(lostBadges);
-				PlayerMutation playerMutation = new PlayerMutation(newPlayerRanking.getPlayer());
-				playerMutation.getDescriptions().add("Badges lost: " + lostBadgeText);
-				mutations.add(playerMutation);
+				mutatedPlayers.add(newPlayerRanking.getPlayer());
+				BadgeMutation badgeMutation = new BadgeMutation();
+				badgeMutation.setPlayer(newPlayerRanking.getPlayer());
+				badgeMutation.getBadges().addAll(lostBadges);
+				mutation.getLostBadges().add(badgeMutation);
 			}
+		}
+		if (mutation.getWonBadges().size() > 0 || mutation.getLostBadges().size() > 0) {
+			mutation.setPlayers(new ArrayList<>(mutatedPlayers));
+			mutations.add(mutation);
 		}
 		return mutations;
 

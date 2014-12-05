@@ -14,6 +14,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Serialize;
 
 @Entity
 @Cache
@@ -28,6 +29,13 @@ public class PlayerMutation {
 	private List<String> descriptions = new ArrayList<>();
 
 	private List<PlayerScoreDto> playerScores = new ArrayList<>();
+	
+	@Serialize(zip = true)
+	private List<BadgeMutation> wonBadges = new ArrayList<>();
+	
+	@Serialize(zip = true)
+	private List<BadgeMutation> lostBadges = new ArrayList<>();
+	
 	
 	@Index
 	private Date createdDate;

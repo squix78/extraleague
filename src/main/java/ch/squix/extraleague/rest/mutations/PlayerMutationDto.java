@@ -14,6 +14,10 @@ public class PlayerMutationDto {
 	private String value;
 	private List<String> descriptions = new ArrayList<>();
 	private List<PlayerScoreDto> playerScores = new ArrayList<>();
+	
+	private List<BadgeMutationDto> wonBadges = new ArrayList<>();
+	private List<BadgeMutationDto> lostBadges = new ArrayList<>();
+	
 	private Date createdDate;
  
 

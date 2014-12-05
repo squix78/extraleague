@@ -64,6 +64,38 @@ here:
 		          </tr>
 		        </tbody>
 		    </table>
+		    <div ng-show="mutation.wonBadges">
+		    	<table class="table table-striped table-condensed" >
+			        <thead>
+			          <tr>
+			            <th>Player</th>
+			            <th>Won Badges</th>
+			          </tr>
+			        </thead>
+			        <tbody>
+			          <tr ng-repeat="badgeMutation in mutation.wonBadges">
+			            <td ng-bind="badgeMutation.player"></td>
+			            <td><span ng-repeat="badge in badgeMutation.badges"><span highlight-badges ng-model="badge"></span> </span></td>
+			          </tr>
+			        </tbody>
+		    	</table>
+		    </div>
+		    <div ng-show="mutation.lostBadges">
+		    	<table class="table table-striped table-condensed">
+			        <thead>
+			          <tr>
+			            <th>Player</th>
+			            <th>Lost Badges</th>
+			          </tr>
+			        </thead>
+			        <tbody>
+			          <tr ng-repeat="badgeMutation in mutation.lostBadges">
+			            <td ng-bind="badgeMutation.player"></td>
+			            <td><span ng-repeat="badge in badgeMutation.badges"><span highlight-badges ng-model="badge"></span> </span></td>
+			          </tr>
+			        </tbody>
+		    	</table>
+		    </div>
 	       	<div ng-repeat="description in mutation.descriptions">
 		    	<div highlight-badges ng-model="description"></div>
 	       	</div>

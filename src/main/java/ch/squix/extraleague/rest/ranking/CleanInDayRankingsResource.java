@@ -14,7 +14,7 @@ public class CleanInDayRankingsResource extends ServerResource {
 	
 	@Get(value = "json")
 	public String execute() throws UnsupportedEncodingException {
-		List<Ranking> rankings = ofy().load().type(Ranking.class).order("createdDate").list();
+		List<Ranking> rankings = ofy().load().type(Ranking.class).order("createdDate").limit(300).list();
 		List<Ranking> inTheDayRankings = InTheDayRankingFilter.getInTheDayRankings(rankings);
 		ofy().delete().entities(inTheDayRankings).now();
 		

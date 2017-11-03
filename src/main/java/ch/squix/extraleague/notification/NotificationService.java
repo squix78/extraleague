@@ -40,7 +40,7 @@ public class NotificationService {
     private static final Joiner JOINER = Joiner.on(", ");
 
     public static void sendMessage(NotificationMessage message) {
-        try {
+        /*try {
             List<BrowserClient> clients = ofy().load().type(BrowserClient.class).list();
             ChannelService channelService = ChannelServiceFactory.getChannelService();
             ObjectMapper mapper = new ObjectMapper();
@@ -61,7 +61,7 @@ public class NotificationService {
             }
         } catch (IOException e) {
             log.log(Level.SEVERE, "Could not convert message to json", e);
-        }
+        }*/
     }
 
     public static void sendSummaryEmail(Game game, List<Match> matches) {

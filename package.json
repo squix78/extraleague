@@ -4,5 +4,22 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/squix78/extraleague.git"
+  },
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-bower-concat": "^0.2.5",
+    "grunt-bower-install": "^1.4.0",
+    "grunt-connect-proxy": "^0.1.10",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-connect": "^0.8.0",
+    "grunt-contrib-less": "^0.11.4",
+    "grunt-contrib-uglify": "^0.4.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-manifest": "^0.4.0",
+    "livereloadx": "^0.3.9"
   }
 }

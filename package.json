@@ -7,7 +7,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "grunt": "^0.4.1",
+    "grunt": ">=0.4.5 <1.0.0",
     "grunt-bower-concat": "^0.2.5",
     "grunt-bower-install": "^1.4.0",
     "grunt-cli": "^1.2.0",

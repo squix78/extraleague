@@ -10,6 +10,7 @@
 package ch.squix.extraleague.model.ranking.elo;
 
 import java.util.Map;
+import java.util.Optional;
 
 import ch.squix.extraleague.model.match.Match;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
@@ -52,9 +53,9 @@ public class EloUtil {
 	}
 	
 	private static Integer getPlayerRanking(Ranking ranking, String player) {
-	    PlayerRanking playerRanking = ranking.getPlayerRanking(player);
-	    if (playerRanking != null && playerRanking.getEloValue() != null) {
-	        return playerRanking.getEloValue();
+	    Optional<PlayerRanking> playerRanking = ranking.getPlayerRanking(player);
+	    if (playerRanking.isPresent() && playerRanking.get().getEloValue() != null) {
+	        return playerRanking.get().getEloValue();
 	    }
 	    return EloUtil.INITIAL_RATING;
 	}

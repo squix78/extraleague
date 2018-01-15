@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import lombok.Data;
+import java.util.Optional;
 
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -14,6 +13,8 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Serialize;
+
+import lombok.Data;
 
 @Entity
 @Cache
@@ -33,13 +34,13 @@ public class Ranking {
 	private Map<String, PlayerRanking> playerRankingMap = new HashMap<>();
 
 	
-	public PlayerRanking getPlayerRanking(String player) {
+	public Optional<PlayerRanking> getPlayerRanking(String player) {
 	    if (playerRankingMap.size() != playerRankings.size()) {
 	        for (PlayerRanking playerRanking : playerRankings) {
 	            playerRankingMap.put(playerRanking.getPlayer(), playerRanking);
 	        }
 	    }
-	    return playerRankingMap.get(player);
+	    return Optional.ofNullable(playerRankingMap.get(player));
 	}
 
 

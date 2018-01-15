@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum GameModeEnum {
-	
+
 	FourMatchesToFive("4 matches to 5", "Four matches are played in fix order according ELO ranking"),
+	FourMatchesToFiveRandom("4 to 5 random", "Same pairings as in normal mode but random starting positions"),
 	ThreeMatchesToFive("3 matches to 5", "Three matches are played in random start formation"),
 	OneMatchToSeven("1 match to 7", "One match is played to 7 goals following initial player list");
 	

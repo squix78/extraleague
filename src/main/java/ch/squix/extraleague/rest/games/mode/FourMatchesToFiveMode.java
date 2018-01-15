@@ -3,9 +3,8 @@ package ch.squix.extraleague.rest.games.mode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
-
-import com.googlecode.objectify.Key;
 
 import ch.squix.extraleague.model.game.Game;
 import ch.squix.extraleague.model.match.Match;
@@ -60,27 +59,21 @@ public class FourMatchesToFiveMode implements GameMode {
 		}
 		return matches;
 	}
-	
 
 
-	
-
-	
 	public List<String> sortPlayersByRanking(List<String> players, Ranking currentRanking) {
 		Map<Integer, String> playerRankMap = new TreeMap<>();
 		Integer newPlayerRank = Integer.MAX_VALUE - 10;
 		for (String player : players) {
-			PlayerRanking playerRanking = currentRanking.getPlayerRanking(player);
-			Integer rank = newPlayerRank;
-			if (playerRanking != null) {
-				rank = playerRanking.getEloRanking();
+			Optional<PlayerRanking> playerRanking = currentRanking.getPlayerRanking(player);
+			Integer rank;
+			if (playerRanking.isPresent()) {
+				rank = playerRanking.get().getEloRanking();
 			} else {
-			    newPlayerRank++;
+				rank = newPlayerRank++;
 			}
 			playerRankMap.put(rank, player);
 		}
 		return new ArrayList<>(playerRankMap.values());
 	}
-
-
 }

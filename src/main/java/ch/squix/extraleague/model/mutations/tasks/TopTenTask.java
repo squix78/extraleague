@@ -2,6 +2,7 @@ package ch.squix.extraleague.model.mutations.tasks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import ch.squix.extraleague.model.mutations.PlayerMutation;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
@@ -13,11 +14,11 @@ public class TopTenTask implements MutationTask {
 	public List<PlayerMutation> calculate(Ranking oldRanking, Ranking newRanking) {
 		List<PlayerMutation> mutations = new ArrayList<>();
 		for (PlayerRanking newPlayerRanking : newRanking.getPlayerRankings()) {
-			PlayerRanking oldPlayerRanking = oldRanking.getPlayerRanking(newPlayerRanking.getPlayer());
+			Optional<PlayerRanking> oldPlayerRanking = oldRanking.getPlayerRanking(newPlayerRanking.getPlayer());
 			Integer newRank = newPlayerRanking.getEloRanking();
 			Integer oldRank = 999;
-			if (oldPlayerRanking != null) {
-				oldRank = oldPlayerRanking.getEloRanking();
+			if (oldPlayerRanking.isPresent()) {
+				oldRank = oldPlayerRanking.get().getEloRanking();
 			}
 			if (oldRank > 10 && newRank <= 10) {
 				PlayerMutation playerMutation = new PlayerMutation(newPlayerRanking.getPlayer());

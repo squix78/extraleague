@@ -3,6 +3,7 @@ package ch.squix.extraleague.model.mutations.tasks;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import ch.squix.extraleague.model.mutations.BadgeMutation;
@@ -20,13 +21,13 @@ public class BadgeMutationsTask implements MutationTask {
 		for (PlayerRanking newPlayerRanking : newRanking.getPlayerRankings()) {
 
 			
-			PlayerRanking oldPlayerRanking = oldRanking.getPlayerRanking(newPlayerRanking.getPlayer());
+			Optional<PlayerRanking> oldPlayerRanking = oldRanking.getPlayerRanking(newPlayerRanking.getPlayer());
 			List<String> newBadges = new ArrayList<>();
 			List<String> lostBadges = new ArrayList<>();
 			newBadges.addAll(newPlayerRanking.getBadges());
-			if (oldPlayerRanking != null) {
-				newBadges.removeAll(oldPlayerRanking.getBadges());
-				lostBadges.addAll(oldPlayerRanking.getBadges());
+			if (oldPlayerRanking.isPresent()) {
+				newBadges.removeAll(oldPlayerRanking.get().getBadges());
+				lostBadges.addAll(oldPlayerRanking.get().getBadges());
 				lostBadges.removeAll(newPlayerRanking.getBadges());
 			}
 			if (newBadges.size() > 0) {

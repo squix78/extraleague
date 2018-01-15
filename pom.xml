@@ -140,6 +140,12 @@
 			<version>2.6.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.j2html</groupId>
+			<artifactId>j2html</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
 
 		<!-- Test Dependencies -->
 		<dependency>
@@ -256,8 +262,8 @@
 				<version>2.5.1</version>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 

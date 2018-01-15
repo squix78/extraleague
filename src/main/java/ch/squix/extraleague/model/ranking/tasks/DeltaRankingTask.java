@@ -1,13 +1,14 @@
 package ch.squix.extraleague.model.ranking.tasks;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Optional;
 
 import ch.squix.extraleague.model.match.Matches;
 import ch.squix.extraleague.model.ranking.PlayerRanking;
 import ch.squix.extraleague.model.ranking.Ranking;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class DeltaRankingTask implements RankingTask {
 
@@ -21,13 +22,13 @@ public class DeltaRankingTask implements RankingTask {
 		Ranking dayStartRanking = ofy().load().type(Ranking.class).order("createdDate").filter("createdDate > ", calendar.getTime()).limit(1).first().now();
 		if (dayStartRanking != null) {
 			for (PlayerRanking newPlayerRanking : playerRankingMap.values()) {
-				PlayerRanking oldPlayerRanking = dayStartRanking.getPlayerRanking(newPlayerRanking.getPlayer());
+				Optional<PlayerRanking> oldPlayerRanking = dayStartRanking.getPlayerRanking(newPlayerRanking.getPlayer());
 				Integer newRank = newPlayerRanking.getEloRanking();
 				Integer newElo = newPlayerRanking.getEloValue();
 				if (oldPlayerRanking != null) {
-					Integer oldRank = oldPlayerRanking.getEloRanking();
+					Integer oldRank = oldPlayerRanking.get().getEloRanking();
 					newPlayerRanking.setRankingDelta(oldRank - newRank);
-					Integer oldElo = oldPlayerRanking.getEloValue();
+					Integer oldElo = oldPlayerRanking.get().getEloValue();
 					newPlayerRanking.setEloDelta(newElo - oldElo);
 				}
 

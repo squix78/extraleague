@@ -4,12 +4,12 @@
     <url>/rest/updateRankingsCron</url>
     <description>Create history of highscore for trending</description>
     <schedule>every day 00:05</schedule>
-  </cron>
+  </cron><!--
   <cron>
     <url>/rest/admin/updateEternalRankingsCron</url>
     <description>Calculate eternal highscore</description>
     <schedule>every day 00:20</schedule>
-  </cron>
+  </cron>-->
   <cron>
     <url>/rest/cleanRankingsCron</url>
     <description>clean in-day rankings</description>
